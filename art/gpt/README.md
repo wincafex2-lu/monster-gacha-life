@@ -58,10 +58,13 @@
 
 還沒畫：pebble_sprite（石精，被跳過了，請補上）。
 
-### 妖精之森（fairy）：4 / 16
-已收下：flower_fairy、pixie、dew_fairy、brownie。品質很好，不用修改。
+### 妖精之森（fairy）：完成
+已收下全部 16 隻，品質很好，不用修改。
 
-還沒畫：glow_fairy、chime_fairy、wood_elf、dryad、undine、lucky_dwarf、unicorn、baku、moon_elf、elf_sage、season_keeper、fairy_queen。
+### 惡魔領域（demon）：10 / 15
+已收下：imp、coal_imp、nightmare_sheep、contract_cat、hell_pup、demon_knight、horned_demon、mirror_demon、demon_merchant、balrog。品質很好，不用修改。
+
+還沒畫：glutton、demon_duke、demon_heir、fallen_angel、demon_lord。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
