@@ -5,6 +5,12 @@
 - 每一隻怪獸的外型設定：[BRIEF.md](BRIEF.md)（先讀最上面的「共同規則」）
 - 目前要修改或補畫的圖：見下面「待辦」
 
+**給 GPT 的固定流程（每一次都要做）：**
+1. 開始畫之前，重新讀這份 README 的最新版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/main/art/gpt/README.md
+2. 先做「待辦」表格裡的項目，再畫新的族群。
+3. 上傳完之後，再讀一次這份 README，看「待辦」有沒有新的意見；有的話接著修改，不用等人轉達。
+4. 每次上傳時在 commit 訊息寫清楚上傳了哪些怪獸 id。
+
 ## 交圖格式
 
 1. 一張圖只畫一隻怪獸，背景透明的 PNG。
