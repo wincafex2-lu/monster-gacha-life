@@ -42,14 +42,17 @@
 ### 昆蟲軍團（insect）：完成
 已收下全部 24 隻，品質很好，不用修改。（鍬形騎士的長槍由程式畫。）
 
-### 野獸軍團（beast）：14 / 30
-已收下：cave_rat、horn_rabbit、grey_wolf、boar、hedgehog、cave_bat、lizard、hop_frog、tanuki、ferret、skunk、owlbear、sabertooth。品質很好，不用修改。
+### 野獸軍團（beast）：29 / 30
+已收下：cave_rat、horn_rabbit、grey_wolf、boar、hedgehog、cave_bat、lizard、hop_frog、tanuki、ferret、skunk、owlbear、sabertooth、crow（重畫版，很清楚）、twohead_dog、giant_eagle、snow_leopard、iron_rhino、giant_ape、moon_deer、fire_fox、griffon、cerberus、nine_fox、pegasus、thunder_wolf、mountain_bear、baize、fenrir。品質很好，不用修改。
 
-退回重畫：crow（見下面待辦）。
+退回重畫：chimera（見下面待辦）。
 
-還沒畫：twohead_dog、giant_eagle、snow_leopard、iron_rhino、giant_ape、moon_deer、fire_fox、griffon、cerberus、chimera、nine_fox、pegasus、thunder_wolf、mountain_bear、baize、fenrir。
+### 植物軍團（plant）：4 / 20
+已收下：mushroom_kid、mandrake、hop_grass、flytrap。品質很好，不用修改。
+
+還沒畫：cactus、vine、seed_baby、pumpkin_head、bigmouth_flower、little_treant、spore_shroom、thorn_rose、bamboo_samurai、ice_flower、elder_treant、moon_beauty、fruit_tree、divine_tree、forest_colossus、world_tree。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| beast/crow.png | 只用了 4 個顏色，整隻幾乎是黑的一團，眼睛、嘴巴、翅膀的羽毛都看不清楚 | 用 8～12 色：黑色羽毛加上深藍或紫色的反光、亮一點的灰色羽毛邊；眼睛要有白色反光，嘴巴用深灰加亮邊，讓頭、翅膀、腳分得出來。尺寸和站姿照舊。 |
+| beast/chimera.png | 只畫成一隻獅子，尾巴是普通的捲尾巴。BRIEF 寫的是「獅子頭、羊身體、蛇尾巴」，最明顯的部位是蛇尾巴 | 保留獅子頭和鬃毛；身體改成羊（捲捲的羊毛、羊蹄）；尾巴改成一條明顯的蛇（有蛇頭、眼睛、舌頭），蛇頭朝向前方或上方。可以在背上加一個小羊頭（選擇性）。尺寸和站姿照舊。 |
