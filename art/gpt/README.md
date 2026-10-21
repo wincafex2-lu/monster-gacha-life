@@ -33,11 +33,11 @@
 已收下全部 18 隻（骨龍、棺材貓、無頭騎士的重畫版都已收下，畫得很好）。
 `_wraith_blue`（藍袍幽魂）先保留，不用重畫。
 
-### 史萊姆軍團（slime）：21 / 30
-已收下：green_slime、blue_slime、red_slime、yellow_slime、mud_slime、drop_slime、jelly_slime、bubble_slime、moss_slime、pudding_slime、spike_slime、shadow_slime、poison_slime、ice_slime、fire_slime、thunder_slime、rock_slime、honey_slime、rainbow_slime、twin_slime、glow_slime。品質很好，不用修改。
+### 史萊姆軍團（slime）：完成
+已收下全部 30 隻，品質很好，不用修改。
 
-還沒畫：metal_slime、heal_slime、mirror_slime、knight_slime、gem_slime、gold_slime、king_slime、galaxy_slime、star_slime。
-（knight_slime 要畫頭盔、king_slime 要畫王冠，但都不要畫武器。）
+### 下一個族群：哥布林部落（goblin）
+請照 BRIEF.md 的順序畫，上傳到 `art/gpt/goblin/`。
 
 ### 待辦（要修改的圖）
 目前沒有。
