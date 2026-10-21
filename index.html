@@ -29161,7 +29161,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
       top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
       no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo',
-      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 352, 358), 78, 50], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 352, 358), 78, 50], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2, ...(a => a ? { base: 'lightkid_shen_' + a, cloth: { flame: [ri(r, 18, 26), 95, 55], wave: [ri(r, 195, 205), 85, 55], dark: [ri(r, 270, 280), 45, 40], dragon: [ri(r, 212, 220), 75, 45], halberd: [45, 85, 55], crystal: [ri(r, 165, 175), 70, 52] }[a] } : {})(pick(r, ['', '', 'flame', 'wave', 'dark', 'dragon', 'halberd', 'crystal'])) }; },
     },
     lightkid_tian: {
       art: [
@@ -29213,7 +29213,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
       top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
       no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo',
-      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 208, 218), 80, 52], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 208, 218), 80, 52], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2, ...(a => a ? { base: 'lightkid_tian_' + a, cloth: { flame: [ri(r, 18, 26), 95, 55], wave: [ri(r, 195, 205), 85, 55], dark: [ri(r, 270, 280), 45, 40], dragon: [ri(r, 212, 220), 75, 45], halberd: [45, 85, 55], crystal: [ri(r, 165, 175), 70, 52] }[a] } : {})(pick(r, ['', '', 'flame', 'wave', 'dark', 'dragon', 'halberd', 'crystal'])) }; },
     },
     lightkid_shen_evo: {
       art: [
@@ -29521,6 +29521,1977 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       top: 1, horn: [11, 4], neck: 22, chest: [25, 46], hand: [7, 38], tail: [34, 44], wing: [10, 27], feet: true, strict: true, gentle: true,
       no: ['horn', 'pattern', 'armor', 'wing', 'tail'], only: { head: ['flower', 'bow', 'chef', 'straw'], weapon: ['pan', 'umbrella', 'lollipop'], neck: ['necklace', 'scarf'], face: ['glasses'], aura: ['hearts', 'sparkle', 'sunring'] },
       color(r) { return { body: pick(r, [[ri(r, 130, 150), ri(r, 30, 42), ri(r, 58, 64)], [ri(r, 265, 285), ri(r, 28, 38), ri(r, 66, 72)], [ri(r, 195, 205), ri(r, 35, 45), ri(r, 62, 68)]]), accent: [ri(r, 340, 360), ri(r, 55, 70), ri(r, 62, 70)], cloth: [ri(r, 40, 50), ri(r, 40, 60), ri(r, 90, 94)], size: 3, base: pick(r, ['mama_kaiju', 'mama_kaiju_long', 'mama_kaiju_wave']) }; },
+    },
+    lightkid_shen_beam: {
+      art: [
+        '.............l',
+        '...........dll',
+        '...........dll',
+        '.........bbdll',
+        '........blldll',
+        '.......bblldll',
+        '.......bbbbdll',
+        '......bbdfddll',
+        '.....ddfeeedll',
+        '......dfeeefdb',
+        '......dfffffdb',
+        '......dddffedb',
+        '......dbbddbbb',
+        '......bbbbbbbb',
+        '.......bbbbbbb',
+        '........bbbbbd',
+        '.........bbbbb',
+        '..........bbbb',
+        '............dd',
+        '............dd',
+        '...bbbb.bbbbbf',
+        '...aabbaaabbfW',
+        '...aabbbbbbbbf',
+        '...abbbbbbbbbb',
+        '....bbbbbaabgg',
+        '....bbbbaaaldd',
+        '....baaaaaaalb',
+        '.......aaaaalb',
+        '.......aaaaalb',
+        '.......aaaaalb',
+        '.......aaaaald',
+        '.......ddddddd',
+        '.......bbbbbbb',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........ddddd.',
+        '........ddddd.',
+      ],
+      eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
+      top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo',
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 352, 358), 78, 50], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+    },
+    lightkid_shen_evo_beam: {
+      art: [
+        '.............l',
+        '...........dll',
+        '...........dll',
+        '.........bbdll',
+        '........blldll',
+        '.......bblldll',
+        '.......bbbbdll',
+        '......bbdfddll',
+        '.....ddfeeedll',
+        '......dfeeefdb',
+        '......dfffffdb',
+        '......dddffedb',
+        '......dbbddbbb',
+        '......bbbbbbbb',
+        '.......bbbbbbb',
+        '........bbbbbd',
+        '.........bbbbb',
+        '..........bbbb',
+        '....qqqqqq..dd',
+        '....qaaaaqlldd',
+        '...bqaaaaqlbbf',
+        '...aqqqqqqbbfW',
+        '...aabbbbbbbbf',
+        '...abbbbbbbbbb',
+        '....bbbbbaabgg',
+        '....bbbbaaqldd',
+        '....baaaaaaqqq',
+        '.......aaaaalb',
+        '.......aaaaalb',
+        '.......aaaaalb',
+        '.......aaaaald',
+        '.......ddddddd',
+        '.......bbbbbbb',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........ddddd.',
+        '........ddddd.',
+      ],
+      eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
+      top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 352, 358), 78, 50], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+    },
+    lightkid_tian_beam: {
+      art: [
+        '......dll.....',
+        '......ldl.....',
+        '.......ldl.baa',
+        '.......ldllbag',
+        '........ldlbaa',
+        '.......bbllbbb',
+        '.......bbbbbbb',
+        '......bbdfdbbb',
+        '.....ddfeeeddb',
+        '......dfeeefdb',
+        '......dfffffdb',
+        '......dddffedb',
+        '......dbbddbbb',
+        '......bbbbbbbb',
+        '.......bbbbbbb',
+        '........bbbbbd',
+        '.........bbbbb',
+        '..........bbbb',
+        '............dd',
+        '............dd',
+        '...bbbb.bbbbbf',
+        '...aababbbbbfW',
+        '...aababbbbbbf',
+        '...abbbbbbbbbb',
+        '....bbbbbaabgg',
+        '....bbbbaaaadd',
+        '....baaabbaaaa',
+        '.......aabbbaa',
+        '.......aabbbba',
+        '.......aabbbbb',
+        '.......aaddddd',
+        '.......ddddddd',
+        '.......bbbbbbb',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........ddddd.',
+        '........ddddd.',
+      ],
+      eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
+      top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo',
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 208, 218), 80, 52], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+    },
+    lightkid_tian_evo_beam: {
+      art: [
+        '......dll.....',
+        '......ldl.....',
+        '.......ldl.baa',
+        '.......ldllbag',
+        '........ldlbaa',
+        '.......bbllbbb',
+        '.......bbbbbbb',
+        '......bbdfdbbb',
+        '.....ddfeeeddb',
+        '......dfeeefdb',
+        '......dfffffdb',
+        '......dddffedb',
+        '......dbbddbbb',
+        '......bbbbbbbb',
+        '.......bbbbbbb',
+        '........bbbbbd',
+        '.........bbbbb',
+        '..........bbbb',
+        '....qqqqqq..dd',
+        '....qaaaaqlldd',
+        '...bqaaaaqlbbf',
+        '...aqqqqqqbbfW',
+        '...aababbbbbbf',
+        '...abbbbbbbbbb',
+        '....bbbbbaabgg',
+        '....bbbbaaqldd',
+        '....baaabbaqqq',
+        '.......aabbbaa',
+        '.......aabbbba',
+        '.......aabbbbb',
+        '.......aaddddd',
+        '.......ddddddd',
+        '.......bbbbbbb',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '.........aabb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........bbbbb.',
+        '........ddddd.',
+        '........ddddd.',
+      ],
+      eye: { y: 7, xs: [6, 16], w: 6, h: 5 },
+      top: 1, horn: [9, 3], neck: 18, chest: [20, 31], hand: [5, 31], tail: [24, 34], wing: [7, 21], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return { body: [ri(r, 205, 215), ri(r, 6, 12), ri(r, 76, 82)], accent: [ri(r, 208, 218), 80, 52], glow: [52, 100, 82], gem: [ri(r, 185, 195), 95, 62], size: 2 }; },
+    },
+    mama_kaiju_hug: {
+      art: [
+        '................nn',
+        '...............Nnn',
+        '..........aaa.nnnn',
+        '.........aannWWnnN',
+        '.........annnnNnnN',
+        '.........nnnnnNnNn',
+        '........nnnnnNnnNn',
+        '.......annnnnNnnNb',
+        '.......annnnNnbbbb',
+        '.......annnnNbbbbb',
+        '.......annnnbbbbbb',
+        '........nnnbbbbbbb',
+        '........nnnbbbbbbb',
+        '........nnbbbbblll',
+        '........nnbbbbllll',
+        '........nnbbbllldl',
+        '........nnnbblllll',
+        'llll....nn.bblllll',
+        'lllll......bblllll',
+        'llllb........bblll',
+        '..lbb.........bbbb',
+        '..bbbb.........bbb',
+        '..bbbb.........bbb',
+        '...bbbb........bbb',
+        '...bbbaaaaaasaaaaa',
+        '....baaaaaaaasaaaa',
+        '....baaaaaaaaassss',
+        '.....aaaaaaaaassss',
+        '......aaaa.aaassss',
+        '...........aaassss',
+        '...........aaassss',
+        '...........aaassss',
+        '...........ddddddd',
+        '...........assssss',
+        '..........aassspps',
+        '..........aasspWpp',
+        '..........aasspppp',
+        '.........aassssppp',
+        '.........aassssspp',
+        '........aaassssssp',
+        '........aassssssss',
+        '........aassWWWsss',
+        '.......aaassssssss',
+        '.......aaassssssss',
+        '......aaasssssssss',
+        '......aaasssssssss',
+        '......aaaaWaWaWaWa',
+        '.....ddddddddddddd',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '............ddddd.',
+        '............ddddd.',
+        '............ddddd.',
+        '..................',
+      ],
+      face: { eye: 'cute', at: [11, 10], mouth: 'cute', my: 19, cheek: [10, 15] },
+      top: 1, horn: [11, 4], neck: 22, chest: [25, 46], hand: [7, 38], tail: [34, 44], wing: [10, 27], feet: true, strict: true, gentle: true,
+      no: ['horn', 'pattern', 'armor', 'wing', 'tail'], only: { head: ['flower', 'bow', 'chef', 'straw'], weapon: ['pan', 'umbrella', 'lollipop'], neck: ['necklace', 'scarf'], face: ['glasses'], aura: ['hearts', 'sparkle', 'sunring'] },
+      color(r) { return { body: pick(r, [[ri(r, 130, 150), ri(r, 30, 42), ri(r, 58, 64)], [ri(r, 265, 285), ri(r, 28, 38), ri(r, 66, 72)], [ri(r, 195, 205), ri(r, 35, 45), ri(r, 62, 68)]]), accent: [ri(r, 340, 360), ri(r, 55, 70), ri(r, 62, 70)], cloth: [ri(r, 40, 50), ri(r, 40, 60), ri(r, 90, 94)], size: 3, base: pick(r, ['mama_kaiju', 'mama_kaiju_long', 'mama_kaiju_wave']) }; },
+    },
+    mama_kaiju_long_hug: {
+      art: [
+        '..................',
+        '..................',
+        '..........aaa.nnnn',
+        '.........aannWWNnn',
+        '.........annnnNnnn',
+        '.........nnnNnNnnn',
+        '........nnnnNNnnnn',
+        '.......annnNnNnnbb',
+        '.......annnNNnbbbb',
+        '.......annNnNbbbbb',
+        '.......annNNbbbbbb',
+        '.......nnNnbbbbbbb',
+        '.......nnNnbbbbbbb',
+        '.......nnnbbbbblll',
+        '.......nnnbbbbllll',
+        '.......nnnbbbllldl',
+        '.......nnnnbblllll',
+        'llll...nnnnbblllll',
+        'lllll..nnnnbblllll',
+        'llllb..nnnnnnbblll',
+        '..lbb..nnnnnn.bbbb',
+        '..bbbb.nnnnnn..bbb',
+        '..bbbb.NnnnNn..bbb',
+        '...bbbbNnnnNn..bbb',
+        '...bbbaaaaaasaaaaa',
+        '....baaaaaaaasaaaa',
+        '....baaaaaaaaassss',
+        '.....aaaaaaaaassss',
+        '......aaaanaaassss',
+        '......nNnNnaaassss',
+        '......nNnNnaaassss',
+        '......nNnNnaaassss',
+        '......nNnNnddddddd',
+        '......nNnNnassssss',
+        '......nNnNaassspps',
+        '......nNnNaasspWpp',
+        '......NnNnaasspppp',
+        '.........aassssppp',
+        '.........aassssspp',
+        '........aaassssssp',
+        '........aassssssss',
+        '........aassWWWsss',
+        '.......aaassssssss',
+        '.......aaassssssss',
+        '......aaasssssssss',
+        '......aaasssssssss',
+        '......aaaaWaWaWaWa',
+        '.....ddddddddddddd',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '............ddddd.',
+        '............ddddd.',
+        '............ddddd.',
+        '..................',
+      ],
+      face: { eye: 'cute', at: [11, 10], mouth: 'cute', my: 19, cheek: [10, 15] },
+      top: 1, horn: [11, 4], neck: 22, chest: [25, 46], hand: [7, 38], tail: [34, 44], wing: [10, 27], feet: true, strict: true, gentle: true,
+      no: ['horn', 'pattern', 'armor', 'wing', 'tail'], only: { head: ['flower', 'bow', 'chef', 'straw'], weapon: ['pan', 'umbrella', 'lollipop'], neck: ['necklace', 'scarf'], face: ['glasses'], aura: ['hearts', 'sparkle', 'sunring'] },
+      color(r) { return { body: pick(r, [[ri(r, 130, 150), ri(r, 30, 42), ri(r, 58, 64)], [ri(r, 265, 285), ri(r, 28, 38), ri(r, 66, 72)], [ri(r, 195, 205), ri(r, 35, 45), ri(r, 62, 68)]]), accent: [ri(r, 340, 360), ri(r, 55, 70), ri(r, 62, 70)], cloth: [ri(r, 40, 50), ri(r, 40, 60), ri(r, 90, 94)], size: 3, base: pick(r, ['mama_kaiju', 'mama_kaiju_long', 'mama_kaiju_wave']) }; },
+    },
+    mama_kaiju_wave_hug: {
+      art: [
+        '..................',
+        '..................',
+        '..........aaa.nnnn',
+        '.........aannWWNnn',
+        '.........annnnNnnn',
+        '.........nnnNnNnnn',
+        '........nnnnNNnnnn',
+        '.......annnNnNnnbb',
+        '.......annnNNnbbbb',
+        '...nnnnannNnNbbbbb',
+        '...nnnnannNNbbbbbb',
+        '..nnnNnnnNnbbbbbbb',
+        '..nnnnNnnNnbbbbbbb',
+        '...nnnnnnnbbbbblll',
+        '...nnnnnnnbbbbllll',
+        '....nnnNnnbbbllldl',
+        '....nnnnnnnbblllll',
+        'llllnnnnnnnbblllll',
+        'lllllnnnnnNbblllll',
+        'llllbNnnnnnnnbblll',
+        '..lbbnNnnNnnn.bbbb',
+        '..bbbbnnnnnnn..bbb',
+        '..bbbbnnnnnnn..bbb',
+        '...bbbbNnnnnn..bbb',
+        '...bbbaannnasaaaaa',
+        '...nbaaaanaaasaaaa',
+        '...nbaaaaaaaaassss',
+        '..nnnaaaaaaaaassss',
+        '..nnnnaaaanaaassss',
+        '...nnnnnnnnaaassss',
+        '...nnnnnnnnaaassss',
+        '....nnnNnnnaaassss',
+        '....nnnnNnnddddddd',
+        '...nnnnnnNnassssss',
+        '...nnnnnnnaassspps',
+        '..nnnNnnnnaasspWpp',
+        '..nnnnNnnnaasspppp',
+        '...nnnnnnaassssppp',
+        '...nnnnnnaassssspp',
+        '....nnnNaaassssssp',
+        '....nnnnaassssssss',
+        '....nnnnaassWWWsss',
+        '.....nnaaassssssss',
+        '.......aaassssssss',
+        '......aaasssssssss',
+        '......aaasssssssss',
+        '......aaaaWaWaWaWa',
+        '.....ddddddddddddd',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '.............bbb..',
+        '............ddddd.',
+        '............ddddd.',
+        '............ddddd.',
+        '..................',
+      ],
+      face: { eye: 'cute', at: [11, 10], mouth: 'cute', my: 19, cheek: [10, 15] },
+      top: 1, horn: [11, 4], neck: 22, chest: [25, 46], hand: [7, 38], tail: [34, 44], wing: [10, 27], feet: true, strict: true, gentle: true,
+      no: ['horn', 'pattern', 'armor', 'wing', 'tail'], only: { head: ['flower', 'bow', 'chef', 'straw'], weapon: ['pan', 'umbrella', 'lollipop'], neck: ['necklace', 'scarf'], face: ['glasses'], aura: ['hearts', 'sparkle', 'sunring'] },
+      color(r) { return { body: pick(r, [[ri(r, 130, 150), ri(r, 30, 42), ri(r, 58, 64)], [ri(r, 265, 285), ri(r, 28, 38), ri(r, 66, 72)], [ri(r, 195, 205), ri(r, 35, 45), ri(r, 62, 68)]]), accent: [ri(r, 340, 360), ri(r, 55, 70), ri(r, 62, 70)], cloth: [ri(r, 40, 50), ri(r, 40, 60), ri(r, 90, 94)], size: 3, base: pick(r, ['mama_kaiju', 'mama_kaiju_long', 'mama_kaiju_wave']) }; },
+    },
+    lightkid_shen_flame: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '..........Y.dddffedbbdeffddd.Y..........',
+        '..........s.dbbddbbbbbbddbbd.s..........',
+        '......Y...s.bbbbbbbbbbbbbbbb.s...Y......',
+        '......s..ss..bYbbbbbbbbbbYb..ss..s......',
+        '.......s.sss.sbbbbbddbbbbbs.sss.s.......',
+        '.......sssssss.bbbbbbbbbb.sssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '........ssssss....ddqd....ssssss........',
+        '.......ssssssss...dqqd...ssssssss.......',
+        '.......ssssssssbqqqqqqqbqssssssss.......',
+        '.......ssssssssaqqqYYqqqassssssss.......',
+        '........ssssssaaqqYWWYqqaassssss........',
+        '.....Y...abbbdaaqqYWWYqqaadbbba...Y.....',
+        '......s..aabbdaqqqYWWYqqaqdbbaa..s......',
+        '......sssssssdaaqqqYYqqqaadsssssss......',
+        '.......ssssssdaaaqqqqqqaaadssssss.......',
+        '........sssssdaaaalqqlaaaadsssss........',
+        '........sssssdaaqalbqlaaqadsssss........',
+        '........sssssdaaaalbblaaaadsssss........',
+        '........bbbbbdaaaalddlaaaadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_flame',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_flame: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '..........Y.dddffedbbdeffddd.Y..........',
+        '..........s.dbbddbbbbbbddbbd.s..........',
+        '......Y...s.bbbbbbbbbbbbbbbb.s...Y......',
+        '......s..ss..bYbbbbbbbbbbYb..ss..s......',
+        '.......s.sss.sbbbbbddbbbbbs.sss.s.......',
+        '.......sssssss.bbbbbbbbbb.sssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '........ssssssqq..ddqd..qqssssss........',
+        '.......ssssssssqlldqqdllqssssssss.......',
+        '.......ssssssssqqqqqqqqlqssssssss.......',
+        '.......ssssssssqqqqYYqqqqssssssss.......',
+        '........ssssssaqqqYWWYqqqassssss........',
+        '.....Y...abbbdaqqqYWWYqqqadbbba...Y.....',
+        '......s..aabbdaqqqYWWYqqaqdbbaa..s......',
+        '......sssssssdaaqqqYYqqqaadsssssss......',
+        '.......ssssssdaaaqqqqqqaaadssssss.......',
+        '........sssssdaaaalqqlaaaadsssss........',
+        '........sssssdaaqalbqlaaqadsssss........',
+        '........sssssdaaaalbblaaaadsssss........',
+        '........bbbbbdaaaalddlaaaadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_shen_wave: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '.....s......dbbddbbbbbbddbbd......s.....',
+        '......s.....bbbbbbbbbbbbbbbb.....s......',
+        '......Ws.....bbbbbbbbbbbbbb.....sW......',
+        '......sWs.....bbbbbddbbbbb.....sWs......',
+        '.......sWs.....bbbbbbbbbb.....sWs.......',
+        '.......sWss.....bbbbbbbb.....ssWs.......',
+        '.......ssWssss....dddd....ssssWss.......',
+        '.......sssWssss...dddd...ssssWsss.......',
+        '.......ssssssssbbbssssbbbssssssss.......',
+        '.......ssssssssaasWWWWsaassssssss.......',
+        '........ssssssaassWggWssaassssss........',
+        '...ssssssabbbdaasWggggWsaadbbba.........',
+        '..sssWWsssabbdaassWggWssaadbbaa.........',
+        '.ssWWssWWssssdaaasWWWWsaaadssss.........',
+        '.ssWWWssWssssdaaaassssaaaadssss.........',
+        '.sWsWWsssWsssdaaaalbblaaaadssss.........',
+        '.sWssssssWsssdaaaalbblaaaadssss.........',
+        '.ssWssssWssbbdaaaalbblaaaadbbbbb........',
+        '.ssWWssWWssbbdaaaalddlaaaadbbbbb........',
+        '..sssWWsssdddddddddddddddddddddb........',
+        '...ssssssbbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_wave',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_wave: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '.....s......dbbddbbbbbbddbbd......s.....',
+        '......s.....bbbbbbbbbbbbbbbb.....s......',
+        '......Ws.....bbbbbbbbbbbbbb.....sW......',
+        '......sWs.....bbbbbddbbbbb.....sWs......',
+        '.......sWs.....bbbbbbbbbb.....sWs.......',
+        '.......sWss.....bbbbbbbb.....ssWs.......',
+        '.......ssWssssqq..dddd..qqssssWss.......',
+        '.......sssWssssqllddddllqssssWsss.......',
+        '.......ssssssssqllssssllqssssssss.......',
+        '.......ssssssssqlsWWWWslqssssssss.......',
+        '........ssssssaqssWggWssqassssss........',
+        '...ssssssabbbdaqsWggggWsqadbbba.........',
+        '..sssWWsssabbdaassWggWssaadbbaa.........',
+        '.ssWWssWWssssdaaqsWWWWsqaadssss.........',
+        '.ssWWWssWssssdaaaqssssqaaadssss.........',
+        '.sWsWWsssWsssdaaaalbblaaaadssss.........',
+        '.sWssssssWsssdaaaalbblaaaadssss.........',
+        '.ssWssssWssbbdaaaalbblaaaadbbbbb........',
+        '.ssWWssWWssbbdaaaalddlaaaadbbbbb........',
+        '..sssWWsssdddddddddddddddddddddb........',
+        '...ssssssbbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_shen_dark: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '............bbbbbbbbbbbbbbbb............',
+        '.............bbbbbbbbbbbbbb.............',
+        '..............bbbbbddbbbbb..............',
+        '.......ssssss..bbbbbbbbbb..ssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '......sssssssss...dddd...sssssssss......',
+        '......sspssssss.ssppppss.sssssspss......',
+        '......sssppssssbbssppssbbssssppsss......',
+        '......ssssspsssaabssssbaassspsssss......',
+        '.......ssssspsaaadgssgdaaaspsssss.......',
+        '........sssssdaaadggggdaaadsssss........',
+        '.........aabbdaaadggggdaaadbbaa.........',
+        '........sssssdaaalddddlaaadsssss........',
+        '.......sssssssaaaalbblaaaasssssss.......',
+        '.......sspssssaaaalbblaaaasssspss.......',
+        '.......sssppssaaaalbblaaaassppsss.......',
+        '.......ssssspsaaaalbblaaaaspsssss.......',
+        '........sssssdaaaalddlaaaadsssss........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '.............ssssss..ssssss.............',
+        '.............sspsss..ssspss.............',
+        '.............ssspss..sspsss.............',
+        '..............sspss..sspss..............',
+        '..............sssps..spsss..............',
+        '..............sssss..sssss..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_dark',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_dark: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '............bbbbbbbbbbbbbbbb............',
+        '.............bbbbbbbbbbbbbb.............',
+        '..............bbbbbddbbbbb..............',
+        '.......ssssss..bbbbbbbbbb..ssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '......sssssssssq..dddd..qsssssssss......',
+        '......sspssssssqssppppssqsssssspss......',
+        '......sssppssssqlssppsslqssssppsss......',
+        '......ssssspsssqllssssllqssspsssss......',
+        '.......ssssspsaqldgssgdlqaspsssss.......',
+        '........sssssdaqldggggdlqadsssss........',
+        '.........aabbdaaqdggggdqaadbbaa.........',
+        '........sssssdaaqlddddlqaadsssss........',
+        '.......sssssssaaaqqqqqqaaasssssss.......',
+        '.......sspssssaaaalbblaaaasssspss.......',
+        '.......sssppssaaaalbblaaaassppsss.......',
+        '.......ssssspsaaaalbblaaaaspsssss.......',
+        '........sssssdaaaalddlaaaadsssss........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '.............ssssss..ssssss.............',
+        '.............sspsss..ssspss.............',
+        '.............ssspss..sspsss.............',
+        '..............sspss..sspss..............',
+        '..............sssps..spsss..............',
+        '..............sssss..sssss..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_shen_dragon: {
+      art: [
+        '.........sssss..........................',
+        '.........sssss..........................',
+        '.........ssWss..........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss.....ll...................',
+        '.........ssWsss..dlllld.................',
+        '.........ssWss...dlllld.................',
+        '........sssWss.bbdlllldbb...............',
+        '.........ssWssslldlllldllb..............',
+        '.........ssWssblldlllldllbb.............',
+        '........sssWssbbbdlllldbbbb.............',
+        '.........ssWsssfddllllddfdbb............',
+        '.........ssWsseeedlllldeeefdd...........',
+        '........sssWsseeefdbbdfeeefd............',
+        '.........ssWsssfffdbbdfffffd............',
+        '.........ssWssdffedbbdeffddd............',
+        '........sssWssbddbbbbbbddbbd............',
+        '.........ssWsssbbbbbbbbbbbbb.W..........',
+        '.........ssWssbbbbbbbbbbbbb.............',
+        '........sssWssbbbbbddbbbbbW.ss..W.......',
+        '.........ssWsssbbbbbbbbbbss.ss.ss.......',
+        '.........ssWss..bbbbbbbb.ssssssss.......',
+        '........sssWss....dddd...sssssssssW.....',
+        '.........ssWsss...dddd..ssssssssss......',
+        '.........ssWssbbbbddddbbssssssssss......',
+        '........sssWssaaabddddbassssssssss......',
+        '.........ssWsssaadgWWgdaassssssss.......',
+        '.........ssWssaaadggggdaaadssss.........',
+        '........sssWssaaadggggdaaadbbaa.........',
+        '.........ssssssaalddddlaaadsssss........',
+        '.......qqqqqqqqqaalbblaaaadsWsss........',
+        '.......qqqqqqqqqaalbblaaaadsssWs........',
+        '.........bKKKdaaaalbblaaaadsssss........',
+        '........bbKKKdaaaalbblaaaadbbbbb........',
+        '........bbKKKdaaaalddlaaaadbbbbb........',
+        '........bdKKKddddddddddddddddddb........',
+        '.........bKKKbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_dragon',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_dragon: {
+      art: [
+        '.........sssss..........................',
+        '.........sssss..........................',
+        '.........ssWss..........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss.....ll...................',
+        '.........ssWsss..dlllld.................',
+        '.........ssWss...dlllld.................',
+        '........sssWss.bbdlllldbb...............',
+        '.........ssWssslldlllldllb..............',
+        '.........ssWssblldlllldllbb.............',
+        '........sssWssbbbdlllldbbbb.............',
+        '.........ssWsssfddllllddfdbb............',
+        '.........ssWsseeedlllldeeefdd...........',
+        '........sssWsseeefdbbdfeeefd............',
+        '.........ssWsssfffdbbdfffffd............',
+        '.........ssWssdffedbbdeffddd............',
+        '........sssWssbddbbbbbbddbbd............',
+        '.........ssWsssbbbbbbbbbbbbb.W..........',
+        '.........ssWssbbbbbbbbbbbbb.............',
+        '........sssWssbbbbbddbbbbbW.ss..W.......',
+        '.........ssWsssbbbbbbbbbbss.ss.ss.......',
+        '.........ssWss..bbbbbbbb.ssssssss.......',
+        '........sssWssqq..dddd..qsssssssssW.....',
+        '.........ssWsssqllddddllssssssssss......',
+        '.........ssWssaqllddddllssssssssss......',
+        '........sssWssqqllddddllssssssssss......',
+        '.........ssWsssqldgWWgdlqssssssss.......',
+        '.........ssWssaqldggggdlqadssss.........',
+        '........sssWssaaqdggggdqaadbbaa.........',
+        '.........ssssssaqlddddlqaadsssss........',
+        '.......qqqqqqqqqaqqqqqqaaadsWsss........',
+        '.......qqqqqqqqqaalbblaaaadsssWs........',
+        '.........bKKKdaaaalbblaaaadsssss........',
+        '........bbKKKdaaaalbblaaaadbbbbb........',
+        '........bbKKKdaaaalddlaaaadbbbbb........',
+        '........bdKKKddddddddddddddddddb........',
+        '.........bKKKbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_shen_halberd: {
+      art: [
+        '........................................',
+        '......................q......qq.....q...',
+        '......................qq.....qq....qq...',
+        '......................qqq....qq...qqq...',
+        '.......................qqq...rr..qqq....',
+        '.......................qqqq..rr.qqqq....',
+        '.......................qqqqq.ggqqqqq....',
+        '......................qqqqqq.ggqqqqqq...',
+        '.....................qqqqqqq.rrqqqqqqq..',
+        '.......................qqqqq.rrqqqqq....',
+        '...................ll.....qq.rrqq.......',
+        '.................dlllld......rr.........',
+        '.................dlllld......rr.........',
+        '...............bbdlllldbb....rr.........',
+        '..............blldlllldllb...rr.........',
+        '.............bblldlllldllbb..rr.........',
+        '.............bbbbdlllldbbbb..rr.........',
+        '............bbdfddllllddfdbb.rr.........',
+        '...........ddfeeedlllldeeefddrr.........',
+        '............dfeeefdbbdfeeefd.rr.........',
+        '............dfffffdbbdfffffd.rr.........',
+        '............dddffedbbdeffddd.rr.........',
+        '............dbbddbbbbbbddbbd.rr.........',
+        '............bbbbbbbbbbbbbbbb.rr.........',
+        '.....q.......bbbbbbbbbbbbbb..rr...q.....',
+        '......qq......bbbbbddbbbbb...rr.qq......',
+        '......qqq......bbbbbbbbbb....rrqqq......',
+        '.......qqqqqq...bbbbbbbb...qqrrqq.......',
+        '.......qqqqqqqq...dddd...qqqqrrqq.......',
+        '.......qqqqqqqq..qqqqqq..qqqqrrqq.......',
+        '.......qqqqqqqqbbbqqqqbbbqqqqrrqq.......',
+        '.......qqqqqqqqaabdqqdbaaqqqqrrqq.......',
+        '.........qqqqaaaadgWWgdaaaaqqrr.........',
+        '.........abbbdaaadggggdaaadbbrr.........',
+        '.........aabbdaaadggggdaaadbbrr.........',
+        '.........aabbdaaalddddlaaadbbrr.........',
+        '.........aabbdaaaalbblaaaadbbrr.........',
+        '.........aabbdaaaalbblaaaadbbrr.........',
+        '.........bbbbdaaaalbblaaaadbbKK.........',
+        '........bbbbbdaaaalbblaaaadbbKKb........',
+        '........bbbbbdaaaalddlaaaadbbKKb........',
+        '........bddddddddddddddddddddrrb........',
+        '.........bbbbbbbbbbbbbbbbbbbbrr.........',
+        '.............q.aabb..bbaa.q..rr.........',
+        '..............qaabb..bbaaq...rr.........',
+        '..............qqabb..bbaqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_halberd',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_halberd: {
+      art: [
+        '........................................',
+        '......................q......qq.....q...',
+        '......................qq.....qq....qq...',
+        '......................qqq....qq...qqq...',
+        '.......................qqq...rr..qqq....',
+        '.......................qqqq..rr.qqqq....',
+        '.......................qqqqq.ggqqqqq....',
+        '......................qqqqqq.ggqqqqqq...',
+        '.....................qqqqqqq.rrqqqqqqq..',
+        '.......................qqqqq.rrqqqqq....',
+        '...................ll.....qq.rrqq.......',
+        '.................dlllld......rr.........',
+        '.................dlllld......rr.........',
+        '...............bbdlllldbb....rr.........',
+        '..............blldlllldllb...rr.........',
+        '.............bblldlllldllbb..rr.........',
+        '.............bbbbdlllldbbbb..rr.........',
+        '............bbdfddllllddfdbb.rr.........',
+        '...........ddfeeedlllldeeefddrr.........',
+        '............dfeeefdbbdfeeefd.rr.........',
+        '............dfffffdbbdfffffd.rr.........',
+        '............dddffedbbdeffddd.rr.........',
+        '............dbbddbbbbbbddbbd.rr.........',
+        '............bbbbbbbbbbbbbbbb.rr.........',
+        '.....q.......bbbbbbbbbbbbbb..rr...q.....',
+        '......qq......bbbbbddbbbbb...rr.qq......',
+        '......qqq......bbbbbbbbbb....rrqqq......',
+        '.......qqqqqq...bbbbbbbb...qqrrqq.......',
+        '.......qqqqqqqqq..dddd..qqqqqrrqq.......',
+        '.......qqqqqqqqqlqqqqqqlqqqqqrrqq.......',
+        '.......qqqqqqqqqllqqqqllqqqqqrrqq.......',
+        '.......qqqqqqqqqlldqqdllqqqqqrrqq.......',
+        '.........qqqqaaqldgWWgdlqaaqqrr.........',
+        '.........abbbdaqldggggdlqadbbrr.........',
+        '.........aabbdaaqdggggdqaadbbrr.........',
+        '.........aabbdaaqlddddlqaadbbrr.........',
+        '.........aabbdaaaqqqqqqaaadbbrr.........',
+        '.........aabbdaaaalbblaaaadbbrr.........',
+        '.........bbbbdaaaalbblaaaadbbKK.........',
+        '........bbbbbdaaaalbblaaaadbbKKb........',
+        '........bbbbbdaaaalddlaaaadbbKKb........',
+        '........bddddddddddddddddddddrrb........',
+        '.........bbbbbbbbbbbbbbbbbbbbrr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '.............q.aabb..bbaa.q..rr.........',
+        '..............qaabb..bbaaq...rr.........',
+        '..............qqabb..bbaqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_shen_crystal: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '..........W.bbbbbbbbbbbbbbbb.W..........',
+        '.............bbbbbbbbbbbbbb.............',
+        '.......W.ss...bbbbbddbbbbb...ss.W.......',
+        '......ss.ss..W.bbbbbbbbbb.W..ss.ss......',
+        '......ss.ss.ss..bbbbbbbb..ss.ss.ss......',
+        '......ssssssss....dddd....ssssssss......',
+        '......sssssssss...dddd...sssssssss......',
+        '.......ssssssssbbbddddbbbssssssss.......',
+        '.......ssssssssaabddddbaassssssss.......',
+        '........ssssssaaadgWWgdaaassssss........',
+        '.........abbbdaaadggggdaaadbbba.........',
+        '........sssssdaaadggggdaaadsssss........',
+        '........sWsssdaaalddddlaaadsssWs........',
+        '.......sssWssdaaaalbblaaaadssWsss.......',
+        '.......sssWsbdaaaalbblaaaadbsWsss.......',
+        '........sssWbdaaaalbblaaaadbWsss........',
+        '........bbbsbdaaaalbblaaaadbsbbb........',
+        '........bbbbbdsssssddsssssdbbbbb........',
+        '........bdddddsWsssddsssWsdddddb........',
+        '.........bbbbbsWsssbbsssWsbbbbb.........',
+        '..............ssWss..ssWss..............',
+        '..............ssWsb..bsWss..............',
+        '..............sssWb..bWsss..............',
+        '...............ssWb..bWss...............',
+        '...............aasb..bsaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_shen_evo_crystal',
+      color(r) { return {}; },
+    },
+    lightkid_shen_evo_crystal: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '...................ll...................',
+        '.................dlllld.................',
+        '.................dlllld.................',
+        '...............bbdlllldbb...............',
+        '..............blldlllldllb..............',
+        '.............bblldlllldllbb.............',
+        '.............bbbbdlllldbbbb.............',
+        '............bbdfddllllddfdbb............',
+        '...........ddfeeedlllldeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '..........W.bbbbbbbbbbbbbbbb.W..........',
+        '.............bbbbbbbbbbbbbb.............',
+        '.......W.ss...bbbbbddbbbbb...ss.W.......',
+        '......ss.ss..W.bbbbbbbbbb.W..ss.ss......',
+        '......ss.ss.ss..bbbbbbbb..ss.ss.ss......',
+        '......ssssssssqq..dddd..qqssssssss......',
+        '......sssssssssqllddddllqsssssssss......',
+        '.......ssssssssqllddddllqssssssss.......',
+        '.......ssssssssqllddddllqssssssss.......',
+        '........ssssssaqldgWWgdlqassssss........',
+        '.........abbbdaqldggggdlqadbbba.........',
+        '........sssssdaaqdggggdqaadsssss........',
+        '........sWsssdaaqlddddlqaadsssWs........',
+        '.......sssWssdaaaqqqqqqaaadssWsss.......',
+        '.......sssWsbdaaaalbblaaaadbsWsss.......',
+        '........sssWbdaaaalbblaaaadbWsss........',
+        '........bbbsbdaaaalbblaaaadbsbbb........',
+        '........bbbbbdaaaalddlaaaadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '..............sssss..sssss..............',
+        '..............sWsss..sssWs..............',
+        '..............sWsss..sssWs..............',
+        '..............ssWss..ssWss..............',
+        '..............ssWsb..bsWss..............',
+        '..............sssWb..bWsss..............',
+        '...............ssWb..bWss...............',
+        '...............aasb..bsaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_flame: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '..........Y.dddffedbbdeffddd.Y..........',
+        '..........s.dbbddbbbbbbddbbd.s..........',
+        '......Y...s.bbbbbbbbbbbbbbbb.s...Y......',
+        '......s..ss..bYbbbbbbbbbbYb..ss..s......',
+        '.......s.sss.sbbbbbddbbbbbs.sss.s.......',
+        '.......sssssss.bbbbbbbbbb.sssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '........ssssss....ddqd....ssssss........',
+        '.......ssssssss...dqqd...ssssssss.......',
+        '.......ssssssssbqqqqqqqbqssssssss.......',
+        '.......ssssssssbqqqYYqqqbssssssss.......',
+        '........ssssssbbqqYWWYqqbbssssss........',
+        '.....Y...abbadaaqqYWWYqqaadabba...Y.....',
+        '......s..aabbdaqqqYWWYqqaqdbbaa..s......',
+        '......sssssssdaaqqqYYqqqaadsssssss......',
+        '.......ssssssdbbaqqqqqqabbdssssss.......',
+        '........sssssdabbbaqqabbbadsssss........',
+        '........sssssdabqbbaqbbbqadsssss........',
+        '........sssssdabbbbbbbbbbadsssss........',
+        '........bbbbbdaddddddddddadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_flame',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_flame: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '..........Y.dddffedbbdeffddd.Y..........',
+        '..........s.dbbddbbbbbbddbbd.s..........',
+        '......Y...s.bbbbbbbbbbbbbbbb.s...Y......',
+        '......s..ss..bYbbbbbbbbbbYb..ss..s......',
+        '.......s.sss.sbbbbbddbbbbbs.sss.s.......',
+        '.......sssssss.bbbbbbbbbb.sssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '........ssssssqq..ddqd..qqssssss........',
+        '.......ssssssssqlldqqdllqssssssss.......',
+        '.......ssssssssqqqqqqqqlqssssssss.......',
+        '.......ssssssssqqqqYYqqqqssssssss.......',
+        '........ssssssbqqqYWWYqqqbssssss........',
+        '.....Y...abbadaqqqYWWYqqqadabba...Y.....',
+        '......s..aabbdaqqqYWWYqqaqdbbaa..s......',
+        '......sssssssdaaqqqYYqqqaadsssssss......',
+        '.......ssssssdbbaqqqqqqabbdssssss.......',
+        '........sssssdabbbaqqabbbadsssss........',
+        '........sssssdabqbbaqbbbqadsssss........',
+        '........sssssdabbbbbbbbbbadsssss........',
+        '........bbbbbdaddddddddddadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_wave: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '.....s......dbbddbbbbbbddbbd......s.....',
+        '......s.....bbbbbbbbbbbbbbbb.....s......',
+        '......Ws.....bbbbbbbbbbbbbb.....sW......',
+        '......sWs.....bbbbbddbbbbb.....sWs......',
+        '.......sWs.....bbbbbbbbbb.....sWs.......',
+        '.......sWss.....bbbbbbbb.....ssWs.......',
+        '.......ssWssss....dddd....ssssWss.......',
+        '.......sssWssss...dddd...ssssWsss.......',
+        '.......ssssssssbbbssssbbbssssssss.......',
+        '.......ssssssssbbsWWWWsbbssssssss.......',
+        '........ssssssbbssWggWssbbssssss........',
+        '...ssssssabbadaasWggggWsaadabba.........',
+        '..sssWWsssabbdaassWggWssaadbbaa.........',
+        '.ssWWssWWssssdaaasWWWWsaaadssss.........',
+        '.ssWWWssWssssdbbaassssaabbdssss.........',
+        '.sWsWWsssWsssdabbbaaaabbbadssss.........',
+        '.sWssssssWsssdabbbbaabbbbadssss.........',
+        '.ssWssssWssbbdabbbbbbbbbbadbbbbb........',
+        '.ssWWssWWssbbdaddddddddddadbbbbb........',
+        '..sssWWsssdddddddddddddddddddddb........',
+        '...ssssssbbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_wave',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_wave: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '.....s......dbbddbbbbbbddbbd......s.....',
+        '......s.....bbbbbbbbbbbbbbbb.....s......',
+        '......Ws.....bbbbbbbbbbbbbb.....sW......',
+        '......sWs.....bbbbbddbbbbb.....sWs......',
+        '.......sWs.....bbbbbbbbbb.....sWs.......',
+        '.......sWss.....bbbbbbbb.....ssWs.......',
+        '.......ssWssssqq..dddd..qqssssWss.......',
+        '.......sssWssssqllddddllqssssWsss.......',
+        '.......ssssssssqllssssllqssssssss.......',
+        '.......ssssssssqlsWWWWslqssssssss.......',
+        '........ssssssbqssWggWssqbssssss........',
+        '...ssssssabbadaqsWggggWsqadabba.........',
+        '..sssWWsssabbdaassWggWssaadbbaa.........',
+        '.ssWWssWWssssdaaqsWWWWsqaadssss.........',
+        '.ssWWWssWssssdbbaqssssqabbdssss.........',
+        '.sWsWWsssWsssdabbbaaaabbbadssss.........',
+        '.sWssssssWsssdabbbbaabbbbadssss.........',
+        '.ssWssssWssbbdabbbbbbbbbbadbbbbb........',
+        '.ssWWssWWssbbdaddddddddddadbbbbb........',
+        '..sssWWsssdddddddddddddddddddddb........',
+        '...ssssssbbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_dark: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '............bbbbbbbbbbbbbbbb............',
+        '.............bbbbbbbbbbbbbb.............',
+        '..............bbbbbddbbbbb..............',
+        '.......ssssss..bbbbbbbbbb..ssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '......sssssssss...dddd...sssssssss......',
+        '......sspssssss.ssppppss.sssssspss......',
+        '......sssppssssbbssppssbbssssppsss......',
+        '......ssssspsssbbbssssbbbssspsssss......',
+        '.......ssssspsbbbdgssgdbbbspsssss.......',
+        '........sssssdaabdggggdbaadsssss........',
+        '.........aabbdaaadggggdaaadbbaa.........',
+        '........sssssdaaaaddddaaaadsssss........',
+        '.......sssssssbbaaaaaaaabbsssssss.......',
+        '.......sspssssabbbaaaabbbasssspss.......',
+        '.......sssppssabbbbaabbbbassppsss.......',
+        '.......ssssspsabbbbbbbbbbaspsssss.......',
+        '........sssssdaddddddddddadsssss........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '.............ssssss..ssssss.............',
+        '.............sspsss..ssspss.............',
+        '.............ssspss..sspsss.............',
+        '..............sspss..sspss..............',
+        '..............sssps..spsss..............',
+        '..............sssss..sssss..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_dark',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_dark: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '............bbbbbbbbbbbbbbbb............',
+        '.............bbbbbbbbbbbbbb.............',
+        '..............bbbbbddbbbbb..............',
+        '.......ssssss..bbbbbbbbbb..ssssss.......',
+        '.......sssssss..bbbbbbbb..sssssss.......',
+        '......sssssssssq..dddd..qsssssssss......',
+        '......sspssssssqssppppssqsssssspss......',
+        '......sssppssssqlssppsslqssssppsss......',
+        '......ssssspsssqllssssllqssspsssss......',
+        '.......ssssspsbqldgssgdlqbspsssss.......',
+        '........sssssdaqldggggdlqadsssss........',
+        '.........aabbdaaqdggggdqaadbbaa.........',
+        '........sssssdaaqlddddlqaadsssss........',
+        '.......sssssssbbaqqqqqqabbsssssss.......',
+        '.......sspssssabbbaaaabbbasssspss.......',
+        '.......sssppssabbbbaabbbbassppsss.......',
+        '.......ssssspsabbbbbbbbbbaspsssss.......',
+        '........sssssdaddddddddddadsssss........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '.............ssssss..ssssss.............',
+        '.............sspsss..ssspss.............',
+        '.............ssspss..sspsss.............',
+        '..............sspss..sspss..............',
+        '..............sssps..spsss..............',
+        '..............sssss..sssss..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_dragon: {
+      art: [
+        '.........sssss..........................',
+        '.........sssss..........................',
+        '.........ssWss..........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWssl..........lld............',
+        '.........ssWsss..........ldl............',
+        '.........ssWssdl.baaaab.ldl.............',
+        '........sssWssdllbaggablldl.............',
+        '.........ssWsssdlbaaaabldl..............',
+        '.........ssWssbllbbbbbbllbb.............',
+        '........sssWssbbbbbbbbbbbbb.............',
+        '.........ssWsssfdbbbbbbdfdbb............',
+        '.........ssWsseeeddbbddeeefdd...........',
+        '........sssWsseeefdbbdfeeefd............',
+        '.........ssWsssfffdbbdfffffd............',
+        '.........ssWssdffedbbdeffddd............',
+        '........sssWssbddbbbbbbddbbd............',
+        '.........ssWsssbbbbbbbbbbbbb.W..........',
+        '.........ssWssbbbbbbbbbbbbb.............',
+        '........sssWssbbbbbddbbbbbW.ss..W.......',
+        '.........ssWsssbbbbbbbbbbss.ss.ss.......',
+        '.........ssWss..bbbbbbbb.ssssssss.......',
+        '........sssWss....dddd...sssssssssW.....',
+        '.........ssWsss...dddd..ssssssssss......',
+        '.........ssWssbbbbddddbbssssssssss......',
+        '........sssWssbbbbddddbbssssssssss......',
+        '.........ssWsssbbdgWWgdbbssssssss.......',
+        '.........ssWssaabdggggdbaadssss.........',
+        '........sssWssaaadggggdaaadbbaa.........',
+        '.........ssssssaaaddddaaaadsssss........',
+        '.......qqqqqqqqqaaaaaaaabbdsWsss........',
+        '.......qqqqqqqqqbbaaaabbbadsssWs........',
+        '.........bKKKdabbbbaabbbbadsssss........',
+        '........bbKKKdabbbbbbbbbbadbbbbb........',
+        '........bbKKKdaddddddddddadbbbbb........',
+        '........bdKKKddddddddddddddddddb........',
+        '.........bKKKbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_dragon',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_dragon: {
+      art: [
+        '.........sssss..........................',
+        '.........sssss..........................',
+        '.........ssWss..........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWss..........................',
+        '.........ssWsss.........................',
+        '.........ssWss..........................',
+        '........sssWssl..........lld............',
+        '.........ssWsss..........ldl............',
+        '.........ssWssdl.baaaab.ldl.............',
+        '........sssWssdllbaggablldl.............',
+        '.........ssWsssdlbaaaabldl..............',
+        '.........ssWssbllbbbbbbllbb.............',
+        '........sssWssbbbbbbbbbbbbb.............',
+        '.........ssWsssfdbbbbbbdfdbb............',
+        '.........ssWsseeeddbbddeeefdd...........',
+        '........sssWsseeefdbbdfeeefd............',
+        '.........ssWsssfffdbbdfffffd............',
+        '.........ssWssdffedbbdeffddd............',
+        '........sssWssbddbbbbbbddbbd............',
+        '.........ssWsssbbbbbbbbbbbbb.W..........',
+        '.........ssWssbbbbbbbbbbbbb.............',
+        '........sssWssbbbbbddbbbbbW.ss..W.......',
+        '.........ssWsssbbbbbbbbbbss.ss.ss.......',
+        '.........ssWss..bbbbbbbb.ssssssss.......',
+        '........sssWssqq..dddd..qsssssssssW.....',
+        '.........ssWsssqllddddllssssssssss......',
+        '.........ssWssaqllddddllssssssssss......',
+        '........sssWssqqllddddllssssssssss......',
+        '.........ssWsssqldgWWgdlqssssssss.......',
+        '.........ssWssaqldggggdlqadssss.........',
+        '........sssWssaaqdggggdqaadbbaa.........',
+        '.........ssssssaqlddddlqaadsssss........',
+        '.......qqqqqqqqqaqqqqqqabbdsWsss........',
+        '.......qqqqqqqqqbbaaaabbbadsssWs........',
+        '.........bKKKdabbbbaabbbbadsssss........',
+        '........bbKKKdabbbbbbbbbbadbbbbb........',
+        '........bbKKKdaddddddddddadbbbbb........',
+        '........bdKKKddddddddddddddddddb........',
+        '.........bKKKbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_halberd: {
+      art: [
+        '........................................',
+        '......................q......qq.....q...',
+        '......................qq.....qq....qq...',
+        '......................qqq....qq...qqq...',
+        '.......................qqq...rr..qqq....',
+        '.......................qqqq..rr.qqqq....',
+        '.......................qqqqq.ggqqqqq....',
+        '......................qqqqqq.ggqqqqqq...',
+        '.....................qqqqqqq.rrqqqqqqq..',
+        '.......................qqqqq.rrqqqqq....',
+        '............dll..........lqq.rrqq.......',
+        '............ldl..........ldl.rr.........',
+        '.............ldl.baaaab.ldl..rr.........',
+        '.............ldllbaggablldl..rr.........',
+        '..............ldlbaaaabldl...rr.........',
+        '.............bbllbbbbbbllbb..rr.........',
+        '.............bbbbbbbbbbbbbb..rr.........',
+        '............bbdfdbbbbbbdfdbb.rr.........',
+        '...........ddfeeeddbbddeeefddrr.........',
+        '............dfeeefdbbdfeeefd.rr.........',
+        '............dfffffdbbdfffffd.rr.........',
+        '............dddffedbbdeffddd.rr.........',
+        '............dbbddbbbbbbddbbd.rr.........',
+        '............bbbbbbbbbbbbbbbb.rr.........',
+        '.....q.......bbbbbbbbbbbbbb..rr...q.....',
+        '......qq......bbbbbddbbbbb...rr.qq......',
+        '......qqq......bbbbbbbbbb....rrqqq......',
+        '.......qqqqqq...bbbbbbbb...qqrrqq.......',
+        '.......qqqqqqqq...dddd...qqqqrrqq.......',
+        '.......qqqqqqqq..qqqqqq..qqqqrrqq.......',
+        '.......qqqqqqqqbbbqqqqbbbqqqqrrqq.......',
+        '.......qqqqqqqqbbbdqqdbbbqqqqrrqq.......',
+        '.........qqqqabbbdgWWgdbbbaqqrr.........',
+        '.........abbadaabdggggdbaadabrr.........',
+        '.........aabbdaaadggggdaaadbbrr.........',
+        '.........aabbdaaaaddddaaaadbbrr.........',
+        '.........aabbdbbaaaaaaaabbdbbrr.........',
+        '.........aabbdabbbaaaabbbadbbrr.........',
+        '.........bbbbdabbbbaabbbbadbbKK.........',
+        '........bbbbbdabbbbbbbbbbadbbKKb........',
+        '........bbbbbdaddddddddddadbbKKb........',
+        '........bddddddddddddddddddddrrb........',
+        '.........bbbbbbbbbbbbbbbbbbbbrr.........',
+        '.............q.aabb..bbaa.q..rr.........',
+        '..............qaabb..bbaaq...rr.........',
+        '..............qqabb..bbaqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_halberd',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_halberd: {
+      art: [
+        '........................................',
+        '......................q......qq.....q...',
+        '......................qq.....qq....qq...',
+        '......................qqq....qq...qqq...',
+        '.......................qqq...rr..qqq....',
+        '.......................qqqq..rr.qqqq....',
+        '.......................qqqqq.ggqqqqq....',
+        '......................qqqqqq.ggqqqqqq...',
+        '.....................qqqqqqq.rrqqqqqqq..',
+        '.......................qqqqq.rrqqqqq....',
+        '............dll..........lqq.rrqq.......',
+        '............ldl..........ldl.rr.........',
+        '.............ldl.baaaab.ldl..rr.........',
+        '.............ldllbaggablldl..rr.........',
+        '..............ldlbaaaabldl...rr.........',
+        '.............bbllbbbbbbllbb..rr.........',
+        '.............bbbbbbbbbbbbbb..rr.........',
+        '............bbdfdbbbbbbdfdbb.rr.........',
+        '...........ddfeeeddbbddeeefddrr.........',
+        '............dfeeefdbbdfeeefd.rr.........',
+        '............dfffffdbbdfffffd.rr.........',
+        '............dddffedbbdeffddd.rr.........',
+        '............dbbddbbbbbbddbbd.rr.........',
+        '............bbbbbbbbbbbbbbbb.rr.........',
+        '.....q.......bbbbbbbbbbbbbb..rr...q.....',
+        '......qq......bbbbbddbbbbb...rr.qq......',
+        '......qqq......bbbbbbbbbb....rrqqq......',
+        '.......qqqqqq...bbbbbbbb...qqrrqq.......',
+        '.......qqqqqqqqq..dddd..qqqqqrrqq.......',
+        '.......qqqqqqqqqlqqqqqqlqqqqqrrqq.......',
+        '.......qqqqqqqqqllqqqqllqqqqqrrqq.......',
+        '.......qqqqqqqqqlldqqdllqqqqqrrqq.......',
+        '.........qqqqabqldgWWgdlqbaqqrr.........',
+        '.........abbadaqldggggdlqadabrr.........',
+        '.........aabbdaaqdggggdqaadbbrr.........',
+        '.........aabbdaaqlddddlqaadbbrr.........',
+        '.........aabbdbbaqqqqqqabbdbbrr.........',
+        '.........aabbdabbbaaaabbbadbbrr.........',
+        '.........bbbbdabbbbaabbbbadbbKK.........',
+        '........bbbbbdabbbbbbbbbbadbbKKb........',
+        '........bbbbbdaddddddddddadbbKKb........',
+        '........bddddddddddddddddddddrrb........',
+        '.........bbbbbbbbbbbbbbbbbbbbrr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '...............aabb..bbaa....rr.........',
+        '.............q.aabb..bbaa.q..rr.........',
+        '..............qaabb..bbaaq...rr.........',
+        '..............qqabb..bbaqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............qqqqq..qqqqq...rr.........',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
+    },
+    lightkid_tian_crystal: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '..........W.bbbbbbbbbbbbbbbb.W..........',
+        '.............bbbbbbbbbbbbbb.............',
+        '.......W.ss...bbbbbddbbbbb...ss.W.......',
+        '......ss.ss..W.bbbbbbbbbb.W..ss.ss......',
+        '......ss.ss.ss..bbbbbbbb..ss.ss.ss......',
+        '......ssssssss....dddd....ssssssss......',
+        '......sssssssss...dddd...sssssssss......',
+        '.......ssssssssbbbddddbbbssssssss.......',
+        '.......ssssssssbbbddddbbbssssssss.......',
+        '........ssssssbbbdgWWgdbbbssssss........',
+        '.........abbadaabdggggdbaadabba.........',
+        '........sssssdaaadggggdaaadsssss........',
+        '........sWsssdaaaaddddaaaadsssWs........',
+        '.......sssWssdbbaaaaaaaabbdssWsss.......',
+        '.......sssWsbdabbbaaaabbbadbsWsss.......',
+        '........sssWbdabbbbaabbbbadbWsss........',
+        '........bbbsbdabbbbbbbbbbadbsbbb........',
+        '........bbbbbdsssssddsssssdbbbbb........',
+        '........bdddddsWsssddsssWsdddddb........',
+        '.........bbbbbsWsssbbsssWsbbbbb.........',
+        '..............ssWss..ssWss..............',
+        '..............ssWsb..bsWss..............',
+        '..............sssWb..bWsss..............',
+        '...............ssWb..bWss...............',
+        '...............aasb..bsaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] }, evoBase: 'lightkid_tian_evo_crystal',
+      color(r) { return {}; },
+    },
+    lightkid_tian_evo_crystal: {
+      art: [
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '........................................',
+        '............dll..........lld............',
+        '............ldl..........ldl............',
+        '.............ldl.baaaab.ldl.............',
+        '.............ldllbaggablldl.............',
+        '..............ldlbaaaabldl..............',
+        '.............bbllbbbbbbllbb.............',
+        '.............bbbbbbbbbbbbbb.............',
+        '............bbdfdbbbbbbdfdbb............',
+        '...........ddfeeeddbbddeeefdd...........',
+        '............dfeeefdbbdfeeefd............',
+        '............dfffffdbbdfffffd............',
+        '............dddffedbbdeffddd............',
+        '............dbbddbbbbbbddbbd............',
+        '..........W.bbbbbbbbbbbbbbbb.W..........',
+        '.............bbbbbbbbbbbbbb.............',
+        '.......W.ss...bbbbbddbbbbb...ss.W.......',
+        '......ss.ss..W.bbbbbbbbbb.W..ss.ss......',
+        '......ss.ss.ss..bbbbbbbb..ss.ss.ss......',
+        '......ssssssssqq..dddd..qqssssssss......',
+        '......sssssssssqllddddllqsssssssss......',
+        '.......ssssssssqllddddllqssssssss.......',
+        '.......ssssssssqllddddllqssssssss.......',
+        '........ssssssbqldgWWgdlqbssssss........',
+        '.........abbadaqldggggdlqadabba.........',
+        '........sssssdaaqdggggdqaadsssss........',
+        '........sWsssdaaqlddddlqaadsssWs........',
+        '.......sssWssdbbaqqqqqqabbdssWsss.......',
+        '.......sssWsbdabbbaaaabbbadbsWsss.......',
+        '........sssWbdabbbbaabbbbadbWsss........',
+        '........bbbsbdabbbbbbbbbbadbsbbb........',
+        '........bbbbbdaddddddddddadbbbbb........',
+        '........bddddddddddddddddddddddb........',
+        '.........bbbbbbbbbbbbbbbbbbbbbb.........',
+        '...............aabb..bbaa...............',
+        '..............sssss..sssss..............',
+        '..............sWsss..sssWs..............',
+        '..............sWsss..sssWs..............',
+        '..............ssWss..ssWss..............',
+        '..............ssWsb..bsWss..............',
+        '..............sssWb..bWsss..............',
+        '...............ssWb..bWss...............',
+        '...............aasb..bsaa...............',
+        '...............aabb..bbaa...............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............bbbbb..bbbbb..............',
+        '..............ddddd..ddddd..............',
+        '..............ddddd..ddddd..............',
+      ],
+      full: true,
+      eye: { y: 17, xs: [12, 22], w: 6, h: 5 },
+      top: 11, horn: [15, 13], neck: 28, chest: [30, 41], hand: [11, 41], tail: [30, 44], wing: [13, 31], feet: true, strict: true,
+      no: ['head', 'horn', 'face', 'pattern', 'armor', 'neck', 'wing', 'tail', 'weapon'], only: { aura: ['sunring', 'lightning', 'sparkle'] },
+      color(r) { return {}; },
     },
     kobold: {
       art: [
@@ -31435,6 +33406,12 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       horn: [], wing: ['butterfly', 'glass'], tail: [], weapon: [], neck: ['bowtie'],
       evo: ['lightwing', 'orbs', 'crownhalo', 'floatcrown', 'runering'],
     },
+    beast: {
+      head: ['crown', 'spikecrown', 'tiara', 'party', 'wizard', 'bow', 'tophat', 'helmet', 'flower', 'straw', 'chef', 'sprout'],
+      horn: ['smallhorn', 'curved', 'longhorn', 'unicorn'], wing: ['batwing', 'feather', 'angel', 'flamewing'],
+      tail: [], weapon: [], neck: ['bowtie'],
+      evo: ['orbs', 'runering', 'crownhalo', 'floatcrown', 'lightwing', 'soulfire'],
+    },
     undead: {
       head: ['crown', 'spikecrown', 'wizard', 'tophat', 'helmet', 'pumpkin', 'party', 'straw'],
       horn: ['smallhorn', 'curved', 'longhorn', 'demonking', 'crystal'], wing: ['batwing', 'bonewing', 'flamewing'],
@@ -32138,6 +34115,8 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
     const cb = m && ((look.style === 'cool' && BASES[m.base + '@cool']) || BASES[m.base]);
     return cb ? Math.min(1, cb.art.length * 1.2 / pb.pix.length) : 1;
   }
+  const SPECIAL_MOVES = { shenshen_kaiju: ['beam', 'fly', 'spar'], tiantian_kaiju: ['beam', 'fly', 'spar'], mama_kaiju: ['hug', 'stomp', 'spar'] };
+  const MOVE_NAMES = { beam: '光之光線', fly: '飛上天空', hug: '愛心大抱抱', stomp: '地震踩踩', spar: '打鬧時間' };
   function frames(look) {
     if (look.epic) return global.MonsterEpic.frames(look);
     const L = legendOf(look);
@@ -32250,6 +34229,10 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   global.MonsterArt = {
     roll, rollMonster, evolve, draw,
     monsterBases: () => MONSTER_BASES, compose, describe, rollRace, comboCount, frames,
+    // 特殊動作（侲侲、田田、媽媽大怪獸）：舞台用 stage.play(id)
+    specialMoves: (look) => (SPECIAL_MOVES[look.monster] || []).map(id => ({ id, name: MOVE_NAMES[id] })),
+    // 特殊動作的姿勢圖（造型名稱 + '_' + 動作，例如 lightkid_shen_beam），沒有就回傳 null
+    poseFrames: (look, name) => (!legendOf(look) && BASES[look.base + '_' + name] ? frames(Object.assign({}, look, { base: look.base + '_' + name })) : null),
     styleName: (look) => (look.style === 'cool' ? '帥氣' : '可愛') + (look.legend && LEG()[look.legend] ? '・最終型態' : look.form === 2 ? '・進化' : ''),
     hasLegend: (id) => !!LEG()[id],
     coolBases: Object.keys(RACES).filter(k => RACES[k].cool).map(k => ({ key: k, base: RACES[k].cool.base, chance: RACES[k].cool.chance })),
@@ -32269,6 +34252,8 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
  *   const stage = new MonsterStage(canvas, { scene: 'forest' });
  *   stage.setMonster(MonsterArt.roll('dragon', 123));
  *   stage.play('walk' | 'jump' | 'happy' | 'idle');
+ *   特殊怪獸還有特殊動作：MonsterArt.specialMoves(look) → [{ id, name }]，stage.play(id)
+ *   （侲侲、田田：beam 光之光線、fly 飛上天空、spar 兄弟打鬧（另一個兄弟跑進來打一架）；媽媽大怪獸：hug 愛心大抱抱、stomp 地震踩踩、spar 兩個兄弟一起來打鬧）
  *   stage.auto = true;          // 自己隨意走動、跳跳
  *   stage.setScene('volcano');
  *
@@ -33206,6 +35191,391 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   };
   Object.assign(SCENES, DUNGEON_SCENES);
 
+  /* ---------- 特殊地下城（只有侲侲、田田、媽媽大怪獸進得去） ----------
+   * starlight_*：星光試煉塔（飄在宇宙裡的水晶塔）；cradle_*：媽媽的回憶森林（暖暖的魔法夜晚森林）
+   * 比一般場景多一層：paint 之後 detail 在兩倍畫布上加柔光和小亮點。
+   */
+  function starfield(c, r, n, y0, y1) {
+    for (let i = 0; i < n; i++) box(c, ri(r, 0, SW - 1), ri(r, y0, y1), 1, 1, pick(r, ['#ffffff', '#cfd8ff', '#ffe9a8', '#a8c8ff', '#e0c8ff']));
+  }
+  function twinkle(c, x, y, col, k) { k = k || 1; box(c, x - k, y, 2 * k + 1, 1, col); box(c, x, y - k, 1, 2 * k + 1, col); }
+  function haze(c, x, y, rad, col, al) { c.globalAlpha = al; disc(c, x, y, rad, col); c.globalAlpha = 1; }
+  function crystal(c, x, base, h, w, dark, mid, light) {
+    const tip = Math.max(2, Math.round(h * 0.3));
+    for (let k = 0; k < h; k++) {
+      const hw = k < tip ? Math.round(w * k / tip) : w, y = base - h + k;
+      box(c, x - hw, y, hw, 1, mid); box(c, x, y, hw + 1, 1, dark);
+      if (k > 1 && hw > 1) box(c, x - Math.ceil(hw / 2), y, 1, 1, light);
+    }
+  }
+  function floatCrystal(c, x, y, h, w, dark, mid, light) {
+    crystal(c, x, y, h, w, dark, mid, light);
+    const d = Math.round(h * 0.6);
+    for (let k = 0; k < d; k++) { const hw = Math.round(w * (1 - k / d)); box(c, x - hw, y + k, hw, 1, mid); box(c, x, y + k, hw + 1, 1, dark); }
+  }
+  function constellation(c, pts, line, star) {
+    for (let i = 1; i < pts.length; i++) {
+      const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0));
+      for (let k = 0; k <= n; k += 2) box(c, Math.round(x0 + (x1 - x0) * k / n), Math.round(y0 + (y1 - y0) * k / n), 1, 1, line);
+    }
+    for (const [x, y] of pts) twinkle(c, x, y, star);
+  }
+  function nightTree(c, x, base, h, r, trunk, leaf, light) {
+    box(c, x - 2, base - h, 5, h, trunk); box(c, x - 2, base - h, 1, h, light === undefined ? trunk : '#00000000');
+    disc(c, x, base - h - r + 4, r, leaf); disc(c, x - Math.round(r * 0.4), base - h - r + 1, Math.round(r * 0.55), light || leaf);
+  }
+  // 兩倍畫布上的柔光（detail 用）
+  function softGlow(b, x, y, rad, col, al) {
+    for (let i = 4; i >= 1; i--) { b.globalAlpha = al * (5 - i) / 10; b.fillStyle = col; const rr = rad * i / 4; b.beginPath(); b.arc(x * 2, y * 2, rr * 2, 0, 6.29); b.fill(); }
+    b.globalAlpha = 1;
+  }
+  function sparkles2x(b, r, n, x0, y0, x1, y1, cols) {
+    for (let i = 0; i < n; i++) { b.fillStyle = pick(r, cols); const x = Math.floor((x0 + r() * (x1 - x0)) * 2), y = Math.floor((y0 + r() * (y1 - y0)) * 2); b.fillRect(x, y, 1, 1); if (r() < 0.3) { b.fillRect(x - 1, y, 3, 1); b.fillRect(x, y - 1, 1, 3); } }
+  }
+  const SPACE = ['#05031a', '#0a0628', '#120a3a', '#1c1050', '#281664'];
+  const CRY = { dark: '#3a5ab8', mid: '#7fb4ff', light: '#e0f4ff' };
+  const SPECIAL_DUNGEONS = {
+    starlight_gate: {
+      name: '星光試煉塔・星門', ground: 77,
+      paint(c, r) {
+        bands(c, SPACE, 0, 90);
+        starfield(c, r, X(140), 0, 70);
+        // 遠方有環的星球
+        disc(c, X(136), 18, 8, '#e08a5a'); disc(c, X(134), 16, 5, '#f0aa7a');
+        for (let x = -14; x <= 14; x++) box(c, X(136) + x, 19 + Math.round(x * 0.12), 1, 1, x % 3 ? '#ffe0b0' : '#c8a080');
+        // 水晶浮台（地面）
+        ground(c, 72, '#e0f4ff', '#4a6ac8', '#3a4aa8');
+        for (let x = 0; x < SW; x += 8) box(c, x, 73, 1, 6, '#6a8ae0');
+        for (let k = 0; k < 10; k++) { const y = 80 + k; box(c, Math.round(k * 2.4), y, SW - Math.round(k * 4.8), 1, k % 2 ? '#2a3a90' : '#34449c'); }
+        const cx = X(80);
+        // 星門：兩根水晶柱 + 上面一圈水晶
+        crystal(c, cx - 26, 72, 46, 4, CRY.dark, CRY.mid, CRY.light); crystal(c, cx + 26, 72, 46, 4, CRY.dark, CRY.mid, CRY.light);
+        for (let a = 0; a <= 12; a++) { const t = Math.PI * a / 12, x = cx - Math.round(Math.cos(t) * 26), y = 30 - Math.round(Math.sin(t) * 14); crystal(c, x, y + 2, 7, 2, CRY.dark, CRY.mid, CRY.light); }
+        // 門裡面的星雲漩渦
+        for (const [rr, col] of [[18, '#1a0e4a'], [15, '#3a1e8a'], [11, '#6a4ad0'], [7, '#a890ff'], [3, '#f0e8ff']]) {
+          for (let y = -rr; y <= rr; y++) for (let x = -rr; x <= rr; x++) if (x * x + (y * 1.4) ** 2 <= rr * rr && 50 + y * 1.4 < 72) box(c, cx + x, 50 + Math.round(y * 1.4), 1, 1, col);
+        }
+        for (let t = 0; t < 60; t++) { const a = t * 0.25, d = 2 + t * 0.26; box(c, cx + Math.round(Math.cos(a) * d), 50 + Math.round(Math.sin(a) * d * 1.3), 1, 1, '#e0d8ff'); }
+        twinkle(c, cx, 13, '#fff6c2', 3); twinkle(c, cx, 13, '#ffffff', 1);
+        return { gate: [[cx - 12, 36, cx + 12, 70]], glows: [[cx, 52, '#9a7aff'], [cx - 26, 30, '#7fe8ff'], [cx + 26, 30, '#7fe8ff'], [cx, 14, '#fff6c2']] };
+      },
+      detail(b, r, sp) {
+        const cx = X(80);
+        softGlow(b, X(30), 22, 30, '#6a3ab0', 0.25); softGlow(b, X(130), 30, 26, '#2a8ab0', 0.22); softGlow(b, X(80), 8, 20, '#b03a8a', 0.18);
+        softGlow(b, cx, 50, 26, '#b8a0ff', 0.35); softGlow(b, cx, 13, 10, '#fff6c2', 0.5);
+        softGlow(b, cx - 26, 40, 8, '#7fe8ff', 0.3); softGlow(b, cx + 26, 40, 8, '#7fe8ff', 0.3);
+        sparkles2x(b, r, X(120), 0, 0, SW, 70, ['#ffffff', '#cfe8ff', '#ffe9a8']);
+      },
+      fx: [{ type: 'glow', from: 'glows' },
+        { type: 'rise', n: 16, col: '#e0d8ff', from: 'gate', speed: [3, 7], life: 5 },
+        { type: 'float', n: 18, col: '#fff6c2', area: [0, 4, SW, 70] }],
+    },
+    starlight_path: {
+      name: '星光試煉塔・雲橋', ground: 77,
+      paint(c, r) {
+        bands(c, ['#0a0830', '#141040', '#20185a', '#2e2070', '#3e2a84'], 0, 90);
+        starfield(c, r, X(150), 0, 90);
+        // 飄著的水晶島
+        for (const [x, y, h, w] of [[16, 30, 12, 6], [58, 12, 8, 4], [104, 24, 14, 7], [146, 40, 10, 5], [130, 8, 6, 3]]) {
+          const xx = X(x);
+          for (let k = 0; k < 6; k++) box(c, xx - w - 3 + k, y + k, (w + 3 - k) * 2 + 1, 1, k < 2 ? '#6a5a9a' : '#4a3a7a');
+          floatCrystal(c, xx, y, h, Math.max(2, w - 2), CRY.dark, CRY.mid, CRY.light);
+          crystal(c, xx - w, y, Math.round(h * 0.6), 1, '#a04ad0', '#d08aff', '#ffe0ff');
+        }
+        // 雲橋（地面）
+        box(c, 0, 72, SW, SH - 72, '#d8c8f4');
+        for (let x = 0; x < SW; x += 6) disc(c, x + 3, 72 + (x % 12 ? 0 : -1), 4 + (x % 18 ? 0 : 1), '#f4eaff');
+        for (let x = 0; x < SW; x += 9) disc(c, x, 84, 4, '#b8a8e4');
+        box(c, 0, 76, SW, 1, '#ffffff');
+        for (let i = 0; i < X(14); i++) box(c, ri(r, 0, SW), ri(r, 78, 88), 2, 1, '#ffe0f4');
+        // 橋邊的小星燈
+        const lamps = [];
+        for (let x = X(10); x < SW; x += X(36)) { box(c, x, 62, 1, 10, '#c8b8f0'); twinkle(c, x, 61, '#fff6c2', 2); lamps.push([x, 60, '#fff6c2']); }
+        return { lamps, isles: [[0, 4, SW, 50]] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(60), 40, 34, '#8a4ab0', 0.2); softGlow(b, X(120), 20, 24, '#3a9ad0', 0.2);
+        for (const [x, y] of sp.lamps) softGlow(b, x, y, 6, '#fff6c2', 0.45);
+        for (const [x, y] of [[16, 30], [58, 12], [104, 24], [146, 40]]) softGlow(b, X(x), y - 4, 10, '#9fd8ff', 0.25);
+        sparkles2x(b, r, X(100), 0, 0, SW, 70, ['#ffffff', '#e0d0ff']);
+      },
+      fx: [{ type: 'fog', n: 5, col: 'rgba(255,240,255,.18)', area: [0, 62, SW, 74], speed: [2, 4] },
+        { type: 'float', n: 20, col: '#cfe8ff', area: [0, 0, SW, 70] },
+        { type: 'rise', n: 8, col: '#ffe0ff', from: 'isles', speed: [2, 4], life: 4 }],
+    },
+    starlight_hall: {
+      name: '星光試煉塔・星星圖書館', ground: 77,
+      paint(c, r) {
+        bands(c, ['#100a2a', '#160e36', '#1c1242', '#22164e'], 0, 90);
+        // 背牆上的大圓窗，看得到星空
+        for (const x of [X(40), X(120)]) {
+          disc(c, x, 24, 15, '#3a2a6a'); disc(c, x, 24, 13, '#0a0628');
+          for (let i = 0; i < 26; i++) box(c, x + ri(r, -11, 11), 24 + ri(r, -11, 11), 1, 1, pick(r, ['#ffffff', '#ffe9a8', '#a8c8ff']));
+          box(c, x, 11, 1, 26, '#3a2a6a'); box(c, x - 13, 24, 26, 1, '#3a2a6a');
+        }
+        // 星座線
+        constellation(c, [[X(66), 8], [X(72), 14], [X(80), 10], [X(88), 16], [X(94), 9]], '#5a7ad0', '#e0f0ff');
+        constellation(c, [[X(70), 26], [X(80), 22], [X(90), 27], [X(80), 32], [X(70), 26]], '#5a7ad0', '#ffe9a8');
+        // 會發光的書架
+        const glows = [];
+        const BOOK = ['#ff7a9a', '#ffd04a', '#7fe8ff', '#a890ff', '#8aff9a', '#ffffff'];
+        for (const x0 of [X(2), X(56), X(104), SW - X(26)]) {
+          const w = X(22);
+          box(c, x0, 36, w, 36, '#3a2448'); box(c, x0, 36, w, 2, '#5a3a6a'); box(c, x0 + 1, 38, 1, 34, '#4a3058');
+          for (let sh = 0; sh < 4; sh++) {
+            const y = 40 + sh * 8;
+            box(c, x0 + 2, y + 6, w - 4, 1, '#5a3a6a');
+            for (let x = x0 + 2; x < x0 + w - 2;) { const bw = ri(r, 1, 2), bh = ri(r, 4, 6); box(c, x, y + 6 - bh, bw, bh, pick(r, BOOK)); x += bw + (r() < 0.2 ? 1 : 0); }
+          }
+          glows.push([x0 + Math.round(w / 2), 50, pick(r, ['#7fe8ff', '#ffd04a', '#a890ff'])]);
+        }
+        // 光亮的地板，映出星星
+        ground(c, 72, '#8a7ad0', '#2a1e5a', '#3a2a74');
+        for (let i = 0; i < X(30); i++) box(c, ri(r, 0, SW), ri(r, 74, 89), 1, 1, pick(r, ['#6a5ab0', '#a890ff']));
+        // 飄在空中的書
+        const books = [];
+        for (const [x, y] of [[30, 30], [92, 40], [140, 28]]) { box(c, X(x), y, 5, 3, '#ffe9a8'); box(c, X(x) + 2, y, 1, 3, '#c8a050'); books.push([X(x) + 2, y + 1, '#ffe9a8']); }
+        return { glows: glows.concat(books), page: [[0, 30, SW, 70]] };
+      },
+      detail(b, r, sp) {
+        for (const [x, y, col] of sp.glows) softGlow(b, x, y, 9, col, 0.3);
+        softGlow(b, X(40), 24, 14, '#6a8aff', 0.2); softGlow(b, X(120), 24, 14, '#6a8aff', 0.2);
+        sparkles2x(b, r, X(40), 0, 0, SW, 34, ['#ffffff', '#ffe9a8']);
+      },
+      fx: [{ type: 'float', n: 22, col: '#ffe9a8', area: [0, 6, SW, 70] },
+        { type: 'rise', n: 10, col: '#a8e0ff', from: 'page', speed: [2, 4], life: 6 }],
+    },
+    starlight_treasure: {
+      name: '星光試煉塔・光之核心', ground: 77,
+      paint(c, r) {
+        bands(c, ['#08061e', '#0e0a2c', '#16103c', '#1e1650'], 0, 90);
+        const cx = X(80), cy = 34;
+        // 放射的光芒
+        c.globalAlpha = 0.18;
+        for (let a = 0; a < 16; a++) { const t = a / 16 * Math.PI * 2; for (let d = 14; d < 70; d++) box(c, cx + Math.round(Math.cos(t) * d), cy + Math.round(Math.sin(t) * d * 0.8), 2, 1, '#bfe8ff'); }
+        c.globalAlpha = 1;
+        starfield(c, r, X(60), 0, 66);
+        // 兩邊的水晶台座
+        for (const x of [X(30), X(130)]) { box(c, x - 6, 58, 13, 14, '#3a4a9a'); box(c, x - 7, 58, 15, 2, '#7fa0e8'); floatCrystal(c, x, 50, 10, 3, CRY.dark, CRY.mid, CRY.light); }
+        // 地板上的符文圓圈
+        ground(c, 72, '#9ab8ff', '#2a2a6a', '#34347a');
+        for (let a = 0; a < 80; a++) { const t = a / 80 * Math.PI * 2; box(c, cx + Math.round(Math.cos(t) * 40), 81 + Math.round(Math.sin(t) * 6), 1, 1, a % 4 ? '#7fe8ff' : '#ffffff'); box(c, cx + Math.round(Math.cos(t) * 28), 81 + Math.round(Math.sin(t) * 4), 1, 1, '#5a8ae0'); }
+        // 中間的大光核
+        for (const [rr, col] of [[17, '#2a5ac8'], [14, '#4f8aff'], [11, '#9fe8ff'], [8, '#e0faff'], [5, '#ffffff']]) disc(c, cx, cy, rr, col);
+        for (let a = 0; a < 3; a++) for (let t = 0; t < 72; t++) { const ang = t / 72 * Math.PI * 2; box(c, cx + Math.round(Math.cos(ang) * (22 + a * 5)), cy + Math.round(Math.sin(ang) * (8 + a * 2) * (a === 1 ? -1 : 1)), 1, 1, a === 1 ? '#ffe9a8' : '#9fe8ff'); }
+        return { core: [[cx, cy, '#bfe8ff'], [cx - 10, cy, '#ffffff'], [cx + 10, cy, '#ffffff'], [X(30), 44, '#7fe8ff'], [X(130), 44, '#7fe8ff']], coreBox: [[cx - 8, cy - 8, cx + 8, cy + 8]] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(80), 34, 34, '#9fe8ff', 0.45); softGlow(b, X(80), 34, 16, '#ffffff', 0.5);
+        softGlow(b, X(80), 81, 30, '#7fe8ff', 0.15);
+        sparkles2x(b, r, X(60), 0, 0, SW, 70, ['#ffffff', '#bfe8ff']);
+      },
+      fx: [{ type: 'glow', from: 'core' },
+        { type: 'rise', n: 20, col: '#ffffff', from: 'coreBox', speed: [4, 9], life: 4 },
+        { type: 'float', n: 16, col: '#9fe8ff', area: [0, 6, SW, 72] }],
+    },
+    starlight_boss: {
+      name: '星光試煉塔・塔頂', ground: 77,
+      paint(c, r) {
+        bands(c, ['#04020e', '#0a061c', '#120a2c', '#1c0e3a', '#2a1248'], 0, 90);
+        starfield(c, r, X(160), 0, 72);
+        // 巨大的月亮
+        const mx = X(46);
+        haze(c, mx, 30, 34, '#fff0c8', 0.12);
+        disc(c, mx, 30, 26, '#f4ecd0'); disc(c, mx - 6, 24, 18, '#fffaf0');
+        for (const [x, y, s] of [[-10, 8, 4], [8, -6, 3], [12, 12, 5], [-14, -10, 2], [2, 18, 3]]) disc(c, mx + x, 30 + y, s, '#d8cca8');
+        // 暗影怪獸的剪影（只看得到輪廓和紅眼睛）
+        const bx = SW - X(36);
+        for (const [rr, col] of [[34, '#1a0c32'], [27, '#26104a'], [20, '#341660']]) disc(c, bx, 40, rr, col);
+        for (let y = 0; y < 50; y++) { const w = Math.round(20 * Math.sin(Math.min(1, (y + 6) / 36) * Math.PI / 2)); box(c, bx - w, 22 + y, w * 2, 1, '#0c0618'); }
+        disc(c, bx, 24, 12, '#0c0618');
+        for (const [x, y, h] of [[-10, 14, 8], [-4, 10, 10], [3, 10, 10], [9, 14, 8], [14, 22, 7], [-15, 22, 7]]) for (let k = 0; k < h; k++) box(c, bx + x - Math.floor((h - k) / 4), y - k + 4, Math.max(1, Math.floor((h - k) / 2)), 1, '#0c0618');
+        box(c, bx - 26, 40, 8, 4, '#0c0618'); box(c, bx + 18, 40, 8, 4, '#0c0618');
+        box(c, bx - 7, 22, 4, 2, '#ff3a5a'); box(c, bx + 3, 22, 4, 2, '#ff3a5a'); box(c, bx - 6, 22, 1, 1, '#ffd0d8'); box(c, bx + 4, 22, 1, 1, '#ffd0d8');
+        // 塔頂平台和水晶尖塔
+        ground(c, 72, '#e0f4ff', '#3a4aa8', '#2a3a90');
+        for (let x = 0; x < SW; x += 10) { box(c, x, 66, 2, 6, '#7fa0e8'); box(c, x, 65, 2, 1, '#e0f4ff'); }
+        crystal(c, X(6), 72, 34, 4, CRY.dark, CRY.mid, CRY.light); crystal(c, SW - X(6), 72, 34, 4, CRY.dark, CRY.mid, CRY.light);
+        for (let x = 4; x < SW; x += 12) box(c, x, 76, 6, 1, '#6a8ae0');
+        return { eyes: [[bx - 5, 23, '#ff3a5a'], [bx + 5, 23, '#ff3a5a']], moon: [[mx, 30, '#fff0c8']], shadow: [[bx - 18, 30, bx + 18, 70]], spires: [[X(6), 40, '#7fe8ff'], [SW - X(6), 40, '#7fe8ff']] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(46), 30, 40, '#fff0c8', 0.25);
+        for (const [x, y] of sp.eyes) softGlow(b, x, y, 5, '#ff3a5a', 0.5);
+        for (const [x, y] of sp.spires) softGlow(b, x, y, 8, '#7fe8ff', 0.3);
+        sparkles2x(b, r, X(80), 0, 0, SW, 70, ['#ffffff', '#ffe9a8', '#cfd8ff']);
+      },
+      fx: [{ type: 'glow', from: 'eyes' }, { type: 'glow', from: 'spires' },
+        { type: 'rise', n: 14, col: '#6a2a9a', from: 'shadow', speed: [3, 6], life: 4 },
+        { type: 'float', n: 14, col: '#fff6c2', area: [0, 2, SW, 66] }],
+    },
+
+    cradle_gate: {
+      name: '媽媽的回憶森林・老木門', ground: 77,
+      paint(c, r) {
+        bands(c, ['#0c1430', '#141e44', '#1e2a58', '#2e3a6a', '#4a4a78'], 0, 72);
+        starfield(c, r, X(60), 0, 40);
+        disc(c, X(140), 14, 6, '#fff3c8'); disc(c, X(142), 12, 5, '#1e2a58');
+        for (let x = -4; x < SW; x += ri(r, 10, 16)) nightTree(c, x, 72, ri(r, 10, 18), ri(r, 8, 12), '#1a1a2a', '#1a2e3a', '#22384a');
+        ground(c, 72, '#4a7a4a', '#2e4a34', '#26402c');
+        const cx = X(80);
+        // 好大的老木門（圓頂），石框
+        arch(c, cx, 72, 44, 54, '#5a5a6a', null); arch(c, cx, 72, 38, 50, '#6e4426', null);
+        for (let x = cx - 18; x < cx + 19; x += 6) box(c, x, 23, 1, 49, '#4a2c18');
+        for (const y of [34, 56]) { box(c, cx - 19, y, 38, 2, '#3a3a44'); for (let x = cx - 17; x < cx + 18; x += 7) box(c, x, y, 1, 1, '#9a9aa8'); }
+        disc(c, cx + 12, 48, 2, '#ffd04a'); box(c, cx + 12, 48, 1, 1, '#fff1a8');
+        // 刻在門上的身高記號（小朋友長高了）
+        for (const [y, w, tag] of [[64, 6, 1], [58, 7, 2], [51, 6, 3], [45, 8, 4], [40, 5, 5]]) {
+          box(c, cx - 16, y, w, 1, '#f4d8a0');
+          for (let k = 0; k < tag; k++) box(c, cx - 16 + w + 1 + k * 2, y - 1, 1, 2, '#f4d8a0');
+        }
+        // 刻了一顆愛心和小星星
+        box(c, cx - 4, 30, 2, 1, '#f4d8a0'); box(c, cx, 30, 2, 1, '#f4d8a0'); box(c, cx - 5, 31, 8, 1, '#f4d8a0'); box(c, cx - 4, 32, 6, 1, '#f4d8a0'); box(c, cx - 3, 33, 4, 1, '#f4d8a0'); box(c, cx - 2, 34, 2, 1, '#f4d8a0');
+        twinkle(c, cx + 8, 30, '#f4d8a0');
+        // 門縫透出來的暖光
+        box(c, cx, 24, 1, 48, '#ffcc66');
+        for (let i = 0; i < X(24); i++) box(c, ri(r, 0, SW), ri(r, 74, 88), 1, 1, pick(r, ['#ff9ab8', '#fff3a0', '#c8a0ff']));
+        return { light: [[cx, 50, '#ffcc66'], [cx, 30, '#ffcc66']], door: [[cx - 2, 26, cx + 2, 70]], ff: [[0, 30, SW, 72]] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(80), 48, 22, '#ffcc66', 0.35);
+        softGlow(b, X(140), 14, 10, '#fff3c8', 0.3);
+        sparkles2x(b, r, X(50), 0, 0, SW, 40, ['#ffffff', '#ffe9a8']);
+      },
+      fx: [{ type: 'glow', from: 'light' },
+        { type: 'rise', n: 10, col: '#ffe0a0', from: 'door', speed: [2, 4], life: 5 },
+        { type: 'float', n: 24, col: '#e8ff8a', from: 'ff' }],
+    },
+    cradle_path: {
+      name: '媽媽的回憶森林・螢火蟲小路', ground: 77,
+      paint(c, r) {
+        bands(c, ['#08102a', '#0e1834', '#14203e', '#1a2a48'], 0, 72);
+        starfield(c, r, X(40), 0, 24);
+        for (let x = -6; x < SW; x += ri(r, 7, 11)) nightTree(c, x, 66, ri(r, 14, 26), ri(r, 8, 12), '#121a26', '#16283a', '#1c3244');
+        for (let x = -4; x < SW; x += ri(r, 12, 18)) nightTree(c, x, 74, ri(r, 8, 14), ri(r, 9, 13), '#1e1a24', '#1e3a3a', '#2a4a44');
+        ground(c, 72, '#3e6a44', '#2a4a30', '#22402a');
+        // 彎彎的小路
+        for (let y = 72; y < 90; y++) { const w = 8 + (y - 72) * 2, cx = X(80) + Math.round(Math.sin((y - 72) * 0.25) * 6); box(c, cx - w, y, w * 2, 1, y % 3 ? '#8a7258' : '#9a8266'); }
+        // 路邊會發光的小花
+        const flowers = [];
+        for (let x = 6; x < SW; x += ri(r, 9, 15)) { const y = ri(r, 74, 86), col = pick(r, ['#ffd04a', '#ff9ab8', '#9fe8ff', '#c8a0ff']); box(c, x, y, 1, 2, '#3a7a3a'); twinkle(c, x, y - 1, col); flowers.push([x, y - 1, col]); }
+        return { flowers, ff: [[0, 20, SW, 76]] };
+      },
+      detail(b, r, sp) {
+        for (const [x, y, col] of sp.flowers) softGlow(b, x, y, 4, col, 0.35);
+        sparkles2x(b, r, X(70), 0, 26, SW, 74, ['#e8ff8a', '#fff3a0']);
+      },
+      fx: [{ type: 'float', n: 40, col: '#e8ff8a', from: 'ff' },
+        { type: 'fog', n: 4, col: 'rgba(160,200,255,.08)', area: [0, 56, SW, 80], speed: [1, 3] }],
+    },
+    cradle_hall: {
+      name: '媽媽的回憶森林・搖籃曲湖', ground: 77,
+      paint(c, r) {
+        bands(c, ['#0a0e2a', '#121a3c', '#1c2650', '#2a3462', '#3a4070'], 0, 56);
+        starfield(c, r, X(90), 0, 50);
+        const mx = X(110);
+        disc(c, mx, 16, 8, '#fff6d8'); disc(c, mx - 2, 14, 5, '#ffffff');
+        for (let x = -6; x < SW; x += ri(r, 9, 14)) nightTree(c, x, 56, ri(r, 4, 9), ri(r, 6, 9), '#121624', '#14243a', '#1a2e44');
+        // 湖面，映著星星和月亮
+        bands(c, ['#1a2a5a', '#162450', '#121e46', '#0e183c'], 56, 72);
+        for (let i = 0; i < X(60); i++) box(c, ri(r, 0, SW), ri(r, 57, 71), 1, 1, pick(r, ['#8aa0e0', '#cfd8ff', '#ffe9a8']));
+        for (let y = 57; y < 72; y += 2) { const w = 5 - Math.floor((y - 57) / 5); box(c, mx - w + ((y >> 1) % 2 ? 1 : -1), y, w * 2, 1, y < 64 ? '#fff0c0' : '#b8b090'); }
+        ground(c, 72, '#4a7a4a', '#2e4a34', '#26402c');
+        for (let x = 0; x < SW; x += 3) box(c, x, 71, 1, ri(r, 1, 3) === 1 ? 1 : 0, '#5a8a5a');
+        // 浮在湖上和空中的燈籠
+        const lamps = [];
+        for (const [x, y] of [[14, 60], [40, 44], [62, 64], [84, 36], [100, 58], [126, 46], [150, 62], [28, 30]]) {
+          const xx = X(x);
+          box(c, xx - 2, y - 3, 5, 5, '#ff9a4a'); box(c, xx - 1, y - 2, 3, 3, '#ffd88a'); box(c, xx - 2, y - 4, 5, 1, '#8a4a2a'); box(c, xx - 1, y + 2, 3, 1, '#8a4a2a');
+          if (y > 56) box(c, xx - 3, y + 4, 7, 1, '#ff9a4a');
+          lamps.push([xx, y, '#ffb347']);
+        }
+        return { lamps, rise: [[0, 50, SW, 70]] };
+      },
+      detail(b, r, sp) {
+        for (const [x, y] of sp.lamps) softGlow(b, x, y, 7, '#ffb347', 0.4);
+        softGlow(b, X(110), 16, 14, '#fff6d8', 0.3);
+        sparkles2x(b, r, X(80), 0, 0, SW, 52, ['#ffffff', '#ffe9a8', '#cfd8ff']);
+      },
+      fx: [{ type: 'rise', n: 8, col: '#ffb347', from: 'rise', speed: [1.5, 3], life: 12 },
+        { type: 'ripple', n: 8, col: '#8aa0e0', area: [0, 58, SW, 70], speed: [1, 3] },
+        { type: 'float', n: 14, col: '#e8ff8a', area: [0, 20, SW, 72] }],
+    },
+    cradle_treasure: {
+      name: '媽媽的回憶森林・搖籃樹', ground: 77,
+      paint(c, r) {
+        bands(c, ['#0c1028', '#141a38', '#1c2448', '#262e58'], 0, 72);
+        starfield(c, r, X(50), 0, 30);
+        const cx = X(114);
+        // 好大的樹冠
+        for (const [x, y, s, col] of [[-30, 14, 18, '#1a3a34'], [30, 14, 18, '#1a3a34'], [0, 8, 22, '#1e4038'], [-14, 4, 12, '#24483e'], [16, 6, 12, '#24483e']]) disc(c, cx + x, y, s, col);
+        // 會發光的葉子
+        const leaves = [];
+        for (let i = 0; i < 22; i++) { const x = cx + ri(r, -44, 44), y = ri(r, 0, 26), col = pick(r, ['#9aff8a', '#ffe98a', '#8af0ff']); box(c, x, y, 2, 1, col); if (i % 3 === 0) leaves.push([x, y, col]); }
+        // 樹幹和彎成搖籃的樹枝
+        box(c, cx - 6, 30, 13, 42, '#5a3a24'); box(c, cx - 6, 30, 2, 42, '#7a5234'); box(c, cx + 5, 30, 2, 42, '#3e2818');
+        for (let x = -12; x <= 12; x++) { box(c, cx + x - 1, 72 - 2 + Math.abs(x) % 2, 3, 2, '#4a2e1c'); }
+        for (let t = 0; t <= 40; t++) { const a = Math.PI * t / 40, x = cx + Math.round(Math.cos(a) * 30), y = 46 + Math.round(Math.sin(a) * 12); box(c, x - 1, y, 3, 3, '#6e4426'); box(c, x - 1, y, 3, 1, '#8a5a32'); }
+        box(c, cx - 31, 40, 3, 8, '#6e4426'); box(c, cx + 29, 40, 3, 8, '#6e4426');
+        // 搖籃裡的光之巢
+        for (let y = 0; y < 8; y++) { const w = Math.round(22 * Math.sqrt(1 - ((y - 8) / 9) ** 2)); box(c, cx - w, 48 + y, w * 2, 1, y % 2 ? '#8a6a3a' : '#a07a44'); }
+        disc(c, cx, 47, 9, '#ffe98a'); disc(c, cx, 47, 6, '#fff6c8'); disc(c, cx, 47, 3, '#ffffff');
+        for (let k = 0; k < 9; k++) box(c, cx - 18 + k * 4, 50 + (k % 2), 3, 1, '#c8a060');
+        // 掛在樹枝上的星星吊飾（像嬰兒床上的那種）
+        const charms = [];
+        for (const [dx, len, col] of [[-22, 10, '#ffd04a'], [-10, 16, '#ff9ab8'], [10, 14, '#9fe8ff'], [22, 9, '#c8a0ff']]) {
+          box(c, cx + dx, 28, 1, len, '#d8c8a0'); twinkle(c, cx + dx, 28 + len + 1, col, 2); charms.push([cx + dx, 29 + len, col]);
+        }
+        ground(c, 72, '#4a7a4a', '#2e4a34', '#26402c');
+        return { nest: [[cx, 46, '#fff1a8'], [cx - 8, 48, '#ffe98a'], [cx + 8, 48, '#ffe98a']], charms, leaves, nestBox: [[cx - 6, 42, cx + 6, 48]] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(114), 46, 24, '#ffe98a', 0.45); softGlow(b, X(114), 46, 10, '#ffffff', 0.4);
+        for (const [x, y, col] of sp.charms) softGlow(b, x, y, 4, col, 0.4);
+        for (const [x, y, col] of sp.leaves) softGlow(b, x, y, 3, col, 0.4);
+      },
+      fx: [{ type: 'glow', from: 'nest' },
+        { type: 'rise', n: 18, col: '#fff1a8', from: 'nestBox', speed: [3, 6], life: 5 },
+        { type: 'float', n: 20, col: '#e8ff8a', area: [0, 10, SW, 72] }],
+    },
+    cradle_boss: {
+      name: '媽媽的回憶森林・愛哭的雷雲', ground: 77,
+      paint(c, r) {
+        bands(c, ['#0a0e22', '#10162e', '#161e3a', '#1e2848'], 0, 72);
+        starfield(c, r, X(40), 0, 30);
+        for (let x = -8; x < SW; x += ri(r, 8, 12)) if (Math.abs(x - X(80)) > X(36)) nightTree(c, x, 72, ri(r, 14, 24), ri(r, 9, 13), '#141824', '#16283a', '#1e3446');
+        ground(c, 72, '#4a7a4a', '#2e4a34', '#26402c');
+        for (let i = 0; i < X(30); i++) box(c, ri(r, 0, SW), ri(r, 74, 88), 1, 1, pick(r, ['#ff9ab8', '#fff3a0', '#9fe8ff']));
+        // 小小的雷雲，在哭
+        const cx = X(118), cy = 18;
+        for (const [x, y, s] of [[-14, 4, 8], [-6, -2, 10], [6, -1, 10], [15, 4, 8], [0, 5, 10]]) disc(c, cx + x, cy + y, s, '#5a6488');
+        for (const [x, y, s] of [[-8, -5, 6], [5, -5, 6]]) disc(c, cx + x, cy + y, s, '#7a84a8');
+        box(c, cx - 22, cy + 10, 44, 3, '#4a5274');
+        // 臉：下垂的眼睛、眼淚、扁扁的嘴
+        box(c, cx - 8, cy + 2, 4, 1, '#1a1a2a'); box(c, cx - 7, cy + 3, 2, 2, '#1a1a2a'); box(c, cx + 4, cy + 2, 4, 1, '#1a1a2a'); box(c, cx + 5, cy + 3, 2, 2, '#1a1a2a');
+        box(c, cx - 7, cy + 5, 1, 3, '#9fd0ff'); box(c, cx + 6, cy + 5, 1, 3, '#9fd0ff');
+        box(c, cx - 2, cy + 8, 4, 1, '#1a1a2a'); box(c, cx - 3, cy + 9, 1, 1, '#1a1a2a'); box(c, cx + 2, cy + 9, 1, 1, '#1a1a2a');
+        // 小閃電
+        for (const [x, y] of [[cx + 18, cy + 13], [cx + 17, cy + 14], [cx + 16, cy + 15], [cx + 18, cy + 15], [cx + 17, cy + 16], [cx + 16, cy + 17]]) box(c, x, y, 2, 1, '#ffe04a');
+        // 地上的小水窪
+        for (let dy = -1; dy <= 1; dy++) box(c, cx - 14 + Math.abs(dy) * 3, 80 + dy, 28 - Math.abs(dy) * 6, 1, '#3a5a8a');
+        box(c, cx - 8, 79, 6, 1, '#9fd0ff');
+        return { rain: [[cx - 18, cy + 13, cx + 18, cy + 14]], eyes: [[cx - 6, cy + 6, '#9fd0ff'], [cx + 6, cy + 6, '#9fd0ff'], [cx + 17, cy + 15, '#ffe04a']] };
+      },
+      detail(b, r, sp) {
+        softGlow(b, X(118), 18, 22, '#8aa0ff', 0.2);
+        softGlow(b, X(118) + 17, 33, 5, '#ffe04a', 0.5);
+        sparkles2x(b, r, X(40), 0, 0, SW, 30, ['#ffffff', '#cfd8ff']);
+      },
+      fx: [{ type: 'glow', from: 'eyes' },
+        { type: 'drip', n: 10, col: '#9fd0ff', from: 'rain', speed: [40, 60], groundY: 80 },
+        { type: 'ripple', n: 3, col: '#6a8ac8', area: [104, 79, 132, 81], speed: [1, 2] },
+        { type: 'float', n: 16, col: '#e8ff8a', area: [0, 30, SW, 72] },
+        { type: 'flash' }],
+    },
+  };
+  Object.assign(SCENES, SPECIAL_DUNGEONS);
+
   // 舊名字也能用
   const ALIAS = { meadow: 'grassland', tomb: 'graveyard', deepsea: 'sea' };
 
@@ -33333,6 +35703,9 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       // GPT 畫的身體比較大，縮到跟程式畫的差不多
       if (this.f.pixScale && this.f.pixScale < 1) this.dpx = Math.max(0.5, this.dpx * this.f.pixScale);
       const prevX = this.a ? this.a.x : this.c.width / 2;
+      this.poses = {}; this.nb = null;
+      this.rivals = null;
+      this.moves = global.MonsterArt.specialMoves ? global.MonsterArt.specialMoves(look).map(m => m.id) : [];
       this.a = { x: prevX, face: 1, act: 'idle', at: 0, wait: 1.2 + this.rand() * 1.5, blinkIn: 1.5, blinkT: 0, auraI: 0, auraT: 0 };
       this.play('jump');
     }
@@ -33344,6 +35717,33 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         let tx;
         do { tx = lo + this.rand() * (hi - lo); } while (Math.abs(tx - a.x) < Math.min(W * 0.15, (hi - lo) * 0.3));
         a.tx = tx; a.face = tx > a.x ? 1 : -1;
+      }
+      if (act === 'hug') for (let i = 0; i < 12; i++) {
+        const ang = i / 12 * Math.PI * 2;
+        this.hearts.push({ x: a.x + Math.cos(ang) * this.mpx * 9, y: this.groundPx() - this.mpx * 14 + Math.sin(ang) * this.mpx * 7, vx: Math.cos(ang) * 70, vy: Math.sin(ang) * 50 - 20, big: i % 3 === 0, age: -0.35 - (i % 4) * 0.05 });
+      }
+      if (act === 'stomp') this.dust = [];
+      if (act === 'spar') {
+        // 另一個兄弟從畫面另一邊跑進來（進化了就一起進化）
+        // 兄弟：另一個兄弟從一邊跑進來；媽媽：兩個兄弟從左右兩邊一起跑進來（進化了就一起進化）
+        const ids = RIVAL[this.look.monster];
+        if (!ids) { a.act = 'idle'; return; }
+        if (!this.rivals || this.rivals.form !== this.look.form) {
+          this.rivals = ids.map((id, i) => {
+            let rl = global.MonsterArt.rollMonster(id, (this.look.seed ^ (0x2b1d + i)) >>> 0);
+            if (this.look.form === 2) rl = global.MonsterArt.evolve(rl);
+            const rf = global.MonsterArt.frames(rl);
+            return { id, f: rf, dpx: rf.res === 4 ? Math.max(0.5, this.cell * rf.factor * 0.375) : Math.max(1, Math.round(this.cell * rf.factor * (rf.res ? 0.75 : 1))) };
+          });
+          this.rivals.form = this.look.form;
+        }
+        const W = this.c.width, side = a.x < W / 2 ? 1 : -1, gap = this.mpx * (ids.length > 1 ? 30 : 26);
+        a.face = side;
+        this.rivals.forEach((R, i) => {
+          const sd = ids.length > 1 ? (i ? 1 : -1) : side;
+          R.from = sd > 0 ? W + 40 : -40; R.to = a.x + sd * gap; R.face = -sd; R.ph = i * 0.225;
+        });
+        this.dust = []; this.pows = [];
       }
       if (act === 'happy') for (let i = 0; i < 4; i++) this.hearts.push({ x: a.x + (this.rand() - .5) * 60, y: this.groundPx() - 60 - this.rand() * 40, age: -i * 0.15 });
     }
@@ -33385,16 +35785,43 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       }
       if (a.act === 'jump' && a.at > 0.85) this.toIdle();
       if (a.act === 'happy' && a.at > 0.75) this.toIdle();
+      if (MOVE_LEN[a.act] && a.at > MOVE_LEN[a.act]) this.toIdle();
+      if (a.act === 'spar') {
+        // 每 0.45 秒撞一次，撞到的地方冒出星星
+        const k = Math.floor((a.at - 0.7) / 0.45);
+        if (a.at > 0.7 && a.at < 2.5 && k !== a.hit && ((a.at - 0.7) % 0.45) > 0.2) {
+          a.hit = k; this.shake = 0.18;
+          const R = this.rivals[k % this.rivals.length], mx = (a.x + R.to) / 2;
+          this.pows.push({ x: mx + (r() - .5) * this.mpx * 4, y: this.groundPx() - this.mpx * (10 + r() * 8), age: 0 });
+        }
+        if (this.pows) this.pows = this.pows.filter(p => (p.age += dt) < 0.35);
+      }
+      if (a.act === 'stomp' && a.at > 0.42 && !a.landed) {
+        a.landed = true; this.shake = 0.45;
+        for (let i = 0; i < 10; i++) this.dust.push({ x: a.x + (i < 5 ? -1 : 1) * (this.mpx * 4 + r() * this.mpx * 6), y: this.groundPx() - r() * this.mpx * 2, vx: (i < 5 ? -1 : 1) * (30 + r() * 50), age: 0, s: 1 + Math.floor(r() * 2) });
+      }
+      this.shake = Math.max(0, (this.shake || 0) - dt);
+      if (this.dust) this.dust = this.dust.filter(d => (d.age += dt) < 0.9);
       if (a.act === 'idle' && this.auto && a.at > a.wait) {
         const k = r();
-        this.play(k < 0.55 ? 'walk' : k < 0.82 ? 'jump' : 'happy');
+        if (this.moves.length && k < 0.18) this.play(this.moves[Math.floor(r() * this.moves.length)]);
+        else this.play(k < 0.55 ? 'walk' : k < 0.82 ? 'jump' : 'happy');
       }
     }
-    toIdle() { const a = this.a; a.act = 'idle'; a.at = 0; a.wait = 1.5 + this.rand() * 2.5; }
+    toIdle() { const a = this.a; a.act = 'idle'; a.at = 0; a.landed = false; a.hit = -1; a.wait = 1.5 + this.rand() * 2.5; }
+    pose(name) {
+      if (!(name in this.poses)) {
+        const pf = global.MonsterArt.poseFrames ? global.MonsterArt.poseFrames(this.look, name) : null;
+        this.poses[name] = pf ? { img: pf.normal, auras: pf.auras, box: bbox(pf.normal) } : null;
+      }
+      return this.poses[name];
+    }
 
     render() {
       const ctx = this.ctx, cell = this.cell, t = this.t, W = this.c.width, H = this.c.height;
       ctx.imageSmoothingEnabled = false;
+      ctx.save();
+      if (this.shake > 0) ctx.translate(Math.round((this.rand() - .5) * cell * 3 * this.shake / 0.45), Math.round((this.rand() - .5) * cell * 2 * this.shake / 0.45));
       ctx.drawImage(this.bg, 0, 0, W, H);
       const cx = (x) => Math.round(x) * cell;
       const back = [], front = [];
@@ -33459,17 +35886,34 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         }
       };
       back.forEach(drawP);
+      if (this.a && this.a.act === 'spar' && this.rivals) for (const R of this.rivals) this.renderRival(R);
       this.renderMonster();
+      if (this.pows && this.a && this.a.act === 'spar') for (const p of this.pows) {
+        const k = cell * (p.age < 0.12 ? 2 : 3), x = Math.round(p.x / cell) * cell, y = Math.round(p.y / cell) * cell;
+        ctx.fillStyle = p.age < 0.15 ? '#ffffff' : '#ffe04a';
+        ctx.fillRect(x - k * 2, y, k * 5, k); ctx.fillRect(x, y - k * 2, k, k * 5);
+        ctx.fillRect(x - k, y - k, k, k); ctx.fillRect(x + k, y - k, k, k); ctx.fillRect(x - k, y + k, k, k); ctx.fillRect(x + k, y + k, k, k);
+      }
       front.forEach(drawP);
       for (const h of this.hearts) {
         if (h.age < 0) continue;
-        const x = Math.round(h.x / cell) * cell, y = Math.round((h.y - h.age * 40) / cell) * cell;
+        const k = h.big ? cell * 2 : cell;
+        const x = Math.round((h.x + (h.vx || 0) * h.age) / cell) * cell, y = Math.round((h.y + (h.vy || 0) * h.age - h.age * 40) / cell) * cell;
         ctx.globalAlpha = Math.max(0, 1 - h.age / 1.4);
         ctx.fillStyle = '#ff6f9c';
-        ctx.fillRect(x - cell, y, cell, cell); ctx.fillRect(x + cell, y, cell, cell);
-        ctx.fillRect(x - cell, y + cell, cell * 3, cell); ctx.fillRect(x, y + cell * 2, cell, cell);
+        ctx.fillRect(x - k, y, k, k); ctx.fillRect(x + k, y, k, k);
+        ctx.fillRect(x - k, y + k, k * 3, k); ctx.fillRect(x, y + k * 2, k, k);
+        if (h.big) { ctx.fillStyle = '#ffd3e1'; ctx.fillRect(x - k, y, cell, cell); }
         ctx.globalAlpha = 1;
       }
+      if (this.dust) for (const d of this.dust) {
+        ctx.globalAlpha = Math.max(0, 0.8 - d.age);
+        ctx.fillStyle = '#e8dcc8';
+        const sz = cell * (d.s + Math.floor(d.age * 3));
+        ctx.fillRect(Math.round((d.x + d.vx * d.age) / cell) * cell, Math.round((d.y - d.age * 18) / cell) * cell, sz, sz);
+        ctx.globalAlpha = 1;
+      }
+      ctx.restore();
       if (this.flash > 0) { ctx.globalAlpha = this.flash; ctx.fillStyle = '#e8dcff'; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
     }
 
@@ -33491,6 +35935,46 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         }
         if (a.act === 'happy') { img = A.happy[Math.floor(a.at / 0.2) % 2]; const u = (a.at / 0.375) % 1; lift = Math.sin(u * Math.PI) * mpx * 3; }
         return this.blit(img, lift, 1, 1);
+      }
+      if (a.act === 'beam' || a.act === 'hug') {
+        const P = this.pose(a.act);
+        if (P) img = P.img;
+        if (a.act === 'beam') {
+          if (a.at < 0.45) { ky = 1 - 0.05 * Math.sin(a.at / 0.45 * Math.PI); kx = 1 + 0.03 * Math.sin(a.at / 0.45 * Math.PI); }
+          this.blit(img, 0, kx, ky);
+          return this.drawBeam(P);
+        }
+        const u = Math.min(1, a.at / 0.35);
+        lift = Math.sin(u * Math.PI) * mpx * 5;
+        if (a.at > 0.35 && a.at < 0.5) { ky = 0.92; kx = 1.06; }
+        return this.blit(img, lift, kx, ky);
+      }
+      if (a.act === 'spar') {
+        const T = a.at, u = ((T - 0.7) % 0.45) / 0.45;
+        if (T > 0.7 && T < 2.5) { lift = Math.sin(u * Math.PI) * mpx * 4; if (u > 0.4 && u < 0.6) { kx = 1.12; ky = 0.9; } }
+        else if (T >= 2.5 && T < 3.0) lift = Math.sin((T - 2.5) / 0.5 * Math.PI) * mpx * 8;
+        // 往對方衝一下再彈回來
+        const push = T > 0.7 && T < 2.5 && this.rivals && this.rivals.length < 2 ? Math.sin(u * Math.PI) * mpx * 7 * a.face : 0;
+        a.x += push; const res = this.blit(img, lift, kx, ky); a.x -= push; return res;
+      }
+      if (a.act === 'fly') {
+        // 起飛：蹲一下 → 衝上天 → 在空中飄一下 → 慢慢降落
+        const nb = this.nb || (this.nb = bbox(f.normal)), room = this.groundPx() - (f.FLOOR + 1 - nb.top) * (this.dpx || mpx) - this.cell * 6;
+        const T = a.at, top = Math.max(mpx * 8, Math.min(mpx * 30, room));
+        if (T < 0.2) { ky = 0.88; kx = 1.08; }
+        else if (T < 0.7) { const v = (T - 0.2) / 0.5; lift = top * (1 - (1 - v) * (1 - v)); ky = 1.08; kx = 0.94; }
+        else if (T < 1.5) lift = top + Math.sin((T - 0.7) * 6) * mpx * 1.5;
+        else { const v = Math.min(1, (T - 1.5) / 0.7); lift = top * (1 - v * v); }
+        if (T > 0.2 && T < 0.75) this.speedLines(lift);
+        return this.blit(img, lift, kx, ky);
+      }
+      if (a.act === 'stomp') {
+        // 大怪獸踩地：抬高 → 重重落下 → 地面搖晃、揚起灰塵
+        const T = a.at;
+        if (T < 0.1) { ky = 0.9; kx = 1.06; }
+        else if (T < 0.42) { const v = (T - 0.1) / 0.32; lift = Math.sin(v * Math.PI * 0.5) * mpx * 8 * (v < 0.7 ? 1 : (1 - v) / 0.3); ky = 1.06; kx = 0.96; }
+        else if (T < 0.62) { ky = 0.84; kx = 1.12; }
+        return this.blit(img, lift, kx, ky);
       }
       if (a.act === 'idle') {
         const beat = Math.sin(t * 3.2);
@@ -33530,6 +36014,70 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       return this.blit(img, lift, kx, ky);
     }
 
+    renderRival(R) {
+      const f = R.f, a = this.a, ctx = this.ctx, mpx = this.mpx, gy = this.groundPx(), T = a.at;
+      let x, lift = 0, kx = 1, ky = 1, img = f.normal;
+      if (T < 0.7) { const v = T / 0.7; x = R.from + (R.to - R.from) * (1 - (1 - v) * (1 - v)); img = [f.stepA, f.normal, f.stepB, f.normal][Math.floor(T / 0.1) % 4]; lift = Math.floor(T / 0.1) % 2 ? mpx : 0; }
+      else if (T < 2.5) { const u = ((T - 0.7 + 0.225 + R.ph) % 0.45) / 0.45; x = R.to + Math.sin(u * Math.PI) * mpx * 7 * R.face; lift = Math.sin(u * Math.PI) * mpx * 4; }
+      else if (T < 3.0) { x = R.to; lift = Math.sin((T - 2.5) / 0.5 * Math.PI) * mpx * 8; }
+      else { const v = (T - 3.0) / 0.6; x = R.to + (R.from - R.to) * v * v; img = [f.stepA, f.normal, f.stepB, f.normal][Math.floor(T / 0.1) % 4]; }
+      ctx.fillStyle = 'rgba(0,0,0,.25)';
+      ctx.beginPath(); ctx.ellipse(x, gy - mpx * 0.3, R.dpx * 17 * Math.max(0.4, 1 - lift / (mpx * 20)), mpx * 1.4, 0, 0, 6.29); ctx.fill();
+      ctx.save(); ctx.translate(Math.round(x), Math.round(gy - lift));
+      // 往畫面另一邊跑回去時轉身
+      if ((T < 3.0 ? R.face : -R.face) < 0) ctx.scale(-1, 1);
+      const d = R.dpx, w = f.GW * d * kx, h = f.GH * d * ky;
+      if (f.auras.length) ctx.drawImage(f.auras[a.auraI], -f.CX * d * kx, -(f.FLOOR + 1) * d * ky, w, h);
+      ctx.drawImage(img, -f.CX * d * kx, -(f.FLOOR + 1) * d * ky, w, h);
+      ctx.restore();
+    }
+
+    speedLines(lift) {
+      const ctx = this.ctx, a = this.a, cell = this.cell, gy = this.groundPx();
+      ctx.fillStyle = '#ffffff';
+      for (let i = 0; i < 5; i++) {
+        const x = Math.round((a.x + (i - 2) * this.mpx * 3) / cell) * cell;
+        const y0 = gy - lift + ((this.t * 400 + i * 37) % (this.mpx * 10));
+        ctx.globalAlpha = 0.6; ctx.fillRect(x, Math.round(y0 / cell) * cell, cell, this.mpx * 4);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    drawBeam(P) {
+      // 光之光線：先在手上集氣，再往面對的方向射出去
+      const a = this.a, f = this.f, ctx = this.ctx, cell = this.cell, t = this.t, W = this.c.width;
+      const dpx = this.dpx || this.mpx, gy = this.groundPx();
+      const b = P ? P.box : { top: f.GH * 0.3, bottom: f.FLOOR };
+      const ox = Math.round(a.x + a.face * dpx * 3), oy = Math.round(gy + (b.top + (b.bottom - b.top) * 0.55 - (f.FLOOR + 1)) * dpx);
+      const T = a.at, snap = (v) => Math.round(v / cell) * cell;
+      if (T < 0.45) {
+        // 集氣：光點往手上聚過來
+        ctx.fillStyle = '#e9fbff';
+        for (let i = 0; i < 8; i++) {
+          const ang = i / 8 * Math.PI * 2 + t * 3, d = (1 - T / 0.45) * this.mpx * 12;
+          ctx.fillRect(snap(ox + Math.cos(ang) * d), snap(oy + Math.sin(ang) * d), cell, cell);
+        }
+        return;
+      }
+      if (T > 1.7) return;
+      const grow = Math.min(1, (T - 0.45) / 0.2), fade = T > 1.45 ? 1 - (T - 1.45) / 0.25 : 1;
+      const len = (a.face > 0 ? W - ox : ox) * grow, h = Math.max(cell * 3, dpx * 3.2) * fade;
+      const x0 = a.face > 0 ? ox : ox - len;
+      const fl = Math.sin(t * 40) > 0 ? 1 : 0.85;
+      ctx.globalAlpha = 0.45 * fade; ctx.fillStyle = '#5fc3ff';
+      ctx.fillRect(snap(x0), snap(oy - h * 1.1 * fl), snap(len), snap(h * 2.2 * fl) || cell);
+      ctx.globalAlpha = 0.9 * fade; ctx.fillStyle = '#bff1ff';
+      ctx.fillRect(snap(x0), snap(oy - h * 0.6), snap(len), snap(h * 1.2) || cell);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(snap(x0), snap(oy - h * 0.25), snap(len), Math.max(cell, snap(h * 0.5)));
+      // 光線上的亮點往前跑
+      for (let i = 0; i < 6; i++) {
+        const k = ((t * 3 + i / 6) % 1) * len;
+        ctx.fillRect(snap(a.face > 0 ? ox + k : ox - k), snap(oy - h * 0.9), cell * 2, cell);
+      }
+      ctx.globalAlpha = 1;
+    }
+
     blit(img, lift, kx, ky) {
       const a = this.a, f = this.f, ctx = this.ctx, mpx = this.mpx, t = this.t;
       const gy = this.groundPx();
@@ -33557,6 +36105,18 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         ctx.fillRect(sx - mpx, sy, mpx * 3, mpx); ctx.fillRect(sx, sy - mpx, mpx, mpx * 3);
       }
     }
+  }
+
+  // 特殊動作的長度（秒）
+  const MOVE_LEN = { beam: 1.9, fly: 2.3, hug: 1.6, stomp: 1.2, spar: 3.6 };
+  // 兄弟打鬧時跑進來的是誰
+  const RIVAL = { shenshen_kaiju: ['tiantian_kaiju'], tiantian_kaiju: ['shenshen_kaiju'], mama_kaiju: ['shenshen_kaiju', 'tiantian_kaiju'] };
+  // 圖片裡有東西的範圍（上下），光線從胸口射出要用
+  function bbox(img) {
+    const d = img.getContext('2d').getImageData(0, 0, img.width, img.height).data;
+    let top = img.height, bottom = 0;
+    for (let y = 0; y < img.height; y++) for (let x = 0; x < img.width; x++) if (d[(y * img.width + x) * 4 + 3]) { if (y < top) top = y; bottom = y; break; }
+    return { top, bottom };
   }
 
   MonsterStage.scenes = Object.keys(SCENES).map(k => ({ key: k, name: SCENES[k].name }));
@@ -36916,6 +39476,140 @@ window.SAGA_TEXT = {"_說明": "性格、族系能力、具名角色、世界新
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
+<script>
+/* 隱藏怪獸專屬地下城（2026-10-21 泓）：只有侲侲、田田、媽媽大怪獸能進。
+   掛在 MonsterDungeon.DUNGEONS 上，habitats 留空，所以一般抽選不會抽到；由引擎 specialDungeon() 另外判斷。 */
+(function (G) {
+  const D = G.MonsterDungeon; if (!D) return;
+  D.DUNGEONS.starlight = {
+    name: '星光試煉塔', special: true, habitats: [],
+    items: ['會唱歌的星星碎片', '光之戰士的舊披風', '裝著流星的玻璃瓶', '寫著「加油」的星座圖'],
+    rooms: {
+      gate: {
+        scene: 'starlight_gate', name: '星門',
+        text: '夜空裂開一道縫，一座水晶塔從星星之間降下來。塔門上寫著：「只有心裡有光的孩子，才能走進來。」你胸口的光，跟著門一起亮了。',
+        choices: [
+          { t: '把手放在門上', ok: { text: '門認出了你，慢慢打開。裡面傳來好多好多星星在小聲說話的聲音。', go: 'path' } },
+          { t: '先回家問問媽媽', retreat: true, ok: { text: '你跑回家問媽媽。媽媽笑著說：「等你準備好，它還會再來的。」那天晚上，你夢見了整片星空。', eff: { bond: 2 } } },
+        ],
+      },
+      path: {
+        scene: 'starlight_path', name: '雲之橋',
+        text: '一條雲做的橋，連到遠方漂浮的水晶。每走一步，雲就會往下陷一點點。橋的另一頭，有一隻小星星卡在雲裡哭。',
+        choices: [
+          { t: '用光把小星星拉上來', check: { stat: 'str', base: 0.5, div: 150 },
+            ok: { text: '你伸出手，光像繩子一樣把小星星拉了上來。小星星跳到你頭上，說要幫你照亮前面的路。', eff: { friends: 1, bond: 2 }, meet: '迷路的小星星', go: 'hall' },
+            fail: { text: '你用力過頭，自己也掉進雲裡，跟小星星一起滾成一顆大雲球。你們笑著從另一頭滾出來。', eff: { hp: -4, friends: 1 }, meet: '迷路的小星星', go: 'hall' } },
+          { t: '輕輕地走，不要吵醒雲', check: { stat: 'hide', base: 0.45, div: 120 },
+            ok: { text: '你踮著腳，一步一步走過去。雲在你腳下打呼，連一點都沒有陷下去。', eff: { hide: 1 }, go: 'hall' },
+            fail: { text: '雲被你吵醒了，打了一個好大的哈欠，把你吹到了橋的另一頭。也算是到了啦。', eff: { hp: -3 }, go: 'hall' } },
+          { t: '太高了，先回去', retreat: true, ok: { text: '你往下看了一眼，決定今天先不要。雲朵好像有點失望，又好像在說：沒關係。' } },
+        ],
+      },
+      hall: {
+        scene: 'starlight_hall', name: '星星圖書館',
+        text: '書架上放的不是書，是一顆一顆的星星。每一顆都記著一個勇敢的故事。一位很老很老的光之巨人坐在中間，問你：「你想成為什麼樣的光？」',
+        choices: [
+          { t: '「保護大家的光」', ok: { text: '老巨人點點頭：「那就不要忘了，最先要保護的，是你身邊的人。」他把一顆小星星放進你的手心。', eff: { bond: 3, inf: 2 }, go: 'treasure' } },
+          { t: '「最亮最亮的光」', check: { stat: 'int', base: 0.4, div: 140 },
+            ok: { text: '老巨人笑了：「最亮的光，常常是在最黑的時候才亮起來的。」你好像懂了，又好像還不太懂。', eff: { int: 3 }, go: 'treasure' },
+            fail: { text: '你用力把胸口的燈開到最亮，結果整間圖書館的星星都被你晃到眼睛，一起說：「太亮了啦！」', eff: { inf: 2, hp: -2 }, go: 'treasure' } },
+          { t: '「我還不知道」', retreat: true, ok: { text: '老巨人摸摸你的頭：「不知道也沒關係，慢慢長大就會知道了。」他送你走出塔外。', eff: { int: 2 } } },
+        ],
+      },
+      treasure: {
+        scene: 'starlight_treasure', name: '光核之間',
+        text: '房間正中央，有一顆像心臟一樣一閃一閃的大光球。你靠近它的時候，胸口的燈跟著它一起閃，一下、兩下、三下。',
+        choices: [
+          { t: '把手放上去', roll: [
+            { p: 0.7, text: '光核裡跳出了{item}，輕輕落在你的手上。它暖暖的，像是有人在跟你說：「辛苦了。」', eff: { treasures: 1, hp: 6 }, item: true, go: 'boss' },
+            { p: 0.3, text: '光核把你整個包起來，你覺得好像回到了剛出生的那一天。等你醒來，身上的傷都好了。', eff: { hp: 15 }, go: 'boss' }] },
+          { t: '它看起來好累，不要吵它', ok: { text: '你在光核旁邊輕輕哼了一首媽媽唱過的歌。光核閃得慢了一點，好像睡著了。它還是偷偷把{item}推到你腳邊。', eff: { treasures: 1, bond: 2 }, item: true, go: 'boss' } },
+          { t: '拿到這裡就夠了，回家', retreat: true, ok: { text: '你對光核揮揮手，沿著雲橋走回家。路上的星星一顆一顆為你亮起來。' } },
+        ],
+      },
+      boss: {
+        scene: 'starlight_boss', name: '塔頂的影子怪獸', boss: true,
+        text: '塔頂上，大月亮底下，站著一隻全黑的影子怪獸。牠的樣子……跟你一模一樣，只是沒有光。牠說：「我是你害怕的那一面。」',
+        choices: [
+          { t: '用光之光線照亮牠', check: { stat: 'str', base: 0.3, div: 110 },
+            ok: { text: '你把雙手交叉，放出這輩子最亮的一道光。影子怪獸被照得一點一點變透明，最後笑著說：「原來你已經不怕了。」', eff: { inf: 6, str: 3, treasures: 1 }, mile: '在星光試煉塔頂打敗了自己的影子' },
+            fail: { text: '你的光不夠亮，被影子推倒在地上。但你還是爬起來，站在那裡不肯走。影子愣住了，慢慢退回了月亮後面。', eff: { hp: -12, bond: 2 } } },
+          { t: '走過去，抱抱牠', check: { stat: 'bond', base: 0.4, div: 120 },
+            ok: { text: '你張開雙手抱住了影子。牠先是僵住，然後慢慢變暖、變亮，最後變成你胸口燈裡的一點小火花。害怕的那一面，從今以後也是你的一部分了。', eff: { bond: 5, friends: 1, hp: 8 }, mile: '在星光試煉塔頂抱住了自己的影子' },
+            fail: { text: '影子躲開了。不過走之前，牠回頭小聲說了一句：「謝謝你想抱我。」', eff: { bond: 2 } } },
+          { t: '我還沒準備好', retreat: true, ok: { text: '你轉身離開。影子沒有追上來，只是坐在月亮下等你。你知道，有一天你會回來。' } },
+        ],
+      },
+    },
+  };
+  D.DUNGEONS.cradle = {
+    name: '媽媽的回憶森林', special: true, habitats: [],
+    items: ['媽媽小時候的髮夾', '一顆裝著搖籃曲的松果', '畫著三個人的舊圖畫', '永遠不會熄的螢火燈籠'],
+    rooms: {
+      gate: {
+        scene: 'cradle_gate', name: '記憶之門',
+        text: '森林深處有一扇好大好舊的木門。門上刻著一條一條的線，旁邊寫著小小的字：「侲侲 3 歲」、「田田 3 歲」、「侲侲 5 歲」……原來這是量身高的門。',
+        choices: [
+          { t: '站到門邊，量量現在的身高', ok: { text: '你站直身體，在門上劃了一條新的線。比上一條高了好多。門好像很開心，自己打開了。', go: 'path' } },
+          { t: '在門外看看就好', retreat: true, ok: { text: '你摸了摸那些線，想起小時候被量身高時一直踮腳偷長高。你笑著回家了。', eff: { bond: 2 } } },
+        ],
+      },
+      path: {
+        scene: 'cradle_path', name: '螢火小徑',
+        text: '小路兩邊飛滿了螢火蟲。每一隻螢火蟲靠近你，就會讓你看到一個小小的回憶：第一次走路、第一次跌倒、第一次被抱起來。',
+        choices: [
+          { t: '跟著最亮的那隻走', roll: [
+            { p: 0.6, text: '最亮的那隻螢火蟲帶你看到了一個回憶：一個下雨天，有人把傘全部撐在你頭上，自己淋得濕答答。你知道那是誰。', eff: { bond: 3 }, go: 'hall' },
+            { p: 0.4, text: '最亮的那隻螢火蟲其實迷路了，帶著你繞了三圈。你們一起找到了路，牠決定跟著你走。', eff: { friends: 1 }, meet: '迷路的螢火蟲', go: 'hall' }] },
+          { t: '把螢火蟲收進手心', check: { stat: 'hide', base: 0.4, div: 120 },
+            ok: { text: '你輕輕合起雙手，一隻螢火蟲停在裡面，把你的手照成暖暖的橘色。', eff: { hide: 1, hp: 3 }, go: 'hall' },
+            fail: { text: '螢火蟲們以為你要跟牠們玩，全部一起飛到你臉上。你亮得像一顆燈泡。', eff: { inf: 2 }, go: 'hall' } },
+          { t: '回憶太多了，先回去', retreat: true, ok: { text: '你覺得心裡滿滿的，一下子裝不下了。螢火蟲們送你到森林外面。' } },
+        ],
+      },
+      hall: {
+        scene: 'cradle_hall', name: '搖籃曲之湖',
+        text: '湖面上漂著好多小燈籠。湖水會唱歌，唱的是一首你好像聽過、但想不起來在哪裡聽過的搖籃曲。',
+        choices: [
+          { t: '跟著湖水一起唱', check: { stat: 'bond', base: 0.45, div: 130 },
+            ok: { text: '你一開口，就想起來了：這是媽媽每天晚上唱的歌。你唱完最後一句，湖面上的燈籠全部亮了起來，排成一條往前的路。', eff: { bond: 4 }, go: 'treasure' },
+            fail: { text: '你唱走音了。湖水停了一下，然後忍不住笑出了一圈一圈的漣漪。燈籠還是幫你照亮了路。', eff: { inf: 1 }, go: 'treasure' } },
+          { t: '划著燈籠過湖', check: { stat: 'str', base: 0.5, div: 150 },
+            ok: { text: '你跳上一盞最大的燈籠，用手當槳划過湖面。燈籠晃呀晃，像一個搖籃。', eff: { str: 2 }, go: 'treasure' },
+            fail: { text: '燈籠太小了，你一跳上去就翻了。湖水把你溫柔地推回岸邊，還幫你烘乾了。', eff: { hp: -3 }, go: 'treasure' } },
+          { t: '坐在湖邊聽完就回家', retreat: true, ok: { text: '你坐在湖邊，聽完了整首搖籃曲，差點睡著。回家的路上，你一直哼著那首歌。', eff: { hp: 5, bond: 2 } } },
+        ],
+      },
+      treasure: {
+        scene: 'cradle_treasure', name: '搖籃之樹',
+        text: '一棵好大的樹，樹枝彎成搖籃的形狀。搖籃裡有一窩暖暖的光，光裡好像放著什麼東西。樹說：「這是有人一直想留給你的東西。」',
+        choices: [
+          { t: '收下它', ok: { text: '你把{item}抱在懷裡。它聞起來，跟媽媽的圍裙一模一樣。', eff: { treasures: 1, bond: 2 }, item: true, go: 'boss' } },
+          { t: '躺進搖籃睡一下', roll: [
+            { p: 0.6, text: '你縮在搖籃裡睡了一下。夢裡有人輕輕拍著你的背。醒來的時候，{item}放在你的枕頭邊。', eff: { treasures: 1, hp: 12 }, item: true, go: 'boss' },
+            { p: 0.4, text: '你太大了，搖籃被你壓得「嘎——」一聲。樹笑著說：「你真的長大了呢。」', eff: { hp: 4, inf: 1 }, go: 'boss' }] },
+          { t: '把光留給更需要的人，回家', retreat: true, ok: { text: '你沒有拿走任何東西，只是對樹說了一聲謝謝。樹沙沙作響，像在說：好孩子。', eff: { bond: 3, helped: 1 } } },
+        ],
+      },
+      boss: {
+        scene: 'cradle_boss', name: '哭泣的小雷雲', boss: true,
+        text: '森林中間的空地上，一朵小小的雷雲在哭。牠每哭一下，就打一道小閃電，把附近的樹嚇得發抖。「我找不到媽媽了……」牠抽抽噎噎地說。',
+        choices: [
+          { t: '唱搖籃曲給牠聽', check: { stat: 'bond', base: 0.4, div: 110 },
+            ok: { text: '你唱起剛剛在湖邊學會的那首歌。小雷雲慢慢不哭了，最後下了一場很溫柔的小雨，雨停之後出現了一道彩虹。牠說：「謝謝你，我想起回家的路了。」', eff: { friends: 1, helped: 2, inf: 4 }, meet: '小雷雲', mile: '在回憶森林用搖籃曲哄好了哭泣的小雷雲' },
+            fail: { text: '你一唱，小雷雲哭得更大聲了：「這首歌讓我更想媽媽了啦！」你只好陪牠一起哭了一場。哭完，你們都好多了。', eff: { bond: 2, hp: -5 } } },
+          { t: '帶牠去找媽媽', check: { stat: 'int', base: 0.35, div: 120 },
+            ok: { text: '你看了看雲飄來的方向，帶著小雷雲一路往山頂走。山頂上，一朵好大好大的雷雲正在著急地找來找去。牠們抱在一起，下了一整晚開心的雨。', eff: { helped: 2, friends: 1, int: 2 }, meet: '小雷雲', mile: '幫迷路的小雷雲找到了媽媽' },
+            fail: { text: '你們走錯路了，走到了一片沙漠。小雷雲剛好在那裡下了一場雨，沙漠開滿了花。雖然沒找到媽媽，但牠說這是牠做過最棒的事。', eff: { helped: 1, hp: -4 } } },
+          { t: '我也好想媽媽，先回家', retreat: true, ok: { text: '你跑回家，一進門就抱住了媽媽。媽媽問你怎麼了，你什麼都沒說，只是抱得更緊。', eff: { bond: 4 } } },
+        ],
+      },
+    },
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
 
 <script>
 /* ===================== 遊戲資料 =====================
@@ -37026,13 +39720,25 @@ function drawSpecial() {
   for (const id in SPECIAL_P) { if (r < SPECIAL_P[id]) return BY_ID[id]; r -= SPECIAL_P[id]; }
   return null;
 }
+/* 隱藏怪獸前半生受重傷時，媽媽（或孩子們）會及時趕到 */
+const RESCUE_TEXT = {
+  kid: ['就在快撐不住的時候，地面輕輕一震，媽媽大怪獸趕到了。她把你捧在手心，一整晚都沒有放下。第二天早上，你又能跑能跳了。', '你倒下的時候，{sib}衝過來，把自己胸口的光分了一半給你。你們兩個的燈一起閃了好久，最後一起亮了起來。'],
+  mama: ['你倒下的時候，侲侲和田田一左一右撐住了你。「換我們保護媽媽！」兩道光照在你身上，暖暖的，你慢慢站了起來。'],
+};
+function specialRescue(s) {
+  const k = specialKind(s); if (!k || s.age / s.life >= 0.5) return false;
+  s.st.hp = 25; s.hurt = null;
+  addLine(s, '♥ ' + pick(RESCUE_TEXT[k]).replace(/\{sib\}/g, specialSib(s)), 'big', { act: k === 'mama' ? 'hug' : 'happy' });
+  return true;
+}
 function specialMonthly(s) {
   const k = specialKind(s); if (!k || R() > 0.09) return null;
   const opts = SPECIAL_TEXT[k].month.filter(x => !s.usedM.has(x));
   if (!opts.length) return null;
   const t = pick(opts); s.usedM.add(t);
   const fx = []; applyEff(s, { bond: 1 }, fx);
-  return addLine(s, t.replace(/\{sib\}/g, specialSib(s)), '', { fx });
+  const spar = /\{sib\}|侲侲和田田/.test(t) && R() < 0.5 ? 'spar' : null;  // 兄弟出現時偶爾來一段打鬧
+  return addLine(s, t.replace(/\{sib\}/g, specialSib(s)), '', { fx, act: spar });
 }
 function specialGlow(s) {
   const k = specialKind(s); if (!k || s.flags.light_awaken || !s.alive) return;
@@ -37040,7 +39746,7 @@ function specialGlow(s) {
   if (R() > 0.25) return;
   setFlag(s, 'light_awaken');
   const fx = []; applyEff(s, { str: 6, bond: 6, inf: 8, helped: 2 }, fx);
-  addLine(s, '★ ' + SPECIAL_TEXT[k].glow.replace(/\{sib\}/g, specialSib(s)), 'big', { fx, act: 'happy' });
+  addLine(s, '★ ' + SPECIAL_TEXT[k].glow.replace(/\{sib\}/g, specialSib(s)), 'big', { fx, act: k === 'mama' ? 'hug' : 'beam' });
   mile(s, k === 'mama' ? '看著侲侲和田田長大，換他們保護自己' : `和${specialSib(s)}一起用光守護了村子`, 7);
 }
 
@@ -37356,6 +40062,16 @@ function genLine(s) {
 function dungeonStart(s) {
   if (!G.MonsterDungeon || s.dg) return null;
   s.dungeons = s.dungeons || {};
+  /* 隱藏怪獸專屬地下城：只有侲侲、田田、媽媽大怪獸能進，每年 12%，一生各一次 */
+  if (specialKind(s) && stage(s) !== 'baby') {
+    const sp = Object.keys(G.MonsterDungeon.DUNGEONS).filter(id => G.MonsterDungeon.DUNGEONS[id].special && !s.dungeons[id]);
+    if (sp.length && R() < 0.12) {
+      const id = pick(sp);
+      s.dungeons[id] = s.year; s.dg = G.MonsterDungeon.start(id); s.events++;
+      mile(s, `走進了只有特別的孩子才能進去的「${G.MonsterDungeon.DUNGEONS[id].name}」`, 4);
+      return dungeonPend(s);
+    }
+  }
   const d = G.MonsterDungeon.roll({ habKey: s.habKey, stage: stage(s), strat: s.strat, year: s.year, done: s.dungeons }, R);
   if (!d) return null;
   s.dungeons[d.id] = s.year; s.dg = G.MonsterDungeon.start(d.id); s.events++;
@@ -37455,7 +40171,8 @@ function choose(s, i) {
     applyEff(s, r.eff, fx);
     if (s.st.hp < 1) s.st.hp = 1;
     addUnique(s, 'met', 'monstersMet', r.meet, fx);
-    addLine(s, r.text, r.item ? 'big' : '', { fx, act: r.item ? 'happy' : null });
+    const sk = specialKind(s), bigMove = sk && r.mile ? (sk === 'mama' ? 'hug' : 'beam') : null;  // 特別怪獸在頭目房成功時放大絕
+    addLine(s, r.text, r.item || bigMove ? 'big' : '', { fx, act: bigMove || (r.item ? 'happy' : null) });
     s.tmpFx = null;
     if (r.mile) mile(s, r.mile, 4);
     if (r.ended) { addLine(s, r.summary.line, 'big'); s.dg = null; return afterMonth(s); }
@@ -37500,7 +40217,7 @@ function tickMonth(s) {
 }
 function afterMonth(s) {
   flushBadges(s);
-  if (s.st.hp <= 0 && !(G.MonsterSaga && G.MonsterSaga.rescue(s, 'hurt'))) return die(s, s.hurt || '傷得太重，再也沒有醒來');
+  if (s.st.hp <= 0 && !specialRescue(s) && !(G.MonsterSaga && G.MonsterSaga.rescue(s, 'hurt'))) return die(s, s.hurt || '傷得太重，再也沒有醒來');
   if (s.month >= 12) return endYear(s);
   return 'ok';
 }
@@ -37578,11 +40295,12 @@ function endYear(s) {
   specialGlow(s);
   tryEvolve(s);
   flushBadges(s);
-  if (s.st.hp <= 0 && !(G.MonsterSaga && G.MonsterSaga.rescue(s, 'hurt'))) return die(s, s.hurt || '傷得太重，再也沒有醒來');
+  if (s.st.hp <= 0 && !specialRescue(s) && !(G.MonsterSaga && G.MonsterSaga.rescue(s, 'hurt'))) return die(s, s.hurt || '傷得太重，再也沒有醒來');
   const f = s.age / s.life;
   let p = f < 0.6 ? (s.year <= 2 ? 0.04 : 0.018) : 0.018 + Math.pow((f - 0.6) / 0.4, 2) * 0.4;
   p *= s.hab.danger; p *= 1.2 - Math.min(s.st.str, 100) / 250;
   if (s.st.hp < 30) p *= 1.8; else if (s.st.hp > 80) p *= 0.8;
+  if (specialKind(s) && f < 0.6) p *= 0.05;  // 隱藏怪獸前半生幾乎不會死（泓 2026-10-21）
   if (f >= 1) p = Math.max(p, 0.6); if (f >= 1.25) p = 1;
   if (R() < p && !(G.MonsterSaga && G.MonsterSaga.rescue(s, f >= 0.7 ? 'old' : 'accident'))) return die(s, cause(s, f));
   s.hurt = null;
