@@ -27,16 +27,17 @@
 5. 不要畫武器（劍、法杖、長矛、弓），手空著；武器和其他配件由程式加。
 6. 顏色分清楚：身體一個主色、一個副色，眼睛、牙齒、骨頭、金屬用中性色，方便程式換色。
 
-## 待辦：亡靈軍團（undead）
+## 進度與待辦（Claude 每小時檢查一次，有新意見會更新這裡）
 
-已經收下、不用重畫：skeleton（3 種造型）、little_ghost、zombie（3 種造型）、bone_dog、will_wisp、mummy、skeleton_pirate、skeleton_mage、haunted_armor、banshee、vampire、necromancer、ghost_captain、lich、night_king。
+### 亡靈軍團（undead）：完成
+已收下全部 18 隻（骨龍、棺材貓、無頭騎士的重畫版都已收下，畫得很好）。
+`_wraith_blue`（藍袍幽魂）先保留，不用重畫。
 
-要重畫：
+### 史萊姆軍團（slime）：21 / 30
+已收下：green_slime、blue_slime、red_slime、yellow_slime、mud_slime、drop_slime、jelly_slime、bubble_slime、moss_slime、pudding_slime、spike_slime、shadow_slime、poison_slime、ice_slime、fire_slime、thunder_slime、rock_slime、honey_slime、rainbow_slime、twin_slime、glow_slime。品質很好，不用修改。
 
-| 怪獸 id | 名稱 | 問題 |
-|---|---|---|
-| bone_dragon | 骨龍 | 原圖左右兩邊（翅膀、尾巴）被畫布切掉，請整隻完整畫在畫面內 |
-| coffin_cat | 棺材貓 | 顏色和細節太少（只有 9 色），跟其他隻放在一起太陽春；請畫一隻黑貓從棺材裡探出頭的樣子 |
-| headless_knight | 無頭騎士 | 顏色和細節太少；請畫一個沒有頭、手上抱著自己頭盔的騎士（不要拿武器） |
+還沒畫：metal_slime、heal_slime、mirror_slime、knight_slime、gem_slime、gold_slime、king_slime、galaxy_slime、star_slime。
+（knight_slime 要畫頭盔、king_slime 要畫王冠，但都不要畫武器。）
 
-尚未分配：`_wraith_blue`（藍袍幽魂）先保留，不用重畫。
+### 待辦（要修改的圖）
+目前沒有。
