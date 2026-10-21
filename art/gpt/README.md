@@ -39,11 +39,17 @@
 ### 哥布林部落（goblin）：完成
 已收下全部 25 隻，品質很好，手都空著，不用修改。（弓、鼓、蛋、扳手這些手持物由程式畫。）
 
-### 昆蟲軍團（insect）：15 / 24
-已收下：caterpillar、ladybug、firefly、beetle、giant_ant、cricket、pillbug、snail、giant_worm、dragonfly、angry_bee、mantis、cave_spider、dung_beetle、jewel_beetle。品質很好，不用修改。
+### 昆蟲軍團（insect）：完成
+已收下全部 24 隻，品質很好，不用修改。（鍬形騎士的長槍由程式畫。）
 
-還沒畫：stick_bug、cicada、stag_knight、phantom_moth、desert_scorpion、millipede、ant_queen、spider_queen、moon_butterfly。
-（stag_knight 鍬形騎士手空著，武器由程式畫。）
+### 野獸軍團（beast）：14 / 30
+已收下：cave_rat、horn_rabbit、grey_wolf、boar、hedgehog、cave_bat、lizard、hop_frog、tanuki、ferret、skunk、owlbear、sabertooth。品質很好，不用修改。
+
+退回重畫：crow（見下面待辦）。
+
+還沒畫：twohead_dog、giant_eagle、snow_leopard、iron_rhino、giant_ape、moon_deer、fire_fox、griffon、cerberus、chimera、nine_fox、pegasus、thunder_wolf、mountain_bear、baize、fenrir。
 
 ### 待辦（要修改的圖）
-目前沒有。
+| 圖 | 問題 | 怎麼改 |
+|---|---|---|
+| beast/crow.png | 只用了 4 個顏色，整隻幾乎是黑的一團，眼睛、嘴巴、翅膀的羽毛都看不清楚 | 用 8～12 色：黑色羽毛加上深藍或紫色的反光、亮一點的灰色羽毛邊；眼睛要有白色反光，嘴巴用深灰加亮邊，讓頭、翅膀、腳分得出來。尺寸和站姿照舊。 |
