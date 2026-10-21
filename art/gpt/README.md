@@ -50,19 +50,20 @@
 
 還沒畫：spore_shroom（毒孢子菇）。
 
-### 深海王國（aquatic）：21 / 24
-已收下：merfolk、pincer_crab、little_octopus、kappa、glow_jelly、biter_fish、starfish、hermit_crab、mermaid、sea_serpent、shark_man、giant_clam、electric_eel、sea_turtle、seahorse_knight、siren、narwhal、lantern_fish、kraken、island_turtle、leviathan。品質很好，不用修改。（魚人、海馬騎士的長槍由程式畫。）
+### 深海王國（aquatic）：完成
+已收下全部 24 隻。錦鯉、河神鯰、巨鯨的重畫版都很好。
 
-退回重畫：koi、river_catfish、great_whale（見下面待辦）。
+### 元素之環（elemental）：17 / 18
+已收下：spark_sprite、droplet_sprite、breeze_sprite、frost_sprite、thunder_ball、fire_elemental、water_elemental、wind_elemental、stone_golem、mimic、lava_giant、thunderbird、gargoyle、storm_spirit、phoenix、crystal_golem、element_king。品質很好，不用修改。
 
-### 元素之環（elemental）：4 / 18
-已收下：spark_sprite、droplet_sprite、breeze_sprite、frost_sprite。品質很好，不用修改。
+還沒畫：pebble_sprite（石精，被跳過了，請補上）。
 
-還沒畫：pebble_sprite（石精，被跳過了，請補上）、thunder_ball、fire_elemental、water_elemental、wind_elemental、stone_golem、mimic、lava_giant、thunderbird、gargoyle、storm_spirit、phoenix、crystal_golem、element_king。
+### 妖精之森（fairy）：4 / 16
+已收下：flower_fairy、pixie、dew_fairy、brownie。品質很好，不用修改。
+
+還沒畫：glow_fairy、chime_fairy、wood_elf、dryad、undine、lucky_dwarf、unicorn、baku、moon_elf、elf_sage、season_keeper、fairy_queen。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| aquatic/koi.png | 魚頭朝下、尾巴朝上，整隻倒立，看起來像在往下潛 | 改成頭在上面（或側身、頭朝左右）的正常姿勢，臉和眼睛清楚，尾巴在下面或後面。腳底那列（第 82 列）可以是身體或尾巴最低點。 |
-| aquatic/river_catfish.png | 看不到臉，像從肚子下面往上看的一團粉紅色，旁邊的白色鬍鬚圈太細，看起來像一個圓框 | 改成正面或斜前方：看得到大嘴巴、兩隻眼睛和兩條粗粗的長鬍鬚（最明顯的部位），身體是鯰魚的扁頭寬嘴。 |
-| aquatic/great_whale.png | 正面只看到一張超大的粉紅嘴巴，沒有眼睛，看起來像一朵花或貝殼 | 改成看得出是鯨魚：圓滾滾的身體、兩隻眼睛、嘴巴裡的鯨鬚（最明顯的部位）可以露一點；正面或側面都可以。 |
+| elemental/pebble_sprite.png | 還沒畫（被跳過） | 照 BRIEF 補畫石精：會走路的灰色小石頭，最明顯的部位是石心。 |
