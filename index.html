@@ -30901,7 +30901,13 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   function rollMonster(id, seed, style) {
     const m = MONSTER_BASES[id];
     if (!m) throw new Error('沒有這隻怪獸：' + id);
-    const look = roll(m.family, seed, { base: m.base, style: style || m.style, parts: m.parts, monster: id });
+    const pb = pixBase(id);
+    const look = roll(m.family, seed, { base: m.base, style: style || m.style, parts: pb ? {} : m.parts, monster: id });
+    if (pb) {
+      // GPT 畫的身體：圖上已經有的東西（帽子、武器…）就不再加；主色隨機換一點
+      for (const c of pb.no) { delete look.parts[c]; delete look.partColors[c]; }
+      look.pixHue = PIX()[id].hue === false ? 0 : pick(mulberry(seed ^ 0x9a11), [0, 0, 0, 0, 25, -25, 50, -50, 160, 200]);
+    }
     // 名字有顏色（藍史萊姆、冰龍…）就照名字上色，亮度稍微隨機一點
     if (m.hue && !look.shiny) { const r = mulberry(seed ^ 0x4e5a); look.body = [m.hue[0] + ri(r, -6, 6), m.hue[1], clamp(m.hue[2] + ri(r, -4, 4), 10, 92)]; }
     return look;
@@ -30934,9 +30940,50 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   }
 
   /* ---------- 組合畫面 ---------- */
+  /* ---------- GPT 畫的身體（monster-pixels.js） ----------
+   * 有這張圖的怪獸，身體直接用圖（96×88，腳踩第 82 列），配件、氣勢、進化效果照樣由程式疊上去。
+   * 錨點（手、頭頂、尾巴…）從圖的輪廓自動估。主色可以換色（look.pixHue）。 */
+  const PIX = () => global.MONSTER_PIXELS || {};
+  const PIXA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
+  const pixCache = new Map();
+  function pixBase(id) {
+    const D = id && PIX()[id];
+    if (!D) return null;
+    let b = pixCache.get(D);
+    if (b) return b;
+    const rows = D.rows.map(r => { let out = '', i = 0; while (i < r.length) { const ch = r[i++]; let n = ''; while (i < r.length && r[i] >= '0' && r[i] <= '9') n += r[i++]; out += ch.repeat(n ? +n : 1); } return out; });
+    let top = 0;
+    while (top < FLOOR && !/[^.]/.test(rows[top])) top++;
+    const crop = rows.slice(top, FLOOR + 1), H = crop.length;
+    const Y = (f) => Math.min(H - 1, Math.round(H * f));
+    const left = (y) => { const i = crop[y].search(/[^.]/); return i < 0 ? CX - 8 : i; };
+    const right = (y) => { let i = crop[y].length - 1; while (i > 0 && crop[y][i] === '.') i--; return i; };
+    b = {
+      pix: crop, pal: D.pal, main: new Set(D.main || []), art: crop.map(r => r.replace(/[^.]/g, 'b')),
+      noBlink: true, floats: !!D.floats, feet: !D.floats, top: 0, headX: CX,
+      horn: [left(Y(.1)) + 6, Y(.06)], neck: Y(.3), chest: [Y(.38), Y(.62)], hand: [left(Y(.55)) + 2, Y(.55)],
+      tail: [right(Y(.72)) - 2, Y(.72)], wing: [left(Y(.35)) + 6, Y(.3)],
+      eye: { y: Y(.2), xs: [], w: 0, h: 0 }, mouth: [CX - 1, Y(.28)], no: ['face', 'armor', 'pattern', ...(D.no || [])],
+    };
+    pixCache.set(D, b);
+    return b;
+  }
+  // #rrggbb 轉一個色相角度
+  function hueShift(hex, d) {
+    let r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255, bl = parseInt(hex.slice(5, 7), 16) / 255;
+    const mx = Math.max(r, g, bl), mn = Math.min(r, g, bl), l = (mx + mn) / 2, dd = mx - mn;
+    if (!dd) return hex;
+    const sat = l > .5 ? dd / (2 - mx - mn) : dd / (mx + mn);
+    let h = mx === r ? (g - bl) / dd + (g < bl ? 6 : 0) : mx === g ? (bl - r) / dd + 2 : (r - g) / dd + 4;
+    return hsl(((h * 60 + d) % 360 + 360) % 360, sat * 100, l * 100);
+  }
+
   function compose(look, opts = {}) {
     const bk = look.base || look.race;
-    const base = (look.style === 'cool' && BASES[bk + '@cool']) || BASES[bk];
+    const pixB = !look.legend ? pixBase(look.monster) : null;
+    const base = pixB || (look.style === 'cool' && BASES[bk + '@cool']) || BASES[bk];
+    const pixCol = pixB && pixB.pal.map((h, i) => look.pixHue && pixB.main.has(i) ? hueShift(h, look.pixHue) : h);
+    const pixSet = new Set(pixCol || []);
     const art = base.art, H = art.length, W = art[0].length;
     const ox = CX - W / 2, oy = FLOOR - H + 1 - (base.floats ? 4 : 0);
     const grid = Array.from({ length: GH }, () => Array(GW).fill(null));
@@ -31045,7 +31092,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         put(ox + x, oy + y, base.blinkDark ? FIXED.k : (y === line ? outline : body.base));
         continue;
       }
-      put(ox + x, oy + y, colorOf(ch));
+      put(ox + x, oy + y, pixB ? pixCol[PIXA.indexOf(pixB.pix[y][x])] : colorOf(ch));
       if (BODYISH.includes(ch) || ch === 's') isBody[oy + y][ox + x] = ch;
     }
     // 眼睛第二個小反光，看起來比較有神
@@ -31176,6 +31223,72 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       ['bb..bb', 'bbbbbb', 'dbbbbd', '.dddd.'].forEach((ln, y) => ln.split('').forEach((ch, x) => { if (ch !== '.') put(hx - 2 + x, hy + y, ch === 'd' ? body.dark : body.base); }));
     }
 
+    /* 6b. 覺醒（帥氣的最終進化）：發光紋路、發光眼睛、頭上浮著的能量結晶、身邊的碎晶 */
+    const awake = look.form === 2 && look.style === 'cool';
+    const EN = awake ? (AURA_COL[look.parts.aura] && !['sparkle', 'hearts', 'bubbles'].includes(look.parts.aura) ? AURA_COL[look.parts.aura] : [hsl(look.glow[0], 90, 45), hsl(look.glow[0], 95, 66), hsl(look.glow[0], 100, 90)]) : null;
+    const isEN = new Set(EN || []);
+    if (awake) {
+      const [e0, e1, e2] = EN;
+      const ar = mulberry(look.seed ^ 0xa3a7e);
+      // 身體裡面（離邊緣至少 2 格）才畫紋路，盔甲上也可以（像附魔）
+      const inner = (gx, gy) => { for (const [dx, dy] of [[0, 0], [2, 0], [-2, 0], [0, 2], [0, -2], [1, 1], [-1, -1], [1, -1], [-1, 1]]) if (!onBody(gx + dx, gy + dy)) return false; return true; };
+      const rune = (bx, by, c) => { const gx = ox + bx, gy = oy + by; if (inner(gx, gy)) put(gx, gy, c); if (twin && inner(mirrorX(gx), gy)) put(mirrorX(gx), gy, c); };
+      const midB = W / 2 - 1; // 造型座標的中線（左半邊）
+      const c0 = Math.max(base.chest[0], base.mouth ? base.mouth[1] + 4 : 0);
+      const kind = pixB ? null : base.full ? 'slash' : pick(ar, ['chevron', 'slash', 'core']);
+      if (kind === 'chevron') {
+        // 胸口的 V 字能量紋，中間亮、兩邊深
+        for (let t = 0; t < 9; t++) { const by = c0 + 2 + t, bx = midB - 8 + t; rune(bx, by, e1); rune(bx + 1, by, e2); rune(bx - 1, by, e0); }
+        for (let t = 0; t < 5; t++) { const by = c0 + 7 + t, bx = midB - 6 + t; rune(bx, by, e0); }
+      } else if (kind === 'slash') {
+        // 身體兩側三道爪痕一樣的發光斜線
+        const cx0 = base.full ? Math.round(W * 0.42) : midB - 9;
+        for (let i = 0; i < 3; i++) for (let t = 0; t < 7; t++) { const bx = cx0 + i * 3 + Math.floor(t / 2), by = c0 + 1 + t + i; rune(bx, by, t === 0 || t === 6 ? e0 : t % 3 === 1 ? e2 : e1); }
+      } else {
+        // 胸口一顆發光的核心，放射出細線
+        const cy = c0 + 5;
+        for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 0; dx++) { const d = Math.abs(dx) + Math.abs(dy); if (d <= 3) rune(midB + dx + 1, cy + dy, d <= 1 ? e2 : d === 2 ? e1 : e0); }
+        for (let t = 4; t < 10; t++) { rune(midB + 1 - t, cy - Math.floor(t / 2), t % 2 ? e1 : e0); rune(midB + 1 - t, cy + Math.floor(t / 2), t % 2 ? e1 : e0); }
+      }
+      // 戰紋：眼睛下面兩條發光短線
+      const E = base.eye;
+      if (E && E.xs && E.xs.length && !base.noBlink) {
+        const ex = E.xs[0], ey = E.y + E.h + 1;
+        for (let k = 0; k < 4; k++) { rune(ex + 1, ey + k, k < 2 ? e1 : e0); if (k < 3) rune(ex + 3, ey + k, k < 1 ? e1 : e0); }
+      }
+      // 發光的眼睛（戴眼鏡的就不改）
+      if (E && E.xs && !['glasses', 'sunglasses'].includes(look.parts.face)) for (const exx of E.xs) for (let y = E.y; y < E.y + E.h; y++) for (let x = exx; x < exx + E.w; x++) {
+        const gx = ox + x, gy = oy + y; if (!inGrid(gx, gy)) continue;
+        const ch = art[y] && art[y][x];
+        if (ch === 'k' || ch === 'K') put(gx, gy, e0); else if (ch === 'e' || ch === 't') put(gx, gy, e2); else if (ch === 'f') put(gx, gy, e1);
+      }
+      // 頭上浮著的能量結晶（像王冠的碎片）
+      let topY = GH;
+      for (let gx = HX - 10; gx <= HX + 10; gx++) for (let gy = 0; gy < GH; gy++) if (inGrid(gx, gy) && grid[gy][gx]) { topY = Math.min(topY, gy); break; }
+      const shard = (cx, bottom, h, w) => {
+        for (let y = 0; y < h; y++) {
+          const half = Math.round(w * (y < h * 0.45 ? y / (h * 0.45) : (h - 1 - y) / (h * 0.55)));
+          for (let dx = -half; dx <= half; dx++) {
+            const gy = bottom - h + 1 + y, gx = cx + dx;
+            if (!inGrid(gx, gy) || grid[gy][gx]) continue;
+            put(gx, gy, dx === 0 && y < h - 2 ? e2 : dx < 0 ? e1 : e0);
+          }
+        }
+      };
+      const sb = topY - 3;
+      if (sb > 6) { shard(HX, sb, Math.min(11, sb), 2); if (twin) { shard(HX - 6, sb + 1, Math.min(7, sb), 1); shard(HX + 5, sb + 1, Math.min(7, sb), 1); } }
+      // 身邊漂浮的碎晶
+      const sides = [[-1, 0.42], [1, 0.58], [-1, 0.7]];
+      for (const [dir, f] of sides.slice(0, twin ? 3 : 2)) {
+        const gy = Math.round(oy + H * f);
+        let edge = dir < 0 ? GW : -1;
+        for (let gx = 0; gx < GW; gx++) if (grid[gy] && grid[gy][gx]) edge = dir < 0 ? Math.min(edge, gx) : Math.max(edge, gx);
+        if (edge < 0 || edge >= GW) continue;
+        const sx = edge + dir * ri(ar, 6, 9);
+        if (sx > 2 && sx < GW - 3) shard(sx, gy + 2, 5, 1);
+      }
+    }
+
     /* 走路：左腳或右腳抬起一格 */
     if (opts.step && base.feet) {
       for (let gy = oy + H - 6; gy <= oy + H - 1; gy++) for (let gx = ox; gx < ox + W; gx++) {
@@ -31209,6 +31322,12 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       // 帥氣版：鱗片／肌理（小小的弧形，一排錯開一排）
       else if (cool && T === body && ((y % 7 === 0 && (x + Math.floor(y / 7) * 4) % 8 < 3) || (y % 7 === 6 && (x + Math.floor(y / 7) * 4) % 8 === 7) || (y % 7 === 6 && (x + Math.floor(y / 7) * 4) % 8 === 3))) shaded[y][x] = T.mid;
     }
+    // 覺醒：背光的邊（右側、下側）打上能量色的輪廓光
+    if (awake) for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) {
+      if (!grid[y][x] || isEN.has(grid[y][x])) continue;
+      const empty = (xx, yy) => xx < 0 || yy < 0 || xx >= GW || yy >= GH || !grid[yy][xx];
+      if (empty(x + 1, y) || (empty(x + 1, y + 1) && empty(x, y + 1) && x > CX)) shaded[y][x] = EN[1];
+    }
     // 部位之間的分界線：前面的東西蓋在身體上時，身體那一側畫深色線
     for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) {
       const o = objAt(x, y);
@@ -31227,6 +31346,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       for (const [dx, dy] of [[0, -1], [-1, 0], [1, 0], [0, 1]]) {
         const nx = x + dx, ny = y + dy;
         if (nx < 0 || ny < 0 || nx >= GW || ny >= GH || !grid[ny][nx]) continue;
+        if (pixSet.has(grid[ny][nx])) continue; // 圖本身已經有外框
         const o = REG.get(grid[ny][nx]);
         col = o && !look.shiny ? o.T.outline : outline;
         break;
@@ -31234,6 +31354,16 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       if (col) out[y][x] = col;
     }
     const aura = look.parts.aura ? makeAura(look.parts.aura, out, look, base, oy, opts.phase || 0) : [];
+    // 覺醒：外框外面再一圈能量光邊
+    if (awake) {
+      const seen = new Set(aura.map(c => c.y * GW + c.x));
+      for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) {
+        if (out[y][x]) continue;
+        let near = false;
+        for (const [dx, dy] of [[0, -1], [-1, 0], [1, 0], [0, 1]]) { const nx = x + dx, ny = y + dy; if (nx >= 0 && ny >= 0 && nx < GW && ny < GH && out[ny][nx]) { near = true; break; } }
+        if (near && !seen.has(y * GW + x)) aura.push({ x, y, c: EN[(x + y + (opts.phase || 0)) % 3 === 0 ? 2 : 1], a: .75 });
+      }
+    }
     return { grid: out, aura, floats: !!base.floats, feet: !!base.feet };
   }
 
@@ -31337,9 +31467,39 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
     return big;
   }
 
+  /* ---------- 最終進化的專屬畫像（monster-legends.js） ----------
+   * 有專屬畫像的怪獸，最終進化時改用那張圖（192×176，比一般造型細兩倍）。 */
+  const LEG = () => global.MONSTER_LEGENDS || {};
+  const LEG_RES = 2; // 專屬畫像一格 = 一般造型半格
+  const legendOf = (look) => look.legend && LEG()[look.legend];
+  const legCanvas = new Map();
+  function legendImage(L) {
+    let c = legCanvas.get(L);
+    if (c) return c;
+    c = document.createElement('canvas'); c.width = L.w; c.height = L.h;
+    const x = c.getContext('2d');
+    const A = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
+    L.rows.forEach((row, y) => { for (let i = 0; i < row.length; i++) if (row[i] !== '.') { x.fillStyle = L.pal[A.indexOf(row[i])]; x.fillRect(i, y, 1, 1); } });
+    legCanvas.set(L, c);
+    return c;
+  }
+  function drawLegend(canvas, look, L, opts) {
+    const ctx = canvas.getContext('2d'), img = legendImage(L);
+    const W = canvas.width, Hc = canvas.height, pad = opts.pad == null ? 0.06 : opts.pad;
+    // 跟一般造型同一個 px 時，專屬畫像一格是半個 px
+    const px = opts.px ? opts.px / LEG_RES : Math.min(W * (1 - pad * 2) / L.w, Hc * (1 - pad * 2) / L.h);
+    ctx.clearRect(0, 0, W, Hc); ctx.imageSmoothingEnabled = false;
+    const w = L.w * px, h = L.h * px, bottom = Hc - Math.round(Hc * pad);
+    if (opts.shadow !== false) { ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.beginPath(); ctx.ellipse(W / 2, bottom - px, w * 0.36, px * 6, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.drawImage(img, Math.round(W / 2 - w / 2), Math.round(bottom - h), w, h);
+    return { px: px * LEG_RES };
+  }
+
   /* ---------- 畫到 canvas ---------- */
   function draw(canvas, look, opts = {}) {
     if (look.epic) return global.MonsterEpic.draw(canvas, look, opts);
+    const L = legendOf(look);
+    if (L) return drawLegend(canvas, look, L, opts);
     const ctx = canvas.getContext('2d');
     const { grid, floats, aura } = compose(look, opts);
     let x0 = GW, x1 = -1, y0 = GH, y1 = -1;
@@ -31391,6 +31551,12 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   /* 動畫用：把每一格畫成 1px 的小圖，舞台再放大 */
   function frames(look) {
     if (look.epic) return global.MonsterEpic.frames(look);
+    const L = legendOf(look);
+    if (L) {
+      const img = legendImage(L);
+      // 專屬畫像比一般造型細兩倍（res 4），整體再縮一點，才不會大到塞不進舞台
+      return { normal: img, blink: img, stepA: img, stepB: img, auras: [], floats: false, feet: false, GW: L.w, GH: L.h, CX: L.w / 2, FLOOR: L.h - 1, res: 4, legend: true, factor: SIZES[look.size][1] * 0.8 };
+    }
     const mk = (opts) => {
       const { grid, aura, floats, feet } = compose(look, opts);
       const c = document.createElement('canvas');
@@ -31454,6 +31620,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
     evo.size = Math.min(SIZES.length - 1, look.size + 1);
     if (!look.monster && R.cool && look.style !== 'cool') evo.base = R.cool.base;
     evo.style = 'cool';
+    if (look.monster && LEG()[look.monster]) evo.legend = look.monster;
     const coolList = (cat) => (cat === 'aura' ? (R.cool ? R.cool.auras : ['flame', 'frost', 'lightning', 'sunring', 'dark']) : (R.parts[cat] || [])).filter(id => !CUTE_ONLY.has(id));
     const give = (cat) => {
       const list = coolList(cat);
@@ -31461,12 +31628,14 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       const id = pick(r, list), p = P[id];
       evo.parts[cat] = id;
       const h = p.hue ? hueFrom(r, p.hue) : r() * 360;
-      evo.partColors[cat] = p.dark ? [h, ri(r, 20, 45), ri(r, 22, 32)] : [h, ri(r, 55, 85), ri(r, 52, 64)];
+      // 翅膀、披風用深色（跟身體同色系），才不會變成一大片亮色搶走主角
+      evo.partColors[cat] = p.dark || cat === 'wing' ? [p.hue ? h : look.body[0] + ri(r, -20, 20), ri(r, 25, 45), ri(r, 20, 30)] : [h, ri(r, 55, 85), ri(r, 52, 64)];
       return true;
     };
     // 可愛型的氣勢（愛心、泡泡）換成帥氣的
     if (!evo.parts.aura || ['sparkle', 'hearts', 'bubbles'].includes(evo.parts.aura)) give('aura');
-    const empty = ['horn', 'head', 'weapon', 'wing'].filter(cat => !evo.parts[cat] && coolList(cat).length);
+    const blocked = (pixBase(look.monster) || {}).no || [];
+    const empty = ['horn', 'head', 'weapon', 'wing'].filter(cat => !evo.parts[cat] && coolList(cat).length && !blocked.includes(cat));
     for (let i = 0; i < 2 && empty.length; i++) give(empty.splice(Math.floor(r() * empty.length), 1)[0]);
     return evo;
   }
@@ -31474,7 +31643,8 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   global.MonsterArt = {
     roll, rollMonster, evolve, draw,
     monsterBases: () => MONSTER_BASES, compose, describe, rollRace, comboCount, frames,
-    styleName: (look) => (look.style === 'cool' ? '帥氣' : '可愛') + (look.form === 2 ? '・進化' : ''),
+    styleName: (look) => (look.style === 'cool' ? '帥氣' : '可愛') + (look.legend && LEG()[look.legend] ? '・最終型態' : look.form === 2 ? '・進化' : ''),
+    hasLegend: (id) => !!LEG()[id],
     coolBases: Object.keys(RACES).filter(k => RACES[k].cool).map(k => ({ key: k, base: RACES[k].cool.base, chance: RACES[k].cool.chance })),
     races: Object.keys(RACES).map(k => ({ key: k, name: RACES[k].name, weight: RACES[k].weight })),
     sizeName: (look) => SIZES[look.size][0],
@@ -32550,7 +32720,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       this.f = global.MonsterArt.frames(look);
       this.mpx = Math.max(2, Math.round(this.cell * this.f.factor * (this.f.epic ? 0.62 : 1)));
       // mpx 是動作用的單位（舊格子大小），dpx 是真正畫一格的大小
-      this.dpx = Math.max(1, Math.round(this.cell * this.f.factor * (this.f.res ? 0.75 : 1)));
+      this.dpx = this.f.res === 4 ? Math.max(0.5, this.cell * this.f.factor * 0.375) : Math.max(1, Math.round(this.cell * this.f.factor * (this.f.res ? 0.75 : 1)));
       const prevX = this.a ? this.a.x : this.c.width / 2;
       this.a = { x: prevX, face: 1, act: 'idle', at: 0, wait: 1.2 + this.rand() * 1.5, blinkIn: 1.5, blinkT: 0, auraI: 0, auraT: 0 };
       this.play('jump');
@@ -32744,7 +32914,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       const gy = this.groundPx();
       // 影子
       ctx.fillStyle = 'rgba(0,0,0,.25)';
-      const sw = (f.res ? this.dpx * 17 : mpx * (f.epic ? 16 : 9)) * Math.max(0.4, 1 - lift / (mpx * 20)) * (f.floats ? 0.7 : 1);
+      const sw = (f.res ? this.dpx * 17 * f.res / 2 : mpx * (f.epic ? 16 : 9)) * Math.max(0.4, 1 - lift / (mpx * 20)) * (f.floats ? 0.7 : 1);
       ctx.beginPath(); ctx.ellipse(a.x, gy - mpx * 0.3, sw, mpx * 1.4, 0, 0, 6.29); ctx.fill();
 
       ctx.save();
