@@ -329,6 +329,11 @@ button, .toggle, .choice, .speeds button { touch-action: manipulation; -webkit-t
 }
 
 .ln.major .txt { font-weight: 500; }
+.stat .bar { position: relative; }
+.stat .bar .cap { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--c-bond, #e58fb0); border-radius: 1px; }
+.stat .val .tg { font-size: 10px; color: var(--gold, var(--lantern)); margin-left: 2px; }
+.chip.trait-gift { border-color: var(--gold, var(--lantern)); color: var(--gold, var(--lantern)); }
+.chip.trait-weak { border-color: var(--c-bond, #e58fb0); color: var(--c-bond, #e58fb0); }
 .ln.major .when::after { content: "大事"; display: block; font-size: 11px; color: var(--lantern); letter-spacing: .1em; }
 .ln.strat .txt { font-size: 13.5px; color: var(--mist); }
 .ln.omen .txt { color: var(--gold); font-style: italic; }
@@ -36429,7 +36434,8 @@ function applyEff(s, eff, out) {
     if (CNT[k]) { addCounter(s, k, eff[k], out); continue; }
     if (k === 'food') { s.food = Math.max(0, (s.food || 0) + eff[k]); continue; }
     if (s.st[k] == null) continue;
-    const b = s.st[k]; s.st[k] = clamp(b + eff[k], 0, 100);
+    const b = s.st[k]; s.st[k] = clamp(b + traitDelta(s, k, eff[k]), 0, 100);
+    if (s.trait && s.trait.weak === k) s.st[k] = Math.min(s.st[k], Math.max(b, WEAK_CAP[k]));
     if (s.st[k] !== b) out.push([k, s.st[k] - b]);
   }
   s.peakInf = Math.max(s.peakInf, s.st.inf);
@@ -36488,6 +36494,100 @@ function moveHab(s) {
 }
 
 /* ===================== 一生 ===================== */
+/* ===================== 天生特質：殘缺與天才 =====================
+   出生時小機率：殘缺（某項能力很低、而且練不上去）或天才（某項能力特別高、成長加倍），極少數兩個都有。
+   殘缺的怪獸會在另一項能力上「找到自己的方法」：那一項成長比較快，長大後還有一次發光的時刻。 */
+const TRAIT_P = { weak: 0.05, gift: 0.05, both: 0.01 };
+const WEAK_CAP = { str: 10, int: 10, hp: 50, hide: 10, inf: 10, bond: 10 };
+const WEAK_ALT = { str: 'int', int: 'bond', hp: 'bond', hide: 'inf', inf: 'hide', bond: 'str' };
+const TRAIT = {
+  weak: {
+    str: { name: '天生沒力氣', birth: ['你出生的時候，連自己的蛋殼都推不開，是旁邊一隻路過的甲蟲幫你頂開的。你的力氣，好像天生就比別人小一號。'],
+      month: ['大家比賽搬石頭，你搬起一顆小石子就滿頭大汗。不過你發現，用樹枝當槓桿，可以撬起比你大十倍的石頭。', '你拿不動大木棒，所以你學會了用繩子、滑輪和一點點聰明。', '有人笑你拿不動東西。你想了想，把那個東西放到斜坡上，它自己就滾過去了。'],
+      glow: '那一年，一塊大石頭擋住了全村唯一的水源。大力氣的怪獸們推了三天都推不動。你拿出這輩子研究的槓桿和繩子，只用一根小指頭，就讓石頭慢慢滑開了。大家第一次發現：力氣小的你，其實一直在用另一種方式變強。' },
+    int: { name: '天生腦袋轉得慢', birth: ['你出生後的第一件事，是對著自己的影子打招呼，打了一整個下午。你的腦袋轉得比別人慢一點，但你笑得比誰都開心。'],
+      month: ['數到十這件事，你今年還是常常數到七就忘記。但你記得每一個朋友的生日。', '別人花一天學會的事，你花了一個月。可是你學會之後，就再也不會忘。', '你又迷路了。不過每次迷路，你都會多交到一個朋友。'],
+      glow: '那一年，一隻很聰明的怪獸難過到不想說話，大家講了一堆大道理都沒用。你什麼都沒說，只是坐在牠旁邊，陪牠看了一整晚的星星。後來牠說，那是牠這輩子聽過最好的安慰。' },
+    hp: { name: '天生體弱', birth: ['你出生的時候小小的、軟軟的，一陣風就能讓你打噴嚏。照顧你的老怪獸說：「這孩子要多被疼一點。」'],
+      month: ['你今年又感冒了三次。每次生病，都有朋友帶著熱湯來看你。', '你跑不快也跑不遠，所以你看過的風景，都是慢慢走才看得到的那種。', '天氣變冷，你裹著三條毯子。路過的小怪獸們排隊來借你的毯子取暖，結果大家擠成一團，誰都不冷了。'],
+      glow: '那一年冬天特別冷，很多怪獸都病倒了。只有你知道生病的時候需要什麼：哪種草藥最有用、哪首歌最能讓人睡著。你這輩子生過的每一場病，都變成了你照顧別人的本事。' },
+    hide: { name: '天生藏不住', birth: ['你出生的時候，身上就會發出一閃一閃的光，連在被窩裡都像一盞小夜燈。你這輩子大概都藏不住了。'],
+      month: ['玩躲貓貓的時候，你總是第一個被找到。後來大家乾脆讓你當鬼，因為你一靠近，大家就會笑出來。', '你想偷偷溜走，結果全身發光，整座森林的螢火蟲都以為你是牠們的老大。', '藏不住的你，乾脆不藏了。走到哪裡，大家都會跟你打招呼。'],
+      glow: '那一年，一群小怪獸在暴風雨裡迷路了。四周一片漆黑，什麼都看不見，只有你身上的光。你站在山頂上亮了一整夜，所有小怪獸都順著你的光找到了回家的路。' },
+    inf: { name: '天生沒存在感', birth: ['你出生的時候，大家忙著看隔壁的蛋，完全沒注意到你。你自己爬出來，自己找東西吃，自己跟自己說了生日快樂。'],
+      month: ['點名的時候，大家又忘了叫你的名字。不過也因為這樣，你聽到了很多別人聽不到的秘密。', '你站在旁邊很久都沒人發現。一隻蝴蝶停在你頭上，以為你是一朵花。', '勇者們一個一個走過去，沒有一個人看到你。你覺得這是一種超能力。'],
+      glow: '那一年，一群勇者來抓村裡的怪獸。大家都被認出來了，只有你從他們面前大搖大擺地走過去，把被關起來的朋友一隻一隻放了出來。後來大家說：沒人注意到的那一隻，才是真正的英雄。' },
+    bond: { name: '天生怕生', birth: ['你出生的時候，一看到別的怪獸就躲回蛋殼裡。你很怕生，連跟自己的影子對看都會害羞。'],
+      month: ['今年有怪獸想跟你做朋友，你緊張到一直講天氣。對方說：「你好有趣。」你嚇得跑走了。', '你一個人練習了很久很久。沒有朋友陪的日子，你把自己練得很強。', '你在門口放了一盒點心，寫著「請自由取用」。雖然不敢當面送，但你偷偷看著大家吃得很開心。'],
+      glow: '那一年，有一隻小怪獸跟你一樣怕生，一直躲在角落。你懂那種感覺，所以你慢慢走過去，用你這輩子最大的勇氣說了一句：「要不要一起吃點心？」那是你第一次先開口，牠也是。' },
+  },
+  gift: {
+    str: { name: '天生神力', birth: ['你出生的時候，直接把蛋殼踢飛到隔壁山頭，還砸中了一隻正在睡午覺的熊。大家都說，這孩子是天生的大力士。'],
+      month: ['你單手舉起了一棵樹，只是為了幫松鼠拿掛在上面的果子。', '你和一頭大象比賽拔河，大象輸了，還哭著跟你要簽名。'] },
+    int: { name: '天生聰明', birth: ['你出生第三天就學會了說話，第五天開始糾正大人的錯字。大家都說，這孩子腦袋裡裝了一座圖書館。'],
+      month: ['你只看了一眼星星，就算出了明天會不會下雨。結果真的下了。', '大家想不通的謎題，你一邊吃點心一邊就解開了。'] },
+    hp: { name: '天生強壯', birth: ['你出生的時候就壯得像一顆小石頭，被蜜蜂叮了一下，是蜜蜂哭著飛走的。'],
+      month: ['大家都感冒了，只有你在雨中開心地跳舞。', '你從懸崖上滾下來，拍拍身上的土，繼續去吃午餐。'] },
+    hide: { name: '天生隱身', birth: ['你出生的時候，照顧你的老怪獸找了你一整天，最後才發現你一直躺在牠腳邊。你天生就會跟周圍融為一體。'],
+      month: ['勇者在你面前坐下來野餐，吃完還拍了拍你，以為你是一塊石頭。', '你玩躲貓貓從來沒輸過。有一次大家找你找到天黑，只好先回家吃飯。'] },
+    inf: { name: '天生明星', birth: ['你出生的那一天，天上出現了一道彩虹，連隔壁三座山的怪獸都跑來看你。你天生就是大家目光的焦點。'],
+      month: ['你只是打了一個噴嚏，就被吟遊詩人寫成了一首歌。', '有一群小怪獸開始模仿你走路的樣子，還成立了一個後援會。'] },
+    bond: { name: '天生人緣好', birth: ['你出生的時候，四周的小動物都圍過來看你，一隻兔子還把自己的胡蘿蔔送給你當見面禮。你天生就讓人想靠近。'],
+      month: ['你走到哪裡，哪裡就會多出一個朋友。今天是一隻原本很兇的野狼。', '吵架的兩隻怪獸，一看到你走過來，就忘了自己在吵什麼。'] },
+  },
+};
+function rollTrait(s) {
+  const r = R(), keys = Object.keys(STAT);
+  let t = null;
+  if (r < TRAIT_P.both) { const w = pick(keys), g = pick(keys.filter(k => k !== w && k !== WEAK_ALT[w])); t = { weak: w, gift: g }; }
+  else if (r < TRAIT_P.both + TRAIT_P.weak) t = { weak: pick(keys) };
+  else if (r < TRAIT_P.both + TRAIT_P.weak + TRAIT_P.gift) t = { gift: pick(keys) };
+  if (!t) return;
+  s.trait = t;
+  if (t.weak) s.st[t.weak] = t.weak === 'hp' ? Math.min(s.st.hp, rint(35, 45)) : Math.min(s.st[t.weak], rint(1, 5));
+  if (t.gift) s.st[t.gift] = clamp(s.st[t.gift] + rint(18, 25), 0, 100);
+}
+function traitNames(s) { const t = s.trait; if (!t) return []; return [t.gift && TRAIT.gift[t.gift].name, t.weak && TRAIT.weak[t.weak].name].filter(Boolean); }
+/* 能力變化經過這裡：天才成長加倍，殘缺練不上去，殘缺帶來的另一項能力成長多一半 */
+function traitDelta(s, k, d) {
+  const t = s.trait; if (!t || d <= 0) return d;
+  if (t.gift === k) return d * 2;
+  if (t.weak && WEAK_ALT[t.weak] === k) return Math.ceil(d * 1.5);
+  return d;
+}
+function traitCap(s) {
+  const t = s.trait; if (!t || !t.weak) return;
+  const k = t.weak; if (s.st[k] > WEAK_CAP[k]) s.st[k] = WEAK_CAP[k];
+}
+function traitBirthLines(s) {
+  const t = s.trait; if (!t) return [];
+  const out = [];
+  if (t.gift) out.push(['✦ ' + pick(TRAIT.gift[t.gift].birth) + `（天生特質：${TRAIT.gift[t.gift].name}，${STAT[t.gift].name}成長加倍）`, 'big']);
+  if (t.weak) out.push(['✧ ' + pick(TRAIT.weak[t.weak].birth) + `（天生特質：${TRAIT.weak[t.weak].name}，${STAT[t.weak].name}最多只到 ${WEAK_CAP[t.weak]}，但${STAT[WEAK_ALT[t.weak]].name}會長得比較快）`, 'big']);
+  return out;
+}
+/* 每個月小機率出現跟特質有關的小事；殘缺的怪獸成年後有一次發光的時刻 */
+function traitMonthly(s) {
+  const t = s.trait; if (!t || R() > 0.035) return null;
+  const opts = [];
+  if (t.weak) opts.push(...TRAIT.weak[t.weak].month);
+  if (t.gift) opts.push(...TRAIT.gift[t.gift].month);
+  const text = pick(opts.filter(x => !s.usedM.has(x)).concat(opts.length ? [] : ['']));
+  if (!text) return null;
+  s.usedM.add(text);
+  return addLine(s, text, '');
+}
+function traitGlow(s) {
+  const t = s.trait; if (!t || !t.weak || s.flags.trait_glow || !s.alive) return;
+  const stg = stage(s);
+  if (stg !== 'adult' && stg !== 'old') return;
+  if (R() > 0.22) return;
+  s.flags.trait_glow = true;
+  const fx = []; applyEff(s, { [WEAK_ALT[t.weak]]: 6, inf: 4, helped: 1 }, fx);
+  addLine(s, '★ ' + TRAIT.weak[t.weak].glow, 'big', { fx, act: 'happy' });
+  mile(s, `${TRAIT.weak[t.weak].name}的你，在那一年發出了自己的光`, 6);
+}
+
 function makeLife(sp) {
   const habKey = wpick(Object.keys(sp.habs).filter(k => HABS[k]), k => sp.habs[k]);
   const st = {};
@@ -36500,6 +36600,7 @@ function makeLife(sp) {
     milestones: [], alive: true, pending: null, lines: [], cause: '', hurt: null, strat: null, autoStrat: true, bigMonth: 0, omenOk: false,
     get name() { return this.n; }, seed: Math.floor(Math.random() * 2 ** 31), events: 0, peakInf: st.inf, evoHistory: [], tmpFx: null, inYear: false };
   s.element = elementOf(s);
+  rollTrait(s);
   return s;
 }
 function newLife() {
@@ -36536,6 +36637,7 @@ function startYear(s) {
 }
 
 function monthlyLine(s, month) {
+  if (traitMonthly(s)) return;
   const lg = G.MonsterLegacy && G.MonsterLegacy.monthly(s, month);
   if (lg) return addLine(s, lg.text, lg.cls);
   const sg = G.MonsterSaga && G.MonsterSaga.monthly(s, month);
@@ -36803,6 +36905,8 @@ function tryEvolve(s) {
 /* ===================== 年底：進化、死亡、長一歲 ===================== */
 function endYear(s) {
   s.inYear = false;
+  traitCap(s);
+  traitGlow(s);
   tryEvolve(s);
   flushBadges(s);
   if (s.st.hp <= 0 && !(G.MonsterSaga && G.MonsterSaga.rescue(s, 'hurt'))) return die(s, s.hurt || '傷得太重，再也沒有醒來');
@@ -36976,6 +37080,8 @@ if (typeof document !== 'undefined') {
         ${s.keep.mate ? `<span class="chip">伴侶：${esc(s.keep.mate)}</span>` : ''}
         ${s.cnt.offspring ? `<span class="chip">後代 ${s.cnt.offspring}</span>` : ''}
         ${s.strat ? `<span class="chip">策略：${STRATS[s.strat]}</span>` : ''}
+        ${s.trait && s.trait.gift ? `<span class="chip trait-gift">天才・${TRAIT.gift[s.trait.gift].name}</span>` : ''}
+        ${s.trait && s.trait.weak ? `<span class="chip trait-weak">特別的天生・${TRAIT.weak[s.trait.weak].name}</span>` : ''}
         ${G.MonsterSaga ? G.MonsterSaga.chips(s) : ''}
       </div>
       ${G.MonsterSaga ? G.MonsterSaga.profileHtml(s) : ''}
@@ -37034,8 +37140,8 @@ if (typeof document !== 'undefined') {
           ${Object.keys(STAT).map(k => `
             <div class="stat${bump && bump.has(k) ? ' bump' : ''}" style="--c:${STAT[k].c}">
               <span class="lbl">${STAT[k].name}</span>
-              <span class="bar"><i style="width:${s.st[k]}%"></i></span>
-              <span class="val">${s.st[k]}</span>
+              <span class="bar"${s.trait && s.trait.weak === k ? ` title="天生上限 ${WEAK_CAP[k]}"` : ''}><i style="width:${s.st[k]}%"></i>${s.trait && s.trait.weak === k ? `<b class="cap" style="left:${WEAK_CAP[k]}%"></b>` : ''}</span>
+              <span class="val">${s.st[k]}${s.trait && s.trait.gift === k ? '<small class="tg">×2</small>' : ''}</span>
             </div>`).join('')}
         </div>
       </div>
@@ -37259,6 +37365,7 @@ if (typeof document !== 'undefined') {
             <dt>最終型態</dt><dd>${form(s)}</dd>
             <dt>進化</dt><dd>${evoNames.length ? evoNames.join(' → ') : '沒有進化，用原本的樣子活完一生'}</dd>
             <dt>伴侶與後代</dt><dd>${s.keep.mate ? `伴侶 ${esc(s.keep.mate)}` : '沒有伴侶'}・${s.cnt.offspring ? `${s.cnt.offspring} 隻後代` : '沒有後代'}</dd>
+            ${s.trait ? `<dt>天生特質</dt><dd>${traitNames(s).map(esc).join('・')}${s.flags.trait_glow ? '・曾經發出自己的光' : ''}</dd>` : ''}
             <dt>名氣</dt><dd>最高 ${s.peakInf}・擊退勇者 ${s.cnt.heroesBeaten || 0} 次</dd>
           </dl>
           <div class="facts">
@@ -37305,7 +37412,7 @@ if (typeof document !== 'undefined') {
       tier: s.birthSp.tier, oneIn: s.birthSp.oneIn,
       habitat: HABS[s.birthHab].name, scene: ART_SCENE[s.birthHab], look,
       age: s.age, cause: s.cause, epitaph: ep, pct, score, isRecord: rec.isNew,
-      badges: COUNTERS.filter(c => (s.badges[c.id] ?? -1) >= 0).map(c => ({ name: c.badges[s.badges[c.id]], tier: s.badges[c.id] })).concat(G.MonsterSaga ? G.MonsterSaga.cardBadges(sagaInfo) : []),
+      badges: COUNTERS.filter(c => (s.badges[c.id] ?? -1) >= 0).map(c => ({ name: c.badges[s.badges[c.id]], tier: s.badges[c.id] })).concat(traitNames(s).map(n => ({ name: n, tier: 2 }))).concat(G.MonsterSaga ? G.MonsterSaga.cardBadges(sagaInfo) : []),
       evolutions: [s.birthSp.name, ...s.evoHistory],
       goal: s.lifeGoal ? { text: s.lifeGoal.text, done: !!s.goalDone } : null,
       seed: s.seed,
@@ -37428,6 +37535,7 @@ if (typeof document !== 'undefined') {
         addLine(S, `你在${S.hab.name}誕生了，名字叫做「${S.n}」。`, 'big');
         addLine(S, S.sp.desc, 'amb');
         for (const [t, c] of legacyBirth) addLine(S, t, c);
+        for (const [t, c] of traitBirthLines(S)) addLine(S, t, c);
         S.pending = { goal: true, opts: goalOptions() };
         appendLines(); renderProfile(); renderChoice();
         playing = true; lastT = 0;
