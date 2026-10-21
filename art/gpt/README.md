@@ -61,12 +61,18 @@
 ### 妖精之森（fairy）：完成
 已收下全部 16 隻，品質很好，不用修改。
 
-### 惡魔領域（demon）：10 / 15
-已收下：imp、coal_imp、nightmare_sheep、contract_cat、hell_pup、demon_knight、horned_demon、mirror_demon、demon_merchant、balrog。品質很好，不用修改。
+### 惡魔領域（demon）：完成
+已收下全部 15 隻，品質很好，不用修改。
 
-還沒畫：glutton、demon_duke、demon_heir、fallen_angel、demon_lord。
+### 龍之谷（dragon）：11 / 14
+已收下：wyvern、earth_drake、swamp_dragon、red_dragon、ice_dragon、forest_dragon、thunder_dragon、gold_dragon、crystal_dragon、dragon_king、time_dragon。品質很好，不用修改。
+
+退回重畫：cave_dragon、black_dragon、origin_dragon（見下面待辦）。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
+| dragon/cave_dragon.png | 整隻是深灰色的碎點，臉和眼睛跟身體混在一起，縮小後看不出頭在哪裡 | 臉部（眼睛、鼻子、嘴巴）用比較亮的顏色和清楚的黑框；身體可以保留岩石感，但碎點少一點、色塊大一點。眼睛要有白色反光。 |
+| dragon/black_dragon.png | 黑色身體上的細碎雜點太多，臉和眼睛幾乎看不到 | 黑色鱗片改用大塊的深灰／深紫，加上藍紫色的亮邊；眼睛用亮色（金黃或紅色）加白色反光，頭的輪廓要清楚。 |
+| dragon/origin_dragon.png | 暗紅、深紫的碎點太多，像一團雜訊，看不出臉和身體的形狀 | 傳說級的龍要最帥：輪廓清楚、色塊大、明暗分明；臉和眼睛要最先被看到（亮色眼睛＋白色反光），翅膀和尾巴的邊緣乾淨。 |
 | elemental/pebble_sprite.png | 還沒畫（被跳過） | 照 BRIEF 補畫石精：會走路的灰色小石頭，最明顯的部位是石心。 |
