@@ -42,17 +42,20 @@
 ### 昆蟲軍團（insect）：完成
 已收下全部 24 隻，品質很好，不用修改。（鍬形騎士的長槍由程式畫。）
 
-### 野獸軍團（beast）：29 / 30
-已收下：cave_rat、horn_rabbit、grey_wolf、boar、hedgehog、cave_bat、lizard、hop_frog、tanuki、ferret、skunk、owlbear、sabertooth、crow（重畫版，很清楚）、twohead_dog、giant_eagle、snow_leopard、iron_rhino、giant_ape、moon_deer、fire_fox、griffon、cerberus、nine_fox、pegasus、thunder_wolf、mountain_bear、baize、fenrir。品質很好，不用修改。
+### 野獸軍團（beast）：完成
+已收下全部 30 隻。奇美拉重畫版（獅子頭、羊毛身體、蛇尾巴）很好，不用修改。
 
-退回重畫：chimera（見下面待辦）。
+### 植物軍團（plant）：19 / 20
+已收下：mushroom_kid、mandrake、hop_grass、flytrap、cactus、vine、seed_baby、pumpkin_head、bigmouth_flower、little_treant、thorn_rose、bamboo_samurai、ice_flower、elder_treant、moon_beauty、fruit_tree、divine_tree、forest_colossus、world_tree。品質很好，不用修改。（竹子武士的劍由程式畫。）
 
-### 植物軍團（plant）：4 / 20
-已收下：mushroom_kid、mandrake、hop_grass、flytrap。品質很好，不用修改。
+還沒畫：spore_shroom（毒孢子菇）。
 
-還沒畫：cactus、vine、seed_baby、pumpkin_head、bigmouth_flower、little_treant、spore_shroom、thorn_rose、bamboo_samurai、ice_flower、elder_treant、moon_beauty、fruit_tree、divine_tree、forest_colossus、world_tree。
+### 深海王國（aquatic）：6 / 24
+已收下：merfolk、pincer_crab、little_octopus、kappa、glow_jelly、biter_fish。品質很好，不用修改。（魚人的長槍由程式畫。）
+
+還沒畫：starfish、hermit_crab、koi、mermaid、sea_serpent、shark_man、giant_clam、electric_eel、sea_turtle、seahorse_knight、siren、narwhal、river_catfish、lantern_fish、kraken、island_turtle、great_whale、leviathan。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| beast/chimera.png | 只畫成一隻獅子，尾巴是普通的捲尾巴。BRIEF 寫的是「獅子頭、羊身體、蛇尾巴」，最明顯的部位是蛇尾巴 | 保留獅子頭和鬃毛；身體改成羊（捲捲的羊毛、羊蹄）；尾巴改成一條明顯的蛇（有蛇頭、眼睛、舌頭），蛇頭朝向前方或上方。可以在背上加一個小羊頭（選擇性）。尺寸和站姿照舊。 |
+| （目前沒有） | | |
