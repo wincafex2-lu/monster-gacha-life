@@ -31674,6 +31674,7 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
   const BASE_W = 160, SH = 90;
   // SW 是目前場景的寬度（格子）。一般 160；橫幅可以更寬，固定位置的東西用 X() 依比例攤開，大小不變。
   let SW = BASE_W;
+  const HOP = 0.62; // 沒腳的怪獸跳一下要幾秒
   const X = (x) => Math.round(x * SW / BASE_W);
   const DX = (x) => X(x) - x; // 一整組東西一起平移用
 
@@ -32721,6 +32722,8 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       this.mpx = Math.max(2, Math.round(this.cell * this.f.factor * (this.f.epic ? 0.62 : 1)));
       // mpx 是動作用的單位（舊格子大小），dpx 是真正畫一格的大小
       this.dpx = this.f.res === 4 ? Math.max(0.5, this.cell * this.f.factor * 0.375) : Math.max(1, Math.round(this.cell * this.f.factor * (this.f.res ? 0.75 : 1)));
+      // GPT 畫的身體比較大，縮到跟程式畫的差不多
+      if (this.f.pixScale && this.f.pixScale < 1) this.dpx = Math.max(0.5, this.dpx * this.f.pixScale);
       const prevX = this.a ? this.a.x : this.c.width / 2;
       this.a = { x: prevX, face: 1, act: 'idle', at: 0, wait: 1.2 + this.rand() * 1.5, blinkIn: 1.5, blinkT: 0, auraI: 0, auraT: 0 };
       this.play('jump');
@@ -32766,7 +32769,11 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
       const speed = 55 * this.f.factor;
       if (a.act === 'walk') {
         const d = a.tx - a.x;
-        if (Math.abs(d) < 2) this.toIdle(); else a.x += Math.sign(d) * Math.min(Math.abs(d), speed * dt);
+        // 沒有腳的（史萊姆、蟲、章魚…）用跳的前進：只有在空中才往前移動，落地時停一下
+        const hop = !this.f.feet && !this.f.floats && !this.f.anim;
+        const u = (a.at / HOP) % 1, air = u > 0.18 && u < 0.86;
+        if (Math.abs(d) < 2 && (!hop || !air)) this.toIdle();
+        else if (!hop || air) a.x += Math.sign(d) * Math.min(Math.abs(d), speed * dt * (hop ? 1.5 : 1));
       }
       if (a.act === 'jump' && a.at > 0.85) this.toIdle();
       if (a.act === 'happy' && a.at > 0.75) this.toIdle();
@@ -32890,9 +32897,15 @@ window.EVENT_DATA = {"common": {"_說明": "每年大事件（全種族共用）
         } else if (f.floats) {
           lift = (Math.sin(t * 2) + 1) * mpx * 1.5;
         } else {
-          const u = (a.at / 0.4) % 1;
-          lift = Math.sin(u * Math.PI) * mpx * 4;
-          if (u < 0.12 || u > 0.9) { ky = 0.9; kx = 1.08; }
+          // 彈跳：蹲下蓄力 → 拉長跳起 → 空中變圓 → 落地壓扁
+          const u = (a.at / HOP) % 1;
+          if (u < 0.18) { const k = Math.sin(u / 0.18 * Math.PI); ky = 1 - 0.16 * k; kx = 1 + 0.12 * k; }
+          else if (u < 0.86) {
+            const v = (u - 0.18) / 0.68;
+            lift = 4 * v * (1 - v) * mpx * 7;
+            const st = v < 0.35 ? 1 - v / 0.35 : v > 0.75 ? (v - 0.75) / 0.25 : 0;
+            ky = 1 + 0.1 * st; kx = 1 - 0.07 * st;
+          } else { const k = Math.sin((u - 0.86) / 0.14 * Math.PI); ky = 1 - 0.2 * k; kx = 1 + 0.15 * k; }
         }
       }
       if (a.act === 'jump') {
