@@ -36,11 +36,11 @@
 ### 史萊姆軍團（slime）：完成
 已收下全部 30 隻，品質很好，不用修改。
 
-### 哥布林部落（goblin）：18 / 25
-已收下：goblin、tiny_goblin、forest_goblin、cave_goblin、hat_goblin、junk_goblin、egg_goblin、drum_goblin、cook_goblin、snow_goblin、goblin_archer、goblin_mage、wolf_rider、kobold、tinker_goblin、merchant_goblin、hobgoblin、orc。品質很好，手都空著，不用修改。
+### 哥布林部落（goblin）：20 / 25
+已收下：goblin、tiny_goblin、forest_goblin、cave_goblin、hat_goblin、junk_goblin、egg_goblin、drum_goblin、cook_goblin、snow_goblin、goblin_archer、goblin_mage、wolf_rider、kobold、tinker_goblin、merchant_goblin、hobgoblin、orc、ogre、troll。品質很好，手都空著，不用修改。
 （弓、鼓、蛋、扳手這些手持物由程式畫，所以不用補。）
 
-還沒畫：ogre、troll、inventor_goblin、goblin_shaman、hill_giant、cyclops、goblin_king。
+還沒畫：inventor_goblin、goblin_shaman、hill_giant、cyclops、goblin_king。
 （goblin_king 要畫王冠；goblin_shaman 手空著，法杖由程式畫。）
 
 ### 待辦（要修改的圖）
