@@ -45,18 +45,18 @@
 ### 野獸軍團（beast）：完成
 已收下全部 30 隻。奇美拉重畫版（獅子頭、羊毛身體、蛇尾巴）很好，不用修改。
 
-### 植物軍團（plant）：19 / 20
+### 植物軍團（plant）：完成
 已收下：mushroom_kid、mandrake、hop_grass、flytrap、cactus、vine、seed_baby、pumpkin_head、bigmouth_flower、little_treant、thorn_rose、bamboo_samurai、ice_flower、elder_treant、moon_beauty、fruit_tree、divine_tree、forest_colossus、world_tree。品質很好，不用修改。（竹子武士的劍由程式畫。）
 
-還沒畫：spore_shroom（毒孢子菇）。
+毒孢子菇（spore_shroom）由泓轉交，已收下，很好。
 
 ### 深海王國（aquatic）：完成
 已收下全部 24 隻。錦鯉、河神鯰、巨鯨的重畫版都很好。
 
-### 元素之環（elemental）：17 / 18
+### 元素之環（elemental）：完成
 已收下：spark_sprite、droplet_sprite、breeze_sprite、frost_sprite、thunder_ball、fire_elemental、water_elemental、wind_elemental、stone_golem、mimic、lava_giant、thunderbird、gargoyle、storm_spirit、phoenix、crystal_golem、element_king。品質很好，不用修改。
 
-還沒畫：pebble_sprite（石精，被跳過了，請補上）。
+石精（pebble_sprite）由泓轉交，已收下，很好。
 
 ### 妖精之森（fairy）：完成
 已收下全部 16 隻，品質很好，不用修改。
@@ -70,11 +70,10 @@
 ### 異界來客（otherworld）：完成
 已收下全部 6 隻：lost_alien、void_eye、clock_rabbit、stardust_traveler、dream_whale、genesis。品質很好，不用修改。
 
-### 全部進度：238 / 240
-只差兩隻（見下面待辦）：plant/spore_shroom（毒孢子菇）、elemental/pebble_sprite（石精）。
+### 全部進度：240 / 240
+全部 240 隻都收齊了，謝謝！
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| plant/spore_shroom.png | 還沒畫（被跳過） | 照 BRIEF 補畫毒孢子菇：綠色系的蘑菇，最明顯的部位是孢子（菇傘上冒出一顆顆孢子），一副要打噴嚏的樣子。 |
-| elemental/pebble_sprite.png | 還沒畫（被跳過） | 照 BRIEF 補畫石精：會走路的灰色小石頭，最明顯的部位是石心。 |
+| （目前沒有） | | |
