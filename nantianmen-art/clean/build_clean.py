@@ -21,11 +21,15 @@ man = json.load(open(mpath)) if os.path.exists(mpath) else {}
 done = 0
 OVR = {'egg-rare__idle.png': {'T1': 7, 'holes': False},
        # background layers: remove every enclosed pocket of background colour (gaps between bamboo, inside railings)
-       **{f: {'allholes': 12} for f in ['bg-bamboo__mid.png', 'bg-palace__far.png', 'bg-palace__mid.png', 'bg-palace__ground.png', 'bg-cloud__far.png', 'bg-cloud__mid.png', 'bg-cloud__ground.png', 'bg-town__mid.png']}}   # pale highlight touches the edge with no outline
+       **{f'bg-{a}__ground.png': {'bgsample': 'top', 'holes': False} for a in 'bamboo herb town volcano cloud palace'.split()},
+       **{f: {'allholes': 12} for f in ['bg-bamboo__mid.png', 'bg-palace__far.png', 'bg-palace__mid.png', 'bg-cloud__far.png', 'bg-cloud__mid.png', 'bg-town__mid.png']}}   # pale highlight touches the edge with no outline
 for f, (b, sha) in sorted(chosen.items()):
     if f.endswith('__sky.png'): continue
     if man.get(f, {}).get('raw') == sha and os.path.exists(os.path.join(OUT, f)): continue
-    im = Image.open(io.BytesIO(git('cat-file', 'blob', sha, binary=True)))
+    try:
+        im = Image.open(io.BytesIO(git('cat-file', 'blob', sha, binary=True))); im.load()
+    except Exception as e:
+        print('BROKEN', f, b, e); continue
     if f.endswith('__full.png'):   # whole scenes: keep as drawn
         im.save(os.path.join(OUT, f), optimize=True); man[f] = {'raw': sha, 'branch': b}; done += 1; print('copied', f, b); continue
     keyout(im, crop=not f.startswith('bg-'), **OVR.get(f, {})).save(os.path.join(OUT, f), optimize=True)

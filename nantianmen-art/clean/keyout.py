@@ -2,7 +2,7 @@ import sys, numpy as np
 from PIL import Image
 from scipy import ndimage as nd
 
-def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True, allholes=False):
+def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True, allholes=False, bgsample='border'):
     im = im.convert('RGBA'); A = np.asarray(im).astype(np.float32)
     rgb = A[..., :3]; alpha0 = A[..., 3]
     if (alpha0 < 20).mean() > 0.2:          # already transparent
@@ -10,11 +10,12 @@ def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True, allholes=False):
     else:
         H, W = rgb.shape[:2]
         border = np.concatenate([rgb[:3].reshape(-1, 3), rgb[-3:].reshape(-1, 3), rgb[:, :3].reshape(-1, 3), rgb[:, -3:].reshape(-1, 3)])
+        if bgsample == 'top': border = rgb[:3].reshape(-1, 3)   # ground layers: only the top edge is background
         bg = np.median(border, 0)
         d = np.abs(rgb - bg).max(2)
         near = d < T1
         lab, n = nd.label(near)
-        edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
+        edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]) if bgsample != 'top' else lab[0])
         bgm = np.isin(lab, edge[edge > 0])
         # enclosed flat holes (gaps between legs/arms): large, very flat, very close to bg
         if n and holes:

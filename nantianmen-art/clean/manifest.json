@@ -52,8 +52,8 @@
 "raw": "fe8ec64b06f7340c3672e6c609afe58a103b8669"
 },
 "bg-bamboo__ground.png": {
-"branch": "art/nantianmen-bamboo-20261024",
-"raw": "c78bfe5cbf99b2c7d82bbd21389acbe70ddb0087"
+"branch": "art/nantianmen-bg",
+"raw": "b2ef77d797409408e4ae383a58d06c40da9cd81a"
 },
 "bg-bamboo__mid.png": {
 "branch": "art/nantianmen-bamboo-20261024",
@@ -65,7 +65,7 @@
 },
 "bg-cloud__ground.png": {
 "branch": "art/nantianmen-bg",
-"raw": "d2b013a4b02850690b40cbedead431a106d87199"
+"raw": "88e49aceaf2a7bcb14c78b00bc8b8447cdaba085"
 },
 "bg-cloud__mid.png": {
 "branch": "art/nantianmen-bg",
@@ -81,7 +81,7 @@
 },
 "bg-herb__ground.png": {
 "branch": "art/nantianmen-bg",
-"raw": "2d7ea42298282f6e68a798379283662ed8d4b936"
+"raw": "12a23b67dece7a6f44f2d327b151d86f6c699007"
 },
 "bg-herb__mid.png": {
 "branch": "art/nantianmen-bg",
@@ -101,7 +101,7 @@
 },
 "bg-palace__ground.png": {
 "branch": "art/nantianmen-bg",
-"raw": "3044612a6acdecd87002935c5037ee1094f89380"
+"raw": "21598e4a151b46c228822c9b40a978c39471b884"
 },
 "bg-palace__mid.png": {
 "branch": "art/nantianmen-bg",
@@ -113,7 +113,7 @@
 },
 "bg-town__ground.png": {
 "branch": "art/nantianmen-bg",
-"raw": "69ee3611bfa1311faea89e7ed94f5b92d3c5ec0a"
+"raw": "31f280718ba2320ee36d04a3ef744417dc46d6fb"
 },
 "bg-town__mid.png": {
 "branch": "art/nantianmen-bg",
@@ -125,7 +125,7 @@
 },
 "bg-volcano__ground.png": {
 "branch": "art/nantianmen-bg",
-"raw": "f6b8a3d775a4bd09d85c695abb36b587d6ae1374"
+"raw": "7134c211b5c84bda84888510842c5231f6cd3cea"
 },
 "bg-volcano__mid.png": {
 "branch": "art/nantianmen-bg",
@@ -371,6 +371,14 @@
 "branch": "art/nantianmen-characters-20261024",
 "raw": "f42d5a618ca0514e5e8d88efea7a2dd39f6c54fe"
 },
+"nezha__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "6d1b801ac4bc3fd04be079a754c7ea1f3e96e6ec"
+},
+"nezha__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "a70d4ead5a7dcf6284ae7ccbaf9e84d24a9ab206"
+},
 "niumo__attack.png": {
 "branch": "art/nantianmen-xiyou",
 "raw": "8d0e01675b1c6c6a2c3e2459819ac51c768e1610"
@@ -502,6 +510,10 @@
 "tuxingsun__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "c821112c9f6068fb34ef4421d69f83f62c916547"
+},
+"ui-paper__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "f99c2fb0b2102e96baedb2288361b4d1a2be8b52"
 },
 "wujing__attack.png": {
 "branch": "art/nantianmen-xiyou",
