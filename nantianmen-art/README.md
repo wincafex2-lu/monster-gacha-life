@@ -65,9 +65,12 @@
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
 寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。**除了 `sky` 以外都要透明背景**（`bg-bamboo__mid` 是白底，之後請記得透明）。
 
+### 10/24 21:30 檢查結果
+已通過：`hero-sword`（攻擊圖換手已修好）、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`、`feng`（飛起來了）、`xuanwu`、`baize`、`qinglong`、`qilin`、魔王 `heixiong`、`shuyao`、`kuilei`、`niutou`、目前上傳的小怪、6 個法器的 `__field` 和 `__xian`、背景 `bg-herb` 4 層、`bg-town` sky/far/ground、`bg-volcano` 4 層、`bg-cloud__sky`、`bg-palace__sky`。
+還沒畫：`tietou`、`shen`、`ye`、`jiuwei`、`taotie`、`fenghuang`、新小怪 `yunduo`、`xianhe`、`leigong`、`shuangjing`、`tianbing`、`shenquan`、`jiahou`、`shishi`、`bg-town__mid`、`bg-cloud` 和 `bg-palace` 其他 3 層。
+
 ### 待辦（要修改的圖）
+**還沒改：`feijian__xian.png` 拉直（下面第一行），請優先處理。**
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
 | `feijian__xian.png`（法器分支） | 加長版的設計很好，但劍看起來不直：劍柄和劍身不在同一條直線上（差幾度），劍身兩邊不平行、越往劍尖越寬，劍尖也偏向上緣。 | 保留設計和長度，重畫成一把筆直的劍：1. 劍首寶玉、劍柄、護手中心、劍身、劍尖全部在同一條直線上。2. 劍身兩邊刃完全平行，到劍尖才收尖，劍尖在劍身正中線上、左右對稱。3. 一樣斜放（劍尖朝右上、約 30 度）。 |
-| `hero-sword__attack.png`（人物分支） | 左右手搞混了：站立圖是**右手**拿劍（身體轉向畫面，所以右手在畫面左側）。攻擊圖往前刺的那隻手接成了左手，往後伸的那隻手手掌、手指的方向又畫得像右手，看起來不合理。 | 站立圖不用改。攻擊圖重畫：**右手**握劍往前刺出（弓步、右肩往前），**左手**往後伸平衡，左手手掌和手指方向要是正確的左手（拇指朝上、掌心朝下或朝外）。臉、服裝、比例和頭的大小照站立圖。 |
-| `feng__idle.png`、`feng__attack.png`（夥伴分支） | 畫的時候規則還沒改，兩張都是站在地上。阿鳳要**飛在空中**（見 BRIEF.md 神獸動作表）。 | 兩張都重畫，外型、配色、臉照現在這版：站立圖是飛在空中，小翅膀張開拍動，腳縮起來；攻擊圖一樣飛著，翅膀往後張到最大、身體鼓起、張嘴往前噴。之後畫鳳凰 `fenghuang` 也要飛著。 |
