@@ -67,6 +67,9 @@
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
 寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。`sky` 以外的層：透明背景最好；**如果透明做出來有彩邊或白毛，直接改用單一純色底交圖，Claude 去背**（泓 10/24 同意）。純色底的顏色：一般用純白 `#FFFFFF`；**雲海 `bg-cloud` 和天宮 `bg-palace` 有白雲、白玉，請改用純洋紅 `#FF00FF`**，畫面裡不要用到洋紅色。底色要整片均勻，不要漸層或紋理。
 
+#### 5b. 遊戲介面（一樣用背景分支 `art/nantianmen-bg`，泓 10/24 決定，不用另外開分支）
+背景畫完後，在**同一個分支** `art/nantianmen-bg` 接著畫介面圖，共 34 張：12 張介面框和按鈕、22 個小圖示。代號、長寬比、樣子見 BRIEF.md「遊戲介面」。檔名是 `images/代號__ui.png`（例：`images/ui-panel__ui.png`、`images/ui-ic-stone__ui.png`）。照表格順序畫，先畫大的框和按鈕，再畫小圖示。圖裡不寫字（只有 `ui-logo` 例外）。
+
 #### 6. 新篇章第 1 批：西遊篇（新分支 `art/nantianmen-xiyou`，泓 10/24 確認）
 清單和外型見 BRIEF.md 最後「新篇章」的第 1 批：夥伴 4 個、首領 5 個（各 `__idle`、`__attack`），小怪 6 個（只畫 `__idle`），背景 3 張（每區只畫 1 張 `__full`）。共 27 張（8＋10＋6＋3）。可以和上面五個分支同時畫。
 第 2 批封神篇、第 3 批山海篇先不要畫，等這裡通知。分支名稱先定好，可以現在就開好：`art/nantianmen-fengshen`（封神篇）、`art/nantianmen-shanhai`（山海篇）。
