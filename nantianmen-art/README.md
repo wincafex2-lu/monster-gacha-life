@@ -30,7 +30,7 @@
 先畫第一區「雜役峰後山」（`bamboo`）的 4 層：`bg-bamboo__sky.png`、`bg-bamboo__far.png`、`bg-bamboo__mid.png`、`bg-bamboo__ground.png`。規則見 BRIEF.md 的「背景」。這一區過關再畫其他區。
 
 ### 法器（可以和背景同時畫，用另一個分支）
-7 個法器各畫一張 `代號__field.png`，清單見 BRIEF.md 的「法器」。先畫 `feijian`（飛劍），過關再畫其他 6 個。
+7 個法器各畫兩張：`代號__field.png`（普通版）和 `代號__xian.png`（仙器版），清單見 BRIEF.md 的「法器」。先畫 `feijian`（飛劍）的兩張，過關再畫其他 6 個。
 
 ### 第一步：試做三個角色
 | 順序 | 檔名 | 內容 |
