@@ -44,7 +44,7 @@
 
 #### 1. 人物（`art/nantianmen-people`）
 每個都畫 `__idle` 和 `__attack` 兩張。
-- 主角另外 5 套服裝：`hero-sword`、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`。臉、身高、比例和 `hero-chores` 完全一樣，只換服裝和髮型（見 BRIEF.md「主角」）。武器一樣是掃帚：站立時單手扛在肩上，攻擊時雙手往前揮。
+- 主角另外 5 套服裝：`hero-sword`、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`。臉、身高、比例和 `hero-chores` 完全一樣，只換服裝、髮型和武器。**這 5 套都不拿掃帚**，各自的武器、站立和攻擊動作見 BRIEF.md「主角」表格。
 - 人物大將：`tietou`（鐵頭師兄）、`shen`（沈傲天）、`ye`（夜無塵）。
 
 #### 2. 夥伴（`art/nantianmen-partners`）
