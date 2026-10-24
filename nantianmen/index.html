@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v23</div>
+    <div class="ver">v24</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1533,7 +1533,7 @@ var IDLE_DATA = (function () {
     { key: 'dan', name: '煉丹', need: ['stage', 20], tab: 'skill', desc: '饕餮吐出一本丹方！之後打妖怪會掉靈草，可以在「功法」分頁煉成限時丹藥。「萬藥田」副本可以採更多。' },
     { key: 'wash', name: '法器洗煉', need: ['stage', 30], tab: 'gear', desc: '靈器以上的法器有隨機加成。用洗煉石可以「洗煉」重新搖，喜歡的那條可以鎖住。「玄鐵礦洞」副本挖得到洗煉石。' },
     { key: 'wuxing', name: '五行', need: ['stage', 40], tab: 'gear', desc: '從雲海仙境開始，妖怪有金木水火土。剋牠傷害 ×1.5，被牠剋只有 ×0.75。法器、夥伴、道袍也有屬性：金剋木、木剋土、土剋水、水剋火、火剋金。用五行精魄可以換法器屬性；「五行秘境」副本拿得到精魄。' },
-    { key: 'awaken', name: '神獸覺醒', need: ['stage', 60], tab: 'pets', desc: '5 星的神獸用神獸精血可以覺醒：攻擊變 1.6 倍，招式更強、冷卻更短。「神獸試煉」副本拿得到精血。' },
+    { key: 'awaken', name: '神獸覺醒', need: ['stage', 60], tab: 'pets', desc: '神獸精血可以指定一隻神獸升星；5 星的神獸再用精血覺醒：攻擊變 1.6 倍，招式更強、冷卻更短。「神獸試煉」副本拿得到精血。' },
     { key: 'gear2', name: '新法器', need: ['stage', 60], tab: 'gear', desc: '煉器爐裡開始煉得出「捆仙繩」和「風火輪」了。' },
     { key: 'gear3', name: '新法器', need: ['stage', 90], tab: 'gear', desc: '煉器爐裡開始煉得出「辟邪鈴」和「聚寶盆」了。' },
     { key: 'gear4', name: '新法器', need: ['stage', 120], tab: 'gear', desc: '煉器爐裡開始煉得出「山河圖」了。' },
@@ -1578,6 +1578,7 @@ var IdleCore = (function (D) {
     eCut: [30, 60], eHp: [60, [1.37, 1.31, 1.22]], eAtk: [14, [1.3, 1.24, 1.16]],
     areaTune: [null, [2.3, 1], [1.8, 1], [0.95, 0.9], [0.8, 0.9], [0.5, 0.75], [0.5, 0.75], [0.6, 0.8], [0.45, 0.7], [0.75, 0.85], [0.7, 0.85], [0.75, 0.85]], eGold: [3, [1.17, 1.17, 1.15]], eXp: [2, [1.165, 1.165, 1.15]],
     // 境界：小突破修為 ×step、力量 ×step；跨大境界（雷劫）修為 ×big、力量 ×big。練氣九層自己一套
+    mobEgg: 0.004, repeatBossEgg: 0.3, starNeed: [1, 1, 2, 2], starBlood: [6, 10, 14, 20],
     xpNeed: [40, 1.56], realmXp: { qi: 1.42, step: 1.39, big: 3 }, realmPow: { qi: 1.19, step: 1.1, big: 1.3 }, offlineEff: 0.8, offlineCap: 12 * 3600
   };
 
@@ -1853,6 +1854,8 @@ var IdleCore = (function (D) {
     S.gold += gold; S.xp += xp; S.kills++;
     var iron = 0;
     if (!e.boss && (e.elite || rnd() < 0.02)) { iron = 1; S.iron += 1; }
+    // 小妖偶爾掉靈獸蛋（副本裡和分身不算）
+    var egg = !e.boss && !e.fake && !R.dun && rnd() < BAL.mobEgg ? 1 : 0; S.eggs += egg;
     var drops = {};
     if (!e.fake) for (var rk in D.RES) {
       var rd = D.RES[rk]; if (!sysOn(rd.sys)) continue;
@@ -1862,7 +1865,7 @@ var IdleCore = (function (D) {
     var herb = drops.herb || 0;
     var kh = 0; equipped().forEach(function (q) { kh += affOf(q.it, 'killHeal'); });
     if (kh && R.hero.hp > 0) heal(R.hero.maxHp * kh);
-    emit('kill', { e: e, gold: gold, xp: xp, iron: iron, herb: herb, drops: drops });
+    emit('kill', { e: e, gold: gold, xp: xp, iron: iron, herb: herb, drops: drops, egg: egg });
     // 倒下時的特性
     if (e.trait === 'poison') { R.hero.poisonT = 2; R.hero.poisonDps = e.atk * 0.5; emit('poison', { e: e }); }
     if (e.trait === 'split') {
@@ -2186,7 +2189,7 @@ var IdleCore = (function (D) {
         // 夥伴不直接給：打倒之後才會出現在靈獸蛋裡
         // 夥伴要從蛋裡抽：這一關打開了哪些夥伴，就多送幾顆蛋
         if (g >= pk0) { rew.pOpen = D.PARTNERS.filter(function (p) { return partnerFromStage(p.key) === g && !S.partners[p.key]; }).map(function (p) { return p.key; }); rew.eggs += rew.pOpen.length; }
-      } else rew.iron = 2;
+      } else { rew.iron = 2; if (b.tier >= 2 && rnd() < BAL.repeatBossEgg) rew.eggs = 1; }  // 再打一次首領也有機會掉蛋
       S.eggs += rew.eggs; S.iron += rew.iron;
       S.stage = g + 1; S.maxStage = Math.max(S.maxStage, S.stage); S.wave = 1; S.farming = false;
       R.hero.hp = R.hero.maxHp;
@@ -2335,6 +2338,10 @@ var IdleCore = (function (D) {
   var AWAKEN = { blood: 30 };
   function awakenText() { return AWAKEN.blood + ' 神獸精血'; }
   function canAwaken(k) { var p = S.pets[k]; return !!p && p.star >= 5 && !p.aw && sysOn('awaken') && (S.blood || 0) >= AWAKEN.blood; }
+  // 神獸精血也能拿來升星（指定哪一隻），重複的蛋不夠的時候用
+  function bloodStarCost(k) { var p = S.pets[k]; return p && p.star < 5 ? BAL.starBlood[p.star - 1] : 0; }
+  function canBloodStar(k) { var c = bloodStarCost(k); return !!c && sysOn('awaken') && (S.blood || 0) >= c; }
+  function bloodStar(k) { if (!canBloodStar(k)) return false; S.blood -= bloodStarCost(k); S.pets[k].star++; if (R) syncTeam(); return true; }
   function awaken(k) { if (!canAwaken(k)) return false; S.blood -= AWAKEN.blood; S.pets[k].aw = 1; return true; }
 
   // ───────── 副本 ─────────
@@ -2508,7 +2515,8 @@ var IdleCore = (function (D) {
     if (p.star >= 5) { S.iron += 5; return { isNew: false, star: 5, maxed: true }; }
     p.dup++;
     var up = false;
-    if (p.dup >= p.star) { p.dup -= p.star; p.star++; up = true; }
+    var need = BAL.starNeed[p.star - 1];  // 升下一星要幾隻重複的（1→2、2→3 各 1 隻，3→4、4→5 各 2 隻）
+    if (p.dup >= need) { p.dup -= need; p.star++; up = true; }
     return { isNew: false, star: p.star, up: up };
   }
   // 饕餮、麒麟、青龍要先打贏牠們的地區首領，才會出現在蛋裡
@@ -2683,7 +2691,7 @@ var IdleCore = (function (D) {
     bn: bn, xb: xb, activeCombos: activeCombos, affOf: affOf, outfitCombo: outfitCombo, sysOn: sysOn, checkSystems: checkSystems,
     wuxingOn: wuxingOn, heroEl: heroEl, wash: wash, washCost: washCost, rerollEl: rerollEl, EL_COST: EL_COST,
     xinPoints: xinPoints, xinUsed: xinUsed, xinUp: xinUp, xinReset: xinReset, brew: brew,
-    AWAKEN: AWAKEN, awakenText: awakenText, canAwaken: canAwaken, study: study, PAGE_COST: PAGE_COST,
+    AWAKEN: AWAKEN, awakenText: awakenText, canAwaken: canAwaken, bloodStarCost: bloodStarCost, canBloodStar: canBloodStar, bloodStar: bloodStar, study: study, PAGE_COST: PAGE_COST,
     DUN_BY: DUN_BY, TIX_MAX: TIX_MAX, dunState: dunState, dunNextTix: dunNextTix, dayEl: dayEl, canDungeon: canDungeon, startDungeon: startDungeon, redeem: redeem, awaken: awaken, rebirth: rebirth, rebirthGain: rebirthGain, canRebirth: canRebirth, peak: peak, eScale: eScale,
     sync: function () { if (R) syncTeam(); }, offline: offline, measureRate: measureRate, newRuntime: function () { R = null; newRuntime(); }
   };
@@ -4447,6 +4455,7 @@ var IdleStage = (function (C, D, ART) {
       burst(k.x, k.y, '#ffe27a', d.e.boss ? 24 : 6, 50, 0.7);
       if (d.e.boss) { fx.shake = 0.4; }
       if (d.iron) addText(k.x, k.top - 14, '+1 玄鐵', '#c7d2e0', 8, 1.2);
+      if (d.egg) { addText(k.x, k.top - 22, '+1 靈獸蛋', '#ffe27a', 9, 1.6); burst(k.x, k.y, '#ffe27a', 10, 30, 0.6); }
       var dy = 0; for (var rk in (d.drops || {})) { dy += 9; addText(k.x, k.top - 14 - dy, '+' + d.drops[rk] + ' ' + D.RES[rk].name, D.RES[rk].color, 7, 1.3); }
     } else if (type === 'heroAtk') {
       fx.rings.push({ kind: 'slash', x: hp.x + 18, y: FEET - 18, t: 0, life: 0.18 });
@@ -5339,13 +5348,13 @@ function IdleFmt(n) {
       h += '</div>';
     });
     h += '</div><div class="sec"><h3>神獸圖鑑 ' + Object.keys(S.pets).length + ' / ' + D.PETS.length + '</h3><span class="btns" style="margin:0"><button class="big" type="button" id="tenBtn" data-act="hatchTen" hidden>十連抽</button><button class="big" type="button" id="hatchBtn" data-act="hatch">孵靈獸蛋</button></span></div>';
-    h += '<p class="note">靈獸蛋從首領身上掉。重複的神獸會升星；每多一隻神獸（就算沒出戰），主角都會變強一點。</p><div class="pets">';
+    h += '<p class="note">靈獸蛋從首領身上掉，小妖也偶爾會掉。重複的神獸會升星（1→2、2→3 各要 1 隻，3→4、4→5 各要 2 隻），神獸試煉開放後也能用神獸精血指定升星；每多一隻神獸（就算沒出戰），主角都會變強一點。</p><div class="pets">';
     D.PETS.forEach(function (p) {
       var own = S.pets[p.key], rar = D.RARITY[p.rar];
       h += '<div class="pet" style="border-left-color:' + rar.color + '">' + petBox(p.key, 2).replace('<canvas', '<canvas' + (own ? '' : ' data-sil="1"')) +
         '<div><div class="pn">' + (own ? (own.aw ? '<span style="color:var(--gold)">覺醒・</span>' : '') + esc(p.name) : '？？？') + '</div><div class="rr" style="color:' + rar.color + '">' + rar.name + (own ? '　' + stars(own.star) : '') + '</div>' +
         '<div class="sk">' + (own ? '<b>' + esc(p.skill) + '</b>：' + esc(p.desc) + '<br>攻擊力 ' + Math.round(C.petPower(p.key) * 100) + '%（照主角算）' : (p.rar === 'epic' && ['taotie', 'qilin', 'qinglong'].indexOf(p.key) >= 0 ? '聽說是某個地區的首領⋯' : '孵蛋才有機會遇到')) + '</div></div>' +
-        (own ? '<div class="act">' + (own.star >= 5 && !own.aw && C.sysOn('awaken') ? '<button class="mini" type="button" data-awaken="' + p.key + '"' + (C.canAwaken(p.key) ? '' : ' disabled') + '>覺醒（' + C.awakenText() + '）</button>' : '') +
+        (own ? '<div class="act">' + (own.star < 5 && C.sysOn('awaken') ? '<button class="mini" type="button" data-bstar="' + p.key + '"' + (C.canBloodStar(p.key) ? '' : ' disabled') + '>升星（' + C.bloodStarCost(p.key) + ' 精血）</button>' : '') + (own.star >= 5 && !own.aw && C.sysOn('awaken') ? '<button class="mini" type="button" data-awaken="' + p.key + '"' + (C.canAwaken(p.key) ? '' : ' disabled') + '>覺醒（' + C.awakenText() + '）</button>' : '') +
           (S.team.indexOf(p.key) >= 0 ? '<span class="note">出戰中</span>' : '<button class="mini go" type="button" data-go="' + p.key + '">出戰</button>') + '</div>' : '') + '</div>';
     });
     return h + '</div>';
@@ -5525,6 +5534,7 @@ function IdleFmt(n) {
     else if (d.dun) { if (C.startDungeon(d.dun)) { save(); render(); } else toast('現在不能進副本（首領戰中、已經在副本裡，或沒有門票）', 3); }
     else if (d.act === 'rebirth') modal('<h2>真的要飛升？</h2><p>靈石、修為、境界、升級、心法、關卡會歸零，回到雜役峰。神獸、法器、夥伴、道袍和各種材料都會留著。</p><p>可以拿到 <b>' + C.rebirthGain() + ' 點仙緣</b>。</p><div class="btns"><button class="big" type="button" data-m="doRebirth">飛升！</button><button class="mini" type="button" data-m="close" style="padding:8px 16px">再想想</button></div>');
     else if (d.wash) washModal(+d.wash);
+    else if (d.bstar) { if (C.bloodStar(d.bstar)) { var bp = C.PET_BY[d.bstar]; toast(bp.name + ' 升到 ' + C.S.pets[d.bstar].star + ' 星！', 2.4); render(); save(); } }
     else if (d.awaken) { if (C.awaken(d.awaken)) { var ap = C.PET_BY[d.awaken]; render(); save(); modal('<h2>' + esc(ap.name) + '覺醒了！</h2><canvas id="awC"></canvas><p>攻擊變 1.6 倍，招式變成「覺醒・' + esc(ap.skill) + '」，更強、冷卻更短。</p><div class="btns"><button class="big" type="button" data-m="close">好帥</button></div>', function (root) { anims.push(showChar(root.querySelector('#awC'), ap.key, 3)); }); } }
     else if (d.act === 'redeem') {
       var inp = $('codeIn'), r = C.redeem(inp.value);
