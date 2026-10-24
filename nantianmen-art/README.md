@@ -51,6 +51,7 @@
 #### 2. 夥伴（`art/nantianmen-partners`）
 每個都畫 `__idle` 和 `__attack` 兩張，照這個順序：`feng`、`xuanwu`、`baize`、`qinglong`、`qilin`、`jiuwei`、`taotie`、`fenghuang`。
 神獸的站立圖和白虎一樣有氣勢（身體壓低或昂首、有神獸特徵的墨色飄毛、火焰或雲氣般的毛髮），不要畫成普通動物。
+夥伴畫完後，接著在同一個分支畫**靈獸蛋** 5 張：`egg-common`、`egg-rare`、`egg-epic`、`egg-legend`、`egg-shell`，只畫 `__idle`（見 BRIEF.md「靈獸蛋」）。
 
 #### 3. 敵人（`art/nantianmen-enemies`）
 - 魔王，畫 `__idle` 和 `__attack` 兩張：`heixiong`、`shuyao`、`kuilei`、`niutou`。
