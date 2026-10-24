@@ -58,6 +58,9 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
 .vers button[aria-pressed="true"] { border-color: var(--jade); color: var(--jade); }
 .meta { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .meta a { color: var(--muted); }
+.same .pic { aspect-ratio: auto; height: 240px; place-items: end center; }
+.same .wide .pic { height: auto; aspect-ratio: 32 / 9; place-items: center; }
+.same .grid:not(.wide) .pic img { max-width: none; max-height: none; width: calc(var(--nw) * 0.16px); height: auto; }
 .hide-miss .slot.miss, .hide-have .slot:not(.miss) { display: none; }
 .empty-note { color: var(--muted); font-size: 0.9rem; margin: 0; }
 </style>
@@ -66,7 +69,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
 <div class="wrap">
   <header>
     <h1>南天門美術圖庫<span class="seal">即時</span></h1>
-    <p class="lead">GPT 上傳到 GitHub 的圖都會出現在這裡，包含所有 <code>art/nantianmen-*</code> 分支和 main。每一格是規格裡應該要有的一張圖，虛線框代表還沒畫。同一張圖在好幾個分支都有時，可以點下面的分支名稱切換。</p>
+    <p class="lead">GPT 上傳到 GitHub 的圖都會出現在這裡，包含所有 <code>art/nantianmen-*</code> 分支和 main。每一格是規格裡應該要有的一張圖，虛線框代表還沒畫。同一張圖在好幾個分支都有時，可以點下面的分支名稱切換。要比較站立和攻擊的大小，請切到「原圖同比例」。</p>
   </header>
 
   <div class="bar">
@@ -74,6 +77,8 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     <div class="seg" id="f-show"><button id="s-all" data-v="all" aria-pressed="true">全部</button><button id="s-have" data-v="have" aria-pressed="false">已到</button><button id="s-miss" data-v="miss" aria-pressed="false">還沒畫</button></div>
     <span class="lab">底色</span>
     <div class="seg" id="f-bg"><button id="b-check" data-v="check" aria-pressed="true">透明格子</button><button id="b-paper" data-v="paper" aria-pressed="false">宣紙</button><button id="b-dark" data-v="dark" aria-pressed="false">深色</button></div>
+    <span class="lab">大小</span>
+    <div class="seg" id="f-size"><button id="z-fit" data-v="fit" aria-pressed="true">填滿格子</button><button id="z-same" data-v="same" aria-pressed="false">原圖同比例</button></div>
     <button class="btn" id="reload" type="button">重新讀取</button>
     <span class="status" id="status">讀取中…</span>
   </div>
@@ -141,7 +146,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     var seen = {}, uniq = vers.filter(function (v) { if (seen[v.sha]) return false; seen[v.sha] = 1; return true; });
     var v = uniq[0];
     var chips = uniq.length > 1 ? '<div class="vers">' + uniq.map(function (u, i) { return '<button type="button" data-src="' + esc(u.url) + '" data-meta="' + esc(u.branch + '|' + kb(u.size) + '|' + u.html) + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(u.branch.replace('art/nantianmen-', '')) + '</button>'; }).join('') + '</div>' : '';
-    return '<div class="slot"><a class="pic" href="' + esc(v.url) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(v.url) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
+    return '<div class="slot"><a class="pic" href="' + esc(v.url) + '" target="_blank" rel="noopener"><img loading="lazy" onload="this.style.setProperty('--nw', this.naturalWidth)" src="' + esc(v.url) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
       '<div class="name">' + esc(label) + '<span class="act">' + esc(ACT[act] || act) + '</span></div><div class="file">' + esc(file) + '</div>' + chips +
       '<div class="meta">' + metaHTML(v.branch, kb(v.size), v.html) + '</div></div>';
   }
@@ -189,6 +194,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
   }
   seg('f-show', function (v) { document.body.classList.toggle('hide-miss', v === 'have'); document.body.classList.toggle('hide-have', v === 'miss'); });
   seg('f-bg', function (v) { document.body.classList.remove('bg-check', 'bg-paper', 'bg-dark'); document.body.classList.add('bg-' + v); });
+  seg('f-size', function (v) { document.body.classList.toggle('same', v === 'same'); });
   $('reload').addEventListener('click', load);
   load();
 })();
