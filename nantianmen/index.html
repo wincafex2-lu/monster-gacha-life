@@ -16,26 +16,40 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Noto+Serif+TC:wght@900&display=swap">
 <style>
-/* 版面：手機直向一欄（上：境界與資源，中：戰鬥畫面，下：分頁面板），電腦置中 560px。夜色墨藍底、金色與玉綠點綴。 */
+/* 版面：直立一欄，整頁剛好一個螢幕高、不會捲動。上：境界與資源；中：戰鬥畫面（4:3，永遠看得到）；
+   下：系統面板（固定高度，只有面板裡面會捲）；最底：分頁按鈕（大拇指按得到）。橫放時這一欄置中，兩邊是墨色。
+   配色：墨石深色底、宣紙色字、金色與朱紅點綴。 */
 :root {
-  --ink: #12131f; --panel: #1b1e30; --panel2: #24283f; --line: #353b5a;
-  --text: #f1ebdd; --muted: #a9a4bb; --gold: #f2c65a; --jade: #5fd6a6; --cinnabar: #e5583f; --sky: #79c6ff;
+  --ink: #15120f; --panel: #221e19; --panel2: #2d2822; --line: #4d4337;
+  --text: #f1ebdd; --muted: #b5aa95; --gold: #e6bd5c; --jade: #5fc79a; --cinnabar: #c3412f; --sky: #79c6ff;
+  --tabh: 60px;
   --display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
   --body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { background: var(--ink); color: var(--text); }
-body { font-family: var(--body); font-size: 15px; line-height: 1.5; margin: 0;
-  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); padding-block: 10px 40px; }
+html, body { background: var(--ink); color: var(--text); height: 100%; overflow: hidden; overscroll-behavior: none; }
+body { font-family: var(--body); font-size: 15px; line-height: 1.5; margin: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; touch-action: manipulation;
+  background: radial-gradient(ellipse at 50% 0%, #2a241d 0%, transparent 60%), radial-gradient(ellipse at 0% 100%, #231d17 0%, transparent 55%), radial-gradient(ellipse at 100% 80%, #1e1a15 0%, transparent 50%), var(--ink); }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 button:disabled { cursor: default; opacity: 0.45; }
-#app { max-width: 560px; margin: 0 auto; display: grid; gap: 10px; }
+#app { position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100vw, 760px); height: 100dvh;
+  display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; grid-template-areas: "head" "stage" "panel" "tabs"; grid-template-columns: minmax(0, 1fr); gap: 8px;
+  padding: max(8px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 0 max(10px, env(safe-area-inset-left, 0px)); }
+@supports not (height: 100dvh) { #app { height: 100vh; } }
+#rotate { display: none; }
+/* 手機橫放太矮，請小朋友轉回直的 */
+@media (orientation: landscape) and (max-height: 500px) {
+  #rotate { display: grid; position: fixed; inset: 0; z-index: 50; place-content: center; gap: 12px; text-align: center; background: var(--ink); font-family: var(--display); font-size: 22px; color: var(--gold); }
+  #rotate span { font-size: 54px; display: block; animation: tilt 1.6s ease-in-out infinite; }
+  @keyframes tilt { 0%, 30% { transform: rotate(90deg); } 60%, 100% { transform: rotate(0deg); } }
+}
+#app > .top { grid-area: head; } #app > .stage { grid-area: stage; } #app > #panel { grid-area: panel; } #app > .tabs { grid-area: tabs; }
 
-.top { display: grid; gap: 8px; }
-.titlebar { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.top { display: grid; gap: 6px; }
+.titlebar { display: none; }
 .title { font-family: var(--display); font-weight: 900; font-size: 22px; letter-spacing: 0.06em; color: var(--gold); text-shadow: 0 2px 0 #5a3d0a; }
 .stagechip { font-size: 13px; color: var(--muted); }
 .realmrow { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; }
@@ -46,7 +60,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 #breakBtn { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 4px 14px; font-weight: 900; }
 #breakBtn.ready { background: var(--gold); color: #2a1d02; border-color: #ffe9a6; animation: glow 1s ease-in-out infinite alternate; }
 @keyframes glow { from { box-shadow: 0 0 0 rgba(242,198,90,0); } to { box-shadow: 0 0 14px rgba(242,198,90,0.9); } }
-.res { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; font-variant-numeric: tabular-nums; }
+.res { display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 14px; font-variant-numeric: tabular-nums; }
 .res b { font-weight: 900; }
 .ic { display: inline-block; width: 12px; height: 12px; margin-right: 4px; vertical-align: -1px; }
 .ic.stone { background: var(--jade); transform: rotate(45deg) scale(.8); box-shadow: inset -3px -3px 0 #2f8c68; }
@@ -79,8 +93,12 @@ button:disabled { cursor: default; opacity: 0.45; }
 .wash label { display: flex; gap: 6px; align-items: center; justify-content: center; font-size: 14px; }
 .ic.iron { background: #9aa4b5; box-shadow: inset -3px -3px 0 #626c7e; border-radius: 2px; }
 
-.stage { position: relative; border-radius: 12px; overflow: hidden; border: 2px solid #2c3150; background: #000; }
-#cv { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; image-rendering: pixelated; image-rendering: crisp-edges; }
+.stage { position: relative; border-radius: 6px; overflow: hidden; border: 2px solid #5a4b38; box-shadow: 0 0 0 1px #000, 0 6px 18px rgba(0,0,0,.5); background: #000;
+  /* 畫面太矮的時候（橫放），戰鬥畫面縮小一點，留至少 260px 給系統面板 */
+  width: min(100%, calc((100dvh - 330px - var(--tabh)) * 4 / 3)); justify-self: center; }
+#cv { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.ver { position: absolute; right: 6px; bottom: 4px; font-size: 10px; color: rgba(255,255,255,.55); text-shadow: 0 1px 2px #000; pointer-events: none; }
+.hud-l .area { font-size: 12px; color: #f6efe0; opacity: .9; }
 .hud-l { position: absolute; left: 8px; top: 6px; font-size: 13px; text-shadow: 0 1px 2px #000, 0 0 3px #000; pointer-events: none; }
 .hud-l b { font-family: var(--display); font-size: 15px; }
 .hud-r { position: absolute; right: 6px; top: 6px; display: flex; gap: 6px; align-items: center; }
@@ -101,12 +119,15 @@ button:disabled { cursor: default; opacity: 0.45; }
 .toast { position: absolute; left: 50%; top: 74px; transform: translateX(-50%); max-width: 90%; background: rgba(12,12,24,.85); border: 1px solid var(--gold); color: var(--text); border-radius: 10px; padding: 4px 12px; font-size: 13px; font-weight: 700; text-align: center; opacity: 0; transition: opacity .25s; pointer-events: none; }
 .toast.show { opacity: 1; }
 
-.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
+.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; margin: 0 -10px; padding: 6px 8px max(6px, env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(#1b1713, #110e0b); border-top: 1px solid var(--line); }
 .tabs button[hidden] { display: none; }
-.tabs button { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 4px; font-weight: 900; font-size: 15px; position: relative; }
-.tabs button[aria-selected="true"] { background: var(--panel2); border-color: var(--gold); color: var(--gold); }
-.tabs .dot { position: absolute; top: 4px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cinnabar); }
-#panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 10px; min-height: 260px; }
+.tabs button { background: transparent; border-radius: 8px; min-height: 48px; padding: 4px 2px; font-family: var(--display); font-weight: 900; font-size: 17px; letter-spacing: .08em; position: relative; color: var(--muted); }
+.tabs button[aria-selected="true"] { color: var(--gold); background: radial-gradient(ellipse at 50% 120%, rgba(195,65,47,.45), transparent 70%); }
+.tabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 3px; height: 4px; border-radius: 3px; background: var(--cinnabar); transform: skewX(-20deg); }
+.tabs .dot { position: absolute; top: 6px; right: 12%; width: 9px; height: 9px; border-radius: 50%; background: var(--cinnabar); box-shadow: 0 0 0 2px #15120f; }
+#panel { background: linear-gradient(180deg, rgba(255,255,255,.025), transparent 120px), var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: grid; gap: 10px; align-content: start;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; min-height: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
 .sec { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
 .sec h3 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 900; }
 .note { color: var(--muted); font-size: 13px; margin: 0; }
@@ -120,7 +141,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 .up .nm small { color: var(--muted); font-weight: 500; margin-left: 6px; }
 .up .val { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .up .val b { color: var(--jade); }
-.buy { min-width: 92px; background: #2f6b55; border-radius: 9px; padding: 5px 8px; font-weight: 900; line-height: 1.2; box-shadow: 0 2px 0 #1b4033; }
+.buy { min-width: 96px; min-height: 48px; background: #2f6b55; border-radius: 6px; padding: 5px 8px; font-weight: 900; line-height: 1.2; box-shadow: 0 2px 0 #1b4033; }
 .buy small { display: block; font-size: 12px; font-weight: 700; color: #d8ffe9; font-variant-numeric: tabular-nums; }
 .buy:disabled { background: #3a3f58; box-shadow: none; }
 .bonus { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 6px; font-size: 13px; }
@@ -136,11 +157,11 @@ button:disabled { cursor: default; opacity: 0.45; }
 .slot .pn { font-weight: 900; font-size: 13px; }
 .stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; font-weight: 400; }
 .stars .off { color: #4a4f6c; }
-.mini { background: #3a3f58; border-radius: 7px; padding: 2px 8px; font-size: 12px; font-weight: 700; }
+.mini { background: #3d362d; border-radius: 6px; padding: 6px 12px; min-height: 36px; font-size: 14px; font-weight: 700; }
 .mini.go { background: #2f6b55; }
 .mini.warn { background: #7a3426; }
-.big { background: var(--gold); color: #2a1d02; border-radius: 10px; padding: 8px 16px; font-weight: 900; font-size: 15px; box-shadow: 0 3px 0 #8a6516; }
-.big:disabled { background: #3a3f58; color: var(--muted); box-shadow: none; }
+.big { background: var(--cinnabar); color: #fff6ea; border-radius: 6px; padding: 10px 18px; min-height: 46px; font-family: var(--display); font-weight: 900; font-size: 17px; letter-spacing: .06em; box-shadow: 0 3px 0 #6e2219, inset 0 0 0 1px rgba(255,255,255,.12); }
+.big:disabled { background: #3d362d; color: var(--muted); box-shadow: none; }
 .pets { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .pet { background: var(--panel2); border-radius: 10px; padding: 8px; display: grid; grid-template-columns: 64px 1fr; gap: 6px; align-items: start; border-left: 4px solid var(--line); }
 .pet .pn { font-weight: 900; }
@@ -176,7 +197,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 
 #modal { position: fixed; inset: 0; background: rgba(5,5,12,.72); display: grid; place-items: center; z-index: 20;
   padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
-.card { background: var(--panel); border: 2px solid var(--gold); border-radius: 14px; padding: 16px; width: min(440px, 100%); max-height: 100%; overflow: auto; display: grid; gap: 10px; text-align: center; justify-items: center; }
+.card { background: linear-gradient(180deg, #2a241d, var(--panel) 30%); border: 2px solid #8a6a3a; border-radius: 4px; padding: 20px 16px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,.6); width: min(440px, 100%); max-height: 100%; overflow: auto; display: grid; gap: 10px; text-align: center; justify-items: center; }
 .card h2 { margin: 0; font-family: var(--display); font-weight: 900; font-size: 22px; color: var(--gold); }
 .card p { margin: 0; }
 .card .lines { text-align: left; display: grid; gap: 4px; width: 100%; font-size: 14px; }
@@ -190,7 +211,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 
 <div id="app">
   <header class="top">
-    <div class="titlebar"><div class="title">一路掃到南天門</div><div class="stagechip" id="areaName"></div></div>
+    <div class="titlebar"><div class="title">一路掃到南天門</div></div>
     <div class="realmrow">
       <div class="realm" id="realmName">練氣一層</div>
       <div class="bar"><i id="xpFill"></i><span id="xpTxt">修為 0 / 0</span></div>
@@ -205,13 +226,14 @@ button:disabled { cursor: default; opacity: 0.45; }
   </header>
 
   <section class="stage" aria-label="戰鬥畫面">
-    <canvas id="cv" width="960" height="540"></canvas>
-    <div class="hud-l"><b id="stLabel">1-1</b> <span id="waveLbl">第 1/9 波</span></div>
+    <canvas id="cv" width="960" height="720"></canvas>
+    <div class="hud-l"><b id="stLabel">1-1</b> <span id="waveLbl">第 1/9 波</span><div class="area" id="areaName"></div></div>
     <div class="hud-r"><button id="bossBtn" type="button" hidden>挑戰首領</button><button id="autoBtn" type="button">自動挑戰</button><button id="spdBtn" type="button" aria-label="遊戲速度">×1</button></div>
     <div class="bossbar" id="bossBar" hidden><div class="bn" id="bossName"></div><div class="bb"><i id="bossFill"></i></div><div class="bt" id="bossTime"></div></div>
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
+    <div class="ver">v14</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -223,6 +245,7 @@ button:disabled { cursor: default; opacity: 0.45; }
   </nav>
   <section id="panel"></section>
 </div>
+<div id="rotate" aria-live="polite"><span aria-hidden="true">📱</span>請把手機轉成直的</div>
 <div id="modal" hidden><div class="card" id="modalCard" role="dialog" aria-modal="true"></div></div>
 
 <script>
@@ -3839,14 +3862,24 @@ var IdleInk = (function () {
     return true;
   }
   // 背景：一層一層往前，越近捲越快。layers: [{src, speed, y, h}]（y、h 是 0~1，相對畫面高）
-  function bg(ctx, area, scroll, W, H) {
+  // 背景：一層一層往前，越近捲越快。每層 {src, speed, units（圖高幾格）, gy（地面線在圖高的幾成）}
+  // feetPx：畫布上的地面線；圖上緣沒蓋到的天空，用第一層最上面一排拉長補滿
+  function bg(ctx, area, scroll, W, feetPx, S, bottom) {
     var L = M.bg[area]; if (!L) return false;
     for (var i = 0; i < L.length; i++) if (!img(L[i].src)) return false;
     ctx.save(); ctx.imageSmoothingEnabled = true;
-    L.forEach(function (l) {
-      var im = img(l.src), dh = (l.h || 1) * H, dw = im.naturalWidth * dh / im.naturalHeight, y = (l.y || 0) * H;
+    L.forEach(function (l, li) {
+      var im = img(l.src), dh = (l.units || 216) * S, dw = im.naturalWidth * dh / im.naturalHeight, y = feetPx - (l.gy || 186 / 216) * dh;
       var off = ((scroll * l.speed) % dw + dw) % dw;
-      for (var x = -off; x < W; x += dw) ctx.drawImage(im, Math.floor(x), y, Math.ceil(dw) + 1, dh);
+      for (var x = -off; x < W; x += dw) {
+        if (li === 0 && y > 0) ctx.drawImage(im, 0, 0, im.naturalWidth, 2, Math.floor(x), 0, Math.ceil(dw) + 1, y + 1);
+        if (li === L.length - 1 && y + dh < bottom) {
+          // 最前面那層蓋不到畫面最底：地面線以上照畫，地面線以下拉長到底
+          var gyPx = (l.gy || 186 / 216) * im.naturalHeight, w2 = Math.ceil(dw) + 1;
+          ctx.drawImage(im, 0, 0, im.naturalWidth, gyPx, Math.floor(x), y, w2, feetPx - y);
+          ctx.drawImage(im, 0, gyPx, im.naturalWidth, im.naturalHeight - gyPx, Math.floor(x), feetPx, w2, bottom - feetPx);
+        } else ctx.drawImage(im, Math.floor(x), y, Math.ceil(dw) + 1, dh);
+      }
     });
     ctx.restore();
     return true;
@@ -3862,8 +3895,8 @@ var IdleInk = (function () {
 <script>
 // 《一路掃到南天門》戰鬥畫面：橫向捲動背景、角色、法器、特效。畫面 384×216 邏輯像素，放大 S 倍畫。
 var IdleStage = (function (C, D, ART) {
-  var W = 320, H = 180, S = 3, BGY = -36;   // 背景圖是 384×216 畫的，往上裁掉 36 格天空
-  var FEET = 158;                       // 主角腳底（也是水墨背景的地面線）
+  var W = 320, H = 240, S = 3, BGY = 14;    // 畫面 4:3（直立版）；點陣背景是 384×216 畫的，往下放 14 格，上面補天空色
+  var FEET = 200;                       // 主角腳底（也是水墨背景的地面線，畫面高的 83%）
   // 水墨背景是側面看過去的一條地面線，大家都要踩在線上，前後只差一點點
   // 站位分三排：後排（高一點、小一點）、主角那一排、前排。同一排左右錯開，前後排只遮到一小塊
   var PET_SLOTS = [{ cx: 108, feet: FEET - 12, k: 0.62 }, { cx: 96, feet: FEET + 10, k: 0.66 }, { cx: 40, feet: FEET - 12, k: 0.62 }];
@@ -3902,7 +3935,6 @@ var IdleStage = (function (C, D, ART) {
   function seedOf(key) { var h = 0; for (var i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) % 997; return h; }
   function inkHeight(key, ik, sc, minH) { var d = INK.def(ik); return Math.max((d.size || ART.meta(key).h) * INK_SCALE, minH || 0) * sc; }
   var INK_SCALE = 1.3;   // 水墨角色比點陣圖大一點，才不會被竹林比下去
-  var INK_GROUND = 186;  // 水墨背景（高 216）的地面線在第 186 格
   // 腳底在 (cx, feet)（邏輯座標）
   // minH：水墨圖至少要畫多高（首領借用夥伴的圖時，不能比小怪還小）
   // inkMul：水墨圖再縮放（神獸和夥伴站位比較擠，畫小一點）
@@ -4051,18 +4083,16 @@ var IdleStage = (function (C, D, ART) {
   // 每一區的水墨背景名字（同主題的區也可以有自己的圖）
   var AREA_BG = ['bamboo', 'herb', 'town', 'volcano', 'cloud', 'palace', 'huaguo', 'gaolao', 'huoyan', 'chentang', 'xiqi', 'zhaoge', 'donghai', 'tianshan', 'kunlun'];
   function drawBg(theme, scroll, area) {
-    if (INK) {
-      ctx.save(); ctx.translate(0, (FEET - INK_GROUND) * S);
-      var done = (area && INK.bg(ctx, area, scroll * S, W * S, BH * S)) || INK.bg(ctx, theme, scroll * S, W * S, BH * S);
-      ctx.restore(); if (done) return;
-    }
+    if (INK && ((area && INK.bg(ctx, area, scroll * S, W * S, FEET * S, S, H * S)) || INK.bg(ctx, theme, scroll * S, W * S, FEET * S, S, H * S))) return;
     var b = buildBg(theme);
     ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(b.sky, 0, 0, TW, 1, 0, 0, W * S, BGY * S + 1);  // 最上面一排天空色拉長補滿
     [[b.sky, 0.02], [b.far, 0.12], [b.mid, 0.4], [b.ground, 1]].forEach(function (L) {
       var off = Math.round((scroll * L[1]) % TW);
       ctx.drawImage(L[0], -off * S, BGY * S, TW * S, BH * S);
       ctx.drawImage(L[0], (TW - off) * S, BGY * S, TW * S, BH * S);
     });
+    ctx.drawImage(b.ground, 0, BH - 1, TW, 1, 0, (BGY + BH - 1) * S, W * S, (H - BGY - BH + 1) * S);  // 底下補地面色
   }
 
   // ───────── 法器 ─────────
@@ -4077,10 +4107,11 @@ var IdleStage = (function (C, D, ART) {
       drawTreasure(t, x, y, q, glowT, c);
       ctx.restore(); ctx = save; return;
     }
-    if (q >= 1) wash(x + 7, y + 5, 10 + q * 1.5, qc, 0.3 + 0.15 * Math.sin(glowT * 4));
+    if (q >= 1 && !c2) wash(x + 7, y + 5, 10 + q * 1.5, qc, 0.3 + 0.15 * Math.sin(glowT * 4));  // 小圖示不畫光暈，品階看名字顏色
     var ti = INK && INK.item(t, q);
     if (ti) { // 水墨法器：塞進 20×14 的框，置中
-      var k = Math.min(20 / ti.naturalWidth, 14 / ti.naturalHeight) * S, iw = ti.naturalWidth * k, ih = ti.naturalHeight * k;
+      var bw = t === 'feijian' ? 34 : 22, bh = t === 'feijian' ? 18 : 16;  // 飛劍長一點才看得出在飛
+      var k = Math.min(bw / ti.naturalWidth, bh / ti.naturalHeight) * S, iw = ti.naturalWidth * k, ih = ti.naturalHeight * k;
       var sm = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = true; ctx.drawImage(ti, (x + 7) * S - iw / 2, (y + 5) * S - ih / 2, iw, ih); ctx.imageSmoothingEnabled = sm;
     } else if (t === 'feijian') {
       px(x, y + 4, 12, 2, '#e8eef5'); px(x, y + 5, 12, 1, '#a9b6c6'); px(x + 12, y + 4, 2, 1, '#e8eef5'); px(x + 12, y + 5, 3, 1, '#c9d3df');
@@ -4298,7 +4329,7 @@ var IdleStage = (function (C, D, ART) {
   }
   function gearFx(d, hp) {
     var R = C.R, slot = d.g.slot, home = gearHome(d.t, slot, hp.x, FEET, time), first = d.targets[0] ? enemyCenter(d.targets[0]) : null;
-    if (d.t === 'feijian' && first) gearAnim[d.g.id] = { t: 0, life: 0.75, tx: first.x - 6, ty: first.y - 3, sword: true };
+    if (d.t === 'feijian' && first) gearAnim[d.g.id] = { t: 0, life: 0.9, tx: first.x - 6, ty: first.y - 3, sword: true };
     else if (d.t === 'hulu') { d.targets.forEach(function (e, i) { var c = enemyCenter(e); shot(home.x + 10, home.y + 6, c.x, c.y, '#ff8a3c', 0.3 + i * 0.05, 'fire'); }); }
     else if (d.t === 'leizhu') { d.targets.forEach(function (e, i) { var c = enemyCenter(e); fx.bolts.push({ x: home.x + 4, y: home.y + 4, tx: c.x, ty: c.y, t: -i * 0.15, life: 0.25 }); }); }
     else if (d.t === 'fuzhen') { d.targets.forEach(function (e, i) { if (!e) return; var c = enemyCenter(e); shot(home.x + 4, home.y, c.x, c.y + (i % 3) * 3 - 3, '#f4d35e', 0.25 + i * 0.07, 'paper'); }); }
@@ -4437,19 +4468,21 @@ var IdleStage = (function (C, D, ART) {
         var q = a.t / a.life;
         if (a.wok) { if (q < 0.5) { x = home.x + (a.tx - home.x) * q * 2; y = home.y + (a.ty - 30 - home.y) * q * 2; } else if (q < 0.7) { x = a.tx; y = a.ty - 30 + (q - 0.5) / 0.2 * 30; if (!a.done) { a.done = true; addText(a.tx + 6, a.ty - 12, '噹！', '#ffffff', 12, 0.8); fx.shake = 0.15; } } else { var r = (q - 0.7) / 0.3; x = a.tx + (home.x - a.tx) * r; y = a.ty + (home.y - a.ty) * r; } }
         else if (a.sword) { // 飛劍：轉向對準妖怪 → 衝過去刺穿 → 繞回來
-          var hx = home.x, hy = home.y, ang = Math.atan2(a.ty - hy, a.tx - hx), base0 = (INK && INK.itemAng(g.t, it.q)) || 0, rot;
-          if (q < 0.18) { var e0 = q / 0.18; rot = base0 + (ang - base0) * e0; x = hx - Math.cos(ang) * 4 * e0; y = hy - Math.sin(ang) * 4 * e0; }
-          else if (q < 0.62) {
-            var e1 = (q - 0.18) / 0.44; e1 = e1 * e1; rot = ang;
-            var ex = a.tx + Math.cos(ang) * 16, ey = a.ty + Math.sin(ang) * 16, sx0 = hx - Math.cos(ang) * 4, sy0 = hy - Math.sin(ang) * 4;
-            x = sx0 + (ex - sx0) * e1; y = sy0 + (ey - sy0) * e1;
-            for (var tr2 = 1; tr2 <= 4; tr2++) { ctx.globalAlpha = 0.28 - tr2 * 0.05; drawTreasure(g.t, x - Math.cos(ang) * tr2 * 7, y - Math.sin(ang) * tr2 * 7, it.q, time + g.slot, null, rot); }
-            ctx.globalAlpha = 0.35; ctx.strokeStyle = '#1b1a20'; ctx.lineWidth = 2 * S; ctx.beginPath(); ctx.moveTo((sx0 + 7) * S, (sy0 + 5) * S); ctx.lineTo((x + 7) * S, (y + 5) * S); ctx.stroke(); ctx.globalAlpha = 1;
-            if (!a.hit && e1 > 0.75) { a.hit = true; burst(a.tx + 6, a.ty + 4, '#e8eef5', 8, 40, 0.35); }
+          // 先往上飛、劍尖轉向妖怪 → 俯衝刺穿（拖一道墨痕和殘影）→ 繞一圈飛回原位
+          var hx = home.x, hy = home.y, base0 = (INK && INK.itemAng(g.t, it.q)) || 0, rot;
+          var ux = hx - 4, uy = hy - 26, ang = Math.atan2(a.ty - uy, a.tx - ux), ex = a.tx + Math.cos(ang) * 30, ey = a.ty + Math.sin(ang) * 30;
+          if (q < 0.22) { var e0 = q / 0.22, es = e0 * (2 - e0); rot = base0 + (ang - base0) * es; x = hx + (ux - hx) * es; y = hy + (uy - hy) * es; }
+          else if (q < 0.55) {
+            var e1 = (q - 0.22) / 0.33; e1 = e1 * e1; rot = ang;
+            x = ux + (ex - ux) * e1; y = uy + (ey - uy) * e1;
+            for (var tr2 = 1; tr2 <= 5; tr2++) { ctx.globalAlpha = 0.32 - tr2 * 0.05; drawTreasure(g.t, x - Math.cos(ang) * tr2 * 9, y - Math.sin(ang) * tr2 * 9, it.q, time + g.slot, null, rot); }
+            ctx.globalAlpha = 1;
+            brush([[ux + 7, uy + 5], [ux + 7 + (x - ux) * 0.33, uy + 5 + (y - uy) * 0.33], [ux + 7 + (x - ux) * 0.66, uy + 5 + (y - uy) * 0.66], [x + 7, y + 5]], 2.2, INKC, 0.5, 13);
+            if (!a.hit && e1 > 0.55) { a.hit = true; burst(a.tx + 6, a.ty + 4, '#e8eef5', 10, 50, 0.4); fx.splats.push({ x: a.tx + 6, y: a.ty + 4, t: 0, life: 0.6, seed: 77, big: 1.8, col: null }); fx.shake = Math.max(fx.shake, 0.1); }
           } else {
-            var e2 = (q - 0.62) / 0.38, ox = a.tx + Math.cos(ang) * 16, oy = a.ty + Math.sin(ang) * 16, back = Math.atan2(hy - oy, hx - ox);
-            x = ox + (hx - ox) * e2; y = oy + (hy - oy) * e2 - Math.sin(e2 * Math.PI) * 18;
-            rot = e2 < 0.8 ? back + Math.PI * 2 * e2 : base0 + (back + Math.PI * 1.6 - base0) * (1 - (e2 - 0.8) / 0.2);
+            var e2 = (q - 0.55) / 0.45, back = Math.atan2(hy - ey, hx - ex);
+            x = ex + (hx - ex) * e2; y = ey + (hy - ey) * e2 - Math.sin(e2 * Math.PI) * 30;
+            rot = e2 < 0.75 ? ang + Math.PI * 2 * (e2 / 0.75) : ang + Math.PI * 2 + (base0 - ang) * ((e2 - 0.75) / 0.25);
           }
           drawTreasure(g.t, x, y, it.q, time + g.slot, null, rot); return;
         }
@@ -4498,7 +4531,7 @@ var IdleStage = (function (C, D, ART) {
       else if (r.t < 0) { }
       else if (r.kind === 'wheel') { var wx = r.x + q * 220; wash(wx, r.y, 9, 'rgba(255,110,40,1)', 0.4); brush(arcPts(wx, r.y, 5, time * 20, time * 20 + 4.5, 16), 1.3, '#b8322a', 0.95, 61); brush(arcPts(wx, r.y, 5, time * 20 + 3.1, time * 20 + 6, 10), 0.9, '#ffb347', 0.9, 63); if (Math.random() < 0.6) fx.parts.push({ x: wx - 4, y: r.y + 4, vx: -10, vy: -20, t: 0, life: 0.4, col: '#ff6a2a', s: 1.5 }); }
       else if (r.kind === 'bell') { for (var k2 = 0; k2 < 2; k2++) { var br = Math.max(1, 10 + q * 50 - k2 * 10); brush(arcPts(r.x, r.y, br, 0, 6.2, 32), 0.9, '#b8862b', (1 - q) * 0.8, 70 + k2); } wash(r.x, r.y, 20 + q * 40, 'rgba(255,242,176,1)', 0.2 * (1 - q)); }
-      else if (r.kind === 'scroll') { var o2 = Math.sin(Math.min(1, q * 1.5) * Math.PI), sw = 300 * Math.min(1, q * 3); ctx.globalAlpha = 0.5 * o2; px(r.x - sw / 2, 40, sw, 110, '#f3ead2'); ctx.globalAlpha = 0.6 * o2; px(r.x - sw / 2 + 20, 100, sw * 0.3, 40, '#4f6f5a'); px(r.x - sw / 2 + sw * 0.4, 80, sw * 0.25, 60, '#6a8a6a'); px(r.x - sw / 2, 36, 4, 118, '#8a5a1a'); px(r.x + sw / 2 - 4, 36, 4, 118, '#8a5a1a'); ctx.globalAlpha = 1; }
+      else if (r.kind === 'scroll') { var o2 = Math.sin(Math.min(1, q * 1.5) * Math.PI), sw = 300 * Math.min(1, q * 3); ctx.globalAlpha = 0.5 * o2; var yo = FEET - 158; px(r.x - sw / 2, 40 + yo, sw, 110, '#f3ead2'); ctx.globalAlpha = 0.6 * o2; px(r.x - sw / 2 + 20, 100 + yo, sw * 0.3, 40, '#4f6f5a'); px(r.x - sw / 2 + sw * 0.4, 80 + yo, sw * 0.25, 60, '#6a8a6a'); px(r.x - sw / 2, 36 + yo, 4, 118, '#8a5a1a'); px(r.x + sw / 2 - 4, 36 + yo, 4, 118, '#8a5a1a'); ctx.globalAlpha = 1; }
       else if (r.kind === 'tornado') { for (var y = 0; y < 50; y += 5) { var ww = 4 + y * 0.35, off = Math.sin(time * 14 + y * 0.3) * 4; brush(arcPts(r.x + off, r.r === undefined ? r.y - y : r.y - y, ww / 2, time * 8 + y, time * 8 + y + 3.6, 10, 0.3), 0.8, y % 10 ? '#2c6e68' : '#7fd6c8', 0.7 * (1 - q), 80 + y); } wash(r.x, r.y - 25, 26, 'rgba(79,209,197,1)', 0.15 * (1 - q)); }
       else if (r.kind === 'mouth') { var o = Math.sin(q * Math.PI); ctx.globalAlpha = 0.85; px(r.x - 18, r.y - 14 * o, 36, 6, '#5a3a2a'); px(r.x - 18, r.y + 8 * o, 36, 6, '#5a3a2a'); for (var t = 0; t < 6; t++) { px(r.x - 16 + t * 6, r.y - 14 * o + 6, 3, 3, '#ffffff'); px(r.x - 13 + t * 6, r.y + 8 * o - 3, 3, 3, '#ffffff'); } ctx.globalAlpha = 1; if (q > 0.6 && !r.done) { r.done = true; burst(r.x, r.y, '#ffe27a', 16, 60, 0.8); } }
     });
@@ -4506,7 +4539,7 @@ var IdleStage = (function (C, D, ART) {
     fx.splats.forEach(function (sp) { var u = sp.t / sp.life; if (sp.col) wash(sp.x, sp.y, 8 * sp.big, sp.col, 0.3 * (1 - u)); splat(sp.x, sp.y, Math.round(9 * sp.big), (4 + 10 * u) * sp.big, INKC, (1 - u) * 0.9, sp.seed); });
     fx.parts.forEach(function (p) { inkDot(p.x, p.y, 0.45 + p.s * 0.45, p.col, Math.max(0, 1 - p.t / p.life), p.vx, p.vy); });
     ctx.globalAlpha = 1;
-    if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = 60 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
+    if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = FEET - 98 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
     if (fx.pillar) { var pq = fx.pillar.t / fx.pillar.life; for (var py = 0; py < FEET; py += 6) wash(hp.x, py, 12, 'rgba(255,226,122,1)', 0.22 * (1 - pq)); wash(hp.x, FEET - 10, 24, 'rgba(255,251,224,1)', 0.4 * (1 - pq)); }
 
     // 主角血條
@@ -5214,7 +5247,7 @@ function IdleFmt(n) {
     else if (d.act === 'xinReset') { C.xinReset(); toast('心法重點了，點數都還給你'); save(); render(); }
     else if (d.act === 'study') { if (C.study()) { toast('參悟成功！心法多 1 點', 3); save(); render(); } }
     else if (d.brew) { if (C.brew(d.brew)) { var pl = null; D.PILLS.forEach(function (x) { if (x.key === d.brew) pl = x; }); toast('煉成「' + pl.name + '」！' + pl.say, 3); save(); render(); } }
-    else if (d.dun) { if (C.startDungeon(d.dun)) { save(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); } else toast('現在不能進副本（首領戰中、已經在副本裡，或沒有門票）', 3); }
+    else if (d.dun) { if (C.startDungeon(d.dun)) { save(); render(); } else toast('現在不能進副本（首領戰中、已經在副本裡，或沒有門票）', 3); }
     else if (d.act === 'rebirth') modal('<h2>真的要飛升？</h2><p>靈石、修為、境界、升級、心法、關卡會歸零，回到雜役峰。神獸、法器、夥伴、道袍和各種材料都會留著。</p><p>可以拿到 <b>' + C.rebirthGain() + ' 點仙緣</b>。</p><div class="btns"><button class="big" type="button" data-m="doRebirth">飛升！</button><button class="mini" type="button" data-m="close" style="padding:8px 16px">再想想</button></div>');
     else if (d.wash) washModal(+d.wash);
     else if (d.awaken) { if (C.awaken(d.awaken)) { var ap = C.PET_BY[d.awaken]; render(); save(); modal('<h2>' + esc(ap.name) + '覺醒了！</h2><canvas id="awC"></canvas><p>攻擊變 1.6 倍，招式變成「覺醒・' + esc(ap.skill) + '」，更強、冷卻更短。</p><div class="btns"><button class="big" type="button" data-m="close">好帥</button></div>', function (root) { anims.push(showChar(root.querySelector('#awC'), ap.key, 3)); }); } }
