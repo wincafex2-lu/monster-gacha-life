@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v21</div>
+    <div class="ver">v22</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4224,22 +4224,17 @@ var IdleStage = (function (C, D, ART) {
     pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
     pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
     var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
-    function place(shrink) {
-      var w = function (m) { return m ? drawnW(m.key, m.k) * shrink : 0; }, edge = heroL, minL = 999;
-      function put(m, x) { pos[m.id] = { x: x, feet: ROWS[m.row], k: m.k * shrink }; minL = Math.min(minL, x - w(m) / 2); }
-      // 菱形上下兩點（夥伴）：跟主角錯開一點點
-      if (pars.length) { var wa = Math.max(w(pars[0]), w(pars[1])), xa = heroL - wa * 0.3; pars.forEach(function (m) { put(m, xa); }); edge = xa - wa / 2; }
-      // 後面上下兩排（神獸 1、2），再後面中間（神獸 3）
-      var tb = pets.slice(0, 2);
-      if (tb.length) { var wp = Math.max(w(pets[0]), w(pets[1])), xp = edge - wp * (pars.length ? 0.35 : 0.3); tb.forEach(function (m) { put(m, xp); }); edge = xp - wp / 2; }
-      if (pets[2]) put(pets[2], edge - w(pets[2]) * 0.1);
-      return minL;
+    // 從主角背後往左一個一個排（夥伴上、夥伴下、神獸上、神獸下、神獸中），上下排交錯，
+    // 每一個都有自己的 x，不會兩隻疊在同一個位置；整隊平均攤開到畫面左邊
+    var mem = pars.concat(pets);
+    if (mem.length) {
+      var sh = 1, w = function (m) { return drawnW(m.key, m.k) * sh; };
+      var need = function () { var t = 0; mem.forEach(function (m, i) { t += w(m) * (i ? 0.62 : 0.75); }); return t; };
+      while (sh > 0.62 && need() > heroL - 6) sh -= 0.04;
+      var first = heroL - w(mem[0]) * 0.42, last = mem.length > 1 ? Math.max(w(mem[mem.length - 1]) / 2 + 4, first - need() * 1.6) : first;
+      var step = mem.length > 1 ? (first - last) / (mem.length - 1) : 0;
+      mem.forEach(function (m, i) { pos[m.id] = { x: first - step * i, feet: ROWS[m.row], k: m.k * sh }; });
     }
-    // 最左邊不要超出畫面太多，超出就整隊縮小再排
-    for (var sh = 1; sh > 0.6 && place(sh) < -6; sh -= 0.05) pos = {};
-    // 排完如果左邊還空很多，就把整隊往左拉開（主角不動，越後面的拉越遠），不要全擠在主角背後
-    var minL = 999, id; for (id in pos) { var pm = pos[id], km = id.slice(2); minL = Math.min(minL, pm.x - drawnW(km, pm.k) / 2); }
-    if (minL < 999 && minL > 8) { var f = Math.min(1.9, (heroL - 8) / Math.max(1, heroL - minL)); for (id in pos) pos[id].x = heroL - (heroL - pos[id].x) * f; }
     formCache = { sig: sig, pos: pos };
     return pos;
   }
