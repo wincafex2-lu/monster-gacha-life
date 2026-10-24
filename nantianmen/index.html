@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v18</div>
+    <div class="ver">v19</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4252,31 +4252,55 @@ var IdleStage = (function (C, D, ART) {
     fx.text.push(t); return t;
   }
   // 招式名稱不在角色頭上冒，統一排在畫面上方的「招式欄」（我方靠左、敵方靠右），最多同時三條
-  function addCall(txt, col, foe) {
+  function addCall(txt, col, foe, seal) {
     for (var i = 0; i < fx.calls.length; i++) if (fx.calls[i].txt === txt) { fx.calls[i].t = Math.min(fx.calls[i].t, 0.2); return; }
-    fx.calls.unshift({ txt: txt, col: col || '#ffcf4a', t: 0, life: 1.6, foe: !!foe });
+    fx.calls.unshift({ txt: txt, col: col || '#ffcf4a', t: 0, life: 1.7, foe: !!foe, seal: seal || '', seed: Math.floor(Math.random() * 997) + 1 });
     if (fx.calls.length > 3) fx.calls.length = 3;
   }
+  // 招式欄：毛筆刷一筆的墨底（頭圓、尾巴飛白），左邊一顆朱紅小印寫是誰放的招
   function drawCalls() {
     var row = { a: 0, b: 0 };
     fx.calls.forEach(function (c) {
       var i = c.foe ? row.b++ : row.a++;
-      var q = c.t / c.life, slide = Math.min(1, c.t / 0.12), a = q > 0.75 ? (1 - q) / 0.25 : 1;
-      var y = (68 + i * 17) * S, x = c.foe ? (W - 10) * S : 10 * S;
-      ctx.save(); ctx.globalAlpha = a * (i ? 0.8 : 1);
-      var fs = (i ? 9 : 10.5) * S; ctx.font = '900 ' + fs + 'px ' + FONT;
-      // 字的實際高度量出來，底條一定比字高，字放在底條正中間（中文字不能靠 middle 基線，會偏下被切到）
-      var mt = ctx.measureText(c.txt), w = mt.width, asc = mt.actualBoundingBoxAscent || fs * 0.88, dsc = mt.actualBoundingBoxDescent || fs * 0.12;
-      var x0 = x - (c.foe ? -1 : 1) * (1 - slide) * 30 * S;
-      var bh = asc + dsc + 6 * S, bx = c.foe ? x0 - w - 10 * S : x0 - 4 * S, bw = w + 14 * S, top = y - bh / 2;
-      ctx.fillStyle = 'rgba(21,18,15,0.68)'; ctx.beginPath();
-      ctx.moveTo(bx, top); ctx.lineTo(bx + bw, top + S); ctx.lineTo(bx + bw - 3 * S, top + bh); ctx.lineTo(bx + 2 * S, top + bh - S); ctx.closePath(); ctx.fill();
-      ctx.textAlign = c.foe ? 'right' : 'left'; ctx.textBaseline = 'alphabetic';
-      ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(29,24,22,0.9)';
-      var tx = c.foe ? x0 - 5 * S : x0 + 2 * S, ty = y + (asc - dsc) / 2; ctx.strokeText(c.txt, tx, ty); ctx.fillStyle = c.col; ctx.fillText(c.txt, tx, ty);
+      var q = c.t / c.life, grow = Math.min(1, c.t / 0.16), a = q > 0.78 ? (1 - q) / 0.22 : 1;
+      var fs = (i ? 8.5 : 10) * S, y = (70 + i * 19) * S, dir = c.foe ? -1 : 1;
+      ctx.save(); ctx.globalAlpha = a * (i ? 0.85 : 1);
+      ctx.font = '900 ' + fs + 'px ' + FONT;
+      var mt = ctx.measureText(c.txt), tw = mt.width, asc = mt.actualBoundingBoxAscent || fs * 0.88, dsc = mt.actualBoundingBoxDescent || fs * 0.12;
+      var ss = fs * 1.25, pad = 5 * S, L = ss + tw + pad * 3.2, h = asc + dsc + 7 * S;
+      var x0 = c.foe ? (W - 6) * S : 6 * S, R = rng(c.seed), len = L * grow;
+      // 墨條：上下緣用小亂數抖動，起筆圓頭、收筆分岔飛白
+      ctx.save(); ctx.translate(x0, y); ctx.scale(dir, 1);
+      ctx.fillStyle = 'rgba(20,17,14,0.8)'; ctx.beginPath();
+      var n = 14, k;
+      for (k = 0; k <= n; k++) { var u = k / n, yy = -h / 2 * (1 - 0.18 * u) + (R() - 0.5) * 1.6 * S; ctx.lineTo(u * len, yy + (k ? 0 : h * 0.12)); }
+      for (k = n; k >= 0; k--) { var u2 = k / n, yb = h / 2 * (1 - 0.3 * u2) + (R() - 0.5) * 1.6 * S; ctx.lineTo(u2 * len, yb - (k ? 0 : h * 0.12)); }
+      ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(S * 1.5, 0, h * 0.28, h * 0.48, 0, 0, 6.283); ctx.fill();
+      // 收筆飛白：幾條越來越細、越來越淡的墨絲
+      ctx.lineCap = 'round';
+      for (k = 0; k < 3; k++) { var sy = (k - 1) * h * 0.26 + (R() - 0.5) * S, sl = (3 + R() * 7) * S * grow; ctx.strokeStyle = 'rgba(20,17,14,' + (0.45 - k * 0.08) + ')'; ctx.lineWidth = (0.9 - k * 0.2) * S; ctx.beginPath(); ctx.moveTo(len - 4 * S, sy); ctx.quadraticCurveTo(len + sl * 0.5, sy + (R() - 0.5) * 1.5 * S, len + sl, sy + (R() - 0.5) * 2.5 * S); ctx.stroke(); }
+      ctx.restore();
+      if (grow < 0.35) { ctx.restore(); return; }
+      // 朱紅小印
+      var sx = c.foe ? x0 - pad - ss / 2 : x0 + pad + ss / 2;
+      if (c.seal) {
+        ctx.save(); ctx.translate(sx, y); ctx.rotate(-0.08 * dir); ctx.fillStyle = '#b8291f'; ctx.beginPath();
+        for (k = 0; k < 4; k++) { var cx2 = (k === 0 || k === 3 ? -1 : 1) * ss / 2, cy2 = (k < 2 ? -1 : 1) * ss / 2; ctx.lineTo(cx2 + (R() - 0.5) * S, cy2 + (R() - 0.5) * S); }
+        ctx.closePath(); ctx.fill();
+        ctx.font = '900 ' + ss * 0.74 + 'px ' + FONT; ctx.fillStyle = '#fff3e0'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        var m2 = ctx.measureText(c.seal), a2 = m2.actualBoundingBoxAscent || ss * 0.6, d2 = m2.actualBoundingBoxDescent || 0; ctx.fillText(c.seal, 0, (a2 - d2) / 2);
+        ctx.restore();
+      }
+      ctx.font = '900 ' + fs + 'px ' + FONT; ctx.textBaseline = 'alphabetic'; ctx.textAlign = c.foe ? 'right' : 'left';
+      var tx = c.foe ? sx - ss / 2 - pad * 0.8 : sx + ss / 2 + pad * 0.8, ty = y + (asc - dsc) / 2;
+      ctx.globalAlpha = a * (i ? 0.85 : 1) * Math.min(1, (grow - 0.35) / 0.4);
+      ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(20,17,14,0.95)'; ctx.strokeText(c.txt, tx, ty);
+      ctx.fillStyle = c.col; ctx.fillText(c.txt, tx, ty);
       ctx.restore();
     });
   }
+
   function burst(x, y, col, n, spd, life) {
     for (var i = 0; i < n; i++) { var a = Math.random() * 6.28, v = (0.4 + Math.random()) * (spd || 40); fx.parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 20, t: 0, life: life || 0.6, col: col, s: 1 + Math.floor(Math.random() * 2) }); }
   }
@@ -4305,7 +4329,7 @@ var IdleStage = (function (C, D, ART) {
       fx.rings.push({ kind: 'slash', x: hp.x + 18, y: FEET - 18, t: 0, life: 0.18 });
     } else if (type === 'heroSkill') {
       fx.leaves = 1.2;
-      addCall('秋風起！', '#ffb36b');
+      addCall('秋風起！', '#ffb36b', false, '我');
     } else if (type === 'petAtk') {
       var pp = petPos(d.pet), tc = enemyCenter(d.e);
       shot(pp.x + 12, pp.feet - 26, tc.x, tc.y, d.color, 0.35);
@@ -4341,13 +4365,13 @@ var IdleStage = (function (C, D, ART) {
       var sc2 = enemyCenter(d.e); burst(sc2.x, sc2.y, '#ffffff', 12, 40, 0.5); if (type === 'clone') addText(sc2.x, sc2.top - 8, '變！', '#ffd84a', 10);
     } else if (type === 'bossMove') {
       var bc = enemyCenter(d.e);
-      addCall(d.name + '！', '#ff9f6b', true);
+      addCall(d.name + '！', '#ff9f6b', true, '妖');
       if (d.id === 'heal') { burst(bc.x, bc.y, '#7dffa0', 18, 30, 0.9); addText(bc.x, bc.top - 2, '+' + fmt(d.heal), '#7dffa0', 9, 1.1, 'heal'); }
       else if (d.id === 'burn') { for (var b = 0; b < 16; b++) fx.parts.push({ x: hp.x - 16 + Math.random() * 32, y: FEET, vx: 0, vy: -40 - Math.random() * 30, t: 0, life: 0.7, col: b % 2 ? '#ff6a2a' : '#ffcf4a', s: 2 }); fx.tint = 0.5; fx.tintColor = '#ff6a2a'; }
       else if (d.id === 'water') { for (var w2 = 0; w2 < 18; w2++) fx.parts.push({ x: bc.x - w2 * 4, y: FEET - 4 - Math.random() * 20, vx: -90, vy: -30, t: 0, life: 0.6, col: w2 % 2 ? '#79c6ff' : '#d8f1ff', s: 2 }); fx.tint = 0.5; fx.tintColor = '#3c8cff'; }
       else { fx.shake = 0.3; burst(hp.x + 8, FEET - 24, '#ffd0d0', 10, 50, 0.4); }
     } else if (type === 'comboBurst') {
-      addCall(d.name + '！', '#ffcf4a'); fx.rings.push({ kind: 'roar', x: hp.x, y: FEET - 20, t: 0, life: 0.5 }); fx.shake = 0.25;
+      addCall(d.name + '！', '#ffcf4a', false, '合');  fx.rings.push({ kind: 'roar', x: hp.x, y: FEET - 20, t: 0, life: 0.5 }); fx.shake = 0.25;
     } else if (type === 'dunStart') {
       fx.banner = { t: 0, life: 2.4, title: '副本', name: d.d.name, say: d.d.say }; fx.wipe = { t: 0, life: 0.9 };
     } else if (type === 'dunWave') {
@@ -4364,7 +4388,7 @@ var IdleStage = (function (C, D, ART) {
   function partnerSkillFx(d, hp) {
     var pp = partnerPos(d.p), def = C.PART_BY[d.key];
     if (d.sleep) { addText(pp.x, pp.feet - 46, '吃太飽，睡著了⋯', '#d8f1ff', 8, 1.6); return; }
-    addCall(d.name + '！', def.shot);
+    addCall(d.name + '！', def.shot, false, def.name.charAt(0));
     switch (d.key) {
       case 'wukong': d.targets.forEach(function (e) { var c = enemyCenter(e); fx.rings.push({ kind: 'slash', x: c.x - 4, y: c.y, t: 0, life: 0.25 }); burst(c.x, c.y, '#ffcf4a', 6, 40, 0.4); }); fx.shake = 0.2; addText(hp.x + 26, FEET - 40, '拔毛變！', '#ffcf4a', 9, 1.2); burst(hp.x + 26, FEET - 10, '#ffffff', 16, 40, 0.5); break;
       case 'bajie': burst(hp.x, FEET - 20, '#7dffa0', 14, 30, 0.8); if (d.heal) addText(hp.x, FEET - 54, '+' + fmt(d.heal), '#7dffa0', 9, 1, 'heal'); break;
@@ -4385,7 +4409,7 @@ var IdleStage = (function (C, D, ART) {
   }
   function petSkillFx(d, hp) {
     var p = d.pet, pp = petPos(p), first = d.targets[0] ? enemyCenter(d.targets[0]) : null, def = C.PET_BY[p.key];
-    addCall(d.name + '！', def.shot);
+    addCall(d.name + '！', def.shot, false, def.name.charAt(def.name.length - 1));
     switch (d.fx) {
       case 'peck': if (first) for (var i = 0; i < 3; i++) shot(pp.x + 10, pp.feet - 20, first.x, first.y + i * 3 - 3, '#ffb347', 0.2 + i * 0.18, 'peck'); break;
       case 'stomp': petJump[p.key] = { t: 0, life: 0.5, tx: first ? first.x : pp.x }; if (first) setTimeout(function () { burst(first.x, FEET, '#c9b58a', 12, 50, 0.5); fx.shake = 0.15; }, 400); break;
@@ -4423,7 +4447,7 @@ var IdleStage = (function (C, D, ART) {
     else if (d.t === 'fuzhen') { d.targets.forEach(function (e, i) { if (!e) return; var c = enemyCenter(e); shot(home.x + 4, home.y, c.x, c.y + (i % 3) * 3 - 3, '#f4d35e', 0.25 + i * 0.07, 'paper'); }); }
     else if (d.t === 'bagua') { burst(hp.x, FEET - 20, d.xian ? '#ffe27a' : '#7fe0ff', 16, 30, 0.6); addText(hp.x, FEET - 54, '八卦護盾', '#7fe0ff', 8, 1); }
     else if (d.t === 'ruyi') { burst(hp.x, FEET - 20, '#9ff0c8', 14, 25, 0.8); if (d.heal) addText(hp.x, FEET - 54, '+' + fmt(d.heal), '#7dffa0', 9, 1, 'heal'); }
-    if (d.combo) { addCall(d.combo + '！', '#ffcf4a'); fx.flash = 0.06; fx.flashColor = '#fff2b0'; }
+    if (d.combo) { addCall(d.combo + '！', '#ffcf4a', false, '器'); fx.flash = 0.06; fx.flashColor = '#fff2b0'; }
     if (d.rain) d.rain.forEach(function (e, i) { if (!e) return; var c5 = enemyCenter(e); fx.proj.push({ x: c5.x - 20 + Math.random() * 10, y: -10, tx: c5.x + Math.random() * 6 - 3, ty: c5.y, col: '#e8eef5', t: -0.25 - i * 0.07, dur: 0.25, kind: 'sword' }); });
     if (d.t === 'fuzhen' && d.combo) d.targets.forEach(function (e, i) { var c6 = enemyCenter(e); fx.bolts.push({ x: c6.x, y: -4, tx: c6.x, ty: c6.y, t: -0.4 - i * 0.1, life: 0.3, big: true }); });
     if (d.t === 'tieguo' && d.gold) addText(hp.x - 20, FEET - 60, '+' + fmt(d.gold) + ' 靈石', '#5fd6a6', 8, 1.4);
