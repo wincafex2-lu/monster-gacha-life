@@ -71,7 +71,7 @@
 在法器分支畫 19 張特效圖，規格見 BRIEF.md「招式特效」，檔名 `images/代號__fx.png`。**先畫這 9 張：** `fx-slash`、`fx-splat`、`fx-bloom`、`fx-burst`、`fx-thunder-1`、`fx-thunder-2`、`fx-fire`、`fx-claw`、`fx-qi`，再畫其他的。
 
 #### 5b. 遊戲介面（一樣用背景分支 `art/nantianmen-bg`，泓 10/24 決定，不用另外開分支）
-背景畫完後，在**同一個分支** `art/nantianmen-bg` 接著畫介面圖，共 42 張：12 張介面框和按鈕、30 個小圖示。代號、長寬比、樣子見 BRIEF.md「遊戲介面」。檔名是 `images/代號__ui.png`（例：`images/ui-panel__ui.png`、`images/ui-ic-stone__ui.png`）。照表格順序畫，先畫大的框和按鈕，再畫小圖示。圖裡不寫字（只有 `ui-logo` 例外）。
+背景畫完後，在**同一個分支** `art/nantianmen-bg` 接著畫介面圖，共 49 張：12 張介面框和按鈕、7 張戰鬥招式提示（墨條、印章、光暈）、30 個小圖示。代號、長寬比、樣子見 BRIEF.md「遊戲介面」。檔名是 `images/代號__ui.png`（例：`images/ui-panel__ui.png`、`images/ui-ic-stone__ui.png`）。照表格順序畫，先畫大的框和按鈕，再畫小圖示。圖裡不寫字（只有 `ui-logo` 例外）。
 
 #### 6. 新篇章第 1 批：西遊篇（新分支 `art/nantianmen-xiyou`，泓 10/24 確認）
 清單和外型見 BRIEF.md 最後「新篇章」的第 1 批：夥伴 4 個、首領 5 個（各 `__idle`、`__attack`），小怪 6 個（只畫 `__idle`），背景 3 張（每區只畫 1 張 `__full`）。共 27 張（8＋10＋6＋3）。可以和上面五個分支同時畫。
