@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v14</div>
+    <div class="ver">v15</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1092,16 +1092,22 @@ var IDLE_DATA = (function () {
   // ── 境界 ──
   var REALMS = [];
   ['一', '二', '三', '四', '五', '六', '七', '八', '九'].forEach(function (n) { REALMS.push({ name: '練氣' + n + '層', big: '練氣' }); });
+  // 築基以後每個大境界分四段：初期、中期、後期、大圓滿（仙人是一品、二品、三品、大圓滿）
   ['築基', '金丹', '元嬰', '化神', '煉虛', '合體', '大乘', '渡劫'].forEach(function (b) {
-    ['初期', '中期', '後期'].forEach(function (s) { REALMS.push({ name: b + s, big: b }); });
+    ['初期', '中期', '後期', '大圓滿'].forEach(function (s) { REALMS.push({ name: b + s, big: b }); });
   });
   ['地仙', '天仙', '真仙', '金仙', '太乙金仙', '大羅金仙'].forEach(function (b) {
-    ['一品', '二品', '三品'].forEach(function (s) { REALMS.push({ name: b + s, big: b }); });
+    ['一品', '二品', '三品', '大圓滿'].forEach(function (s) { REALMS.push({ name: b + s, big: b }); });
   });
+  var BIGS = []; REALMS.forEach(function (r, i) { if (!i || REALMS[i - 1].big !== r.big) BIGS.push(r.big); r.bi = BIGS.length - 1; });
   function realm(i) {
     if (i < REALMS.length) return REALMS[i];
-    return { name: '混元大羅金仙 第' + (i - REALMS.length + 1) + '重', big: '混元' + (i - REALMS.length + 1) };
+    return { name: '混元大羅金仙 第' + (i - REALMS.length + 1) + '重', big: '混元' + (i - REALMS.length + 1), bi: BIGS.length + i - REALMS.length };
   }
+  // 某個大境界的第一段是第幾個境界（解鎖條件用）
+  function realmStart(big) { for (var i = 0; i < REALMS.length; i++) if (REALMS[i].big === big) return i; return -1; }
+  // 舊存檔（築基以後只有三段）的境界編號換成新的
+  function realmFromV1(i) { if (i < 9) return i; if (i < 33) return 9 + Math.floor((i - 9) / 3) * 4 + (i - 9) % 3; if (i < 51) return 41 + Math.floor((i - 33) / 3) * 4 + (i - 33) % 3; return i - 51 + REALMS.length; }
 
   // ── 六大地區 ──
   // enemies: [sprite key, 名字, 特性?]；mid = 第 5 關首領，boss = 第 10 關首領；join = 打贏後加入的神獸
@@ -1496,13 +1502,13 @@ var IDLE_DATA = (function () {
   // ── 副本：每個 3 張門票，每 8 小時補 1 張（離線也算）；打 60 秒，越深拿越多 ──
   var DUNGEONS = [
     { key: 'cangjing', name: '藏經閣', sys: 'xinfa', res: 'page', theme: 'palace', base: 1, per: 0.5,
-      enemies: [['zhiren', '書妖'], ['denglong', '燈芯妖'], ['zhiren', '亂翻書']], say: '書妖：「噓——！藏經閣裡要安靜！」（牠自己最大聲）' },
+      enemies: [['zhiren', '書妖', '', 'shuyaojing'], ['denglong', '燈芯妖', '', 'dengxin'], ['zhiren', '亂翻書', '', 'luanshu']], say: '書妖：「噓——！藏經閣裡要安靜！」（牠自己最大聲）' },
     { key: 'yaotian', name: '萬藥田', sys: 'dan', res: 'herb', theme: 'herb', base: 3, per: 1,
-      enemies: [['limao', '人參娃娃'], ['mogu', '靈芝精'], ['shuzhuang', '何首烏']], say: '人參娃娃：「不要拔我！拔我旁邊那個！」' },
+      enemies: [['limao', '人參娃娃', '', 'ginseng'], ['mogu', '靈芝精', '', 'lingzhi'], ['shuzhuang', '何首烏', '', 'heshouwu']], say: '人參娃娃：「不要拔我！拔我旁邊那個！」' },
     { key: 'kuangdong', name: '玄鐵礦洞', sys: 'wash', res: 'stone', theme: 'volcano', base: 2, per: 1,
-      enemies: [['shijing', '石頭精'], ['shijing', '礦石精'], ['bianfu', '礦坑蝙蝠']], say: '石頭精：「⋯⋯」（這一群都不太愛說話）' },
+      enemies: [['shijing', '石頭精', '', 'shitoujing'], ['shijing', '礦石精', '', 'kuangshi'], ['bianfu', '礦坑蝙蝠']], say: '石頭精：「⋯⋯」（這一群都不太愛說話）' },
     { key: 'wuxing', name: '五行秘境', sys: 'wuxing', res: 'soul', theme: 'cloud', base: 1, per: 0.5, dayEl: true,
-      enemies: [['denglong', '元素靈'], ['houyao', '元素猴'], ['shijing', '元素石']], say: '今天秘境裡全是同一種屬性的妖怪。帶剋牠的法器來！' },
+      enemies: [['denglong', '元素靈', '', 'yuansuling'], ['houyao', '元素猴', '', 'yuansuhou'], ['shijing', '元素石', '', 'yuansushi']], say: '今天秘境裡全是同一種屬性的妖怪。帶剋牠的法器來！' },
     { key: 'shenshou', name: '神獸試煉', sys: 'awaken', res: 'blood', theme: 'bamboo', base: 2, per: 1,
       enemies: [['baihu', '白虎幻影'], ['qinglong', '青龍幻影'], ['qilin', '麒麟幻影'], ['xuanwu', '玄武幻影']], say: '幻影神獸：「打得贏我們，才配得上覺醒的力量。」' }
   ];
@@ -1523,7 +1529,7 @@ var IDLE_DATA = (function () {
   // ── 新系統：到某個進度才打開（打開時跳一次說明）──
   // need: ['realm', n] 或 ['stage', n]（maxStage 到 n）
   var SYSTEMS = [
-    { key: 'xinfa', name: '心法', need: ['realm', 9], tab: 'skill', desc: '築基之後，每升一個境界拿 1 點心法，點在「攻、守、富」三條路線，可以隨時免費重點。心法殘頁湊 5 張還能多換 1 點；「藏經閣」副本打得到殘頁。' },
+    { key: 'xinfa', name: '心法', need: ['realm', realmStart('築基')], tab: 'skill', desc: '築基之後，每升一個境界拿 1 點心法，點在「攻、守、富」三條路線，可以隨時免費重點。心法殘頁湊 5 張還能多換 1 點；「藏經閣」副本打得到殘頁。' },
     { key: 'dan', name: '煉丹', need: ['stage', 20], tab: 'skill', desc: '饕餮吐出一本丹方！之後打妖怪會掉靈草，可以在「功法」分頁煉成限時丹藥。「萬藥田」副本可以採更多。' },
     { key: 'wash', name: '法器洗煉', need: ['stage', 30], tab: 'gear', desc: '靈器以上的法器有隨機加成。用洗煉石可以「洗煉」重新搖，喜歡的那條可以鎖住。「玄鐵礦洞」副本挖得到洗煉石。' },
     { key: 'wuxing', name: '五行', need: ['stage', 40], tab: 'gear', desc: '從雲海仙境開始，妖怪有金木水火土。剋牠傷害 ×1.5，被牠剋只有 ×0.75。法器、夥伴、道袍也有屬性：金剋木、木剋土、土剋水、水剋火、火剋金。用五行精魄可以換法器屬性；「五行秘境」副本拿得到精魄。' },
@@ -1541,18 +1547,18 @@ var IDLE_DATA = (function () {
       bonus: { xp: 0.3, reg: 0.3 }, desc: '修為 +30%、生命回復 +30%', say: '掃地掃了三年，掃出一身好底子。' },
     { key: 'merchant', el: 'shui', name: '小掌櫃袍', need: ['stage', 1], needText: '打倒雜役峰後山的黑熊精',
       bonus: { gold: 0.35, off: 0.15 }, desc: '靈石 +35%、離線收益 80% → 95%', say: '黑熊精賠了一堆饅頭錢，你突然很會算帳。' },
-    { key: 'sword', el: 'jin', name: '劍修袍', need: ['realm', 9], needText: '突破到築基',
+    { key: 'sword', el: 'jin', name: '劍修袍', need: ['realm', realmStart('築基')], needText: '突破到築基',
       bonus: { atk: 0.25, crit: 0.08 }, desc: '攻擊 +25%、暴擊率 +8%', say: '築基了！師父終於肯教你拿劍，不是拿掃帚。' },
     { key: 'alchemy', el: 'huo', name: '丹修袍', need: ['stage', 2], needText: '打倒萬藥谷的饕餮',
       bonus: { hp: 0.4, reg: 1 }, desc: '生命 +40%、生命回復加倍', say: '饕餮吐出一整袋靈藥，你順手學會了煉丹。' },
     { key: 'beast', el: 'mu', name: '御獸師袍', need: ['pets', 10], needText: '神獸圖鑑收集 10 隻',
       bonus: { pet: 0.4, petCd: 0.2 }, desc: '神獸傷害 +40%、神獸招式冷卻 -20%', say: '神獸們排好隊，等你點名。' },
-    { key: 'talisman', el: 'tu', name: '符修袍', need: ['realm', 18], needText: '突破到化神',
+    { key: 'talisman', el: 'tu', name: '符修袍', need: ['realm', realmStart('化神')], needText: '突破到化神',
       bonus: { gear: 0.5, gearCd: 0.2 }, desc: '法器傷害 +50%、法器冷卻 -20%', say: '化神之後，你畫的符終於不會自己燒起來了。' }
   ];
 
   return { PARTNER_RAR: PARTNER_RAR, PARTNER_POW: PARTNER_POW, RES: RES, DUNGEONS: DUNGEONS, CODES: CODES, ELEMENTS: ELEMENTS, EL_KEYS: EL_KEYS, AFFIXES: AFFIXES, OUTFIT_COMBOS: OUTFIT_COMBOS, PARTNER_COMBOS: PARTNER_COMBOS, PET_COMBOS: PET_COMBOS, XINFA: XINFA, PILLS: PILLS, SYSTEMS: SYSTEMS,
-    PARTNERS: PARTNERS, SPRITE_ALIAS: SPRITE_ALIAS, TRAITS: TRAITS, ROUND2_TRAITS: ROUND2_TRAITS, OUTFITS: OUTFITS, REALMS: REALMS, realm: realm, AREAS: AREAS, RARITY: RARITY, PETS: PETS, EGG_RATES: EGG_RATES, QUALITY: QUALITY,
+    PARTNERS: PARTNERS, SPRITE_ALIAS: SPRITE_ALIAS, TRAITS: TRAITS, ROUND2_TRAITS: ROUND2_TRAITS, OUTFITS: OUTFITS, REALMS: REALMS, realm: realm, realmStart: realmStart, realmFromV1: realmFromV1, AREAS: AREAS, RARITY: RARITY, PETS: PETS, EGG_RATES: EGG_RATES, QUALITY: QUALITY,
     TREASURES: TREASURES, UPGRADES: UPGRADES, CHATTER: CHATTER, PET_CHATTER: PET_CHATTER, BREAK_LINES: BREAK_LINES,
     TRIB_LINES: TRIB_LINES, OFFLINE_EXTRA: OFFLINE_EXTRA, PET_OFFLINE: PET_OFFLINE };
 })();
@@ -1571,11 +1577,12 @@ var IdleCore = (function (D) {
     // 妖怪每關變強的倍數分三段：前 3 區、4～6 區、西遊篇以後（每段開頭的關卡數 = eCut）
     eCut: [30, 60], eHp: [60, [1.37, 1.31, 1.22]], eAtk: [14, [1.3, 1.24, 1.16]],
     areaTune: [null, [2.3, 1], [1.8, 1], [0.95, 0.9], [0.8, 0.9], [0.5, 0.75], [0.5, 0.75], [0.6, 0.8], [0.45, 0.7], [0.75, 0.85], [0.7, 0.85], [0.75, 0.85]], eGold: [3, [1.17, 1.17, 1.15]], eXp: [2, [1.165, 1.165, 1.15]],
-    xpNeed: [40, 1.56], offlineEff: 0.8, offlineCap: 12 * 3600
+    // 境界：小突破修為 ×step、力量 ×step；跨大境界（雷劫）修為 ×big、力量 ×big。練氣九層自己一套
+    xpNeed: [40, 1.56], realmXp: { qi: 1.42, step: 1.39, big: 3 }, realmPow: { qi: 1.19, step: 1.1, big: 1.3 }, offlineEff: 0.8, offlineCap: 12 * 3600
   };
 
   function newSave() {
-    return { v: 1, gold: 0, xp: 0, eggs: 1, iron: 0, realm: 0, lv: { atk: 0, hp: 0, reg: 0, spd: 0, crit: 0, cd: 0 },
+    return { v: 1, rv: 2, gold: 0, xp: 0, eggs: 1, iron: 0, realm: 0, lv: { atk: 0, hp: 0, reg: 0, spd: 0, crit: 0, cd: 0 },
       stage: 0, wave: 1, maxStage: 0, farming: false, autoBoss: true,
       pets: { feng: { star: 1, dup: 0 } }, team: ['feng', null, null],
       inv: [{ id: 1, t: 'feijian', q: 0, lv: 0, el: 'jin', aff: [] }], gear: [1, null, null], nextId: 2,
@@ -1610,14 +1617,27 @@ var IdleCore = (function (D) {
     if (!S.outfitsSeen) S.outfitsSeen = { chores: 1 };
     D.OUTFITS.forEach(function (o) { if (!S.outfitsSeen[o.key] && outfitUnlocked(o.key)) { S.outfitsSeen[o.key] = 1; emit('outfit', { o: o }); } });
   }
-  function realmMul() { return Math.pow(BAL.realmMul, S.realm); }
+  // 每個境界的修為需求和力量倍數先算好一張表。RB[r]：第 r 境界往上突破的基本修為（每段 ×step），
+  // 要跨進下一個大境界（大圓滿 → 下一境，雷劫）那一次修為 ×big；力量也是跨大境界那一下跳最多
+  var RB = [BAL.xpNeed[0]], RP = [1];
+  function crossing(r) { var a = D.realm(r), b = D.realm(r + 1); return a.big !== b.big; }
+  function realmTab(r) {
+    var n = D.REALMS.length;
+    while (RB.length <= r + 1) {
+      var i = RB.length, prev = i - 1, past = i >= n;
+      RB.push(RB[prev] * (past ? BAL.xpNeed[1] : prev < 8 ? BAL.realmXp.qi : BAL.realmXp.step));
+      RP.push(RP[prev] * (past ? BAL.realmMul : prev < 8 ? BAL.realmPow.qi : crossing(prev) ? BAL.realmPow.big : BAL.realmPow.step));
+    }
+  }
+  function realmMul(r) { if (r === undefined) r = S.realm; realmTab(r); return RP[r]; }
   function collection() {
     var n = 0, st = 0;
     for (var k in S.pets) { n++; st += S.pets[k].star - 1; }
     return { n: n, stars: st, mul: 1 + 0.05 * n + 0.03 * st };
   }
   function item(id) { for (var i = 0; i < S.inv.length; i++) if (S.inv[i].id === id) return S.inv[i]; return null; }
-  function gearSlots() { return S.realm < 9 ? 1 : S.realm < 12 ? 2 : 3; }
+  var R_ZHUJI = D.realmStart('築基'), R_JINDAN = D.realmStart('金丹');
+  function gearSlots() { return S.realm < R_ZHUJI ? 1 : S.realm < R_JINDAN ? 2 : 3; }
   function equipped() { var a = []; for (var i = 0; i < gearSlots(); i++) { var it = S.gear[i] && item(S.gear[i]); if (it) a.push({ slot: i, it: it }); } return a; }
   function gearPower(it) { return TR_BY[it.t].power * D.QUALITY[it.q].mul * (1 + 0.12 * it.lv); }
   function stats() {
@@ -1649,7 +1669,7 @@ var IdleCore = (function (D) {
     if (got) { var st = stats(); if (R) { R.hero.maxHp = st.hp; if (k === 'hp') R.hero.hp = Math.min(st.hp, R.hero.hp + BAL.heroHp[1] * got * realmMul()); } }
     return got;
   }
-  function xpNeed(r) { return Math.ceil(BAL.xpNeed[0] * Math.pow(BAL.xpNeed[1], r === undefined ? S.realm : r)); }
+  function xpNeed(r) { if (r === undefined) r = S.realm; realmTab(r); return Math.ceil(RB[r] * (r < D.REALMS.length - 1 && crossing(r) ? BAL.realmXp.big : 1)); }
   function canBreak() { return S.xp >= xpNeed(); }
   function breakthrough() {
     if (!canBreak()) return null;
@@ -2288,7 +2308,7 @@ var IdleCore = (function (D) {
   function rerollEl(id) { var it = item(id); if (!it || (S.soul || 0) < EL_COST) return false; S.soul -= EL_COST; var o = it.el; while (it.el === o) it.el = rollEl(); return true; }
 
   // ───────── 心法 ─────────
-  function xinPoints() { return Math.max(0, S.realm - 8) + 2 * (S.rebirths || 0) + (S.xinBonus || 0); }
+  function xinPoints() { return Math.max(0, S.realm - R_ZHUJI + 1) + 2 * (S.rebirths || 0) + (S.xinBonus || 0); }
   var PAGE_COST = 5;
   function study() { if (!sysOn('xinfa') || (S.page || 0) < PAGE_COST) return false; S.page -= PAGE_COST; S.xinBonus = (S.xinBonus || 0) + 1; return true; }
   function xinUsed() { var n = 0; for (var k in S.xin) n += S.xin[k]; return n; }
@@ -2344,7 +2364,7 @@ var IdleCore = (function (D) {
     for (var i = 0; i < n; i++) {
       var e = def.enemies[Math.floor(rnd() * def.enemies.length)];
       var en = mkEnemy(e[0], e[1], eScale(dn.lvl, 'Hp') * tu[0] * grow, eScale(dn.lvl, 'Atk') * tu[1] * 0.9 * grow, L.SPAWN_X + i * L.SPACING, false);
-      en.goldMul = 0.5; en.xpMul = 0.5; en.ghost = def.key === 'shenshou';
+      en.goldMul = 0.5; en.xpMul = 0.5; en.ghost = def.key === 'shenshou'; en.art = e[3];
       en.el = dn.el || (wuxingOn() ? rollEl() : null);
       R.enemies.push(en);
     }
@@ -2619,6 +2639,8 @@ var IdleCore = (function (D) {
   // ───────── 存檔 ─────────
   function load(obj) {
     var base = newSave();
+    // 境界改成四段以前的存檔（沒有 rv）：把境界編號換過來
+    if (obj && obj.v === 1 && !obj.rv) { obj.realm = D.realmFromV1(obj.realm || 0); obj.peak = obj.peak; obj.rv = 2; }
     if (obj && obj.v === 1) { for (var k in base) if (obj[k] === undefined || obj[k] === null) obj[k] = base[k]; for (var u in base.lv) if (obj.lv[u] === undefined) obj.lv[u] = 0; S = obj; }
     else S = base;
     // 存檔或匯入碼裡有不認識的東西（改版刪掉的、打錯的）就丟掉，免得之後查表當掉
@@ -2647,7 +2669,7 @@ var IdleCore = (function (D) {
   return {
     L: L, BAL: BAL, on: on, step: step, load: load, reset: reset,
     get S() { return S; }, get R() { return R; },
-    stats: stats, upInfo: upInfo, buy: buy, xpNeed: xpNeed, canBreak: canBreak, breakthrough: breakthrough,
+    stats: stats, realmMul: realmMul, upInfo: upInfo, buy: buy, xpNeed: xpNeed, canBreak: canBreak, breakthrough: breakthrough,
     stageInfo: stageInfo, bossDef: bossDef, challengeBoss: challengeBoss,
     hatch: hatch, hatchTen: hatchTen, setTeam: setTeam, petPower: petPower, PET_BY: PET_BY, collection: collection,
     forge: forge, FORGE_COST: FORGE_COST, enhance: enhance, enhanceCost: enhanceCost, equip: equip, unequip: unequip, salvage: salvage,
@@ -3899,9 +3921,8 @@ var IdleStage = (function (C, D, ART) {
   var FEET = 200;                       // 主角腳底（也是水墨背景的地面線，畫面高的 83%）
   // 水墨背景是側面看過去的一條地面線，大家都要踩在線上，前後只差一點點
   // 站位分三排：後排（高一點、小一點）、主角那一排、前排。同一排左右錯開，前後排只遮到一小塊
-  var PET_SLOTS = [{ cx: 108, feet: FEET - 12, k: 0.62 }, { cx: 96, feet: FEET + 10, k: 0.66 }, { cx: 40, feet: FEET - 12, k: 0.62 }];
   var cv, ctx, time = 0;
-  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], splats: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0 };
+  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], splats: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0, calls: [] };
   var gearAnim = {};                    // 法器的出招動畫狀態 id → {t, kind, tx, ty}
   var petJump = {};
 
@@ -4177,20 +4198,84 @@ var IdleStage = (function (C, D, ART) {
   function enemyScale(e) { if (!e.boss) return e.mini ? S * 0.7 : S; return e.def.big ? 5 : e.def.tier === 3 ? 4 : S; }
   function enemyFeet(e) { return e.boss ? FEET + 1 : FEET + [0, 2, -2, 1][e.id % 4]; }
   function heroPos() { return { x: C.L.HERO_X + 16, feet: FEET }; }
-  var PARTNER_SLOTS = [{ cx: 24, feet: FEET + 10, k: 0.78 }, { cx: 64, feet: FEET - 1, k: 0.76 }];
-  function partnerPos(p) { var s = PARTNER_SLOTS[p.slot]; return { x: s.cx, feet: s.feet, k: s.k }; }
-  // 會飛的神獸排到空中那一層，走路的排地上三個位置，這樣三隻都上場也不會疊成一團
-  var AIR_SLOTS = [{ cx: 112, feet: FEET - 20, k: 0.6 }, { cx: 66, feet: FEET - 26, k: 0.6 }, { cx: 24, feet: FEET - 22, k: 0.6 }];
+  // 站位（泓定的菱形）：主角是最前面那一點，三隻神獸站另外三點（上、下、後），會飛的就飄在自己那一點上空；
+  // 兩個夥伴站在菱形後面上下兩排。x 照實際畫出來的寬度排，太擠就整隊一起縮小。越下面的排越前面、越後畫
+  // ROWS：上、中、下三排的腳底（目前的地面比較淺；之後換成深地面的背景，只要改這裡）
+  var ROWS = { top: FEET - 14, mid: FEET, bot: FEET + 16 };
   function flies(key) { var ik = inkKey(key), d = ik && INK.def(ik); return !!(d && d.motion === 'fly'); }
-  function petPos(p) {
-    var team = C.R ? C.R.pets : [], air = [], ground = [];
-    team.forEach(function (q) { (flies(q.key) ? air : ground).push(q.key); });
-    var ai = air.indexOf(p.key), gi = ground.indexOf(p.key), s = ai >= 0 ? AIR_SLOTS[ai] : PET_SLOTS[gi >= 0 ? gi : p.slot];
-    return { x: s.cx, feet: s.feet, k: s.k };
+  function drawnW(key, k) {
+    var ik = inkKey(key), d = ik && INK.def(ik);
+    if (d) return inkHeight(key, ik, S, 0) * k / S * d.w / d.h * 0.8;  // 圖邊有留白，算八成
+    return ART.meta(key).w;
   }
+  var formCache = { sig: '', pos: {} };
+  function formation() {
+    var R = C.R; if (!R) return {};
+    var pets = R.pets.map(function (p) { return { id: 'p:' + p.key, key: p.key }; }), pars = R.partners.map(function (p) { return { id: 'a:' + p.key, key: p.key }; });
+    var sig = pets.concat(pars).map(function (m) { return m.id + '=' + inkKey(m.key); }).join(',') + '|' + inkKey('hero');
+    if (sig === formCache.sig) return formCache.pos;
+    // 神獸：第 1 隻上、第 2 隻下、第 3 隻後；遠的那排畫小一點
+    var PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.93 }], AT = [{ row: 'top', k: 0.8 }, { row: 'bot', k: 0.9 }];
+    pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
+    pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
+    var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
+    function place(shrink) {
+      var w = function (m) { return m ? drawnW(m.key, m.k) * shrink : 0; };
+      var tb = [pets[0], pets[1]].filter(Boolean), wtb = Math.max(w(pets[0]), w(pets[1]));
+      var xTB = heroL - wtb * 0.32, left = pets.length ? Math.min.apply(null, tb.map(function (m) { return xTB - w(m) / 2; })) : heroL;
+      var xBack = pets[2] ? left - w(pets[2]) * 0.2 : left, left2 = pets[2] ? Math.min(left, xBack - w(pets[2]) / 2) : left;
+      var wa = Math.max(w(pars[0]), w(pars[1])), xA = left2 - wa * 0.1;
+      tb.forEach(function (m) { pos[m.id] = { x: xTB, feet: ROWS[m.row], k: m.k * shrink }; });
+      if (pets[2]) pos[pets[2].id] = { x: xBack, feet: ROWS.mid, k: pets[2].k * shrink };
+      pars.forEach(function (m) { pos[m.id] = { x: xA, feet: ROWS[m.row], k: m.k * shrink }; });
+      return Math.min(xTB - wtb / 2, pets[2] ? xBack - w(pets[2]) / 2 : 999, pars.length ? xA - wa / 2 : 999);
+    }
+    // 最左邊不要超出畫面太多，超出就整隊縮小再排
+    for (var sh = 1; sh > 0.6 && place(sh) < -6; sh -= 0.05) pos = {};
+    formCache = { sig: sig, pos: pos };
+    return pos;
+  }
+  function partnerPos(p) { return formation()['a:' + p.key] || { x: 40, feet: FEET + 10, k: 0.76 }; }
+  function petPos(p) { return formation()['p:' + p.key] || { x: 80, feet: FEET, k: 0.62 }; }
   // 傷害數字：dmg 普通、crit 暴擊（朱紅印章＋放大彈出）、heal 回血、hurt 主角受傷（往下掉）、miss 打空
   var DMG_COL = { hero: '#ffffff', pet: '#9fe3ff', petSkill: '#9fe3ff', gear: '#b8ffcf', skill: '#ffb36b', reflect: '#d0b8ff', partner: '#ffe0a0' };
-  function addText(x, y, txt, col, size, life, kind) { fx.text.push({ x: x, y: y, txt: String(txt), col: col, size: size || 9, t: 0, life: life || 0.9, kind: kind || 'msg' }); }
+  // 字不要疊在一起：附近已經有字，就往上排一格
+  function addText(x, y, txt, col, size, life, kind, key) {
+    size = size || 9;
+    for (var tries = 0; tries < 5; tries++) {
+      var hit = false;
+      for (var i = 0; i < fx.text.length; i++) { var o = fx.text[i]; if (o.t < o.life * 0.7 && Math.abs(o.x - x) < 22 && Math.abs(o.y - y) < (o.size + size) * 0.5) { hit = true; break; } }
+      if (!hit) break; y -= size + 1;
+    }
+    var t = { x: x, y: y, txt: String(txt), col: col, size: size, t: 0, life: life || 0.9, kind: kind || 'msg', key: key };
+    fx.text.push(t); return t;
+  }
+  // 招式名稱不在角色頭上冒，統一排在畫面上方的「招式欄」（我方靠左、敵方靠右），最多同時三條
+  function addCall(txt, col, foe) {
+    for (var i = 0; i < fx.calls.length; i++) if (fx.calls[i].txt === txt) { fx.calls[i].t = Math.min(fx.calls[i].t, 0.2); return; }
+    fx.calls.unshift({ txt: txt, col: col || '#ffcf4a', t: 0, life: 1.6, foe: !!foe });
+    if (fx.calls.length > 3) fx.calls.length = 3;
+  }
+  function drawCalls() {
+    var row = { a: 0, b: 0 };
+    fx.calls.forEach(function (c) {
+      var i = c.foe ? row.b++ : row.a++;
+      var q = c.t / c.life, slide = Math.min(1, c.t / 0.12), a = q > 0.75 ? (1 - q) / 0.25 : 1;
+      var y = (40 + i * 15) * S, x = c.foe ? (W - 8) * S : 8 * S;
+      ctx.save(); ctx.globalAlpha = a * (i ? 0.8 : 1);
+      ctx.font = '900 ' + (i ? 9 : 10.5) * S + 'px ' + FONT;
+      var w = ctx.measureText(c.txt).width, x0 = x - (c.foe ? -1 : 1) * (1 - slide) * 30 * S;
+      // 墨色橫條當底，左邊一小截招式顏色
+      var bx = c.foe ? x0 - w - 10 * S : x0 - 4 * S, bw = w + 14 * S, bh = 12 * S;
+      ctx.fillStyle = 'rgba(21,18,15,0.62)'; ctx.beginPath();
+      ctx.moveTo(bx, y - bh / 2); ctx.lineTo(bx + bw, y - bh / 2 + S); ctx.lineTo(bx + bw - 3 * S, y + bh / 2); ctx.lineTo(bx + 2 * S, y + bh / 2 - S); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = c.col; ctx.fillRect(c.foe ? bx + bw - 3 * S : bx + S, y - bh / 2 + 2 * S, 2 * S, bh - 4 * S);
+      ctx.textAlign = c.foe ? 'right' : 'left'; ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(29,24,22,0.9)';
+      var tx = c.foe ? x0 - 4 * S : x0 + 2 * S; ctx.strokeText(c.txt, tx, y); ctx.fillStyle = c.col; ctx.fillText(c.txt, tx, y);
+      ctx.restore();
+    });
+  }
   function burst(x, y, col, n, spd, life) {
     for (var i = 0; i < n; i++) { var a = Math.random() * 6.28, v = (0.4 + Math.random()) * (spd || 40); fx.parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 20, t: 0, life: life || 0.6, col: col, s: 1 + Math.floor(Math.random() * 2) }); }
   }
@@ -4201,9 +4286,11 @@ var IdleStage = (function (C, D, ART) {
     var R = C.R, hp = heroPos();
     if (type === 'hit') {
       var c = enemyCenter(d.e), col = d.crit ? '#ffd84a' : DMG_COL[d.src] || '#ffffff';
-      // 太多數字擠在一起時，小的普通傷害先不顯示
-      if (!d.crit && fx.text.length > 22 && d.src !== 'skill') { } else
-      addText(c.x + (Math.random() * 12 - 6), c.top - 4, fmt(d.dmg), col, d.crit ? 13 : d.src === 'skill' || d.src === 'partner' ? 9 : 8, d.crit ? 1.2 : 0.9, d.crit ? 'crit' : 'dmg');
+      // 同一隻妖怪一下子被打很多下：普通傷害合成一個數字往上加；畫面上的普通數字最多 8 個，暴擊才放大
+      var ek = 'e' + d.e.id, merged = null, nd = 0;
+      fx.text.forEach(function (t) { if (t.kind === 'dmg') { nd++; if (!d.crit && t.key === ek && t.t < 0.4) merged = t; } });
+      if (merged) { merged.val += d.dmg; merged.txt = fmt(merged.val); merged.t = Math.min(merged.t, 0.06); }
+      else if (d.crit || nd < 8) { var nt = addText(c.x + (Math.random() * 8 - 4), c.top - 4, fmt(d.dmg), col, d.crit ? 11 : 7, d.crit ? 1.1 : 0.8, d.crit ? 'crit' : 'dmg', ek); nt.val = d.dmg; }
       if (d.src === 'hero') { burst(c.x - 6, c.y, '#ffffff', 4, 30, 0.25); }
       if (fx.splats.length < 14) fx.splats.push({ x: c.x - 3 + Math.random() * 6, y: c.y - 2 + Math.random() * 4, t: 0, life: d.crit ? 0.7 : 0.45, seed: Math.floor(Math.random() * 999), big: d.crit ? 1.6 : 1, col: d.ke > 0 ? '#c8322c' : null });
       if (d.ke && Math.random() < 0.25) addText(c.x + 10, c.top + 4, d.ke > 0 ? '剋！' : '被剋', d.ke > 0 ? '#ffcf4a' : '#9aa4b5', 7, 0.8, 'miss');
@@ -4217,7 +4304,7 @@ var IdleStage = (function (C, D, ART) {
       fx.rings.push({ kind: 'slash', x: hp.x + 18, y: FEET - 18, t: 0, life: 0.18 });
     } else if (type === 'heroSkill') {
       fx.leaves = 1.2;
-      addText(hp.x, FEET - 52, '秋風起！', '#ffb36b', 12, 1.2);
+      addCall('秋風起！', '#ffb36b');
     } else if (type === 'petAtk') {
       var pp = petPos(d.pet), tc = enemyCenter(d.e);
       shot(pp.x + 12, pp.feet - 26, tc.x, tc.y, d.color, 0.35);
@@ -4253,15 +4340,15 @@ var IdleStage = (function (C, D, ART) {
       var sc2 = enemyCenter(d.e); burst(sc2.x, sc2.y, '#ffffff', 12, 40, 0.5); if (type === 'clone') addText(sc2.x, sc2.top - 8, '變！', '#ffd84a', 10);
     } else if (type === 'bossMove') {
       var bc = enemyCenter(d.e);
-      addText(bc.x, bc.top - 14, d.name + '！', '#ff9f6b', 12, 1.4);
+      addCall(d.name + '！', '#ff9f6b', true);
       if (d.id === 'heal') { burst(bc.x, bc.y, '#7dffa0', 18, 30, 0.9); addText(bc.x, bc.top - 2, '+' + fmt(d.heal), '#7dffa0', 9, 1.1, 'heal'); }
       else if (d.id === 'burn') { for (var b = 0; b < 16; b++) fx.parts.push({ x: hp.x - 16 + Math.random() * 32, y: FEET, vx: 0, vy: -40 - Math.random() * 30, t: 0, life: 0.7, col: b % 2 ? '#ff6a2a' : '#ffcf4a', s: 2 }); fx.tint = 0.5; fx.tintColor = '#ff6a2a'; }
       else if (d.id === 'water') { for (var w2 = 0; w2 < 18; w2++) fx.parts.push({ x: bc.x - w2 * 4, y: FEET - 4 - Math.random() * 20, vx: -90, vy: -30, t: 0, life: 0.6, col: w2 % 2 ? '#79c6ff' : '#d8f1ff', s: 2 }); fx.tint = 0.5; fx.tintColor = '#3c8cff'; }
       else { fx.shake = 0.3; burst(hp.x + 8, FEET - 24, '#ffd0d0', 10, 50, 0.4); }
     } else if (type === 'comboBurst') {
-      addText(hp.x, FEET - 66, d.name + '！', '#ffcf4a', 11, 1.4); fx.rings.push({ kind: 'roar', x: hp.x, y: FEET - 20, t: 0, life: 0.5 }); fx.shake = 0.25;
+      addCall(d.name + '！', '#ffcf4a'); fx.rings.push({ kind: 'roar', x: hp.x, y: FEET - 20, t: 0, life: 0.5 }); fx.shake = 0.25;
     } else if (type === 'dunStart') {
-      fx.banner = { t: 0, life: 2, title: '副本', name: d.d.name, say: d.d.say };
+      fx.banner = { t: 0, life: 2.4, title: '副本', name: d.d.name, say: d.d.say }; fx.wipe = { t: 0, life: 0.9 };
     } else if (type === 'dunWave') {
       addText(hp.x + 40, 50, '第 ' + d.depth + ' 波過了！', '#ffe27a', 9, 1);
     } else if (type === 'heroDown') {
@@ -4276,7 +4363,7 @@ var IdleStage = (function (C, D, ART) {
   function partnerSkillFx(d, hp) {
     var pp = partnerPos(d.p), def = C.PART_BY[d.key];
     if (d.sleep) { addText(pp.x, pp.feet - 46, '吃太飽，睡著了⋯', '#d8f1ff', 8, 1.6); return; }
-    addText(pp.x, pp.feet - 48, d.name + '！', def.shot, 10, 1.2);
+    addCall(d.name + '！', def.shot);
     switch (d.key) {
       case 'wukong': d.targets.forEach(function (e) { var c = enemyCenter(e); fx.rings.push({ kind: 'slash', x: c.x - 4, y: c.y, t: 0, life: 0.25 }); burst(c.x, c.y, '#ffcf4a', 6, 40, 0.4); }); fx.shake = 0.2; addText(hp.x + 26, FEET - 40, '拔毛變！', '#ffcf4a', 9, 1.2); burst(hp.x + 26, FEET - 10, '#ffffff', 16, 40, 0.5); break;
       case 'bajie': burst(hp.x, FEET - 20, '#7dffa0', 14, 30, 0.8); if (d.heal) addText(hp.x, FEET - 54, '+' + fmt(d.heal), '#7dffa0', 9, 1, 'heal'); break;
@@ -4297,7 +4384,7 @@ var IdleStage = (function (C, D, ART) {
   }
   function petSkillFx(d, hp) {
     var p = d.pet, pp = petPos(p), first = d.targets[0] ? enemyCenter(d.targets[0]) : null, def = C.PET_BY[p.key];
-    addText(pp.x, pp.feet - 54, d.name + '！', def.shot, 10, 1.2);
+    addCall(d.name + '！', def.shot);
     switch (d.fx) {
       case 'peck': if (first) for (var i = 0; i < 3; i++) shot(pp.x + 10, pp.feet - 20, first.x, first.y + i * 3 - 3, '#ffb347', 0.2 + i * 0.18, 'peck'); break;
       case 'stomp': petJump[p.key] = { t: 0, life: 0.5, tx: first ? first.x : pp.x }; if (first) setTimeout(function () { burst(first.x, FEET, '#c9b58a', 12, 50, 0.5); fx.shake = 0.15; }, 400); break;
@@ -4335,7 +4422,7 @@ var IdleStage = (function (C, D, ART) {
     else if (d.t === 'fuzhen') { d.targets.forEach(function (e, i) { if (!e) return; var c = enemyCenter(e); shot(home.x + 4, home.y, c.x, c.y + (i % 3) * 3 - 3, '#f4d35e', 0.25 + i * 0.07, 'paper'); }); }
     else if (d.t === 'bagua') { burst(hp.x, FEET - 20, d.xian ? '#ffe27a' : '#7fe0ff', 16, 30, 0.6); addText(hp.x, FEET - 54, '八卦護盾', '#7fe0ff', 8, 1); }
     else if (d.t === 'ruyi') { burst(hp.x, FEET - 20, '#9ff0c8', 14, 25, 0.8); if (d.heal) addText(hp.x, FEET - 54, '+' + fmt(d.heal), '#7dffa0', 9, 1, 'heal'); }
-    if (d.combo) { addText(hp.x, FEET - 66, d.combo + '！', '#ffcf4a', 11, 1.4); fx.flash = 0.06; fx.flashColor = '#fff2b0'; }
+    if (d.combo) { addCall(d.combo + '！', '#ffcf4a'); fx.flash = 0.06; fx.flashColor = '#fff2b0'; }
     if (d.rain) d.rain.forEach(function (e, i) { if (!e) return; var c5 = enemyCenter(e); fx.proj.push({ x: c5.x - 20 + Math.random() * 10, y: -10, tx: c5.x + Math.random() * 6 - 3, ty: c5.y, col: '#e8eef5', t: -0.25 - i * 0.07, dur: 0.25, kind: 'sword' }); });
     if (d.t === 'fuzhen' && d.combo) d.targets.forEach(function (e, i) { var c6 = enemyCenter(e); fx.bolts.push({ x: c6.x, y: -4, tx: c6.x, ty: c6.y, t: -0.4 - i * 0.1, life: 0.3, big: true }); });
     if (d.t === 'tieguo' && d.gold) addText(hp.x - 20, FEET - 60, '+' + fmt(d.gold) + ' 靈石', '#5fd6a6', 8, 1.4);
@@ -4354,12 +4441,13 @@ var IdleStage = (function (C, D, ART) {
   function update(dt) {
     time += dt;
     if (fx.parts.length > 260) fx.parts.splice(0, fx.parts.length - 260);
-    ['proj', 'text', 'parts', 'rings', 'bolts', 'splats'].forEach(function (k) {
+    ['proj', 'text', 'parts', 'rings', 'bolts', 'splats', 'calls'].forEach(function (k) {
       fx[k] = fx[k].filter(function (o) { o.t += dt; return o.t < (o.life || o.dur || 1) + (o.kind === 'rock' ? 0.05 : 0); });
     });
     fx.parts.forEach(function (p) { p.x += p.vx * dt; p.y += p.vy * dt; if (!p.float) p.vy += 90 * dt; });
     fx.shake = Math.max(0, fx.shake - dt); fx.flash = Math.max(0, fx.flash - dt); fx.tint = Math.max(0, fx.tint - dt); fx.leaves = Math.max(0, fx.leaves - dt);
     if (fx.banner) { fx.banner.t += dt; if (fx.banner.t > fx.banner.life) fx.banner = null; }
+    if (fx.wipe) { fx.wipe.t += dt; if (fx.wipe.t > fx.wipe.life) fx.wipe = null; }
     if (fx.pillar) { fx.pillar.t += dt; if (fx.pillar.t > fx.pillar.life) fx.pillar = null; }
     if (fx.trib) {
       fx.trib.t += dt;
@@ -4384,7 +4472,8 @@ var IdleStage = (function (C, D, ART) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var sx = fx.shake ? Math.round((Math.random() - 0.5) * 6) : 0, sy = fx.shake ? Math.round((Math.random() - 0.5) * 4) : 0;
     ctx.translate(sx, sy);
-    drawBg(R.dun ? R.dun.theme : si.area.theme, R.scroll, R.dun ? null : AREA_BG[D.AREAS.indexOf(si.area)]);
+    drawBg(R.dun ? R.dun.theme : si.area.theme, R.scroll, R.dun ? R.dun.key : AREA_BG[D.AREAS.indexOf(si.area)]);
+    if (R.dun) dunAtmos(R.dun);
 
     var hp = heroPos(), walking = R.phase === 'walk', down = R.phase === 'down';
     var list = [];
@@ -4438,7 +4527,9 @@ var IdleStage = (function (C, D, ART) {
       var fr = act === 'die' ? Math.min(3, Math.floor((0.6 - e.deadT) / 0.15)) : act === 'attack' ? Math.min(3, Math.floor((0.3 - e.atkT) / 0.3 * 4)) : frameOf(3) + e.id;
       list.push({ feet: feet, draw: function () {
         var tall = m.feet * sc / S;
-        if (e.elite && !e.dead) { ctx.globalAlpha = 0.28 + 0.1 * Math.sin(time * 5); ellipse(e.x + w / 2, feet - tall / 2, w / 2 + 4, tall / 2 + 4, '#ffcf4a'); ctx.globalAlpha = 1; }
+        if (e.elite && !e.dead) wash(e.x + w / 2, feet - tall / 2, Math.max(w, tall) / 2 + 8, 'rgba(255,207,74,1)', 0.35 + 0.1 * Math.sin(time * 5));
+        if (C.R.dun && C.R.dun.key === 'wuxing' && e.el && !e.dead) wash(e.x + w / 2, feet - tall / 2, Math.max(w, tall) / 2 + 10, D.ELEMENTS[e.el].color, 0.55);
+        if (e.ghost && !e.dead) { wash(e.x + w / 2, feet - tall / 2, Math.max(w, tall) / 2 + 6, 'rgba(29,26,31,1)', 0.35); if (Math.random() < 0.3) fx.parts.push({ x: e.x + Math.random() * w, y: feet - Math.random() * tall, vx: 8, vy: -10, t: 0, life: 0.9, col: '#2a2630', s: 2, float: true }); }
         drawSpr(e.art && inkKey(e.art) ? e.art : e.key, act, fr, true, sc, e.x + w / 2, feet, e.fake || e.ghost ? 0.55 : e.fled && e.dead ? 0.5 : undefined, e.boss ? (e.def && e.def.tier === 3 ? 44 : 38) / (sc / S) : 0);
         if (e.exposeT > 0 && !e.dead) { var ey = feet - tall - 8; px(e.x + w / 2 - 3, ey, 6, 3, '#e8e0ff'); px(e.x + w / 2 - 1, ey + 0.5, 2, 2, '#5a3fd0'); }
         if (e.bindT > 0 && !e.dead) { for (var bi = 0; bi < 3; bi++) px(e.x + 1, feet - tall * (0.3 + bi * 0.2), w - 2, 1.5, '#ffd86a'); }
@@ -4554,11 +4645,19 @@ var IdleStage = (function (C, D, ART) {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     fx.text.forEach(drawNumber);
     ctx.globalAlpha = 1;
+    drawCalls();
     // 整個畫面染色：像墨暈從四邊滲進來，中間淡
     function vignette(col, a) { var g = ctx.createRadialGradient(W * S / 2, H * S / 2, H * S * 0.25, W * S / 2, H * S / 2, W * S * 0.62); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, col); ctx.globalAlpha = a; ctx.fillStyle = g; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; }
     if (fx.tint > 0) vignette(fx.tintColor, Math.min(0.75, 0.6 * fx.tint));
     if (fx.flash > 0) { ctx.globalAlpha = Math.min(0.45, fx.flash * 2); ctx.fillStyle = fx.flashColor; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; vignette(INKC, Math.min(0.5, fx.flash * 3)); }
     if (down) { ctx.fillStyle = 'rgba(10,8,20,0.35)'; ctx.fillRect(0, 0, W * S, H * S); }
+    if (fx.wipe) { // 進出副本：一大筆濃墨從左刷到右蓋住畫面，再往右退開
+      var wq = fx.wipe.t / fx.wipe.life, edge = wq < 0.5 ? wq * 2 : 1, tail = wq < 0.5 ? 0 : (wq - 0.5) * 2;
+      var x0 = -40 + tail * (W + 80), x1 = -40 + edge * (W + 80);
+      ctx.fillStyle = INKC; ctx.globalAlpha = 0.96; ctx.fillRect(x0 * S, 0, Math.max(0, x1 - x0) * S, H * S);
+      for (var wy = 0; wy < H; wy += 8) { inkDot(x1 + Math.sin(wy * 0.7) * 6, wy, 6, INKC, 0.9, 40, 0); if (tail > 0) inkDot(x0 - Math.sin(wy * 0.9) * 6, wy, 5, INKC, 0.7, -40, 0); }
+      ctx.globalAlpha = 1;
+    }
   }
   // 畫一個飄字。數字和單位（萬、億⋯）分開畫，單位小一點比較好讀
   var FONT = '"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif';
@@ -4592,9 +4691,33 @@ var IdleStage = (function (C, D, ART) {
     ctx.textAlign = 'center';
   }
 
+  // ───────── 副本氣氛（還沒有專屬背景圖的時候，靠這個一眼看出在副本裡）─────────
+  function dunAtmos(dn) {
+    var k = dn.key, vg = function (col, a, r0) { var g = ctx.createRadialGradient(W * S / 2, H * S * 0.6, H * S * (r0 || 0.2), W * S / 2, H * S * 0.6, W * S * 0.7); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, col); ctx.globalAlpha = a; ctx.fillStyle = g; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; };
+    if (k === 'cangjing') { // 藏經閣：燭光昏黃，紙頁飄
+      vg('#2a1a08', 0.8, 0.15); wash(W * 0.25, 60, 50, 'rgba(255,190,90,1)', 0.18 + 0.04 * Math.sin(time * 7)); wash(W * 0.75, 60, 50, 'rgba(255,190,90,1)', 0.18 + 0.04 * Math.sin(time * 6 + 1));
+      if (Math.random() < 0.12) fx.parts.push({ x: Math.random() * W, y: -4, vx: 6, vy: 14, t: 0, life: 3, col: '#efe0b8', s: 2.2, float: true });
+    } else if (k === 'yaotian') { // 萬藥田：綠色藥霧
+      for (var i = 0; i < 6; i++) wash((i * 61 + time * 8) % (W + 60) - 30, FEET - 10, 40, 'rgba(120,200,120,1)', 0.18);
+      if (Math.random() < 0.15) fx.parts.push({ x: Math.random() * W, y: FEET + 4, vx: 0, vy: -12, t: 0, life: 2.5, col: '#bfe8a0', s: 1.2, float: true });
+    } else if (k === 'kuangdong') { // 玄鐵礦洞：洞頂、很暗、落石灰
+      vg('#050403', 0.92, 0.12);
+      ctx.fillStyle = INKC; ctx.beginPath(); ctx.moveTo(0, 0); for (var x = 0; x <= W; x += 16) ctx.lineTo(x * S, (18 + Math.abs(Math.sin(x * 0.13)) * 26 + (x % 48 === 0 ? 14 : 0)) * S); ctx.lineTo(W * S, 0); ctx.fill();
+      wash(heroPos().x, FEET - 30, 60, 'rgba(255,170,80,1)', 0.12);
+      if (Math.random() < 0.1) fx.parts.push({ x: Math.random() * W, y: 30, vx: 0, vy: 20, t: 0, life: 2, col: '#8a8178', s: 1 });
+    } else if (k === 'wuxing') { // 五行秘境：當天屬性的顏色整片暈開，五顆光點繞圈
+      var ec = dn.el && D.ELEMENTS[dn.el] ? D.ELEMENTS[dn.el].color : '#c9a6ff';
+      vg(ec, 0.35 + 0.08 * Math.sin(time * 2), 0.25);
+      D.EL_KEYS.forEach(function (ek, j) { var a = time * 0.6 + j * 1.2566; wash(W / 2 + Math.cos(a) * 120, 80 + Math.sin(a) * 30, 12, D.ELEMENTS[ek].color, 0.5); });
+    } else if (k === 'shenshou') { // 神獸試煉：灰白霧、墨煙
+      vg('#d8dde4', 0.45, 0.3);
+      for (var m = 0; m < 5; m++) wash((m * 83 + time * 14) % (W + 80) - 40, FEET - 30 - (m % 2) * 20, 50, 'rgba(230,234,240,1)', 0.22);
+    }
+  }
+
   // ───────── 境界光效 ─────────
   // 0 練氣、1 築基、2 金丹、3 元嬰、4 化神、5 煉虛、6 合體、7 大乘、8 渡劫、9 成仙以後
-  function realmTier() { var r = C.S.realm; return r < 9 ? 0 : Math.min(9, 1 + Math.floor((r - 9) / 3)); }
+  function realmTier() { return Math.min(9, D.realm(C.S.realm).bi); }
   function realmAuraBack(t, hp, walking, hact, hfr) {
     if (!t) return;
     var cx = hp.x, glow = Math.min(1, 0.4 + t * 0.07), pulse = 0.5 + 0.5 * Math.sin(time * 3);
@@ -5029,7 +5152,7 @@ function IdleFmt(n) {
       $('buy_' + k).disabled = C.S.gold < pl.cost;
     });
     var col = C.collection(), slots = C.gearSlots();
-    $('bonus').innerHTML = '<div>境界加成 <b>×' + fmt(Math.pow(C.BAL.realmMul, C.S.realm)) + '</b></div><div>神獸收藏 <b>×' + col.mul.toFixed(2) + '</b>（' + col.n + ' 隻）</div>' +
+    $('bonus').innerHTML = '<div>境界加成 <b>×' + fmt(C.realmMul()) + '</b></div><div>神獸收藏 <b>×' + col.mul.toFixed(2) + '</b>（' + col.n + ' 隻）</div>' +
       '<div>絕招「秋風起」 <b>' + (C.S.realm >= 3 ? '已學會' : '練氣四層學會') + '</b></div><div>法器格 <b>' + slots + ' / 3</b>' + (slots < 3 ? '（' + (slots < 2 ? '築基' : '金丹') + '再加一格）' : '') + '</div>';
   }
   // 夥伴（西遊篇、封神篇的人物）
@@ -5218,6 +5341,8 @@ function IdleFmt(n) {
     h += '<div class="sec"><h3>搬家用的進度碼</h3><div class="btns" style="margin:0"><button class="mini go" type="button" data-act="export">匯出進度</button><button class="mini" type="button" data-act="import">匯入進度</button></div></div><p class="note">換裝置前先「匯出進度」，把那串文字存好；到新裝置按「匯入進度」貼上就能接著玩。</p>';
     h += '<div class="sec"><h3>兌換碼</h3></div><div class="sec" style="justify-content:flex-start"><input id="codeIn" type="text" autocomplete="off" spellcheck="false" placeholder="輸入兌換碼" style="flex:1;min-width:0;background:var(--ink);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:15px;text-transform:uppercase"><button class="mini go" type="button" data-act="redeem">兌換</button></div>';
     h += '<div class="sec"><h3>重新開始</h3><button class="mini warn" type="button" data-act="reset">清除進度</button></div><p class="note">進度存在這台裝置的瀏覽器裡（會自動多存一份備份）。清除瀏覽器資料就會不見，記得偶爾匯出進度。</p>';
+    var ver = document.querySelector('.ver');
+    h += '<p class="note" style="text-align:center;margin-top:14px">遊戲版本 <b>' + esc(ver ? ver.textContent : '?') + '</b>　不是最新版的話，把這個分頁關掉再打開一次</p>';
     return h;
   }
   $('panel').addEventListener('click', function (e) {
