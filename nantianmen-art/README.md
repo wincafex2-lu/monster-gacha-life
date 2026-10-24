@@ -91,9 +91,9 @@
 ### 待辦（要修改的圖）
 `feijian__xian.png` 拉直已由 Claude 修好、玄武黑色版已完成（10/24）。
 
-**暫停，先不要畫（10/24 遊戲畫面要改成比較高的比例，等新尺寸定了再通知）：**
+**最優先，先做這一項再畫其他的（新尺寸已定，見 BRIEF.md「背景」）：**
 
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| 6 區的地面 `bg-bamboo__ground`、`bg-herb__ground`、`bg-town__ground`、`bg-volcano__ground`、`bg-cloud__ground`、`bg-palace__ground`（背景分支 `art/nantianmen-bg`） | 現在畫成地底的剖面（側面切開的土層和石頭），放進遊戲看起來很怪。 | 照 BRIEF.md「地面層 `ground` 的畫法」重畫成**角色走路的平面**：從稍微斜上方看的路面，佔圖片下方約 30%，腳踩在約 86% 高度。尺寸、配色、畫風照原本那一區。雲海是雲做的平坦雲路，南天門是白玉地磚。 |
+| 6 區的地面 `bg-bamboo__ground`、`bg-herb__ground`、`bg-town__ground`、`bg-volcano__ground`、`bg-cloud__ground`、`bg-palace__ground`（背景分支 `art/nantianmen-bg`） | 現在畫成地底的剖面（側面切開的土層和石頭），放進遊戲看起來很怪。 | 照 BRIEF.md「背景」的新尺寸（8:3）和「地面層 `ground` 的畫法」重畫成**角色走路的平面**：從稍微斜上方看的路面，從約 73% 高度到底部，腳踩在約 83%。配色、畫風照原本那一區。雲海是雲做的平坦雲路，南天門是白玉地磚。 |
 
