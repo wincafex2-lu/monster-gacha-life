@@ -59,7 +59,7 @@
 小怪要像蘑菇妖一樣有表情、可愛又有點兇，臉轉向畫面。
 
 #### 4. 法器（沿用 `art/nantianmen-feijian-20261024`）
-飛劍普通版已完成 ✅，仙器版要再修一次（見「待辦」）。接著畫其他 6 個，每個畫 `__field` 和 `__xian` 兩張：`hulu`、`leizhu`、`bagua`、`fuzhen`、`tieguo`、`ruyi`。仙器版每一個都要非常華麗（BRIEF.md「法器」）。
+飛劍普通版已完成 ✅，仙器版也完成了 ✅。接著畫其他 6 個，每個畫 `__field` 和 `__xian` 兩張：`hulu`、`leizhu`、`bagua`、`fuzhen`、`tieguo`、`ruyi`。仙器版每一個都要非常華麗（BRIEF.md「法器」）。
 
 #### 5. 背景（`art/nantianmen-bg`）
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
@@ -70,7 +70,6 @@
 還沒畫：`tietou`、`shen`、`ye`、`jiuwei`、`taotie`、`fenghuang`、新小怪 `yunduo`、`xianhe`、`leigong`、`shuangjing`、`tianbing`、`shenquan`、`jiahou`、`shishi`、`bg-town__mid`、`bg-cloud` 和 `bg-palace` 其他 3 層。
 
 ### 待辦（要修改的圖）
-**還沒改：`feijian__xian.png` 拉直（下面第一行），請優先處理。**
+`feijian__xian.png` 拉直已由 Claude 修好（10/24），不用再畫。目前沒有要修改的圖。
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| `feijian__xian.png`（法器分支） | 加長版的設計很好，但劍看起來不直：劍柄和劍身不在同一條直線上（差幾度），劍身兩邊不平行、越往劍尖越寬，劍尖也偏向上緣。 | 保留設計和長度，重畫成一把筆直的劍：1. 劍首寶玉、劍柄、護手中心、劍身、劍尖全部在同一條直線上。2. 劍身兩邊刃完全平行，到劍尖才收尖，劍尖在劍身正中線上、左右對稱。3. 一樣斜放（劍尖朝右上、約 30 度）。 |
