@@ -98,5 +98,5 @@
 
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| 6 區的地面 `bg-bamboo__ground`、`bg-herb__ground`、`bg-town__ground`、`bg-volcano__ground`、`bg-cloud__ground`、`bg-palace__ground`（背景分支 `art/nantianmen-bg`） | 現在畫成地底的剖面（側面切開的土層和石頭），放進遊戲看起來很怪。 | 照 BRIEF.md「背景」的新尺寸（8:3）和「地面層 `ground` 的畫法」重畫成**角色走路的平面**：從稍微斜上方看的路面，從約 62% 高度到底部，角色分好幾排站在 70%～93%。配色、畫風照原本那一區。雲海是雲做的平坦雲路，南天門是白玉地磚。 |
+| 6 區的地面 `bg-bamboo__ground`、`bg-herb__ground`、`bg-town__ground`、`bg-volcano__ground`、`bg-cloud__ground`、`bg-palace__ground`（背景分支 `art/nantianmen-bg`） | 現在畫成地底的剖面（側面切開的土層和石頭），放進遊戲看起來很怪。 | 照 BRIEF.md「背景」的新尺寸（8:3）和「地面層 `ground` 的畫法」重畫成**角色走路的平面**：從稍微斜上方看的路面，從約 42% 高度到底部（佔畫面下方將近六成），角色分好幾排站在 55%～95%。配色、畫風照原本那一區。雲海是雲做的平坦雲路，南天門是白玉地磚。 |
 
