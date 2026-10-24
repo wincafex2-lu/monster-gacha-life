@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v16</div>
+    <div class="ver">v17</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4198,8 +4198,9 @@ var IdleStage = (function (C, D, ART) {
   function enemyScale(e) { if (!e.boss) return e.mini ? S * 0.7 : S; return e.def.big ? 5 : e.def.tier === 3 ? 4 : S; }
   function enemyFeet(e) { return e.boss ? FEET + 1 : FEET + [0, 2, -2, 1][e.id % 4]; }
   function heroPos() { return { x: C.L.HERO_X + 16, feet: FEET }; }
-  // 站位（泓定的菱形）：主角是最前面那一點，三隻神獸站另外三點（上、下、後），會飛的就飄在自己那一點上空；
-  // 兩個夥伴站在菱形後面上下兩排。x 照實際畫出來的寬度排，太擠就整隊一起縮小。越下面的排越前面、越後畫
+  // 站位（泓定的菱形）：主角站最前面那一點，兩位夥伴站菱形上、下兩點；神獸排在菱形後面的上下兩排
+  // （第 3 隻站兩排中間、最後面）。會飛的就飄在自己的位置上空。x 照實際畫出來的寬度排，太擠就整隊一起縮小。
+  // 越下面的排越前面、越後畫。還沒有夥伴的時候，神獸直接往前補，不留空位
   // ROWS：上、中、下三排的腳底（目前的地面比較淺；之後換成深地面的背景，只要改這裡）
   var ROWS = { top: FEET - 14, mid: FEET, bot: FEET + 16 };
   function flies(key) { var ik = inkKey(key), d = ik && INK.def(ik); return !!(d && d.motion === 'fly'); }
@@ -4214,21 +4215,21 @@ var IdleStage = (function (C, D, ART) {
     var pets = R.pets.map(function (p) { return { id: 'p:' + p.key, key: p.key }; }), pars = R.partners.map(function (p) { return { id: 'a:' + p.key, key: p.key }; });
     var sig = pets.concat(pars).map(function (m) { return m.id + '=' + inkKey(m.key); }).join(',') + '|' + inkKey('hero');
     if (sig === formCache.sig) return formCache.pos;
-    // 神獸：第 1 隻上、第 2 隻下、第 3 隻後；遠的那排畫小一點
-    var PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.93 }], AT = [{ row: 'top', k: 0.8 }, { row: 'bot', k: 0.9 }];
-    pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
+    // 夥伴：第 1 位上、第 2 位下；神獸：第 1 隻上、第 2 隻下、第 3 隻中間最後；上面那排比較遠，畫小一點
+    var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.92 }];
     pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
+    pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
     var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
     function place(shrink) {
-      var w = function (m) { return m ? drawnW(m.key, m.k) * shrink : 0; };
-      var tb = [pets[0], pets[1]].filter(Boolean), wtb = Math.max(w(pets[0]), w(pets[1]));
-      var xTB = heroL - wtb * 0.32, left = pets.length ? Math.min.apply(null, tb.map(function (m) { return xTB - w(m) / 2; })) : heroL;
-      var xBack = pets[2] ? left - w(pets[2]) * 0.2 : left, left2 = pets[2] ? Math.min(left, xBack - w(pets[2]) / 2) : left;
-      var wa = Math.max(w(pars[0]), w(pars[1])), xA = left2 - wa * 0.1;
-      tb.forEach(function (m) { pos[m.id] = { x: xTB, feet: ROWS[m.row], k: m.k * shrink }; });
-      if (pets[2]) pos[pets[2].id] = { x: xBack, feet: ROWS.mid, k: pets[2].k * shrink };
-      pars.forEach(function (m) { pos[m.id] = { x: xA, feet: ROWS[m.row], k: m.k * shrink }; });
-      return Math.min(xTB - wtb / 2, pets[2] ? xBack - w(pets[2]) / 2 : 999, pars.length ? xA - wa / 2 : 999);
+      var w = function (m) { return m ? drawnW(m.key, m.k) * shrink : 0; }, edge = heroL, minL = 999;
+      function put(m, x) { pos[m.id] = { x: x, feet: ROWS[m.row], k: m.k * shrink }; minL = Math.min(minL, x - w(m) / 2); }
+      // 菱形上下兩點（夥伴）：跟主角錯開一點點
+      if (pars.length) { var wa = Math.max(w(pars[0]), w(pars[1])), xa = heroL - wa * 0.3; pars.forEach(function (m) { put(m, xa); }); edge = xa - wa / 2; }
+      // 後面上下兩排（神獸 1、2），再後面中間（神獸 3）
+      var tb = pets.slice(0, 2);
+      if (tb.length) { var wp = Math.max(w(pets[0]), w(pets[1])), xp = edge - wp * (pars.length ? 0.35 : 0.3); tb.forEach(function (m) { put(m, xp); }); edge = xp - wp / 2; }
+      if (pets[2]) put(pets[2], edge - w(pets[2]) * 0.1);
+      return minL;
     }
     // 最左邊不要超出畫面太多，超出就整隊縮小再排
     for (var sh = 1; sh > 0.6 && place(sh) < -6; sh -= 0.05) pos = {};
