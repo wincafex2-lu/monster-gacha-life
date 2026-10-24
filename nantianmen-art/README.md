@@ -77,13 +77,16 @@
 清單和外型見 BRIEF.md 最後「新篇章」的第 1 批：夥伴 4 個、首領 5 個（各 `__idle`、`__attack`），小怪 6 個（只畫 `__idle`），背景 3 張（每區只畫 1 張 `__full`）。共 27 張（8＋10＋6＋3）。可以和上面五個分支同時畫。
 西遊篇已完成 ✅（10/24）。
 
+#### 6b. 副本小怪（敵人分支 `art/nantianmen-enemies`）
+9 隻副本小怪，只畫 `__idle`：`shuyaojing`、`dengxin`、`luanshu`、`lingzhi`、`heshouwu`、`kuangshi`、`yuansuling`、`yuansuhou`、`yuansushi`（見 BRIEF.md「副本」）。副本背景先不要畫。
+
 #### 7. 新篇章第 2 批：封神篇（分支 `art/nantianmen-fengshen`，現在開始畫）
 清單和外型見 BRIEF.md「第 2 批：封神篇」：夥伴 3 個、首領 6 個（各畫 `__idle`、`__attack`），小怪 7 個（只畫 `__idle`），背景 3 張（每區 1 張 `__full`），共 28 張（6＋12＋7＋3）。蝦兵沿用 `xiabing`，不用畫。
 
 #### 8. 新篇章第 3 批：山海篇（分支 `art/nantianmen-shanhai`，封神篇畫完就接著畫）
 清單和外型見 BRIEF.md「第 3 批：山海篇」：神獸夥伴 3 個、首領 6 個（各畫 `__idle`、`__attack`），小怪 9 個（只畫 `__idle`），背景 3 張（每區 1 張 `__full`），共 30 張（6＋12＋9＋3）。
 
-**畫圖順序（不用再問）：** 先做「待辦」裡的地面重畫 → 第 5c 項招式特效 → 第 5b 項介面圖和封神篇角色可以同時畫 → 山海篇。封神篇和山海篇的**背景先不要畫**（泓還在決定背景要一整張還是分 4 層），先畫角色，背景等這裡通知。
+**畫圖順序（不用再問）：** 先做「待辦」裡的地面重畫 → 第 5c 項招式特效 → 第 5b 項介面圖和封神篇角色可以同時畫 → 第 6b 項副本小怪 → 山海篇。封神篇和山海篇的**背景先不要畫**（泓還在決定背景要一整張還是分 4 層），先畫角色，背景等這裡通知。
 
 **全部分支一覽（之後不會再加新分支）：** `art/nantianmen-people`、`art/nantianmen-partners`、`art/nantianmen-enemies`、`art/nantianmen-feijian-20261024`、`art/nantianmen-bg`、`art/nantianmen-xiyou`、`art/nantianmen-fengshen`、`art/nantianmen-shanhai`。要修改的圖，直接傳回原本的分支。
 
