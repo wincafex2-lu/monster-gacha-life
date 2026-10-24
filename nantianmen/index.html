@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v15</div>
+    <div class="ver">v16</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1290,7 +1290,7 @@ var IDLE_DATA = (function () {
   var PARTNER_RAR = { common: 50, rare: 30, epic: 15, legend: 5 };  // 從蛋裡抽夥伴時的權重
   var PARTNER_POW = { common: 0.85, rare: 1, epic: 1.2, legend: 1.4 };
   // 還沒有水墨圖的角色，先借現有的點陣圖
-  var SPRITE_ALIAS = { jingwei: 'fenghuang', dijiang: 'xuanwu', kui: 'qilin',
+  var SPRITE_ALIAS = { shitoujing: 'shijing', jingwei: 'fenghuang', dijiang: 'xuanwu', kui: 'qilin',
     huoshu: 'limao', zhihe: 'zhiren', zhusun: 'shuzhuang', yunduo: 'denglong', dangkang: 'langyao', xuangui: 'xuanwu', jiao: 'langyao', lushu: 'baize',
     xiaozuanfeng: 'houyao', tudigong: 'elder', shanshen: 'tietou', xiabing: 'sheyao', honghaier: 'tietou', tieshan: 'liu', leizhenzi: 'houyao', tuxingsun: 'mo',
     wukong: 'houyao', bajie: 'dabao', wujing: 'moWuya', bailong: 'baize', nezha: 'liu', yangjian: 'shen2', jiang: 'elder' };
@@ -4261,7 +4261,7 @@ var IdleStage = (function (C, D, ART) {
     fx.calls.forEach(function (c) {
       var i = c.foe ? row.b++ : row.a++;
       var q = c.t / c.life, slide = Math.min(1, c.t / 0.12), a = q > 0.75 ? (1 - q) / 0.25 : 1;
-      var y = (40 + i * 15) * S, x = c.foe ? (W - 8) * S : 8 * S;
+      var y = (68 + i * 15) * S, x = c.foe ? (W - 10) * S : 10 * S;
       ctx.save(); ctx.globalAlpha = a * (i ? 0.8 : 1);
       ctx.font = '900 ' + (i ? 9 : 10.5) * S + 'px ' + FONT;
       var w = ctx.measureText(c.txt).width, x0 = x - (c.foe ? -1 : 1) * (1 - slide) * 30 * S;
