@@ -9,7 +9,7 @@
 
 **給 GPT 的固定流程（每一次都要做）：**
 1. 開始畫之前，重新讀這份 README 的最新版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/main/nantianmen-art/README.md
-2. 只做「待辦」表格裡的項目，照順序做。試做三個角色通過之前，不要畫其他角色。
+2. 只做「待辦」表格裡的項目，照順序做。試做三個角色通過之前，不要畫其他角色。可以在自己的任務分支上傳，Claude 會從分支拿圖。
 3. 上傳完之後，再讀一次這份 README，看有沒有新的意見。
 4. 上傳時在 commit 訊息（或給泓的訊息）寫清楚上傳了哪些檔名。
 
@@ -26,7 +26,10 @@
 
 ## 進度與待辦（Claude 收到圖後會更新這裡）
 
-### 第一步：試做三個（現在做這個）
+### 背景（泓說先畫這個）
+先畫第一區「雜役峰後山」（`bamboo`）的 4 層：`bg-bamboo__sky.png`、`bg-bamboo__far.png`、`bg-bamboo__mid.png`、`bg-bamboo__ground.png`。規則見 BRIEF.md 的「背景」。這一區過關再畫其他區。
+
+### 第一步：試做三個角色
 | 順序 | 檔名 | 內容 |
 |---|---|---|
 | 1 | `hero-chores__idle.png` | 主角穿雜役服站立，手拿掃帚 |
