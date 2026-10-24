@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v20</div>
+    <div class="ver">v21</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1569,7 +1569,7 @@ if (typeof module !== 'undefined') module.exports = IDLE_DATA;
 // 《一路掃到南天門》遊戲核心：數值、戰鬥、存檔、離線收益。不碰畫面，畫面只聽事件。
 var IdleCore = (function (D) {
   // 版面（邏輯座標，畫面 320×180）
-  var L = { HERO_X: 138, ENGAGE_X: 192, SPACING: 30, SPAWN_X: 340, WALK: 80 };
+  var L = { HERO_X: 124, ENGAGE_X: 180, SPACING: 30, SPAWN_X: 340, WALK: 80 };
   // 數值（用 tools/sim.js 的自動玩家調過：地區 1 約 10 分鐘，第一輪南天門約 3 小時的不停手操作）
   var BAL = {
     realmMul: 1.2, heroAtk: [10, 1], heroHp: [120, 12], heroReg: [2, 0.2], lvGrow: 1.05,
@@ -4237,6 +4237,9 @@ var IdleStage = (function (C, D, ART) {
     }
     // 最左邊不要超出畫面太多，超出就整隊縮小再排
     for (var sh = 1; sh > 0.6 && place(sh) < -6; sh -= 0.05) pos = {};
+    // 排完如果左邊還空很多，就把整隊往左拉開（主角不動，越後面的拉越遠），不要全擠在主角背後
+    var minL = 999, id; for (id in pos) { var pm = pos[id], km = id.slice(2); minL = Math.min(minL, pm.x - drawnW(km, pm.k) / 2); }
+    if (minL < 999 && minL > 8) { var f = Math.min(1.9, (heroL - 8) / Math.max(1, heroL - minL)); for (id in pos) pos[id].x = heroL - (heroL - pos[id].x) * f; }
     formCache = { sig: sig, pos: pos };
     return pos;
   }
