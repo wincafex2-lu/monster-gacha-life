@@ -69,7 +69,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
 <div class="wrap">
   <header>
     <h1>南天門美術圖庫<span class="seal">即時</span></h1>
-    <p class="lead">GPT 上傳到 GitHub 的圖都會出現在這裡，包含所有 <code>art/nantianmen-*</code> 分支和 main。每一格是規格裡應該要有的一張圖，虛線框代表還沒畫。同一張圖在好幾個分支都有時，可以點下面的分支名稱切換。要比較站立和攻擊的大小，請切到「原圖同比例」。</p>
+    <p class="lead">GPT 上傳到 GitHub 的圖都會出現在這裡，包含所有 <code>art/nantianmen-*</code> 分支。每一格是規格裡應該要有的一張圖，虛線框代表還沒畫。同一張圖在好幾個分支都有時，可以點下面的分支名稱切換。要比較站立和攻擊的大小，請切到「原圖同比例」。</p>
   </header>
 
   <div class="bar">
@@ -104,39 +104,61 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
 
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var rateReset = 0;
   function getJSON(url) {
     return fetch(url, { headers: { Accept: 'application/vnd.github+json' } }).then(function (r) {
       if (r.status === 404) return null;
-      if (r.status === 403 || r.status === 429) throw new Error('rate');
+      if (r.status === 403 || r.status === 429) { rateReset = +r.headers.get('x-ratelimit-reset') || 0; throw new Error('rate'); }
       if (!r.ok) throw new Error('http ' + r.status);
       return r.json();
     });
   }
   function kb(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB'; }
 
-  // files: { 'baihu__idle.png': [{branch, url, size, html}] }
+  // 省讀取次數：每次只問 1 次「各分支最新版本」，只有變動過的分支才再讀它的圖片清單；圖片本身走 raw 網址，不算次數。
+  var CACHE_KEY = 'nantianmen-gallery-v2';
+  function loadCache() { try { return JSON.parse(localStorage.getItem(CACHE_KEY)) || { branches: {} }; } catch (e) { return { branches: {} }; } }
+  function saveCache(c) { try { localStorage.setItem(CACHE_KEY, JSON.stringify(c)); } catch (e) {} }
+  var cache = loadCache();
+
+  function filesFrom(c) {
+    var files = {}, names = Object.keys(c.branches).sort(function (a, b) { return a < b ? 1 : -1; });
+    names.forEach(function (n) {
+      var br = c.branches[n];
+      br.list.forEach(function (f) {
+        if (!/\.(png|jpe?g|webp)$/i.test(f.p)) return;
+        (files[f.p] = files[f.p] || []).push({ branch: n, sha: f.s, size: f.z,
+          url: 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + br.sha + '/' + DIR + '/' + f.p,
+          html: 'https://github.com/' + OWNER + '/' + REPO + '/blob/' + n + '/' + DIR + '/' + f.p });
+      });
+    });
+    return files;
+  }
+  function stamp(t) { return new Date(t).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }); }
+
   function load() {
     $('status').className = 'status'; $('status').textContent = '讀取中…';
-    getJSON(API + '/branches?per_page=100').then(function (bs) {
-      var names = (bs || []).map(function (b) { return b.name; }).filter(function (n) { return n === 'main' || n.indexOf('art/nantianmen') === 0; });
-      names.sort(function (a, b) { return a === 'main' ? 1 : b === 'main' ? -1 : a < b ? 1 : -1; });
-      return Promise.all(names.map(function (n) {
-        return getJSON(API + '/contents/' + DIR + '?ref=' + encodeURIComponent(n)).then(function (list) { return { branch: n, list: Array.isArray(list) ? list : [] }; });
-      }));
-    }).then(function (res) {
-      var files = {};
-      res.forEach(function (r) {
-        r.list.forEach(function (f) {
-          if (f.type !== 'file' || !/\.(png|jpe?g|webp)$/i.test(f.name)) return;
-          (files[f.name] = files[f.name] || []).push({ branch: r.branch, url: f.download_url, size: f.size, html: f.html_url, sha: f.sha });
+    var calls = 1;
+    getJSON(API + '/git/matching-refs/heads/art/nantianmen').then(function (refs) {
+      var next = { branches: {}, at: Date.now() };
+      return Promise.all((refs || []).map(function (r) {
+        var n = r.ref.replace('refs/heads/', ''), sha = r.object.sha, old = cache.branches[n];
+        if (old && old.sha === sha) { next.branches[n] = old; return null; }
+        calls++;
+        return getJSON(API + '/git/trees/' + sha + ':' + DIR).then(function (t) {
+          next.branches[n] = { sha: sha, list: ((t && t.tree) || []).filter(function (e) { return e.type === 'blob'; }).map(function (e) { return { p: e.path, s: e.sha, z: e.size }; }) };
         });
-      });
-      render(files);
-      var when = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
-      $('status').textContent = '讀了 ' + res.length + ' 個分支，' + when + ' 更新';
+      })).then(function () { return next; });
+    }).then(function (next) {
+      cache = next; saveCache(cache); render(filesFrom(cache));
+      $('status').textContent = Object.keys(cache.branches).length + ' 個分支，' + stamp(cache.at) + ' 更新（這次用了 ' + calls + ' 次讀取）';
     }).catch(function (e) {
       $('status').className = 'status err';
-      $('status').textContent = e.message === 'rate' ? 'GitHub 暫時限制讀取次數（每小時 60 次），請過幾分鐘再按「重新讀取」。' : '讀不到 GitHub，請檢查網路後按「重新讀取」。';
+      var old = cache.at ? '先顯示 ' + stamp(cache.at) + ' 的結果。' : '';
+      if (e.message === 'rate') {
+        var wait = rateReset ? '，' + stamp(rateReset * 1000) + ' 後可以再讀' : '';
+        $('status').textContent = 'GitHub 每小時只給 60 次讀取，已經用完' + wait + '。' + old;
+      } else $('status').textContent = '讀不到 GitHub，請檢查網路後按「重新讀取」。' + old;
     });
   }
 
@@ -198,6 +220,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
   seg('f-bg', function (v) { document.body.classList.remove('bg-check', 'bg-paper', 'bg-dark'); document.body.classList.add('bg-' + v); });
   seg('f-size', function (v) { document.body.classList.toggle('same', v === 'same'); });
   $('reload').addEventListener('click', load);
+  if (cache.at) render(filesFrom(cache));
   load();
 })();
 </script>
