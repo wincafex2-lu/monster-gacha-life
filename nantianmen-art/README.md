@@ -65,6 +65,10 @@
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
 寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。`sky` 以外的層：透明背景最好；**如果透明做出來有彩邊或白毛，直接改用單一純色底交圖，Claude 去背**（泓 10/24 同意）。純色底的顏色：一般用純白 `#FFFFFF`；**雲海 `bg-cloud` 和天宮 `bg-palace` 有白雲、白玉，請改用純洋紅 `#FF00FF`**，畫面裡不要用到洋紅色。底色要整片均勻，不要漸層或紋理。
 
+#### 6. 新篇章第 1 批：西遊篇（新分支 `art/nantianmen-xiyou`，泓 10/24 確認）
+清單和外型見 BRIEF.md 最後「新篇章」的第 1 批：夥伴 4 個、首領 5 個（各 `__idle`、`__attack`），小怪 6 個（只畫 `__idle`），背景 3 張（每區只畫 1 張 `__full`）。共 33 張。可以和上面五個分支同時畫。
+第 2 批封神篇、第 3 批山海篇先不要畫，等這裡通知。
+
 ### 10/24 21:30 檢查結果
 已通過：`hero-sword`（攻擊圖換手已修好）、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`、`feng`（飛起來了）、`xuanwu`、`baize`、`qinglong`、`qilin`、魔王 `heixiong`、`shuyao`、`kuilei`、`niutou`、目前上傳的小怪、6 個法器的 `__field` 和 `__xian`、背景 `bg-herb` 4 層、`bg-town` sky/far/ground、`bg-volcano` 4 層、`bg-cloud__sky`、`bg-palace__sky`。
 還沒畫：`tietou`、`shen`、`ye`、`jiuwei`、`taotie`、`fenghuang`、新小怪 `yunduo`、`xianhe`、`leigong`、`shuangjing`、`tianbing`、`shenquan`、`jiahou`、`shishi`、`bg-town__mid`、`bg-cloud` 和 `bg-palace` 其他 3 層。
