@@ -77,6 +77,8 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     <div class="seg" id="f-show"><button id="s-all" data-v="all" aria-pressed="true">全部</button><button id="s-have" data-v="have" aria-pressed="false">已到</button><button id="s-miss" data-v="miss" aria-pressed="false">還沒畫</button></div>
     <span class="lab">底色</span>
     <div class="seg" id="f-bg"><button id="b-check" data-v="check" aria-pressed="true">透明格子</button><button id="b-paper" data-v="paper" aria-pressed="false">宣紙</button><button id="b-dark" data-v="dark" aria-pressed="false">深色</button></div>
+    <span class="lab">去背</span>
+    <div class="seg" id="f-clean"><button data-v="clean" aria-pressed="true">去背版</button><button data-v="raw" aria-pressed="false">GPT 原圖</button></div>
     <span class="lab">大小</span>
     <div class="seg" id="f-size"><button id="z-fit" data-v="fit" aria-pressed="true">填滿格子</button><button id="z-same" data-v="same" aria-pressed="false">原圖同比例</button></div>
     <button class="btn" id="reload" type="button">重新讀取</button>
@@ -124,7 +126,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
   function kb(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB'; }
 
   // 省讀取次數：每次只問 1 次「各分支最新版本」，只有變動過的分支才再讀它的圖片清單；圖片本身走 raw 網址，不算次數。
-  var CACHE_KEY = 'nantianmen-gallery-v2';
+  var CACHE_KEY = 'nantianmen-gallery-v3', CLEAN = 'nantianmen-clean', showClean = true;
   function loadCache() { try { return JSON.parse(localStorage.getItem(CACHE_KEY)) || { branches: {} }; } catch (e) { return { branches: {} }; } }
   function saveCache(c) { try { localStorage.setItem(CACHE_KEY, JSON.stringify(c)); } catch (e) {} }
   var cache = loadCache();
@@ -142,21 +144,36 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     });
     return files;
   }
+  // 去背版：Claude 放在 nantianmen-clean 分支；只有從目前這版原圖做的去背圖才顯示
+  function cleanUrl(file, v) {
+    var c = cache.clean, m = c && c.man && c.man[file];
+    if (!showClean || !m || m.raw !== v.sha) return null;
+    return 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + c.sha + '/nantianmen-art/clean/' + file;
+  }
   function stamp(t) { return new Date(t).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }); }
 
   function load() {
     $('status').className = 'status'; $('status').textContent = '讀取中…';
     var calls = 1;
-    getJSON(API + '/git/matching-refs/heads/art/nantianmen').then(function (refs) {
-      var next = { branches: {}, at: Date.now() };
-      return Promise.all((refs || []).map(function (r) {
+    getJSON(API + '/git/matching-refs/heads').then(function (all) {
+      var next = { branches: {}, at: Date.now(), clean: cache.clean }, refs = [], cref = null;
+      (all || []).forEach(function (r) {
+        if (r.ref.indexOf('refs/heads/art/nantianmen') === 0) refs.push(r);
+        else if (r.ref === 'refs/heads/' + CLEAN) cref = r;
+      });
+      var jobs = [];
+      if (cref && (!cache.clean || cache.clean.sha !== cref.object.sha)) {
+        jobs.push(fetch('https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + cref.object.sha + '/nantianmen-art/clean/manifest.json')
+          .then(function (r) { return r.ok ? r.json() : {}; }).then(function (man) { next.clean = { sha: cref.object.sha, man: man }; }).catch(function () {}));
+      }
+      return Promise.all(jobs.concat(refs.map(function (r) {
         var n = r.ref.replace('refs/heads/', ''), sha = r.object.sha, old = cache.branches[n];
         if (old && old.sha === sha) { next.branches[n] = old; return null; }
         calls++;
         return getJSON(API + '/git/trees/' + sha + ':' + DIR).then(function (t) {
           next.branches[n] = { sha: sha, list: ((t && t.tree) || []).filter(function (e) { return e.type === 'blob'; }).map(function (e) { return { p: e.path, s: e.sha, z: e.size }; }) };
         });
-      })).then(function () { return next; });
+      }))).then(function () { return next; });
     }).then(function (next) {
       cache = next; saveCache(cache); render(filesFrom(cache));
       $('status').textContent = Object.keys(cache.branches).length + ' 個分支，' + stamp(cache.at) + ' 更新（這次用了 ' + calls + ' 次讀取）';
@@ -174,11 +191,11 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     if (!vers) return '<div class="slot miss"><div class="pic">還沒畫</div><div class="name">' + esc(label) + '<span class="act">' + esc(ACT[act] || act) + '</span></div><div class="file">' + esc(file) + '</div></div>';
     // 不同分支內容一樣的只算一個版本
     var seen = {}, uniq = vers.filter(function (v) { if (seen[v.sha]) return false; seen[v.sha] = 1; return true; });
-    var v = uniq[0];
-    var chips = uniq.length > 1 ? '<div class="vers">' + uniq.map(function (u, i) { return '<button type="button" data-src="' + esc(u.url) + '" data-meta="' + esc(u.branch + '|' + kb(u.size) + '|' + u.html) + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(u.branch.replace('art/nantianmen-', '')) + '</button>'; }).join('') + '</div>' : '';
-    return '<div class="slot"><a class="pic" href="' + esc(v.url) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(v.url) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
+    var v = uniq[0], src = cleanUrl(file, v) || v.url;
+    var chips = uniq.length > 1 ? '<div class="vers">' + uniq.map(function (u, i) { return '<button type="button" data-src="' + esc(cleanUrl(file, u) || u.url) + '" data-meta="' + esc(u.branch + (cleanUrl(file, u) ? '（已去背）' : '') + '|' + kb(u.size) + '|' + u.html) + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(u.branch.replace('art/nantianmen-', '')) + '</button>'; }).join('') + '</div>' : '';
+    return '<div class="slot"><a class="pic" href="' + esc(src) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(src) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
       '<div class="name">' + esc(label) + '<span class="act">' + esc(ACT[act] || act) + '</span></div><div class="file">' + esc(file) + '</div>' + chips +
-      '<div class="meta">' + metaHTML(v.branch, kb(v.size), v.html) + '</div></div>';
+      '<div class="meta">' + metaHTML(v.branch + (src !== v.url ? '（已去背）' : ''), kb(v.size), v.html) + '</div></div>';
   }
   function metaHTML(branch, size, html) { return esc(branch) + ' · ' + esc(size) + ' · <a href="' + esc(html) + '" target="_blank" rel="noopener">GitHub</a>'; }
 
@@ -227,6 +244,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
   seg('f-show', function (v) { document.body.classList.toggle('hide-miss', v === 'have'); document.body.classList.toggle('hide-have', v === 'miss'); });
   seg('f-bg', function (v) { document.body.classList.remove('bg-check', 'bg-paper', 'bg-dark'); document.body.classList.add('bg-' + v); });
   seg('f-size', function (v) { document.body.classList.toggle('same', v === 'same'); });
+  seg('f-clean', function (v) { showClean = v === 'clean'; render(filesFrom(cache)); });
   $('reload').addEventListener('click', load);
   if (cache.at) render(filesFrom(cache));
   load();
