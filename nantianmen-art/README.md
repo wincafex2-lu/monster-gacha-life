@@ -63,7 +63,7 @@
 
 #### 5. 背景（`art/nantianmen-bg`）
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
-寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。**除了 `sky` 以外都要透明背景**（`bg-bamboo__mid` 是白底，之後請記得透明）。
+寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。`sky` 以外的層：透明背景最好；**如果透明做出來有彩邊或白毛，直接改用單一純色底交圖，Claude 去背**（泓 10/24 同意）。純色底的顏色：一般用純白 `#FFFFFF`；**雲海 `bg-cloud` 和天宮 `bg-palace` 有白雲、白玉，請改用純洋紅 `#FF00FF`**，畫面裡不要用到洋紅色。底色要整片均勻，不要漸層或紋理。
 
 ### 10/24 21:30 檢查結果
 已通過：`hero-sword`（攻擊圖換手已修好）、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`、`feng`（飛起來了）、`xuanwu`、`baize`、`qinglong`、`qilin`、魔王 `heixiong`、`shuyao`、`kuilei`、`niutou`、目前上傳的小怪、6 個法器的 `__field` 和 `__xian`、背景 `bg-herb` 4 層、`bg-town` sky/far/ground、`bg-volcano` 4 層、`bg-cloud__sky`、`bg-palace__sky`。
