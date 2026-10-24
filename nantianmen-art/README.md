@@ -27,29 +27,43 @@
 
 ## 進度與待辦（Claude 收到圖後會更新這裡）
 
-### 背景（泓說先畫這個）
-先畫第一區「雜役峰後山」（`bamboo`）的 4 層：`bg-bamboo__sky.png`、`bg-bamboo__far.png`、`bg-bamboo__mid.png`、`bg-bamboo__ground.png`。規則見 BRIEF.md 的「背景」。這一區過關再畫其他區。
+### 已完成（試做過關，畫風以這些為準）
+主角雜役服 `hero-chores`（站立、攻擊）、白虎 `baihu`（站立、攻擊）、蘑菇妖 `mogu`、雜役峰後山背景 `bg-bamboo` 4 層、飛劍普通版 `feijian__field`。
+之後畫的每一張都要和這些圖同一個畫風：四分之三側面、Q 版比例、墨線加淡彩、水墨質感。
 
-### 法器（可以和背景同時畫，用另一個分支）
-7 個法器各畫兩張：`代號__field.png`（普通版）和 `代號__xian.png`（仙器版，**每一個都要非常華麗**，規則見 BRIEF.md），清單見 BRIEF.md 的「法器」。先畫 `feijian`（飛劍）的兩張，過關再畫其他 6 個。普通版 ✅ 已收到；仙器版 🔁 要重畫，見「待辦」。
+### 現在：五個分支同時畫（泓 10/24 決定）
+每一批開自己的分支，分支名稱照下表。每批照表格順序畫，畫完一張就可以先上傳。檔名、尺寸、規則見上面「交圖格式」和 BRIEF.md。
 
-### 第一步：試做三個角色
-| 順序 | 檔名 | 內容 |
+| 分支 | 內容 | 張數 |
 |---|---|---|
-| 1 | `hero-chores__idle.png` | 主角穿雜役服站立，掃帚扛在肩上 ✅ 重畫版已收到，等泓確認 |
-| 2 | `hero-chores__attack.png` | 主角雙手把掃帚往前揮到最遠（參考 `ref/hero-attack-pose.png`，但不要畫揮出的白色弧線） ✅ 重畫版已收到，等泓確認 |
-| 3 | `baihu__idle.png` | 白虎站立 🔁 要重畫，見「待辦」 |
-| 4 | `baihu__attack.png` | 白虎往前撲、張嘴、前爪伸出 🔁 配合新站立圖重畫 |
-| 5 | `mogu__idle.png` | 蘑菇妖站立（小怪只畫這一張） 🔁 要重畫，見「待辦」 |
+| `art/nantianmen-people` | 人物 | 16 |
+| `art/nantianmen-partners` | 夥伴（神獸） | 16 |
+| `art/nantianmen-enemies` | 敵人（魔王、小怪） | 19 |
+| `art/nantianmen-feijian-20261024`（沿用） | 法器 | 13 |
+| `art/nantianmen-bg` | 背景 | 20 |
 
-三個都在遊戲畫面裡驗收過，這裡會更新成下一批。
+#### 1. 人物（`art/nantianmen-people`）
+每個都畫 `__idle` 和 `__attack` 兩張。
+- 主角另外 5 套服裝：`hero-sword`、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`。臉、身高、比例和 `hero-chores` 完全一樣，只換服裝和髮型（見 BRIEF.md「主角」）。武器一樣是掃帚：站立時單手扛在肩上，攻擊時雙手往前揮。
+- 人物大將：`tietou`（鐵頭師兄）、`shen`（沈傲天）、`ye`（夜無塵）。
 
-### 第二步以後（先不要畫）
-其他神獸、魔王、小怪、人物大將，以及主角另外 5 套服裝。清單見 BRIEF.md。
+#### 2. 夥伴（`art/nantianmen-partners`）
+每個都畫 `__idle` 和 `__attack` 兩張，照這個順序：`feng`、`xuanwu`、`baize`、`qinglong`、`qilin`、`jiuwei`、`taotie`、`fenghuang`。
+神獸的站立圖和白虎一樣有氣勢（身體壓低或昂首、有神獸特徵的墨色飄毛、火焰或雲氣般的毛髮），不要畫成普通動物。
+
+#### 3. 敵人（`art/nantianmen-enemies`）
+- 魔王，畫 `__idle` 和 `__attack` 兩張：`heixiong`、`shuyao`、`kuilei`、`niutou`。
+- 小怪，只畫 `__idle`：`limao`、`shijing`、`jiangshi`、`denglong`、`shuzhuang`、`houyao`、`sheyao`、`bianfu`、`kulou`、`langyao`、`zhiren`。
+小怪要像蘑菇妖一樣有表情、可愛又有點兇，臉轉向畫面。
+
+#### 4. 法器（沿用 `art/nantianmen-feijian-20261024`）
+先完成下面「待辦」的飛劍仙器版加長，再畫其他 6 個，每個畫 `__field` 和 `__xian` 兩張：`hulu`、`leizhu`、`bagua`、`fuzhen`、`tieguo`、`ruyi`。仙器版每一個都要非常華麗（BRIEF.md「法器」）。
+
+#### 5. 背景（`art/nantianmen-bg`）
+其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
+寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。**除了 `sky` 以外都要透明背景**（`bg-bamboo__mid` 是白底，之後請記得透明）。
 
 ### 待辦（要修改的圖）
 | 圖 | 問題 | 怎麼改 |
 |---|---|---|
-| `baihu__idle.png`、`baihu__attack.png`（角色分支） | 泓喜歡 `ref/baihu.png` 原來的構圖。這次的站立圖抬頭挺胸、表情平靜，像一般老虎；水墨感也變淡了。 | 照 `ref/baihu.png` 重畫：1. 身體壓低、前腳彎、頭往前往下，準備撲擊的姿勢。2. 張嘴露牙低吼，藍眼睛瞪著前方。3. 背上、腿上、尾巴有像火焰或墨跡一樣飄起來的黑色毛，這是神獸的特色，要保留。4. 尾巴高高捲起。5. 墨線和斑駁的水墨質感照 `ref/baihu.png`。6. 全身都要畫到。攻擊圖用新的站立圖當基準，同樣的畫風和比例，往前撲、前爪伸出、嘴張大（這次攻擊圖的撲擊動作很好，可以保留這個動作）。 |
-| `mogu__idle.png`（角色分支） | 泓不喜歡完全側面。 | 照 `ref/mogu.png` 重畫：身體朝右但轉向畫面，看得到整張臉（兩隻眼睛和張開的嘴），表情生氣又可愛，圓胖的身體和紅底白點的蘑菇帽照舊，墨線和水墨質感照 `ref/mogu.png`。 |
 | `feijian__xian.png`（法器分支） | 華麗度很好（龍首護手、符文、紅劍穗都對），但劍身太短：護手和劍柄很大，劍身看起來像短刀。 | 保留這張的設計，只把劍身加長到約 1.5 倍，讓劍身（護手到劍尖）佔整把劍長度的三分之二左右，劍尖更細更尖。護手、劍柄、劍穗大小不變。圖片可以變寬，整把劍要完整。 |
