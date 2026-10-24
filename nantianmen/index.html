@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v17</div>
+    <div class="ver">v18</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4262,18 +4262,18 @@ var IdleStage = (function (C, D, ART) {
     fx.calls.forEach(function (c) {
       var i = c.foe ? row.b++ : row.a++;
       var q = c.t / c.life, slide = Math.min(1, c.t / 0.12), a = q > 0.75 ? (1 - q) / 0.25 : 1;
-      var y = (68 + i * 15) * S, x = c.foe ? (W - 10) * S : 10 * S;
+      var y = (68 + i * 17) * S, x = c.foe ? (W - 10) * S : 10 * S;
       ctx.save(); ctx.globalAlpha = a * (i ? 0.8 : 1);
-      ctx.font = '900 ' + (i ? 9 : 10.5) * S + 'px ' + FONT;
-      var w = ctx.measureText(c.txt).width, x0 = x - (c.foe ? -1 : 1) * (1 - slide) * 30 * S;
-      // 墨色橫條當底，左邊一小截招式顏色
-      var bx = c.foe ? x0 - w - 10 * S : x0 - 4 * S, bw = w + 14 * S, bh = 12 * S;
-      ctx.fillStyle = 'rgba(21,18,15,0.62)'; ctx.beginPath();
-      ctx.moveTo(bx, y - bh / 2); ctx.lineTo(bx + bw, y - bh / 2 + S); ctx.lineTo(bx + bw - 3 * S, y + bh / 2); ctx.lineTo(bx + 2 * S, y + bh / 2 - S); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = c.col; ctx.fillRect(c.foe ? bx + bw - 3 * S : bx + S, y - bh / 2 + 2 * S, 2 * S, bh - 4 * S);
-      ctx.textAlign = c.foe ? 'right' : 'left'; ctx.textBaseline = 'middle';
+      var fs = (i ? 9 : 10.5) * S; ctx.font = '900 ' + fs + 'px ' + FONT;
+      // 字的實際高度量出來，底條一定比字高，字放在底條正中間（中文字不能靠 middle 基線，會偏下被切到）
+      var mt = ctx.measureText(c.txt), w = mt.width, asc = mt.actualBoundingBoxAscent || fs * 0.88, dsc = mt.actualBoundingBoxDescent || fs * 0.12;
+      var x0 = x - (c.foe ? -1 : 1) * (1 - slide) * 30 * S;
+      var bh = asc + dsc + 6 * S, bx = c.foe ? x0 - w - 10 * S : x0 - 4 * S, bw = w + 14 * S, top = y - bh / 2;
+      ctx.fillStyle = 'rgba(21,18,15,0.68)'; ctx.beginPath();
+      ctx.moveTo(bx, top); ctx.lineTo(bx + bw, top + S); ctx.lineTo(bx + bw - 3 * S, top + bh); ctx.lineTo(bx + 2 * S, top + bh - S); ctx.closePath(); ctx.fill();
+      ctx.textAlign = c.foe ? 'right' : 'left'; ctx.textBaseline = 'alphabetic';
       ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(29,24,22,0.9)';
-      var tx = c.foe ? x0 - 4 * S : x0 + 2 * S; ctx.strokeText(c.txt, tx, y); ctx.fillStyle = c.col; ctx.fillText(c.txt, tx, y);
+      var tx = c.foe ? x0 - 5 * S : x0 + 2 * S, ty = y + (asc - dsc) / 2; ctx.strokeText(c.txt, tx, ty); ctx.fillStyle = c.col; ctx.fillText(c.txt, tx, ty);
       ctx.restore();
     });
   }
