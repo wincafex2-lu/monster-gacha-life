@@ -58,9 +58,9 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
 .vers button[aria-pressed="true"] { border-color: var(--jade); color: var(--jade); }
 .meta { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .meta a { color: var(--muted); }
-.same .pic { aspect-ratio: auto; height: 240px; place-items: end center; }
+.same .pic { aspect-ratio: auto; height: 150px; place-items: end center; }
 .same .wide .pic { height: auto; aspect-ratio: 32 / 9; place-items: center; }
-.same .grid:not(.wide) .pic img { max-width: none; max-height: none; width: calc(var(--nw) * 0.16px); height: auto; }
+.same .grid:not(.wide) .pic img { max-width: none; max-height: none; width: calc(var(--nw) * 0.105px); height: auto; }
 .hide-miss .slot.miss, .hide-have .slot:not(.miss) { display: none; }
 .empty-note { color: var(--muted); font-size: 0.9rem; margin: 0; }
 </style>
@@ -146,7 +146,7 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     var seen = {}, uniq = vers.filter(function (v) { if (seen[v.sha]) return false; seen[v.sha] = 1; return true; });
     var v = uniq[0];
     var chips = uniq.length > 1 ? '<div class="vers">' + uniq.map(function (u, i) { return '<button type="button" data-src="' + esc(u.url) + '" data-meta="' + esc(u.branch + '|' + kb(u.size) + '|' + u.html) + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(u.branch.replace('art/nantianmen-', '')) + '</button>'; }).join('') + '</div>' : '';
-    return '<div class="slot"><a class="pic" href="' + esc(v.url) + '" target="_blank" rel="noopener"><img loading="lazy" onload="this.style.setProperty('--nw', this.naturalWidth)" src="' + esc(v.url) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
+    return '<div class="slot"><a class="pic" href="' + esc(v.url) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(v.url) + '" alt="' + esc(label + ' ' + (ACT[act] || act)) + '"></a>' +
       '<div class="name">' + esc(label) + '<span class="act">' + esc(ACT[act] || act) + '</span></div><div class="file">' + esc(file) + '</div>' + chips +
       '<div class="meta">' + metaHTML(v.branch, kb(v.size), v.html) + '</div></div>';
   }
@@ -177,6 +177,8 @@ section.cat h2 small { font: 500 0.85rem var(--sans); color: var(--muted); font-
     $('sum').innerHTML = '<a href="#cats">全部 <b>' + have + '</b>/' + total + '</a>' + sum;
   }
 
+  // 記下原圖寬度，給「原圖同比例」用
+  $('cats').addEventListener('load', function (e) { if (e.target.tagName === 'IMG') e.target.style.setProperty('--nw', e.target.naturalWidth); }, true);
   // 切換同一張圖的分支版本
   $('cats').addEventListener('click', function (e) {
     var b = e.target.closest('.vers button'); if (!b) return;
