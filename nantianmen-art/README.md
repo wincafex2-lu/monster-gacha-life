@@ -35,8 +35,8 @@
 ### 第一步：試做三個角色
 | 順序 | 檔名 | 內容 |
 |---|---|---|
-| 1 | `hero-chores__idle.png` | 主角穿雜役服站立，手拿掃帚 |
-| 2 | `hero-chores__attack.png` | 主角雙手把掃帚往前揮到最遠（參考 `ref/hero-attack-pose.png`，但不要畫揮出的白色弧線） |
+| 1 | `hero-chores__idle.png` | 主角穿雜役服站立，手拿掃帚 ✅ 已收到，很好，等泓看預覽 |
+| 2 | `hero-chores__attack.png` | 主角雙手把掃帚往前揮到最遠（參考 `ref/hero-attack-pose.png`，但不要畫揮出的白色弧線） ✅ 已收到，很好，比例和站立圖一致 |
 | 3 | `baihu__idle.png` | 白虎站立 |
 | 4 | `baihu__attack.png` | 白虎往前撲、張嘴、前爪伸出 |
 | 5 | `mogu__idle.png` | 蘑菇妖站立（小怪只畫這一張） |
