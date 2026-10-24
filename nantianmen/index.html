@@ -97,8 +97,8 @@ button:disabled { cursor: default; opacity: 0.45; }
 .banner small { color: var(--cinnabar); font-weight: 900; letter-spacing: .3em; }
 .banner b { font-family: var(--display); font-size: 30px; color: #fff; text-shadow: 0 3px 0 #000; }
 .banner p { margin: 2px 16px 0; font-size: 13px; }
-.bubble { position: absolute; left: 8px; right: 8px; bottom: 8px; background: rgba(250,244,230,.94); color: #2a2230; border-radius: 10px; padding: 5px 10px; font-size: 13px; font-weight: 700; pointer-events: none; }
-.toast { position: absolute; left: 50%; top: 56px; transform: translateX(-50%); max-width: 90%; background: rgba(12,12,24,.85); border: 1px solid var(--gold); color: var(--text); border-radius: 10px; padding: 4px 12px; font-size: 13px; font-weight: 700; text-align: center; opacity: 0; transition: opacity .25s; pointer-events: none; }
+.bubble { position: absolute; left: 50%; transform: translateX(-50%); width: max-content; max-width: 70%; top: 36px; background: rgba(250,244,230,.94); color: #2a2230; border-radius: 10px; padding: 5px 10px; font-size: 13px; font-weight: 700; pointer-events: none; }
+.toast { position: absolute; left: 50%; top: 74px; transform: translateX(-50%); max-width: 90%; background: rgba(12,12,24,.85); border: 1px solid var(--gold); color: var(--text); border-radius: 10px; padding: 4px 12px; font-size: 13px; font-weight: 700; text-align: center; opacity: 0; transition: opacity .25s; pointer-events: none; }
 .toast.show { opacity: 1; }
 
 .tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
@@ -1540,7 +1540,7 @@ if (typeof module !== 'undefined') module.exports = IDLE_DATA;
 // 《一路掃到南天門》遊戲核心：數值、戰鬥、存檔、離線收益。不碰畫面，畫面只聽事件。
 var IdleCore = (function (D) {
   // 版面（邏輯座標，畫面 320×180）
-  var L = { HERO_X: 118, ENGAGE_X: 172, SPACING: 30, SPAWN_X: 340, WALK: 80 };
+  var L = { HERO_X: 138, ENGAGE_X: 192, SPACING: 30, SPAWN_X: 340, WALK: 80 };
   // 數值（用 tools/sim.js 的自動玩家調過：地區 1 約 10 分鐘，第一輪南天門約 3 小時的不停手操作）
   var BAL = {
     realmMul: 1.2, heroAtk: [10, 1], heroHp: [120, 12], heroReg: [2, 0.2], lvGrow: 1.05,
@@ -2990,6 +2990,15 @@ window.IDLE_INK = {
    "size": 27.17,
    "motion": "walk"
   },
+  "huoyun": {
+   "w": 75,
+   "h": 108,
+   "cx": 45.0,
+   "fy": 108.0,
+   "idle": "huoyun__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
   "jiahou": {
    "w": 122,
    "h": 107,
@@ -3457,6 +3466,15 @@ window.IDLE_INK = {
    "size": 35.5,
    "motion": "walk"
   },
+  "yanjiangshe": {
+   "w": 122,
+   "h": 106,
+   "cx": 69.0,
+   "fy": 105.6,
+   "idle": "yanjiangshe__idle.webp",
+   "size": 29.33,
+   "motion": "walk"
+  },
   "yaoguan": {
    "w": 122,
    "h": 108,
@@ -3573,6 +3591,13 @@ window.IDLE_INK = {
     "n": 4
    }
   ],
+  "gaolao": [
+   {
+    "src": "bg-gaolao__full.webp",
+    "speed": 0.5,
+    "n": 0
+   }
+  ],
   "herb": [
    {
     "src": "bg-herb__L1.webp",
@@ -3593,6 +3618,20 @@ window.IDLE_INK = {
     "src": "bg-herb__L4.webp",
     "speed": 1.0,
     "n": 4
+   }
+  ],
+  "huaguo": [
+   {
+    "src": "bg-huaguo__full.webp",
+    "speed": 0.5,
+    "n": 0
+   }
+  ],
+  "huoyan": [
+   {
+    "src": "bg-huoyan__full.webp",
+    "speed": 0.5,
+    "n": 0
    }
   ],
   "palace": [
@@ -3665,31 +3704,45 @@ window.IDLE_INK = {
  "items": {
   "bagua": {
    "field": "bagua__field.webp",
-   "xian": "bagua__xian.webp"
+   "xian": "bagua__xian.webp",
+   "fieldAng": -0.841,
+   "xianAng": -0.7
   },
   "feijian": {
    "field": "feijian__field.webp",
-   "xian": "feijian__xian.webp"
+   "xian": "feijian__xian.webp",
+   "fieldAng": -0.486,
+   "xianAng": -0.504
   },
   "fuzhen": {
    "field": "fuzhen__field.webp",
-   "xian": "fuzhen__xian.webp"
+   "xian": "fuzhen__xian.webp",
+   "fieldAng": -1.185,
+   "xianAng": -0.253
   },
   "hulu": {
    "field": "hulu__field.webp",
-   "xian": "hulu__xian.webp"
+   "xian": "hulu__xian.webp",
+   "fieldAng": -1.107,
+   "xianAng": -0.3
   },
   "leizhu": {
    "field": "leizhu__field.webp",
-   "xian": "leizhu__xian.webp"
+   "xian": "leizhu__xian.webp",
+   "fieldAng": -0.278,
+   "xianAng": -0.389
   },
   "ruyi": {
    "field": "ruyi__field.webp",
-   "xian": "ruyi__xian.webp"
+   "xian": "ruyi__xian.webp",
+   "fieldAng": -0.686,
+   "xianAng": -0.49
   },
   "tieguo": {
    "field": "tieguo__field.webp",
-   "xian": "tieguo__xian.webp"
+   "xian": "tieguo__xian.webp",
+   "fieldAng": -0.332,
+   "xianAng": -0.414
   }
  },
  "eggs": {
@@ -3762,6 +3815,7 @@ var IdleInk = (function () {
     } else if (act === 'die') {
       var dq = Math.min(1, Math.max(0, fr) / 3); rot = -dq * 1.2; a *= 1 - dq * 0.8; dy = dq * hpx * 0.05;
     }
+    if (mo === 'fly' && act !== 'die') dy -= hpx * 0.2;  // 會飛的離地飄著
     ctx.save();
     var sm = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = true;
     ctx.globalAlpha = a;
@@ -3798,9 +3852,10 @@ var IdleInk = (function () {
     return true;
   }
   function item(t, q) { var d = M.items[t]; if (!d) return null; return (q >= 3 && img(d.xian)) || img(d.field); }
+  function itemAng(t, q) { var d = M.items[t]; if (!d) return null; return q >= 3 && img(d.xian) ? (d.xianAng || 0) : img(d.field) ? (d.fieldAng || 0) : null; }
   function egg(k) { return img(M.eggs[k]); }
   if (typeof document !== 'undefined') preload();
-  return { has: has, def: def, draw: draw, fit: fit, bg: bg, item: item, egg: egg, onReady: onReady, M: M };
+  return { has: has, def: def, draw: draw, fit: fit, bg: bg, item: item, itemAng: itemAng, egg: egg, onReady: onReady, M: M };
 })();
 
 </script>
@@ -3808,10 +3863,12 @@ var IdleInk = (function () {
 // 《一路掃到南天門》戰鬥畫面：橫向捲動背景、角色、法器、特效。畫面 384×216 邏輯像素，放大 S 倍畫。
 var IdleStage = (function (C, D, ART) {
   var W = 320, H = 180, S = 3, BGY = -36;   // 背景圖是 384×216 畫的，往上裁掉 36 格天空
-  var FEET = 150;                       // 主角腳底
-  var PET_SLOTS = [{ cx: 86, feet: 137 }, { cx: 62, feet: 165 }, { cx: 30, feet: 145 }];
+  var FEET = 158;                       // 主角腳底（也是水墨背景的地面線）
+  // 水墨背景是側面看過去的一條地面線，大家都要踩在線上，前後只差一點點
+  // 站位分三排：後排（高一點、小一點）、主角那一排、前排。同一排左右錯開，前後排只遮到一小塊
+  var PET_SLOTS = [{ cx: 108, feet: FEET - 12, k: 0.62 }, { cx: 96, feet: FEET + 10, k: 0.66 }, { cx: 40, feet: FEET - 12, k: 0.62 }];
   var cv, ctx, time = 0;
-  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0 };
+  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], splats: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0 };
   var gearAnim = {};                    // 法器的出招動畫狀態 id → {t, kind, tx, ty}
   var petJump = {};
 
@@ -3843,12 +3900,15 @@ var IdleStage = (function (C, D, ART) {
     var al = D.SPRITE_ALIAS[key]; return al && INK.has(al) ? al : null;
   }
   function seedOf(key) { var h = 0; for (var i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) % 997; return h; }
-  function inkHeight(key, ik, sc, minH) { var d = INK.def(ik); return Math.max(d.size || ART.meta(key).h * 1.1, minH || 0) * sc; }
+  function inkHeight(key, ik, sc, minH) { var d = INK.def(ik); return Math.max((d.size || ART.meta(key).h) * INK_SCALE, minH || 0) * sc; }
+  var INK_SCALE = 1.3;   // 水墨角色比點陣圖大一點，才不會被竹林比下去
+  var INK_GROUND = 186;  // 水墨背景（高 216）的地面線在第 186 格
   // 腳底在 (cx, feet)（邏輯座標）
   // minH：水墨圖至少要畫多高（首領借用夥伴的圖時，不能比小怪還小）
-  function drawSpr(key, act, fr, flip, sc, cx, feet, alpha, minH) {
+  // inkMul：水墨圖再縮放（神獸和夥伴站位比較擠，畫小一點）
+  function drawSpr(key, act, fr, flip, sc, cx, feet, alpha, minH, inkMul) {
     var ik = inkKey(key);
-    if (ik && INK.draw(ctx, ik, act, fr, flip, cx * S, feet * S, inkHeight(key, ik, sc, minH), alpha, time, seedOf(key))) return;
+    if (ik && INK.draw(ctx, ik, act, fr, flip, cx * S, feet * S, inkHeight(key, ik, sc, minH) * (inkMul || 1), alpha, time, seedOf(key))) return;
     var m = ART.meta(key), img = sprite(key, act, fr, flip, sc);
     var x = Math.round(cx * S - (m.w / 2 + 8) * sc), y = Math.round(feet * S - (m.feet + 8) * sc);
     if (alpha !== undefined && alpha < 1) { ctx.globalAlpha = alpha; ctx.drawImage(img, x, y); ctx.globalAlpha = 1; }
@@ -3992,7 +4052,7 @@ var IdleStage = (function (C, D, ART) {
   var AREA_BG = ['bamboo', 'herb', 'town', 'volcano', 'cloud', 'palace', 'huaguo', 'gaolao', 'huoyan', 'chentang', 'xiqi', 'zhaoge', 'donghai', 'tianshan', 'kunlun'];
   function drawBg(theme, scroll, area) {
     if (INK) {
-      ctx.save(); ctx.translate(0, BGY * S);
+      ctx.save(); ctx.translate(0, (FEET - INK_GROUND) * S);
       var done = (area && INK.bg(ctx, area, scroll * S, W * S, BH * S)) || INK.bg(ctx, theme, scroll * S, W * S, BH * S);
       ctx.restore(); if (done) return;
     }
@@ -4007,10 +4067,17 @@ var IdleStage = (function (C, D, ART) {
 
   // ───────── 法器 ─────────
   function px(x, y, w, h, col) { ctx.fillStyle = col; ctx.fillRect(Math.round(x * S), Math.round(y * S), Math.ceil(w * S), Math.ceil(h * S)); }
-  function drawTreasure(t, x, y, q, glowT, c2) {
+  // rot：法器要指向的角度（飛劍出招時對準妖怪）；不給就照原圖方向
+  function drawTreasure(t, x, y, q, glowT, c2, rot) {
     var qc = D.QUALITY[q].color;
     var c = c2 || ctx, save = ctx; ctx = c;
-    if (q >= 1) { ctx.globalAlpha = 0.25 + 0.15 * Math.sin(glowT * 4); px(x - 3, y - 3, 22, 14, qc); ctx.globalAlpha = 1; }
+    if (rot !== undefined && rot !== null) {
+      var base = INK && INK.itemAng(t, q); if (base === null || base === undefined) base = 0;
+      ctx.save(); ctx.translate((x + 7) * S, (y + 5) * S); ctx.rotate(rot - base); ctx.translate(-(x + 7) * S, -(y + 5) * S);
+      drawTreasure(t, x, y, q, glowT, c);
+      ctx.restore(); ctx = save; return;
+    }
+    if (q >= 1) wash(x + 7, y + 5, 10 + q * 1.5, qc, 0.3 + 0.15 * Math.sin(glowT * 4));
     var ti = INK && INK.item(t, q);
     if (ti) { // 水墨法器：塞進 20×14 的框，置中
       var k = Math.min(20 / ti.naturalWidth, 14 / ti.naturalHeight) * S, iw = ti.naturalWidth * k, ih = ti.naturalHeight * k;
@@ -4056,8 +4123,8 @@ var IdleStage = (function (C, D, ART) {
     var b = Math.sin(tt * 2.2 + slot) * 2;
     switch (t) {
       case 'feijian': return { x: hx + 22, y: feet - 40 + b };
-      case 'hulu': return { x: hx - 2, y: feet - 64 + b };
-      case 'leizhu': var a = tt * 2 + slot * 2; return { x: hx - 4 + Math.cos(a) * 24, y: feet - 30 + Math.sin(a) * 8 };
+      case 'hulu': return { x: hx - 2, y: feet - 74 + b };
+      case 'leizhu': var a = tt * 2 + slot * 2; return { x: hx - 4 + Math.cos(a) * 30, y: feet - 38 + Math.sin(a) * 8 };
       case 'bagua': return { x: hx + 22, y: feet - 22 + b };
       case 'fuzhen': return { x: hx - 26, y: feet - 46 + b };
       case 'tieguo': return { x: hx - 22, y: feet - 62 + b };
@@ -4077,11 +4144,19 @@ var IdleStage = (function (C, D, ART) {
     return { x: e.x + w / 2, y: enemyFeet(e) - h * 0.5, top: enemyFeet(e) - m.feet * sc / S, w: w };
   }
   function enemyScale(e) { if (!e.boss) return e.mini ? S * 0.7 : S; return e.def.big ? 5 : e.def.tier === 3 ? 4 : S; }
-  function enemyFeet(e) { return e.boss ? FEET + 2 : FEET + [0, 8, -6, 5][e.id % 4]; }
+  function enemyFeet(e) { return e.boss ? FEET + 1 : FEET + [0, 2, -2, 1][e.id % 4]; }
   function heroPos() { return { x: C.L.HERO_X + 16, feet: FEET }; }
-  var PARTNER_SLOTS = [{ cx: 102, feet: 168 }, { cx: 44, feet: 126 }];
-  function partnerPos(p) { var s = PARTNER_SLOTS[p.slot]; return { x: s.cx, feet: s.feet }; }
-  function petPos(p) { var s = PET_SLOTS[p.slot]; return { x: s.cx, feet: s.feet }; }
+  var PARTNER_SLOTS = [{ cx: 24, feet: FEET + 10, k: 0.78 }, { cx: 64, feet: FEET - 1, k: 0.76 }];
+  function partnerPos(p) { var s = PARTNER_SLOTS[p.slot]; return { x: s.cx, feet: s.feet, k: s.k }; }
+  // 會飛的神獸排到空中那一層，走路的排地上三個位置，這樣三隻都上場也不會疊成一團
+  var AIR_SLOTS = [{ cx: 112, feet: FEET - 20, k: 0.6 }, { cx: 66, feet: FEET - 26, k: 0.6 }, { cx: 24, feet: FEET - 22, k: 0.6 }];
+  function flies(key) { var ik = inkKey(key), d = ik && INK.def(ik); return !!(d && d.motion === 'fly'); }
+  function petPos(p) {
+    var team = C.R ? C.R.pets : [], air = [], ground = [];
+    team.forEach(function (q) { (flies(q.key) ? air : ground).push(q.key); });
+    var ai = air.indexOf(p.key), gi = ground.indexOf(p.key), s = ai >= 0 ? AIR_SLOTS[ai] : PET_SLOTS[gi >= 0 ? gi : p.slot];
+    return { x: s.cx, feet: s.feet, k: s.k };
+  }
   // 傷害數字：dmg 普通、crit 暴擊（朱紅印章＋放大彈出）、heal 回血、hurt 主角受傷（往下掉）、miss 打空
   var DMG_COL = { hero: '#ffffff', pet: '#9fe3ff', petSkill: '#9fe3ff', gear: '#b8ffcf', skill: '#ffb36b', reflect: '#d0b8ff', partner: '#ffe0a0' };
   function addText(x, y, txt, col, size, life, kind) { fx.text.push({ x: x, y: y, txt: String(txt), col: col, size: size || 9, t: 0, life: life || 0.9, kind: kind || 'msg' }); }
@@ -4099,6 +4174,7 @@ var IdleStage = (function (C, D, ART) {
       if (!d.crit && fx.text.length > 22 && d.src !== 'skill') { } else
       addText(c.x + (Math.random() * 12 - 6), c.top - 4, fmt(d.dmg), col, d.crit ? 13 : d.src === 'skill' || d.src === 'partner' ? 9 : 8, d.crit ? 1.2 : 0.9, d.crit ? 'crit' : 'dmg');
       if (d.src === 'hero') { burst(c.x - 6, c.y, '#ffffff', 4, 30, 0.25); }
+      if (fx.splats.length < 14) fx.splats.push({ x: c.x - 3 + Math.random() * 6, y: c.y - 2 + Math.random() * 4, t: 0, life: d.crit ? 0.7 : 0.45, seed: Math.floor(Math.random() * 999), big: d.crit ? 1.6 : 1, col: d.ke > 0 ? '#c8322c' : null });
       if (d.ke && Math.random() < 0.25) addText(c.x + 10, c.top + 4, d.ke > 0 ? '剋！' : '被剋', d.ke > 0 ? '#ffcf4a' : '#9aa4b5', 7, 0.8, 'miss');
     } else if (type === 'kill') {
       var k = enemyCenter(d.e);
@@ -4222,7 +4298,7 @@ var IdleStage = (function (C, D, ART) {
   }
   function gearFx(d, hp) {
     var R = C.R, slot = d.g.slot, home = gearHome(d.t, slot, hp.x, FEET, time), first = d.targets[0] ? enemyCenter(d.targets[0]) : null;
-    if (d.t === 'feijian' && first) gearAnim[d.g.id] = { t: 0, life: 0.5, tx: first.x - 6, ty: first.y - 3 };
+    if (d.t === 'feijian' && first) gearAnim[d.g.id] = { t: 0, life: 0.75, tx: first.x - 6, ty: first.y - 3, sword: true };
     else if (d.t === 'hulu') { d.targets.forEach(function (e, i) { var c = enemyCenter(e); shot(home.x + 10, home.y + 6, c.x, c.y, '#ff8a3c', 0.3 + i * 0.05, 'fire'); }); }
     else if (d.t === 'leizhu') { d.targets.forEach(function (e, i) { var c = enemyCenter(e); fx.bolts.push({ x: home.x + 4, y: home.y + 4, tx: c.x, ty: c.y, t: -i * 0.15, life: 0.25 }); }); }
     else if (d.t === 'fuzhen') { d.targets.forEach(function (e, i) { if (!e) return; var c = enemyCenter(e); shot(home.x + 4, home.y, c.x, c.y + (i % 3) * 3 - 3, '#f4d35e', 0.25 + i * 0.07, 'paper'); }); }
@@ -4246,7 +4322,8 @@ var IdleStage = (function (C, D, ART) {
 
   function update(dt) {
     time += dt;
-    ['proj', 'text', 'parts', 'rings', 'bolts'].forEach(function (k) {
+    if (fx.parts.length > 260) fx.parts.splice(0, fx.parts.length - 260);
+    ['proj', 'text', 'parts', 'rings', 'bolts', 'splats'].forEach(function (k) {
       fx[k] = fx[k].filter(function (o) { o.t += dt; return o.t < (o.life || o.dur || 1) + (o.kind === 'rock' ? 0.05 : 0); });
     });
     fx.parts.forEach(function (p) { p.x += p.vx * dt; p.y += p.vy * dt; if (!p.float) p.vy += 90 * dt; });
@@ -4290,7 +4367,7 @@ var IdleStage = (function (C, D, ART) {
       var aw = C.S.pets[p.key] && C.S.pets[p.key].aw;
       list.push({ feet: pp.feet, draw: function () {
         if (aw) { ctx.globalAlpha = 0.22 + 0.1 * Math.sin(time * 4 + p.slot); ellipse(pp.x + dx, pp.feet + dy - m.h * 0.4, m.w * 0.55, m.h * 0.5, '#ffcf4a'); ctx.globalAlpha = 1; if (Math.random() < 0.1) fx.parts.push({ x: pp.x + dx - m.w / 2 + Math.random() * m.w, y: pp.feet + dy - Math.random() * m.h, vx: 0, vy: -16, t: 0, life: 0.7, col: '#ffe27a', s: 1, float: true }); }
-        drawSpr(p.key, act, fr, false, sc, pp.x + dx, pp.feet + dy + bob);
+        drawSpr(p.key, act, fr, false, sc, pp.x + dx, pp.feet + dy + bob, undefined, 0, pp.k);
       } });
     });
     // 夥伴
@@ -4299,7 +4376,7 @@ var IdleStage = (function (C, D, ART) {
       var fr = act === 'walk' ? frameOf(8) : act === 'idle' || act === 'hurt' ? frameOf(3) : act === 'attack' ? Math.min(3, Math.floor((0.3 - p.atkT) / 0.3 * 4)) : frameOf(10);
       var bob = p.key === 'bailong' ? Math.round(Math.sin(time * 4) * 1.5) - 4 : 0;
       list.push({ feet: pp.feet, draw: function () {
-        drawSpr(p.key, act, fr, false, S, pp.x, pp.feet + bob);
+        drawSpr(p.key, act, fr, false, S, pp.x, pp.feet + bob, undefined, 0, pp.k);
         if (p.sleepT > 0) { ctx.font = '900 ' + 7 * S + 'px ' + FONT; ctx.fillStyle = '#d8f1ff'; ctx.fillText('z', (pp.x + 10 + Math.sin(time * 3) * 2) * S, (pp.feet - 38 - (time * 6 % 6)) * S); }
       } });
     });
@@ -4359,6 +4436,23 @@ var IdleStage = (function (C, D, ART) {
       if (a) {
         var q = a.t / a.life;
         if (a.wok) { if (q < 0.5) { x = home.x + (a.tx - home.x) * q * 2; y = home.y + (a.ty - 30 - home.y) * q * 2; } else if (q < 0.7) { x = a.tx; y = a.ty - 30 + (q - 0.5) / 0.2 * 30; if (!a.done) { a.done = true; addText(a.tx + 6, a.ty - 12, '噹！', '#ffffff', 12, 0.8); fx.shake = 0.15; } } else { var r = (q - 0.7) / 0.3; x = a.tx + (home.x - a.tx) * r; y = a.ty + (home.y - a.ty) * r; } }
+        else if (a.sword) { // 飛劍：轉向對準妖怪 → 衝過去刺穿 → 繞回來
+          var hx = home.x, hy = home.y, ang = Math.atan2(a.ty - hy, a.tx - hx), base0 = (INK && INK.itemAng(g.t, it.q)) || 0, rot;
+          if (q < 0.18) { var e0 = q / 0.18; rot = base0 + (ang - base0) * e0; x = hx - Math.cos(ang) * 4 * e0; y = hy - Math.sin(ang) * 4 * e0; }
+          else if (q < 0.62) {
+            var e1 = (q - 0.18) / 0.44; e1 = e1 * e1; rot = ang;
+            var ex = a.tx + Math.cos(ang) * 16, ey = a.ty + Math.sin(ang) * 16, sx0 = hx - Math.cos(ang) * 4, sy0 = hy - Math.sin(ang) * 4;
+            x = sx0 + (ex - sx0) * e1; y = sy0 + (ey - sy0) * e1;
+            for (var tr2 = 1; tr2 <= 4; tr2++) { ctx.globalAlpha = 0.28 - tr2 * 0.05; drawTreasure(g.t, x - Math.cos(ang) * tr2 * 7, y - Math.sin(ang) * tr2 * 7, it.q, time + g.slot, null, rot); }
+            ctx.globalAlpha = 0.35; ctx.strokeStyle = '#1b1a20'; ctx.lineWidth = 2 * S; ctx.beginPath(); ctx.moveTo((sx0 + 7) * S, (sy0 + 5) * S); ctx.lineTo((x + 7) * S, (y + 5) * S); ctx.stroke(); ctx.globalAlpha = 1;
+            if (!a.hit && e1 > 0.75) { a.hit = true; burst(a.tx + 6, a.ty + 4, '#e8eef5', 8, 40, 0.35); }
+          } else {
+            var e2 = (q - 0.62) / 0.38, ox = a.tx + Math.cos(ang) * 16, oy = a.ty + Math.sin(ang) * 16, back = Math.atan2(hy - oy, hx - ox);
+            x = ox + (hx - ox) * e2; y = oy + (hy - oy) * e2 - Math.sin(e2 * Math.PI) * 18;
+            rot = e2 < 0.8 ? back + Math.PI * 2 * e2 : base0 + (back + Math.PI * 1.6 - base0) * (1 - (e2 - 0.8) / 0.2);
+          }
+          drawTreasure(g.t, x, y, it.q, time + g.slot, null, rot); return;
+        }
         else { var k = q < 0.5 ? q * 2 : (1 - q) * 2; x = home.x + (a.tx - home.x) * k; y = home.y + (a.ty - home.y) * k; if (q < 0.5) for (var tr = 1; tr < 4; tr++) { ctx.globalAlpha = 0.2; px(x - tr * 6, y + 4, 10, 2, D.QUALITY[it.q].color); ctx.globalAlpha = 1; } }
       }
       drawTreasure(g.t, x, y, it.q, time + g.slot);
@@ -4368,54 +4462,74 @@ var IdleStage = (function (C, D, ART) {
     fx.proj.forEach(function (p) {
       var q = Math.min(1, p.t / p.dur), x = p.x + (p.tx - p.x) * q, y = p.y + (p.ty - p.y) * q - (p.kind === 'orb' || p.kind === 'fire' ? Math.sin(q * Math.PI) * 12 : 0);
       if (p.t > p.dur) return;
-      if (p.kind === 'rock') { px(x - 6, y - 6, 12, 10, '#8a8178'); px(x - 4, y - 5, 5, 3, '#aaa196'); if (q >= 0.98) { burst(p.tx, p.ty, '#8a8178', 10, 50, 0.5); fx.shake = 0.15; } return; }
-      if (p.kind === 'paper') { px(x - 2, y - 3, 4, 6, '#f4d35e'); px(x - 1, y - 1, 2, 2, '#c8322c'); return; }
-      if (p.kind === 'peck') { px(x - 3, y - 1, 6, 2, '#ffb347'); return; }
+      var arcH = p.kind === 'orb' || p.kind === 'fire' ? 12 : 0, trail = [];
+      for (var ti = 6; ti >= 0; ti--) { var tq = Math.max(0, q - ti * 0.045); trail.push([p.x + (p.tx - p.x) * tq, p.y + (p.ty - p.y) * tq - Math.sin(tq * Math.PI) * arcH]); }
+      if (p.kind === 'rock') { wash(x, y, 9, 'rgba(60,52,48,1)', 0.35); inkDot(x, y, 4.5, '#3a3236', 1, 0, 0); inkDot(x - 1.5, y - 1.5, 1.6, '#8a8178', 0.8, 0, 0); if (q >= 0.98 && !p.done) { p.done = true; burst(p.tx, p.ty, '#3a3236', 10, 50, 0.5); fx.shake = 0.15; } return; }
+      if (p.kind === 'paper') { ctx.save(); ctx.translate(x * S, y * S); ctx.rotate(q * 6); ctx.globalAlpha = 0.95; ctx.fillStyle = '#efe0a8'; ctx.fillRect(-2 * S, -3 * S, 4 * S, 6 * S); ctx.fillStyle = '#b8322a'; ctx.fillRect(-1 * S, -2 * S, 2 * S, 3.6 * S); ctx.restore(); ctx.globalAlpha = 1; return; }
+      if (p.kind === 'peck') { brush(trail.slice(3), 1.2, '#c86a2a', 0.8, 5); return; }
       if (p.t < 0) return;
-      if (p.kind === 'sword') { px(x - 1, y - 8, 2, 10, '#e8eef5'); px(x - 2, y - 9, 4, 2, '#ffcf4a'); return; }
-      if (p.kind === 'rope') { ctx.strokeStyle = '#ffd86a'; ctx.lineWidth = S; ctx.beginPath(); ctx.moveTo(p.x * S, p.y * S); ctx.lineTo(x * S, y * S); ctx.stroke(); return; }
-      ctx.globalAlpha = 0.4; px(x - 3, y - 3, 6, 6, p.col); ctx.globalAlpha = 1; px(x - 2, y - 2, 4, 4, p.col); px(x - 1, y - 1, 2, 2, '#ffffff');
+      if (p.kind === 'sword') { brush([[x, y - 12], [x, y - 8], [x, y - 4], [x, y]], 1.4, '#2a3040', 0.9, 9); wash(x, y - 4, 5, 'rgba(220,235,255,1)', 0.35); return; }
+      if (p.kind === 'rope') { var rp = []; for (var ri = 0; ri <= 12; ri++) { var rq = ri / 12; rp.push([p.x + (x - p.x) * rq, p.y + (y - p.y) * rq + Math.sin(rq * 12 + time * 10) * 1.2]); } brush(rp, 0.9, '#b8862b', 0.9, 4); return; }
+      // 一般的氣團：一筆有顏色的墨痕拖在後面，前面一團暈開的光
+      brush(trail, 1.6, p.col, 0.55, 11);
+      wash(x, y, 6, p.col, 0.45); inkDot(x, y, 1.6, p.col, 0.95, p.tx - p.x, p.ty - p.y);
+      if (p.kind === 'fire') splat(x, y, 3, 4, '#3a1a10', 0.5, Math.floor(time * 30));
     });
     fx.bolts.forEach(function (b) {
       if (b.t < 0) return;
-      ctx.strokeStyle = b.big ? '#ffffff' : '#bfe6ff'; ctx.lineWidth = (b.big ? 3 : 2) * S / 2; ctx.beginPath();
-      var n = 6; ctx.moveTo(b.x * S, b.y * S);
-      for (var i = 1; i <= n; i++) { var q = i / n; ctx.lineTo((b.x + (b.tx - b.x) * q + (i < n ? (Math.random() - 0.5) * 10 : 0)) * S, (b.y + (b.ty - b.y) * q) * S); }
-      ctx.stroke();
+      // 墨色閃電：一筆一筆折下來，外面一層淡藍的暈
+      if (!b.pts) { b.pts = []; var bn = 7; for (var i = 0; i <= bn; i++) { var q = i / bn; b.pts.push([b.x + (b.tx - b.x) * q + (i && i < bn ? (Math.random() - 0.5) * 12 : 0), b.y + (b.ty - b.y) * q]); } }
+      var fine = []; for (var bi = 0; bi < b.pts.length - 1; bi++) for (var bj = 0; bj < 4; bj++) { var u = bj / 4; fine.push([b.pts[bi][0] + (b.pts[bi + 1][0] - b.pts[bi][0]) * u, b.pts[bi][1] + (b.pts[bi + 1][1] - b.pts[bi][1]) * u]); }
+      fine.push(b.pts[b.pts.length - 1]);
+      var bf = 1 - b.t / b.life;
+      wash(b.tx, b.ty, b.big ? 16 : 9, 'rgba(140,190,255,1)', 0.5 * bf);
+      brush(fine, b.big ? 1.6 : 1, INKC, 0.95 * bf, 21);
+      brush(fine.map(function (q) { return [q[0] + 0.6, q[1]]; }), b.big ? 0.7 : 0.45, '#cfe6ff', 0.9 * bf, 23);
     });
     fx.rings.forEach(function (r) {
       var q = r.t / r.life;
-      if (r.kind === 'slash') { ctx.strokeStyle = 'rgba(255,255,255,' + (1 - q) + ')'; ctx.lineWidth = 2 * S; ctx.beginPath(); ctx.arc(r.x * S, r.y * S, 14 * S, -1.2 + q, 0.6 + q); ctx.stroke(); }
-      else if (r.kind === 'roar') { ctx.strokeStyle = 'rgba(255,255,255,' + (0.8 - q * 0.8) + ')'; ctx.lineWidth = 2 * S; for (var k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(r.x * S, r.y * S, Math.max(0, 20 + q * 200 - k * 20) * S, -0.8, 0.8); ctx.stroke(); } }
+      if (r.kind === 'slash') { // 一道彎月墨痕
+        var sa = 1 - Math.max(0, q - 0.4) / 0.6;
+        brush(arcPts(r.x - 4, r.y, 15, -1.3, 0.9, 18, 1.15), 2.2, INKC, sa, 31, Math.min(1, q * 3));
+        brush(arcPts(r.x - 6, r.y, 12, -1.1, 0.7, 14, 1.1), 0.9, '#7f93b5', sa * 0.8, 33, Math.min(1, q * 3));
+        if (q > 0.3) splat(r.x + 8, r.y, 6, 8 + q * 8, INKC, sa * 0.8, 41);
+      }
+      else if (r.kind === 'roar') { for (var k = 0; k < 3; k++) { var rr = Math.max(1, 20 + q * 200 - k * 20); brush(arcPts(r.x, r.y, rr, -0.8, 0.8, 20), 1.6, INKC, (0.7 - q * 0.7), 50 + k); } wash(r.x + 10, r.y, 30 + q * 60, 'rgba(230,230,240,1)', 0.15 * (1 - q)); }
       else if (r.t < 0) { }
-      else if (r.kind === 'wheel') { var wx = r.x + q * 220; for (var a2 = 0; a2 < 4; a2++) { var an2 = time * 20 + a2 * 1.57; px(wx + Math.cos(an2) * 5 - 1, r.y + Math.sin(an2) * 5 - 1, 3, 3, a2 % 2 ? '#ff8a3c' : '#ffe27a'); } px(wx - 2, r.y - 2, 4, 4, '#c8322c'); fx.parts.push({ x: wx - 4, y: r.y + 4, vx: -10, vy: -20, t: 0, life: 0.4, col: '#ff6a2a', s: 2 }); }
-      else if (r.kind === 'bell') { ctx.strokeStyle = 'rgba(255,242,176,' + (1 - q) + ')'; ctx.lineWidth = S; for (var k2 = 0; k2 < 2; k2++) { ctx.beginPath(); ctx.arc(r.x * S, r.y * S, (10 + q * 50 - k2 * 10) * S, 0, 7); ctx.stroke(); } }
+      else if (r.kind === 'wheel') { var wx = r.x + q * 220; wash(wx, r.y, 9, 'rgba(255,110,40,1)', 0.4); brush(arcPts(wx, r.y, 5, time * 20, time * 20 + 4.5, 16), 1.3, '#b8322a', 0.95, 61); brush(arcPts(wx, r.y, 5, time * 20 + 3.1, time * 20 + 6, 10), 0.9, '#ffb347', 0.9, 63); if (Math.random() < 0.6) fx.parts.push({ x: wx - 4, y: r.y + 4, vx: -10, vy: -20, t: 0, life: 0.4, col: '#ff6a2a', s: 1.5 }); }
+      else if (r.kind === 'bell') { for (var k2 = 0; k2 < 2; k2++) { var br = Math.max(1, 10 + q * 50 - k2 * 10); brush(arcPts(r.x, r.y, br, 0, 6.2, 32), 0.9, '#b8862b', (1 - q) * 0.8, 70 + k2); } wash(r.x, r.y, 20 + q * 40, 'rgba(255,242,176,1)', 0.2 * (1 - q)); }
       else if (r.kind === 'scroll') { var o2 = Math.sin(Math.min(1, q * 1.5) * Math.PI), sw = 300 * Math.min(1, q * 3); ctx.globalAlpha = 0.5 * o2; px(r.x - sw / 2, 40, sw, 110, '#f3ead2'); ctx.globalAlpha = 0.6 * o2; px(r.x - sw / 2 + 20, 100, sw * 0.3, 40, '#4f6f5a'); px(r.x - sw / 2 + sw * 0.4, 80, sw * 0.25, 60, '#6a8a6a'); px(r.x - sw / 2, 36, 4, 118, '#8a5a1a'); px(r.x + sw / 2 - 4, 36, 4, 118, '#8a5a1a'); ctx.globalAlpha = 1; }
-      else if (r.kind === 'tornado') { for (var y = 0; y < 50; y += 3) { var ww = 4 + y * 0.35, off = Math.sin(time * 14 + y * 0.3) * 4; ctx.globalAlpha = 0.7 * (1 - q); px(r.x - ww / 2 + off, r.y - y, ww, 2, y % 6 ? '#4fd1c5' : '#c9fff6'); } ctx.globalAlpha = 1; }
+      else if (r.kind === 'tornado') { for (var y = 0; y < 50; y += 5) { var ww = 4 + y * 0.35, off = Math.sin(time * 14 + y * 0.3) * 4; brush(arcPts(r.x + off, r.r === undefined ? r.y - y : r.y - y, ww / 2, time * 8 + y, time * 8 + y + 3.6, 10, 0.3), 0.8, y % 10 ? '#2c6e68' : '#7fd6c8', 0.7 * (1 - q), 80 + y); } wash(r.x, r.y - 25, 26, 'rgba(79,209,197,1)', 0.15 * (1 - q)); }
       else if (r.kind === 'mouth') { var o = Math.sin(q * Math.PI); ctx.globalAlpha = 0.85; px(r.x - 18, r.y - 14 * o, 36, 6, '#5a3a2a'); px(r.x - 18, r.y + 8 * o, 36, 6, '#5a3a2a'); for (var t = 0; t < 6; t++) { px(r.x - 16 + t * 6, r.y - 14 * o + 6, 3, 3, '#ffffff'); px(r.x - 13 + t * 6, r.y + 8 * o - 3, 3, 3, '#ffffff'); } ctx.globalAlpha = 1; if (q > 0.6 && !r.done) { r.done = true; burst(r.x, r.y, '#ffe27a', 16, 60, 0.8); } }
     });
-    fx.parts.forEach(function (p) { ctx.globalAlpha = Math.max(0, 1 - p.t / p.life); px(p.x, p.y, p.s, p.s, p.col); });
+    // 命中墨花：一圈墨點飛濺，剋屬性時帶一點朱紅
+    fx.splats.forEach(function (sp) { var u = sp.t / sp.life; if (sp.col) wash(sp.x, sp.y, 8 * sp.big, sp.col, 0.3 * (1 - u)); splat(sp.x, sp.y, Math.round(9 * sp.big), (4 + 10 * u) * sp.big, INKC, (1 - u) * 0.9, sp.seed); });
+    fx.parts.forEach(function (p) { inkDot(p.x, p.y, 0.45 + p.s * 0.45, p.col, Math.max(0, 1 - p.t / p.life), p.vx, p.vy); });
     ctx.globalAlpha = 1;
-    if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = 60 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6; px(lx, ly, 4, 2, l % 3 ? '#e8a23a' : '#7ab84a'); } }
-    if (fx.pillar) { var pq = fx.pillar.t / fx.pillar.life; ctx.globalAlpha = 0.5 * (1 - pq); px(hp.x - 10, 0, 20, FEET, '#ffe27a'); px(hp.x - 4, 0, 8, FEET, '#fffbe0'); ctx.globalAlpha = 1; }
+    if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = 60 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
+    if (fx.pillar) { var pq = fx.pillar.t / fx.pillar.life; for (var py = 0; py < FEET; py += 6) wash(hp.x, py, 12, 'rgba(255,226,122,1)', 0.22 * (1 - pq)); wash(hp.x, FEET - 10, 24, 'rgba(255,251,224,1)', 0.4 * (1 - pq)); }
 
     // 主角血條
     if (!down) {
-      px(hp.x - 14, FEET - 50, 28, 3, 'rgba(0,0,0,0.55)');
-      px(hp.x - 14, FEET - 50, 28 * Math.max(0, h.hp / h.maxHp), 3, '#5fe07a');
-      if (h.shield > 0) px(hp.x - 14, FEET - 51, 28 * Math.min(1, h.shield / h.maxHp), 1, '#7fe0ff');
+      var hbY = FEET - 50, hpR = Math.max(0, h.hp / h.maxHp);
+      ctx.fillStyle = 'rgba(29,26,31,0.6)'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect((hp.x - 15) * S, (hbY - 0.5) * S, 30 * S, 4 * S, 2 * S) : ctx.rect((hp.x - 15) * S, (hbY - 0.5) * S, 30 * S, 4 * S); ctx.fill();
+      ctx.fillStyle = hpR > 0.3 ? '#4fbf7a' : '#c8322c'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect((hp.x - 14) * S, hbY * S, 28 * hpR * S, 3 * S, 1.5 * S) : ctx.rect((hp.x - 14) * S, hbY * S, 28 * hpR * S, 3 * S); ctx.fill();
+      if (h.shield > 0) { ctx.fillStyle = '#9fd8ff'; ctx.fillRect((hp.x - 14) * S, (hbY - 1) * S, 28 * Math.min(1, h.shield / h.maxHp) * S, 1 * S); }
     }
 
     // 文字
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     fx.text.forEach(drawNumber);
     ctx.globalAlpha = 1;
-    if (fx.tint > 0) { ctx.globalAlpha = 0.25 * fx.tint; ctx.fillStyle = fx.tintColor; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; }
-    if (fx.flash > 0) { ctx.globalAlpha = Math.min(0.7, fx.flash * 3); ctx.fillStyle = fx.flashColor; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; }
+    // 整個畫面染色：像墨暈從四邊滲進來，中間淡
+    function vignette(col, a) { var g = ctx.createRadialGradient(W * S / 2, H * S / 2, H * S * 0.25, W * S / 2, H * S / 2, W * S * 0.62); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, col); ctx.globalAlpha = a; ctx.fillStyle = g; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; }
+    if (fx.tint > 0) vignette(fx.tintColor, Math.min(0.75, 0.6 * fx.tint));
+    if (fx.flash > 0) { ctx.globalAlpha = Math.min(0.45, fx.flash * 2); ctx.fillStyle = fx.flashColor; ctx.fillRect(0, 0, W * S, H * S); ctx.globalAlpha = 1; vignette(INKC, Math.min(0.5, fx.flash * 3)); }
     if (down) { ctx.fillStyle = 'rgba(10,8,20,0.35)'; ctx.fillRect(0, 0, W * S, H * S); }
   }
   // 畫一個飄字。數字和單位（萬、億⋯）分開畫，單位小一點比較好讀
   var FONT = '"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif';
+  var NFONT = '"Noto Serif TC", "Songti TC", "PMingLiU", serif';   // 數字用書法感的明體
   function drawNumber(t) {
     var q = t.t / t.life, k = t.kind;
     var y = k === 'hurt' ? t.y + q * 10 : t.y - (k === 'crit' ? 18 : 14) * Math.min(1, q * 1.6);
@@ -4425,17 +4539,19 @@ var IdleStage = (function (C, D, ART) {
     var m = /^([+\-]?)([0-9.]+)([萬億兆京垓秭穰溝澗正載極]?)$/.exec(t.txt);
     var parts = m ? [[m[1] + m[2], sz], [m[3], sz * 0.7]] : [[t.txt, sz]];
     ctx.font = '900 ' + sz + 'px ' + FONT;
-    var w = 0; parts.forEach(function (p) { if (!p[0]) return; ctx.font = '900 ' + p[1] + 'px ' + FONT; w += ctx.measureText(p[0]).width; });
+    var w = 0; parts.forEach(function (p) { if (!p[0]) return; ctx.font = '900 ' + p[1] + 'px ' + (m ? NFONT : FONT); w += ctx.measureText(p[0]).width; });
     var x = t.x * S - w / 2, yy = y * S;
     ctx.textAlign = 'left';
-    if (k === 'crit') { // 朱紅印章「暴」
-      var ss = sz * 0.95; ctx.fillStyle = '#c8322c'; ctx.fillRect(x - ss - 3, yy - ss / 2, ss, ss);
-      ctx.font = '900 ' + ss * 0.78 + 'px ' + FONT; ctx.fillStyle = '#fff3e0'; ctx.fillText('暴', x - ss - 3 + ss * 0.11, yy + ss * 0.04);
+    if (k === 'crit') { // 朱紅印章「暴」：斜一點、邊緣不規則
+      var ss = sz * 0.95, R2 = rng(Math.floor(t.x * 7));
+      ctx.save(); ctx.translate(x - ss / 2 - 3, yy); ctx.rotate(-0.12); ctx.fillStyle = '#b8291f';
+      ctx.beginPath(); for (var ci = 0; ci < 12; ci++) { var ca = ci / 12 * 6.283 + 0.26, cr = ss * 0.62 * (0.92 + R2() * 0.12); ctx.lineTo(Math.cos(ca) * cr * Math.SQRT1_2 * 1.25, Math.sin(ca) * cr * Math.SQRT1_2 * 1.25); } ctx.closePath(); ctx.fill();
+      ctx.font = '900 ' + ss * 0.78 + 'px ' + NFONT; ctx.fillStyle = '#fff3e0'; ctx.textAlign = 'center'; ctx.fillText('暴', 0, ss * 0.04); ctx.restore(); ctx.textAlign = 'left';
     }
     parts.forEach(function (p) {
       if (!p[0]) return;
-      ctx.font = '900 ' + p[1] + 'px ' + FONT;
-      ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, p[1] * 0.22); ctx.strokeStyle = 'rgba(18,14,24,0.92)'; ctx.strokeText(p[0], x, yy);
+      ctx.font = '900 ' + p[1] + 'px ' + (m ? NFONT : FONT);
+      ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, p[1] * 0.26); ctx.strokeStyle = 'rgba(29,24,22,0.9)'; ctx.strokeText(p[0], x, yy);
       ctx.fillStyle = t.col; ctx.fillText(p[0], x, yy);
       if (k === 'crit') { ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.fillText(p[0], x, yy - p[1] * 0.08); }
       x += ctx.measureText(p[0]).width;
@@ -4456,14 +4572,14 @@ var IdleStage = (function (C, D, ART) {
       drawSpr('hero', hact, hfr, false, S, cx - 5, FEET, 0.18); drawSpr('hero', hact, hfr, false, S, cx - 10, FEET, 0.08);
     }
     if (t >= 2) { // 金光
-      ctx.globalAlpha = (0.14 + 0.06 * pulse) * glow * 1.8; ellipse(cx, FEET - 17, 15 + t, 21 + t, t >= 9 ? '#ffe9a0' : '#ffcf4a'); ctx.globalAlpha = 1;
+      wash(cx, FEET - 22, 22 + t, t >= 9 ? 'rgba(255,233,160,1)' : 'rgba(255,207,74,1)', (0.12 + 0.06 * pulse) * glow * 1.6);
     }
     if (t >= 3) { // 光環
       ctx.globalAlpha = 0.5 + 0.2 * pulse; ctx.strokeStyle = t >= 9 ? '#fff2b0' : '#ffd86a'; ctx.lineWidth = S;
       ctx.beginPath(); ctx.ellipse((cx - 1) * S, (FEET - 27) * S, (8 + Math.min(t, 8) * 0.4) * S, (8 + Math.min(t, 8) * 0.4) * S, 0, 0, 7); ctx.stroke(); ctx.globalAlpha = 1;
     }
     // 腳下靈氣
-    ctx.globalAlpha = 0.4 + 0.15 * pulse; ellipse(cx, FEET, 12 + t, 3, t >= 2 ? '#fff0b8' : '#e6f4ff'); ctx.globalAlpha = 1;
+    ctx.save(); ctx.scale(1, 0.25); wash(cx, FEET * 4, 16 + t, t >= 2 ? 'rgba(255,240,184,1)' : 'rgba(230,244,255,1)', 0.45 + 0.15 * pulse); ctx.restore();
     if (Math.random() < 0.08 + t * 0.03) fx.parts.push({ x: cx - 10 + Math.random() * 20, y: FEET - Math.random() * 6, vx: 0, vy: -18 - t * 2, t: 0, life: 0.8, col: t >= 2 ? '#ffe9a0' : '#e6f4ff', s: 1, float: true });
   }
   function realmAuraFront(t, hp) {
@@ -4476,6 +4592,50 @@ var IdleStage = (function (C, D, ART) {
     }
   }
   function ellipse(x, y, rx, ry, col) { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(x * S, y * S, rx * S, ry * S, 0, 0, 7); ctx.fill(); }
+
+  // ───────── 水墨筆觸工具（特效都用這些畫，不再用方塊）─────────
+  var INKC = '#1d1a1f';
+  function rng(seed) { var v = (seed * 9301 + 49297) % 233280 || 1; return function () { v = (v * 16807) % 2147483647; return (v - 1) / 2147483646; }; }
+  // 暈開的一團顏色（中間濃、邊緣化掉）
+  function wash(x, y, r, col, a) {
+    if (a <= 0 || r <= 0) return;
+    var g = ctx.createRadialGradient(x * S, y * S, 0, x * S, y * S, r * S);
+    ctx.globalAlpha = a; g.addColorStop(0, col); g.addColorStop(0.55, col); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x * S, y * S, r * S, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+  }
+  // 墨點：外面一圈淡的暈、裡面一顆濃的，跑得快的會拉長成水滴
+  function inkDot(x, y, r, col, a, vx, vy) {
+    var sp = Math.sqrt((vx || 0) * (vx || 0) + (vy || 0) * (vy || 0)), st = Math.min(2.4, 1 + sp / 70);
+    ctx.save(); ctx.translate(x * S, y * S); ctx.rotate(Math.atan2(vy || 0, vx || 1)); ctx.fillStyle = col;
+    ctx.globalAlpha = a * 0.28; ctx.beginPath(); ctx.ellipse(0, 0, r * S * 1.7 * st, r * S * 1.7, 0, 0, 7); ctx.fill();
+    ctx.globalAlpha = a * 0.85; ctx.beginPath(); ctx.ellipse(0, 0, r * S * st, r * S * 0.8, 0, 0, 7); ctx.fill();
+    ctx.restore(); ctx.globalAlpha = 1;
+  }
+  // 一筆：沿著點畫，頭尾細、中間粗，加幾條乾筆飛白。prog 0~1 = 畫到哪
+  function brush(pts, width, col, a, seed, prog) {
+    var R = rng(seed || 7), n = pts.length, upto = Math.max(1, Math.floor((n - 1) * (prog === undefined ? 1 : prog)));
+    ctx.fillStyle = col;
+    for (var i = 0; i <= upto; i++) {
+      var t = i / (n - 1), w = width * Math.pow(Math.max(0.05, Math.sin(Math.PI * (t * 0.9 + 0.05))), 0.7);
+      ctx.globalAlpha = a * (0.55 + 0.45 * R());
+      ctx.beginPath(); ctx.arc((pts[i][0] + (R() - 0.5) * 0.5) * S, (pts[i][1] + (R() - 0.5) * 0.5) * S, Math.max(0.5, w * S), 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = a * 0.3; ctx.strokeStyle = col; ctx.lineWidth = 1;
+    for (var k = 0; k < 3; k++) {
+      var off = (R() - 0.5) * width * 1.8; ctx.beginPath();
+      for (var j = 0; j <= upto; j += 2) { var q = pts[j]; if (j === 0 || R() < 0.2) ctx.moveTo(q[0] * S, (q[1] + off) * S); else ctx.lineTo(q[0] * S, (q[1] + off) * S); }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  // 墨點飛濺
+  function splat(x, y, n, spread, col, a, seed) {
+    var R = rng(seed || 3); ctx.fillStyle = col || INKC;
+    for (var i = 0; i < n; i++) { var an = R() * 6.283, d = spread * Math.sqrt(R()); ctx.globalAlpha = a * (0.35 + 0.65 * R()); ctx.beginPath(); ctx.arc((x + Math.cos(an) * d) * S, (y + Math.sin(an) * d * 0.75) * S, (0.25 + R() * 1.1) * S, 0, 7); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+  // 弧形一筆（刀光、爪痕、吼聲都用）
+  function arcPts(cx, cy, r, a0, a1, n, squash) { var pts = []; for (var i = 0; i <= n; i++) { var a = a0 + (a1 - a0) * i / n; pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * (squash || 1)]); } return pts; }
 
   function init(canvas) {
     cv = canvas; cv.width = W * S; cv.height = H * S; ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = false;
@@ -5207,8 +5367,8 @@ function IdleFmt(n) {
     updT -= dt; if (updT <= 0) { updT = 0.3; updaters.forEach(function (f) { f(); }); }
     saveT += dt; if (saveT > 5) { saveT = 0; if (C.S.started) save(); }
     if (toastT > 0) { toastT -= dt; if (toastT <= 0) $('toast').classList.remove('show'); }
-    if (bubbleT > 0) { bubbleT -= dt; if (bubbleT <= 0) $('bubble').hidden = true; }
-    if (C.S.started && !modalOpen) {
+    if (bubbleT > 0) { bubbleT -= dt; if (bubbleT <= 0 || !$('bossBar').hidden) { bubbleT = 0; $('bubble').hidden = true; } }
+    if (C.S.started && !modalOpen && $('bossBar').hidden) {  // 首領戰時不聊天，免得擋到血條
       chatterT -= dt;
       if (chatterT <= 0) {
         chatterT = 28 + Math.random() * 20;
