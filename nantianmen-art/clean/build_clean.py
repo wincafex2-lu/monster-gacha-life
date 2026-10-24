@@ -19,7 +19,9 @@ os.makedirs(OUT, exist_ok=True)
 mpath = os.path.join(OUT, 'manifest.json')
 man = json.load(open(mpath)) if os.path.exists(mpath) else {}
 done = 0
-OVR = {'egg-rare__idle.png': {'T1': 7, 'holes': False}}   # pale highlight touches the edge with no outline
+OVR = {'egg-rare__idle.png': {'T1': 7, 'holes': False},
+       # background layers: remove every enclosed pocket of background colour (gaps between bamboo, inside railings)
+       **{f: {'allholes': 12} for f in ['bg-bamboo__mid.png', 'bg-palace__far.png', 'bg-palace__mid.png', 'bg-palace__ground.png', 'bg-cloud__far.png', 'bg-cloud__mid.png', 'bg-cloud__ground.png', 'bg-town__mid.png']}}   # pale highlight touches the edge with no outline
 for f, (b, sha) in sorted(chosen.items()):
     if f.endswith('__sky.png'): continue
     if man.get(f, {}).get('raw') == sha and os.path.exists(os.path.join(OUT, f)): continue

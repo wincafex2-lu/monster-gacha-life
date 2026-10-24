@@ -2,7 +2,7 @@ import sys, numpy as np
 from PIL import Image
 from scipy import ndimage as nd
 
-def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True):
+def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True, allholes=False):
     im = im.convert('RGBA'); A = np.asarray(im).astype(np.float32)
     rgb = A[..., :3]; alpha0 = A[..., 3]
     if (alpha0 < 20).mean() > 0.2:          # already transparent
@@ -22,7 +22,7 @@ def keyout(im, crop=True, T1=18, T2=80, ring=4, holes=True):
             area = nd.sum(np.ones_like(d), lab, idx)
             mean = nd.mean(d, lab, idx)
             var = nd.variance(rgb.mean(2), lab, idx)
-            hole = idx[(area > 0.0008 * H * W) & (mean < 5) & (var < 4)]
+            hole = idx[(area > 0.0008 * H * W) & (mean < 5) & (var < 4)] if not allholes else idx[area > allholes]
             bgm |= np.isin(lab, hole)
         chroma = bg.max() - bg.min() > 150
         if chroma:   # magenta key: alpha from how magenta a pixel is
