@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v19</div>
+    <div class="ver">v20</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -2194,6 +2194,7 @@ var IdleCore = (function (D) {
       checkOutfits(); checkSystems();
     } else {
       S.wave++;
+      if (S.wave === 10) S.bossOk = S.stage;  // 這一關的小怪清完一輪了，之後才能隨時挑戰首領
       if (S.wave === 10 && S.farming) {
         if (S.autoBoss) S.farming = false; else S.wave = 1;
       }
@@ -2219,9 +2220,12 @@ var IdleCore = (function (D) {
     emit('respawn', {});
     spawnWave();
   }
+  // 首領要先把這一關九波小怪打完一輪才能挑戰（打過的關卡不用）；在半路倒下不能直接跳去打王
+  function bossOpen() { return S.stage < S.maxStage || S.bossOk === S.stage; }
   function challengeBoss() {
     if (R.dun || R.phase === 'down') return false;
     if (S.wave === 10 && !S.farming) return false;
+    if (!bossOpen()) return false;
     S.farming = false; S.wave = 10;
     R.hits = []; R.clones = []; R.eHits = []; R.hero.burnT = R.hero.wetT = R.hero.poisonT = R.hero.slowT = R.hero.windT = 0; R.hero.hp = R.hero.maxHp; spawnWave();
     return true;
@@ -2669,7 +2673,7 @@ var IdleCore = (function (D) {
   return {
     L: L, BAL: BAL, on: on, step: step, load: load, reset: reset,
     get S() { return S; }, get R() { return R; },
-    stats: stats, realmMul: realmMul, upInfo: upInfo, buy: buy, xpNeed: xpNeed, canBreak: canBreak, breakthrough: breakthrough,
+    stats: stats, realmMul: realmMul, bossOpen: bossOpen, upInfo: upInfo, buy: buy, xpNeed: xpNeed, canBreak: canBreak, breakthrough: breakthrough,
     stageInfo: stageInfo, bossDef: bossDef, challengeBoss: challengeBoss,
     hatch: hatch, hatchTen: hatchTen, setTeam: setTeam, petPower: petPower, PET_BY: PET_BY, collection: collection,
     forge: forge, FORGE_COST: FORGE_COST, enhance: enhance, enhanceCost: enhanceCost, equip: equip, unequip: unequip, salvage: salvage,
@@ -5451,7 +5455,7 @@ function IdleFmt(n) {
     $('areaName').textContent = si.title;
     $('stLabel').textContent = si.label;
     $('waveLbl').textContent = S.wave === 10 ? '首領戰' : (S.farming ? '刷怪中 ' : '') + '第 ' + S.wave + '/9 波';
-    $('bossBtn').hidden = !(S.farming && S.wave !== 10);
+    $('bossBtn').hidden = !(S.farming && S.wave !== 10 && C.bossOpen());
     $('autoBtn').classList.toggle('on', S.autoBoss);
     $('autoBtn').textContent = '自動挑戰' + (S.autoBoss ? '：開' : '：關');
     $('spdBtn').textContent = '×' + speedNow();
