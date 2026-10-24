@@ -38,7 +38,7 @@
 |---|---|---|
 | `art/nantianmen-people` | 人物 | 16 |
 | `art/nantianmen-partners` | 夥伴（神獸） | 16 |
-| `art/nantianmen-enemies` | 敵人（魔王、小怪） | 19 |
+| `art/nantianmen-enemies` | 敵人（魔王、小怪） | 32 |
 | `art/nantianmen-feijian-20261024`（沿用） | 法器 | 13 |
 | `art/nantianmen-bg` | 背景 | 20 |
 
@@ -54,6 +54,7 @@
 #### 3. 敵人（`art/nantianmen-enemies`）
 - 魔王，畫 `__idle` 和 `__attack` 兩張：`heixiong`、`shuyao`、`kuilei`、`niutou`。
 - 小怪，只畫 `__idle`：`limao`、`shijing`、`jiangshi`、`denglong`、`shuzhuang`、`houyao`、`sheyao`、`bianfu`、`kulou`、`langyao`、`zhiren`。
+- 新小怪（泓 10/24 確認，各區新敵人），一樣只畫 `__idle`：`ginseng`、`yaoguan`、`xiabing`、`rongyangui`、`huoshu`、`yunduo`、`xianhe`、`leigong`、`shuangjing`、`tianbing`、`shenquan`、`jiahou`、`shishi`。外型見 BRIEF.md 角色清單。
 小怪要像蘑菇妖一樣有表情、可愛又有點兇，臉轉向畫面。
 
 #### 4. 法器（沿用 `art/nantianmen-feijian-20261024`）
