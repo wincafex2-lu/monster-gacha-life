@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v22</div>
+    <div class="ver">v23</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -3320,6 +3320,15 @@ window.IDLE_INK = {
    "size": 30.0,
    "motion": "walk"
   },
+  "shitoujing": {
+   "w": 121,
+   "h": 108,
+   "cx": 58.8,
+   "fy": 108.0,
+   "idle": "shitoujing__idle.webp",
+   "size": 30.0,
+   "motion": "hop"
+  },
   "shuangjing": {
    "w": 95,
    "h": 108,
@@ -3600,197 +3609,281 @@ window.IDLE_INK = {
    {
     "src": "bg-bamboo__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-bamboo__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-bamboo__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-bamboo__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.427,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "cloud": [
    {
     "src": "bg-cloud__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-cloud__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-cloud__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-cloud__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.449,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "gaolao": [
    {
     "src": "bg-gaolao__full.webp",
     "speed": 0.5,
-    "n": 0
+    "n": 0,
+    "units": 240,
+    "gy": 0.833
    }
   ],
   "herb": [
    {
     "src": "bg-herb__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-herb__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-herb__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-herb__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.454,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "huaguo": [
    {
     "src": "bg-huaguo__full.webp",
     "speed": 0.5,
-    "n": 0
+    "n": 0,
+    "units": 240,
+    "gy": 0.833
    }
   ],
   "huoyan": [
    {
     "src": "bg-huoyan__full.webp",
     "speed": 0.5,
-    "n": 0
+    "n": 0,
+    "units": 240,
+    "gy": 0.833
    }
   ],
   "palace": [
    {
     "src": "bg-palace__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-palace__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-palace__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-palace__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.42,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "town": [
    {
     "src": "bg-town__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-town__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-town__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-town__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.454,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "volcano": [
    {
     "src": "bg-volcano__L1.webp",
     "speed": 0.03,
-    "n": 1
+    "n": 1,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-volcano__L2.webp",
     "speed": 0.15,
-    "n": 2
+    "n": 2,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-volcano__L3.webp",
     "speed": 0.45,
-    "n": 3
+    "n": 3,
+    "units": 240,
+    "gy": 0.833
    },
    {
     "src": "bg-volcano__L4.webp",
     "speed": 1.0,
-    "n": 4
+    "n": 4,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.443,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ]
  },
  "items": {
   "bagua": {
    "field": "bagua__field.webp",
-   "xian": "bagua__xian.webp",
    "fieldAng": -0.841,
+   "xian": "bagua__xian.webp",
    "xianAng": -0.7
   },
   "feijian": {
    "field": "feijian__field.webp",
-   "xian": "feijian__xian.webp",
    "fieldAng": -0.486,
+   "xian": "feijian__xian.webp",
    "xianAng": -0.504
   },
   "fuzhen": {
    "field": "fuzhen__field.webp",
-   "xian": "fuzhen__xian.webp",
    "fieldAng": -1.185,
+   "xian": "fuzhen__xian.webp",
    "xianAng": -0.253
   },
   "hulu": {
    "field": "hulu__field.webp",
-   "xian": "hulu__xian.webp",
    "fieldAng": -1.107,
+   "xian": "hulu__xian.webp",
    "xianAng": -0.3
   },
   "leizhu": {
    "field": "leizhu__field.webp",
-   "xian": "leizhu__xian.webp",
    "fieldAng": -0.278,
+   "xian": "leizhu__xian.webp",
    "xianAng": -0.389
   },
   "ruyi": {
    "field": "ruyi__field.webp",
-   "xian": "ruyi__xian.webp",
    "fieldAng": -0.686,
+   "xian": "ruyi__xian.webp",
    "xianAng": -0.49
   },
   "tieguo": {
    "field": "tieguo__field.webp",
-   "xian": "tieguo__xian.webp",
    "fieldAng": -0.332,
+   "xian": "tieguo__xian.webp",
    "xianAng": -0.414
   }
  },
@@ -3802,6 +3895,7 @@ window.IDLE_INK = {
   "shell": "egg-shell.webp"
  }
 };
+if (window.IDLE_INK) window.IDLE_INK.ver = '1aa72e35';
 // 水墨圖：一張（或兩張）去背的圖 + 程式動作。沒有圖的角色照舊用點陣圖。
 // window.IDLE_INK 由 tools/ink_pack.py 產生：{ base, sprites: { key: { idle, attack, w, h, cx, fy, size, motion } }, bg: { area: [layers] }, items: {...}, eggs: {...} }
 var IdleInk = (function () {
@@ -3814,7 +3908,7 @@ var IdleInk = (function () {
     im = IMG[file] = new Image(); pending++;
     im.onload = function () { pending--; if (!pending) ready.forEach(function (f) { try { f(); } catch (e) {} }); };
     im.onerror = function () { pending--; BAD[file] = 1; };
-    im.src = (M.base || 'ink/') + file;
+    im.src = (M.base || 'ink/') + file + (M.ver ? '?v=' + M.ver : '');  // 換圖時檔名不變，加版本號免得瀏覽器用舊的
     return null;
   }
   // 先把所有圖叫進來，第一次畫的時候就有
@@ -3890,18 +3984,24 @@ var IdleInk = (function () {
   // 背景：一層一層往前，越近捲越快。layers: [{src, speed, y, h}]（y、h 是 0~1，相對畫面高）
   // 背景：一層一層往前，越近捲越快。每層 {src, speed, units（圖高幾格）, gy（地面線在圖高的幾成）}
   // feetPx：畫布上的地面線；圖上緣沒蓋到的天空，用第一層最上面一排拉長補滿
+  // 深地面：最前面那層帶 horizon（地平線在圖高幾成），整張貼滿畫面；後面的舊遠景縮小，地面線接在地平線上
+  function ground(area) { var L = M.bg[area]; if (!L) return null; var g = L[L.length - 1]; return g && g.horizon ? g : null; }
   function bg(ctx, area, scroll, W, feetPx, S, bottom) {
     var L = M.bg[area]; if (!L) return false;
     for (var i = 0; i < L.length; i++) if (!img(L[i].src)) return false;
+    var deep = ground(area), horPx = deep ? deep.horizon * bottom : 0;
     ctx.save(); ctx.imageSmoothingEnabled = true;
     L.forEach(function (l, li) {
-      var im = img(l.src), dh = (l.units || 216) * S, dw = im.naturalWidth * dh / im.naturalHeight, y = feetPx - (l.gy || 186 / 216) * dh;
-      var off = ((scroll * l.speed) % dw + dw) % dw;
+      var im = img(l.src), gy = l.gy || 186 / 216, dh, y, last = li === L.length - 1;
+      if (deep && l === deep) { dh = bottom; y = 0; }
+      else if (deep) { var line = horPx + 3 * S, dh0 = (l.units || 216) * S, f = line / (gy * dh0); dh = dh0 * f; y = line - gy * dh; }
+      else { dh = (l.units || 216) * S; y = feetPx - gy * dh; }
+      var dw = im.naturalWidth * dh / im.naturalHeight, off = ((scroll * l.speed) % dw + dw) % dw;
       for (var x = -off; x < W; x += dw) {
         if (li === 0 && y > 0) ctx.drawImage(im, 0, 0, im.naturalWidth, 2, Math.floor(x), 0, Math.ceil(dw) + 1, y + 1);
-        if (li === L.length - 1 && y + dh < bottom) {
+        if (!deep && last && y + dh < bottom) {
           // 最前面那層蓋不到畫面最底：地面線以上照畫，地面線以下拉長到底
-          var gyPx = (l.gy || 186 / 216) * im.naturalHeight, w2 = Math.ceil(dw) + 1;
+          var gyPx = gy * im.naturalHeight, w2 = Math.ceil(dw) + 1;
           ctx.drawImage(im, 0, 0, im.naturalWidth, gyPx, Math.floor(x), y, w2, feetPx - y);
           ctx.drawImage(im, 0, gyPx, im.naturalWidth, im.naturalHeight - gyPx, Math.floor(x), feetPx, w2, bottom - feetPx);
         } else ctx.drawImage(im, Math.floor(x), y, Math.ceil(dw) + 1, dh);
@@ -3914,7 +4014,7 @@ var IdleInk = (function () {
   function itemAng(t, q) { var d = M.items[t]; if (!d) return null; return q >= 3 && img(d.xian) ? (d.xianAng || 0) : img(d.field) ? (d.fieldAng || 0) : null; }
   function egg(k) { return img(M.eggs[k]); }
   if (typeof document !== 'undefined') preload();
-  return { has: has, def: def, draw: draw, fit: fit, bg: bg, item: item, itemAng: itemAng, egg: egg, onReady: onReady, M: M };
+  return { has: has, def: def, draw: draw, fit: fit, bg: bg, ground: ground, item: item, itemAng: itemAng, egg: egg, onReady: onReady, M: M };
 })();
 
 </script>
@@ -3958,7 +4058,8 @@ var IdleStage = (function (C, D, ART) {
     var al = D.SPRITE_ALIAS[key]; return al && INK.has(al) ? al : null;
   }
   function seedOf(key) { var h = 0; for (var i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) % 997; return h; }
-  function inkHeight(key, ik, sc, minH) { var d = INK.def(ik); return Math.max((d.size || ART.meta(key).h) * INK_SCALE, minH || 0) * sc; }
+  function inkHeight(key, ik, sc, minH) { var d = INK.def(ik); return Math.max((d.size || ART.meta(key).h) * INK_SCALE * GSCALE, minH || 0) * sc; }
+  var GSCALE = 1;        // 深地面空間大，所有水墨角色再放大一點（setGround 設定）
   var INK_SCALE = 1.3;   // 水墨角色比點陣圖大一點，才不會被竹林比下去
   // 腳底在 (cx, feet)（邏輯座標）
   // minH：水墨圖至少要畫多高（首領借用夥伴的圖時，不能比小怪還小）
@@ -4205,8 +4306,14 @@ var IdleStage = (function (C, D, ART) {
   // 站位（泓定的菱形）：主角站最前面那一點，兩位夥伴站菱形上、下兩點；神獸排在菱形後面的上下兩排
   // （第 3 隻站兩排中間、最後面）。會飛的就飄在自己的位置上空。x 照實際畫出來的寬度排，太擠就整隊一起縮小。
   // 越下面的排越前面、越後畫。還沒有夥伴的時候，神獸直接往前補，不留空位
-  // ROWS：上、中、下三排的腳底（目前的地面比較淺；之後換成深地面的背景，只要改這裡）
+  // ROWS：上、中、下三排的腳底。淺地面（舊背景）三排擠在地面線附近；深地面照美術給的腳底範圍拉開
   var ROWS = { top: FEET - 14, mid: FEET, bot: FEET + 16 };
+  var DEEP = false;
+  function setGround(key) {
+    var g = INK && INK.ground && key ? INK.ground(key) : null;
+    if (g) { var f0 = g.feet[0], f1 = g.feet[1]; FEET = Math.round(H * (f0 + (f1 - f0) * 0.55)); ROWS = { top: Math.round(H * (f0 + 0.05)), mid: FEET, bot: Math.round(H * (f1 - 0.02)) }; GSCALE = 1.18; DEEP = true; }
+    else { FEET = 200; ROWS = { top: FEET - 14, mid: FEET, bot: FEET + 16 }; GSCALE = 1; DEEP = false; }
+  }
   function flies(key) { var ik = inkKey(key), d = ik && INK.def(ik); return !!(d && d.motion === 'fly'); }
   function drawnW(key, k) {
     var ik = inkKey(key), d = ik && INK.def(ik);
@@ -4217,7 +4324,7 @@ var IdleStage = (function (C, D, ART) {
   function formation() {
     var R = C.R; if (!R) return {};
     var pets = R.pets.map(function (p) { return { id: 'p:' + p.key, key: p.key }; }), pars = R.partners.map(function (p) { return { id: 'a:' + p.key, key: p.key }; });
-    var sig = pets.concat(pars).map(function (m) { return m.id + '=' + inkKey(m.key); }).join(',') + '|' + inkKey('hero');
+    var sig = pets.concat(pars).map(function (m) { return m.id + '=' + inkKey(m.key); }).join(',') + '|' + inkKey('hero') + '|' + FEET;
     if (sig === formCache.sig) return formCache.pos;
     // 夥伴：第 1 位上、第 2 位下；神獸：第 1 隻上、第 2 隻下、第 3 隻中間最後；上面那排比較遠，畫小一點
     var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.92 }];
@@ -4227,13 +4334,27 @@ var IdleStage = (function (C, D, ART) {
     // 從主角背後往左一個一個排（夥伴上、夥伴下、神獸上、神獸下、神獸中），上下排交錯，
     // 每一個都有自己的 x，不會兩隻疊在同一個位置；整隊平均攤開到畫面左邊
     var mem = pars.concat(pets);
+    // 每隻左右各佔多寬（圖不一定左右對稱，像青龍尾巴拖很長，所以照腳底位置分左右算）
+    function ext(m, sh) {
+      var ik = inkKey(m.key), d = ik && INK.def(ik);
+      if (!d) { var hw = ART.meta(m.key).w / 2 * sh; return { l: hw, r: hw }; }
+      var sc = inkHeight(m.key, ik, S, 0) * m.k * sh / S / d.h * 0.88;
+      return { l: d.cx * sc, r: (d.w - d.cx) * sc };
+    }
     if (mem.length) {
-      var sh = 1, w = function (m) { return drawnW(m.key, m.k) * sh; };
-      var need = function () { var t = 0; mem.forEach(function (m, i) { t += w(m) * (i ? 0.62 : 0.75); }); return t; };
-      while (sh > 0.62 && need() > heroL - 6) sh -= 0.04;
-      var first = heroL - w(mem[0]) * 0.42, last = mem.length > 1 ? Math.max(w(mem[mem.length - 1]) / 2 + 4, first - need() * 1.6) : first;
-      var step = mem.length > 1 ? (first - last) / (mem.length - 1) : 0;
-      mem.forEach(function (m, i) { pos[m.id] = { x: first - step * i, feet: ROWS[m.row], k: m.k * sh }; });
+      var OV = DEEP ? 0.5 : 0.3, sh = 1, xs, E, left;  // 深地面上下排離很遠，左右可以多疊一點
+      for (; ; sh -= 0.04) {
+        E = mem.map(function (m) { return ext(m, sh); }); xs = [];
+        mem.forEach(function (m, i) { xs.push(i ? xs[i - 1] - (E[i - 1].l + E[i].r) * (1 - OV) : heroL - E[0].r * 0.45); });
+        left = xs[xs.length - 1] - E[E.length - 1].l;
+        if (left >= -4 || sh <= 0.62) break;
+      }
+      // 左邊還有空就平均攤開（每個間隔最多多拉開半隻的寬度）
+      if (left > 4 && mem.length > 1) {
+        var avg = E.reduce(function (t, e) { return t + e.l + e.r; }, 0) / E.length, gap = Math.min((left - 4) / (mem.length - 1), avg * 0.5);
+        xs = xs.map(function (x, i) { return x - gap * i; });
+      }
+      mem.forEach(function (m, i) { pos[m.id] = { x: xs[i], feet: ROWS[m.row], k: m.k * sh }; });
     }
     formCache = { sig: sig, pos: pos };
     return pos;
@@ -4317,7 +4438,7 @@ var IdleStage = (function (C, D, ART) {
       var ek = 'e' + d.e.id, merged = null, nd = 0;
       fx.text.forEach(function (t) { if (t.kind === 'dmg') { nd++; if (!d.crit && t.key === ek && t.t < 0.4) merged = t; } });
       if (merged) { merged.val += d.dmg; merged.txt = fmt(merged.val); merged.t = Math.min(merged.t, 0.06); }
-      else if (d.crit || nd < 8) { var nt = addText(c.x + (Math.random() * 8 - 4), c.top - 4, fmt(d.dmg), col, d.crit ? 11 : 7, d.crit ? 1.1 : 0.8, d.crit ? 'crit' : 'dmg', ek); nt.val = d.dmg; }
+      else if (d.crit || nd < 8) { var nt = addText(c.x + (Math.random() * 8 - 4), c.top - 4, fmt(d.dmg), col, d.crit ? 8.5 : 6.5, d.crit ? 1 : 0.8, d.crit ? 'crit' : 'dmg', ek); nt.val = d.dmg; }
       if (d.src === 'hero') { burst(c.x - 6, c.y, '#ffffff', 4, 30, 0.25); }
       if (fx.splats.length < 14) fx.splats.push({ x: c.x - 3 + Math.random() * 6, y: c.y - 2 + Math.random() * 4, t: 0, life: d.crit ? 0.7 : 0.45, seed: Math.floor(Math.random() * 999), big: d.crit ? 1.6 : 1, col: d.ke > 0 ? '#c8322c' : null });
       if (d.ke && Math.random() < 0.25) addText(c.x + 10, c.top + 4, d.ke > 0 ? '剋！' : '被剋', d.ke > 0 ? '#ffcf4a' : '#9aa4b5', 7, 0.8, 'miss');
@@ -4499,7 +4620,9 @@ var IdleStage = (function (C, D, ART) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var sx = fx.shake ? Math.round((Math.random() - 0.5) * 6) : 0, sy = fx.shake ? Math.round((Math.random() - 0.5) * 4) : 0;
     ctx.translate(sx, sy);
-    drawBg(R.dun ? R.dun.theme : si.area.theme, R.scroll, R.dun ? R.dun.key : AREA_BG[D.AREAS.indexOf(si.area)]);
+    var bgKey = R.dun ? R.dun.key : AREA_BG[D.AREAS.indexOf(si.area)], bgTheme = R.dun ? R.dun.theme : si.area.theme;
+    setGround(INK && INK.M.bg[bgKey] ? bgKey : bgTheme);
+    drawBg(bgTheme, R.scroll, bgKey);
     if (R.dun) dunAtmos(R.dun);
 
     var hp = heroPos(), walking = R.phase === 'walk', down = R.phase === 'down';
@@ -4692,7 +4815,7 @@ var IdleStage = (function (C, D, ART) {
   function drawNumber(t) {
     var q = t.t / t.life, k = t.kind;
     var y = k === 'hurt' ? t.y + q * 10 : t.y - (k === 'crit' ? 18 : 14) * Math.min(1, q * 1.6);
-    var pop = k === 'crit' ? (q < 0.12 ? 2 - q / 0.12 * 0.8 : 1.2 - Math.min(0.2, (q - 0.12))) : k === 'dmg' || k === 'heal' ? (q < 0.1 ? 1.4 - q * 4 : 1) : 1;
+    var pop = k === 'crit' ? (q < 0.12 ? 1.45 - q / 0.12 * 0.35 : 1.1 - Math.min(0.1, (q - 0.12))) : k === 'dmg' || k === 'heal' ? (q < 0.1 ? 1.4 - q * 4 : 1) : 1;
     var sz = t.size * S * pop;
     ctx.globalAlpha = q > 0.7 ? (1 - q) / 0.3 : 1;
     var m = /^([+\-]?)([0-9.]+)([萬億兆京垓秭穰溝澗正載極]?)$/.exec(t.txt);
