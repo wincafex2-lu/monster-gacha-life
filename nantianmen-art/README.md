@@ -80,7 +80,7 @@
 #### 8. 新篇章第 3 批：山海篇（分支 `art/nantianmen-shanhai`，封神篇畫完就接著畫）
 清單和外型見 BRIEF.md「第 3 批：山海篇」：神獸夥伴 3 個、首領 6 個（各畫 `__idle`、`__attack`），小怪 9 個（只畫 `__idle`），背景 3 張（每區 1 張 `__full`），共 30 張（6＋12＋9＋3）。
 
-**畫圖順序（不用再問）：** 封神篇 → 山海篇。介面圖（第 5b 項，背景分支）可以同時畫。
+**畫圖順序（不用再問）：** 封神篇 → 山海篇。封神篇和山海篇的**背景先不要畫**（泓還在決定背景要一整張還是分 4 層），先畫角色，背景等這裡通知。介面圖（第 5b 項，背景分支）可以同時畫。
 
 **全部分支一覽（之後不會再加新分支）：** `art/nantianmen-people`、`art/nantianmen-partners`、`art/nantianmen-enemies`、`art/nantianmen-feijian-20261024`、`art/nantianmen-bg`、`art/nantianmen-xiyou`、`art/nantianmen-fengshen`、`art/nantianmen-shanhai`。要修改的圖，直接傳回原本的分支。
 
