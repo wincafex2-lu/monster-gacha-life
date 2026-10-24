@@ -67,6 +67,9 @@
 其他 5 區，每區 4 層 `sky`、`far`、`mid`、`ground`，照這個順序：`bg-herb`、`bg-town`、`bg-volcano`、`bg-cloud`、`bg-palace`。
 寬高比照 `bg-bamboo`（約 3:1），左右要能無縫接起來。`sky` 以外的層：透明背景最好；**如果透明做出來有彩邊或白毛，直接改用單一純色底交圖，Claude 去背**（泓 10/24 同意）。純色底的顏色：一般用純白 `#FFFFFF`；**雲海 `bg-cloud` 和天宮 `bg-palace` 有白雲、白玉，請改用純洋紅 `#FF00FF`**，畫面裡不要用到洋紅色。底色要整片均勻，不要漸層或紋理。
 
+#### 5c. 招式特效（法器分支 `art/nantianmen-feijian-20261024`，泓 10/24）
+在法器分支畫 19 張特效圖，規格見 BRIEF.md「招式特效」，檔名 `images/代號__fx.png`。**先畫這 9 張：** `fx-slash`、`fx-splat`、`fx-bloom`、`fx-burst`、`fx-thunder-1`、`fx-thunder-2`、`fx-fire`、`fx-claw`、`fx-qi`，再畫其他的。
+
 #### 5b. 遊戲介面（一樣用背景分支 `art/nantianmen-bg`，泓 10/24 決定，不用另外開分支）
 背景畫完後，在**同一個分支** `art/nantianmen-bg` 接著畫介面圖，共 42 張：12 張介面框和按鈕、30 個小圖示。代號、長寬比、樣子見 BRIEF.md「遊戲介面」。檔名是 `images/代號__ui.png`（例：`images/ui-panel__ui.png`、`images/ui-ic-stone__ui.png`）。照表格順序畫，先畫大的框和按鈕，再畫小圖示。圖裡不寫字（只有 `ui-logo` 例外）。
 
@@ -80,7 +83,7 @@
 #### 8. 新篇章第 3 批：山海篇（分支 `art/nantianmen-shanhai`，封神篇畫完就接著畫）
 清單和外型見 BRIEF.md「第 3 批：山海篇」：神獸夥伴 3 個、首領 6 個（各畫 `__idle`、`__attack`），小怪 9 個（只畫 `__idle`），背景 3 張（每區 1 張 `__full`），共 30 張（6＋12＋9＋3）。
 
-**畫圖順序（不用再問）：** 封神篇 → 山海篇。封神篇和山海篇的**背景先不要畫**（泓還在決定背景要一整張還是分 4 層），先畫角色，背景等這裡通知。介面圖（第 5b 項，背景分支）可以同時畫。
+**畫圖順序（不用再問）：** 先做「待辦」裡的地面重畫 → 第 5c 項招式特效 → 第 5b 項介面圖和封神篇角色可以同時畫 → 山海篇。封神篇和山海篇的**背景先不要畫**（泓還在決定背景要一整張還是分 4 層），先畫角色，背景等這裡通知。
 
 **全部分支一覽（之後不會再加新分支）：** `art/nantianmen-people`、`art/nantianmen-partners`、`art/nantianmen-enemies`、`art/nantianmen-feijian-20261024`、`art/nantianmen-bg`、`art/nantianmen-xiyou`、`art/nantianmen-fengshen`、`art/nantianmen-shanhai`。要修改的圖，直接傳回原本的分支。
 
