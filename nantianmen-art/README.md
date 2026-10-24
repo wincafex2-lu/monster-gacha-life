@@ -89,8 +89,5 @@
 還沒畫：`tietou`、`shen`、`ye`、`jiuwei`、`taotie`、`fenghuang`、新小怪 `yunduo`、`xianhe`、`leigong`、`shuangjing`、`tianbing`、`shenquan`、`jiahou`、`shishi`、`bg-town__mid`、`bg-cloud` 和 `bg-palace` 其他 3 層。
 
 ### 待辦（要修改的圖）
-`feijian__xian.png` 拉直已由 Claude 修好（10/24），不用再畫。
+`feijian__xian.png` 拉直已由 Claude 修好、玄武黑色版已完成（10/24）。目前沒有要修改的圖。
 
-| 圖 | 問題 | 怎麼改 |
-|---|---|---|
-| `xuanwu__idle.png`、`xuanwu__attack.png`（夥伴分支） | 構圖和動作很好，但顏色是淺白灰綠。玄武是四方神獸的北方神獸，要黑色系（青龍青綠、白虎白色都已經對了）。 | 兩張都重畫，構圖、姿勢、臉、比例、頭的大小完全照現在這版，只換顏色：殼和身體濃墨黑帶深藍黑，殼紋暗青灰；蛇藍黑色、腹部深青；少量銀白或青色水光點綴；眼睛亮（金或青）；外輪廓留淡灰亮邊，深色背景上也看得清楚。見 BRIEF.md 角色清單。 |
