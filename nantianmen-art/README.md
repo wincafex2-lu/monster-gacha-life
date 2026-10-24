@@ -67,7 +67,9 @@
 
 #### 6. 新篇章第 1 批：西遊篇（新分支 `art/nantianmen-xiyou`，泓 10/24 確認）
 清單和外型見 BRIEF.md 最後「新篇章」的第 1 批：夥伴 4 個、首領 5 個（各 `__idle`、`__attack`），小怪 6 個（只畫 `__idle`），背景 3 張（每區只畫 1 張 `__full`）。共 27 張（8＋10＋6＋3）。可以和上面五個分支同時畫。
-第 2 批封神篇、第 3 批山海篇先不要畫，等這裡通知。
+第 2 批封神篇、第 3 批山海篇先不要畫，等這裡通知。分支名稱先定好，可以現在就開好：`art/nantianmen-fengshen`（封神篇）、`art/nantianmen-shanhai`（山海篇）。
+
+**全部分支一覽（之後不會再加新分支）：** `art/nantianmen-people`、`art/nantianmen-partners`、`art/nantianmen-enemies`、`art/nantianmen-feijian-20261024`、`art/nantianmen-bg`、`art/nantianmen-xiyou`、`art/nantianmen-fengshen`、`art/nantianmen-shanhai`。要修改的圖，直接傳回原本的分支。
 
 ### 10/24 21:30 檢查結果
 已通過：`hero-sword`（攻擊圖換手已修好）、`hero-alchemy`、`hero-tamer`、`hero-shop`、`hero-talisman`、`feng`（飛起來了）、`xuanwu`、`baize`、`qinglong`、`qilin`、魔王 `heixiong`、`shuyao`、`kuilei`、`niutou`、目前上傳的小怪、6 個法器的 `__field` 和 `__xian`、背景 `bg-herb` 4 層、`bg-town` sky/far/ground、`bg-volcano` 4 層、`bg-cloud__sky`、`bg-palace__sky`。
