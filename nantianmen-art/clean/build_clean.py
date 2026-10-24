@@ -24,6 +24,8 @@ for f, (b, sha) in sorted(chosen.items()):
     if f.endswith('__sky.png'): continue
     if man.get(f, {}).get('raw') == sha and os.path.exists(os.path.join(OUT, f)): continue
     im = Image.open(io.BytesIO(git('cat-file', 'blob', sha, binary=True)))
+    if f.endswith('__full.png'):   # whole scenes: keep as drawn
+        im.save(os.path.join(OUT, f), optimize=True); man[f] = {'raw': sha, 'branch': b}; done += 1; print('copied', f, b); continue
     keyout(im, crop=not f.startswith('bg-'), **OVR.get(f, {})).save(os.path.join(OUT, f), optimize=True)
     man[f] = {'raw': sha, 'branch': b}; done += 1
     print('cleaned', f, b)

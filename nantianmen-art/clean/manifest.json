@@ -71,6 +71,10 @@
 "branch": "art/nantianmen-bg",
 "raw": "e463d9e209414a458174e5f1b60ba0e83e94f3e3"
 },
+"bg-gaolao__full.png": {
+"branch": "art/nantianmen-xiyou",
+"raw": "3eeb9e5504e3e40e5ddcc5d0761adcee547d7735"
+},
 "bg-herb__far.png": {
 "branch": "art/nantianmen-bg",
 "raw": "3f4401a7402de561eae308788c25217356a0be49"
@@ -82,6 +86,14 @@
 "bg-herb__mid.png": {
 "branch": "art/nantianmen-bg",
 "raw": "c8d2640a8d154ca60305f65ed2ca834df6ab343f"
+},
+"bg-huaguo__full.png": {
+"branch": "art/nantianmen-xiyou",
+"raw": "2757b0cc6168f2cb822b8069c1150411f4bddccc"
+},
+"bg-huoyan__full.png": {
+"branch": "art/nantianmen-xiyou",
+"raw": "ced324f869ce8d74307e66def1b91600ceebb116"
 },
 "bg-palace__far.png": {
 "branch": "art/nantianmen-bg",
@@ -282,6 +294,10 @@
 "huoshu__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "5f16a8e165b0e3e599e1c1db74a84d4363a1334f"
+},
+"huoyun__idle.png": {
+"branch": "art/nantianmen-xiyou",
+"raw": "2798784f9eadd1d5a249091ee8589f05b4569a4c"
 },
 "jiahou__idle.png": {
 "branch": "art/nantianmen-enemies",
@@ -526,6 +542,10 @@
 "xuanwu__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "f0e8efbdabbdb43aaca5a07c777f7067bf90af97"
+},
+"yanjiangshe__idle.png": {
+"branch": "art/nantianmen-xiyou",
+"raw": "9d5e540f6a469ad48cc9e4345e097b05695738b4"
 },
 "yaoguan__idle.png": {
 "branch": "art/nantianmen-enemies",
