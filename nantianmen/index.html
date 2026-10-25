@@ -257,7 +257,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v37</div>
+    <div class="ver">v38</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4299,10 +4299,15 @@ window.IDLE_INK = {
   "gaolao": [
    {
     "src": "bg-gaolao__full.webp",
-    "speed": 0.5,
+    "speed": 1.0,
     "n": 0,
     "units": 240,
-    "gy": 0.833
+    "gy": 0.833,
+    "horizon": 0.428,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "herb": [
@@ -4343,19 +4348,29 @@ window.IDLE_INK = {
   "huaguo": [
    {
     "src": "bg-huaguo__full.webp",
-    "speed": 0.5,
+    "speed": 1.0,
     "n": 0,
     "units": 240,
-    "gy": 0.833
+    "gy": 0.833,
+    "horizon": 0.457,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "huoyan": [
    {
     "src": "bg-huoyan__full.webp",
-    "speed": 0.5,
+    "speed": 1.0,
     "n": 0,
     "units": 240,
-    "gy": 0.833
+    "gy": 0.833,
+    "horizon": 0.398,
+    "feet": [
+     0.55,
+     0.95
+    ]
    }
   ],
   "kuangdong": [
@@ -5059,7 +5074,7 @@ window.IDLE_INK = {
   }
  }
 };
-if (window.IDLE_INK) window.IDLE_INK.ver = '4d6294d3';
+if (window.IDLE_INK) window.IDLE_INK.ver = '36c49c71';
 // 水墨圖：一張（或兩張）去背的圖 + 程式動作。沒有圖的角色照舊用點陣圖。
 // window.IDLE_INK 由 tools/ink_pack.py 產生：{ base, sprites: { key: { idle, attack, w, h, cx, fy, size, motion } }, bg: { area: [layers] }, items: {...}, eggs: {...} }
 var IdleInk = (function () {
