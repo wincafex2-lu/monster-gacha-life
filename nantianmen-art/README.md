@@ -101,6 +101,11 @@
 
 西遊 3 張背景重畫已完成 ✅（10/25）。
 
+**要重畫（10/25）：** `heijiao__attack.png` 和 `mohu__attack.png`（敵人分支）跟站立圖幾乎一樣，沒有出招動作，請重畫攻擊圖，傳回原分支蓋掉原檔：
+- `heijiao__attack`：黑蛟張大嘴往前（右）撲，身體往前伸長，爪子往前抓。
+- `mohu__attack`：魔虎撲咬，身體前傾、前爪高高舉起、張嘴露牙。
+同一隻、同樣的大小和顏色，只換動作。`mo__idle` 已通過。
+
 **現在要畫（10/25 補畫，8 個、共 15 張）：** 遊戲裡還有幾個沒換成水墨的，外型都寫在 BRIEF.md：
 - 首領 `heijiao` 黑蛟、`mohu` 赤焰魔虎：各畫 `__idle`、`__attack`，傳到 `art/nantianmen-enemies`（BRIEF「補畫角色」）。
 - 師父 `mo` 墨老頭：只畫 `__idle`，傳到 `art/nantianmen-people`（BRIEF「補畫角色」）。
