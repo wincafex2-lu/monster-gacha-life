@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v24</div>
+    <div class="ver">v25</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1578,7 +1578,7 @@ var IdleCore = (function (D) {
     eCut: [30, 60], eHp: [60, [1.37, 1.31, 1.22]], eAtk: [14, [1.3, 1.24, 1.16]],
     areaTune: [null, [2.3, 1], [1.8, 1], [0.95, 0.9], [0.8, 0.9], [0.5, 0.75], [0.5, 0.75], [0.6, 0.8], [0.45, 0.7], [0.75, 0.85], [0.7, 0.85], [0.75, 0.85]], eGold: [3, [1.17, 1.17, 1.15]], eXp: [2, [1.165, 1.165, 1.15]],
     // 境界：小突破修為 ×step、力量 ×step；跨大境界（雷劫）修為 ×big、力量 ×big。練氣九層自己一套
-    mobEgg: 0.004, repeatBossEgg: 0.3, starNeed: [1, 1, 2, 2], starBlood: [6, 10, 14, 20],
+    mobEgg: 0.004, partnerEgg: [0.4, 0.6], partnerPity: 6, repeatBossEgg: 0.3, starNeed: [1, 1, 2, 2], starBlood: [6, 10, 14, 20],
     xpNeed: [40, 1.56], realmXp: { qi: 1.42, step: 1.39, big: 3 }, realmPow: { qi: 1.19, step: 1.1, big: 1.3 }, offlineEff: 0.8, offlineCap: 12 * 3600
   };
 
@@ -2532,16 +2532,22 @@ var IdleCore = (function (D) {
     var openP = D.PARTNERS.filter(function (p) { return partnerOpen(p.key); });
     if (openP.length && !forceRare) {
       var noneYet = openP.filter(function (p) { return !S.partners[p.key]; });
-      if (rnd() < (noneYet.length === openP.length ? 0.5 : 0.25)) {
-        // 照稀有度抽（還沒有的機會加倍）
-        var wsum = 0, ws = openP.map(function (p) { var w = (D.PARTNER_RAR[p.rar] || 10) * (S.partners[p.key] ? 1 : 2); wsum += w; return w; });
+      // 夥伴機率：一個都還沒有 60%，平常 40%；還有沒拿到的夥伴時，連續 6 顆沒出新夥伴，下一顆保證是新的
+      S.pDry = S.pDry || 0;
+      var pity = noneYet.length && S.pDry >= BAL.partnerPity;
+      if (pity || rnd() < (noneYet.length === openP.length ? BAL.partnerEgg[1] : BAL.partnerEgg[0])) {
+        // 照稀有度抽（還沒有的機會變 3 倍；保底時只抽還沒有的）
+        if (pity) openP = noneYet;
+        var wsum = 0, ws = openP.map(function (p) { var w = (D.PARTNER_RAR[p.rar] || 10) * (S.partners[p.key] ? 1 : 3); wsum += w; return w; });
         var rx = rnd() * wsum, pp = openP[openP.length - 1];
         for (var wi = 0; wi < openP.length; wi++) { rx -= ws[wi]; if (rx < 0) { pp = openP[wi]; break; } }
         var isNew = !S.partners[pp.key];
-        if (isNew) addPartner(pp.key); else S.partners[pp.key].lv += 2;  // 重複的夥伴 +2 級
+        if (isNew) addPartner(pp.key); else S.partners[pp.key].lv += 3;  // 重複的夥伴 +3 級
+        S.pDry = isNew ? 0 : S.pDry + 1;
         return { partner: pp, isNew: isNew };
       }
     }
+    if (D.PARTNERS.some(function (p) { return partnerOpen(p.key) && !S.partners[p.key]; })) S.pDry = (S.pDry || 0) + 1;
     var tot = 0; D.EGG_RATES.forEach(function (r) { tot += r[1]; });
     var x = rnd() * tot, rar = 'common';
     for (var i = 0; i < D.EGG_RATES.length; i++) { x -= D.EGG_RATES[i][1]; if (x < 0) { rar = D.EGG_RATES[i][0]; break; } }
@@ -4005,14 +4011,21 @@ var IdleInk = (function () {
       else if (deep) { var line = horPx + 3 * S, dh0 = (l.units || 216) * S, f = line / (gy * dh0); dh = dh0 * f; y = line - gy * dh; }
       else { dh = (l.units || 216) * S; y = feetPx - gy * dh; }
       var dw = im.naturalWidth * dh / im.naturalHeight, off = ((scroll * l.speed) % dw + dw) % dw;
-      for (var x = -off; x < W; x += dw) {
-        if (li === 0 && y > 0) ctx.drawImage(im, 0, 0, im.naturalWidth, 2, Math.floor(x), 0, Math.ceil(dw) + 1, y + 1);
+      // 一整張的背景（__full）左右接不起來：每隔一張左右翻過來畫，接縫就會對得上
+      var idx = Math.floor(scroll * l.speed / dw), mirror = l.n === 0;
+      function tile(sx, sy, sw, sh, dx, dy, w, h, flip) {
+        if (!flip) { ctx.drawImage(im, sx, sy, sw, sh, dx, dy, w, h); return; }
+        ctx.save(); ctx.translate(dx + w, dy); ctx.scale(-1, 1); ctx.drawImage(im, sx, sy, sw, sh, 0, 0, w, h); ctx.restore();
+      }
+      for (var x = -off, j = 0; x < W; x += dw, j++) {
+        var fl = mirror && ((idx + j) % 2 + 2) % 2 === 1;
+        if (li === 0 && y > 0) tile(0, 0, im.naturalWidth, 2, Math.floor(x), 0, Math.ceil(dw) + 1, y + 1, fl);
         if (!deep && last && y + dh < bottom) {
           // 最前面那層蓋不到畫面最底：地面線以上照畫，地面線以下拉長到底
           var gyPx = gy * im.naturalHeight, w2 = Math.ceil(dw) + 1;
-          ctx.drawImage(im, 0, 0, im.naturalWidth, gyPx, Math.floor(x), y, w2, feetPx - y);
-          ctx.drawImage(im, 0, gyPx, im.naturalWidth, im.naturalHeight - gyPx, Math.floor(x), feetPx, w2, bottom - feetPx);
-        } else ctx.drawImage(im, Math.floor(x), y, Math.ceil(dw) + 1, dh);
+          tile(0, 0, im.naturalWidth, gyPx, Math.floor(x), y, w2, feetPx - y, fl);
+          tile(0, gyPx, im.naturalWidth, im.naturalHeight - gyPx, Math.floor(x), feetPx, w2, bottom - feetPx, fl);
+        } else tile(0, 0, im.naturalWidth, im.naturalHeight, Math.floor(x), y, Math.ceil(dw) + 1, dh, fl);
       }
     });
     ctx.restore();
@@ -4320,7 +4333,7 @@ var IdleStage = (function (C, D, ART) {
   function setGround(key) {
     var g = INK && INK.ground && key ? INK.ground(key) : null;
     if (g) { var f0 = g.feet[0], f1 = g.feet[1]; FEET = Math.round(H * (f0 + (f1 - f0) * 0.55)); ROWS = { top: Math.round(H * (f0 + 0.05)), mid: FEET, bot: Math.round(H * (f1 - 0.02)) }; GSCALE = 1.18; DEEP = true; }
-    else { FEET = 200; ROWS = { top: FEET - 14, mid: FEET, bot: FEET + 16 }; GSCALE = 1; DEEP = false; }
+    else { FEET = 200; ROWS = { top: FEET - 18, mid: FEET, bot: FEET + 20 }; GSCALE = 1; DEEP = false; }
   }
   function flies(key) { var ik = inkKey(key), d = ik && INK.def(ik); return !!(d && d.motion === 'fly'); }
   function drawnW(key, k) {
@@ -4350,7 +4363,7 @@ var IdleStage = (function (C, D, ART) {
       return { l: d.cx * sc, r: (d.w - d.cx) * sc };
     }
     if (mem.length) {
-      var OV = DEEP ? 0.5 : 0.3, sh = 1, xs, E, left;  // 深地面上下排離很遠，左右可以多疊一點
+      var OV = DEEP ? 0.5 : 0.22, sh = 1, xs, E, left;  // 深地面上下排離很遠，左右可以多疊一點
       for (; ; sh -= 0.04) {
         E = mem.map(function (m) { return ext(m, sh); }); xs = [];
         mem.forEach(function (m, i) { xs.push(i ? xs[i - 1] - (E[i - 1].l + E[i].r) * (1 - OV) : heroL - E[0].r * 0.45); });
@@ -4444,7 +4457,9 @@ var IdleStage = (function (C, D, ART) {
       var c = enemyCenter(d.e), col = d.crit ? '#ffd84a' : DMG_COL[d.src] || '#ffffff';
       // 同一隻妖怪一下子被打很多下：普通傷害合成一個數字往上加；畫面上的普通數字最多 8 個，暴擊才放大
       var ek = 'e' + d.e.id, merged = null, nd = 0;
-      fx.text.forEach(function (t) { if (t.kind === 'dmg') { nd++; if (!d.crit && t.key === ek && t.t < 0.4) merged = t; } });
+      // 暴擊也一樣：同一隻妖怪 0.4 秒內的暴擊合成一個大數字，不會一層一層疊上去
+      var want = d.crit ? 'crit' : 'dmg';
+      fx.text.forEach(function (t) { if (t.kind === 'dmg') nd++; if (t.kind === want && t.key === ek && t.t < 0.4) merged = t; });
       if (merged) { merged.val += d.dmg; merged.txt = fmt(merged.val); merged.t = Math.min(merged.t, 0.06); }
       else if (d.crit || nd < 8) { var nt = addText(c.x + (Math.random() * 8 - 4), c.top - 4, fmt(d.dmg), col, d.crit ? 8.5 : 6.5, d.crit ? 1 : 0.8, d.crit ? 'crit' : 'dmg', ek); nt.val = d.dmg; }
       if (d.src === 'hero') { burst(c.x - 6, c.y, '#ffffff', 4, 30, 0.25); }
@@ -5348,7 +5363,7 @@ function IdleFmt(n) {
       h += '</div>';
     });
     h += '</div><div class="sec"><h3>神獸圖鑑 ' + Object.keys(S.pets).length + ' / ' + D.PETS.length + '</h3><span class="btns" style="margin:0"><button class="big" type="button" id="tenBtn" data-act="hatchTen" hidden>十連抽</button><button class="big" type="button" id="hatchBtn" data-act="hatch">孵靈獸蛋</button></span></div>';
-    h += '<p class="note">靈獸蛋從首領身上掉，小妖也偶爾會掉。重複的神獸會升星（1→2、2→3 各要 1 隻，3→4、4→5 各要 2 隻），神獸試煉開放後也能用神獸精血指定升星；每多一隻神獸（就算沒出戰），主角都會變強一點。</p><div class="pets">';
+    h += '<p class="note">靈獸蛋從首領身上掉，小妖也偶爾會掉。重複的神獸會升星（1→2、2→3 各要 1 隻，3→4、4→5 各要 2 隻），神獸試煉開放後也能用神獸精血指定升星；打過地區首領後，蛋裡也會出現夥伴（連續 6 顆沒出新夥伴，下一顆保證出）；每多一隻神獸（就算沒出戰），主角都會變強一點。</p><div class="pets">';
     D.PETS.forEach(function (p) {
       var own = S.pets[p.key], rar = D.RARITY[p.rar];
       h += '<div class="pet" style="border-left-color:' + rar.color + '">' + petBox(p.key, 2).replace('<canvas', '<canvas' + (own ? '' : ' data-sil="1"')) +
