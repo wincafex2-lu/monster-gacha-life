@@ -257,7 +257,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v36</div>
+    <div class="ver">v37</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -2450,6 +2450,8 @@ var IdleCore = (function (D) {
     if (!S.sysSeen) S.sysSeen = {}; if (!S.outfitsSeen) S.outfitsSeen = { chores: 1 };
     D.SYSTEMS.forEach(function (x) { if (sysOn(x.key)) S.sysSeen[x.key] = 1; });
     D.OUTFITS.forEach(function (o) { if (outfitUnlocked(o.key)) S.outfitsSeen[o.key] = 1; });
+    // 跳過的區域本來會拿到的夥伴直接給，空的夥伴格自動補上
+    D.PARTNERS.forEach(function (p) { if (partnerOpen(p.key) && !S.partners[p.key]) addPartner(p.key); });
     return true;
   }
   function testGift() {
