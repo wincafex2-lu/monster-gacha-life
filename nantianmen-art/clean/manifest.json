@@ -1,4 +1,12 @@
 {
+"aobing__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "255a9426546955c5052d3eaaa9250c0792c19ab3"
+},
+"aobing__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "9523493a46991477f6dfc254a6159ffb0addf99f"
+},
 "bagua__field.png": {
 "branch": "art/nantianmen-feijian-20261024",
 "raw": "4a339369257aafcb6c9d1a30d9384485ff97d6b6"
@@ -59,6 +67,14 @@
 "branch": "art/nantianmen-bamboo-20261024",
 "raw": "e2a43953cac609709913edce0ab833db699afafb"
 },
+"bg-cangjing__full.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "f415ef81a7654dde6bec830c416ebb6f583d584e"
+},
+"bg-chentang__full.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "f387f13af083aaf7d9ef9619d12f3f99a09c7d59"
+},
 "bg-cloud__far.png": {
 "branch": "art/nantianmen-bg",
 "raw": "0355c2306234bc84014d655b836ab3a290f0a16e"
@@ -70,6 +86,10 @@
 "bg-cloud__mid.png": {
 "branch": "art/nantianmen-bg",
 "raw": "e463d9e209414a458174e5f1b60ba0e83e94f3e3"
+},
+"bg-donghai__full.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "72a5c2ffca694e5911a19420209fc0567f45751e"
 },
 "bg-gaolao__full.png": {
 "branch": "art/nantianmen-xiyou",
@@ -95,6 +115,14 @@
 "branch": "art/nantianmen-xiyou",
 "raw": "ced324f869ce8d74307e66def1b91600ceebb116"
 },
+"bg-kuangdong__full.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "0e9ac83647567e6d42413ce337cdb636b2af3d4d"
+},
+"bg-kunlun__full.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "d00254b7f1667f018801aa94cb3cbb649a8b066f"
+},
 "bg-palace__far.png": {
 "branch": "art/nantianmen-bg",
 "raw": "0170ce2b315914b17379511990adca443c5749ad"
@@ -106,6 +134,14 @@
 "bg-palace__mid.png": {
 "branch": "art/nantianmen-bg",
 "raw": "1a12acd10424e237b070b1d8e9489184fb2219d2"
+},
+"bg-shenshou__full.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "ceea81dbc1a9299672bcd4d0c82aac57197b9123"
+},
+"bg-tianshan__full.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "7f7ffd8e78cb4e135443750cf8dca7a8555d8a97"
 },
 "bg-town__far.png": {
 "branch": "art/nantianmen-bg",
@@ -131,17 +167,73 @@
 "branch": "art/nantianmen-bg",
 "raw": "d9c6c03232fa9061b5c31093cc267f39775e44e5"
 },
+"bg-wuxing__full.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "270748bbec5e677efec943455a5e34c07825a694"
+},
+"bg-xiqi__full.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "d205cc896fe18182e25d984999eddb23c6098468"
+},
+"bg-yaotian__full.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "4e01ffa99b872d1e15e6427e5ad9d060e880ea3d"
+},
+"bg-zhaoge__full.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "b658163c014935a47f054fc328b94bc0271696a5"
+},
 "bianfu__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "c68e9955cecb6aae1b1ec9e5ccf77bb4bdb944f4"
+},
+"bifang__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "955501568e060fa5774d9ef7cf1414a064adf1a3"
+},
+"bifang__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "07c4940aa2934509b8950cedefcc969b153d3140"
+},
+"bingbianfu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "1e8917152dce226ea987e416baef7de7d115058f"
+},
+"chihe__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "51c0c4ae5adfe422abdd1c529050210ee007dc43"
+},
+"daji__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "5a01470a8d4ea9abe77bc7e4881558e0b7cf471a"
+},
+"daji__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "cf25bf4b91952f8bacfcd3d1e9ca0f065c389221"
 },
 "dangkang__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "87eece0c540b1cb7da995c26b32681a4e443fe1f"
 },
+"daocao__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "cd566991f697d1f97ce61c5e46faaa0a974ffb55"
+},
 "denglong__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "a4108e1bf3c90c369be071ee75063559344e8314"
+},
+"dengxin__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "e08a79e74256e7e96cd050821c0735022d51c8f0"
+},
+"dijiang__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "c7088893c2ea5092f740530f234fa9e75d3eeaf9"
+},
+"dijiang__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "db909a62d334ebb4c428fba42a7c34960771b7de"
 },
 "egg-common__idle.png": {
 "branch": "art/nantianmen-partners",
@@ -195,9 +287,89 @@
 "branch": "art/nantianmen-feijian-20261024",
 "raw": "9dc4cd667a805b1e378fa313928cf9def1c43df5"
 },
+"fx-bloom__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "a2b2b0880c2c7c7dc4758728042cfa60352d7c33"
+},
+"fx-burst__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "bf9bab8f4c38a068866f0dc8f366f12290ee4e26"
+},
+"fx-claw__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "a8807e38163a6c4066f894d42a4d9e3a5fcd86ab"
+},
+"fx-cloud__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "01492d0b2f16b106c66a92945df579150f5b7c2b"
+},
+"fx-crack__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "1bcbb720dcfc1ceb6bc28c54d01f5c5b14c1fa5d"
+},
+"fx-dot__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "16e9b13a415697fb1371ba36f15dfcb566a76589"
+},
+"fx-fire__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "49b810bf090768bf069c834f78bbe0a71197a43a"
+},
+"fx-flame__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "8791169df1f61e718756f06fde92d7ddca3ceec8"
+},
+"fx-heal__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "a307d25277e47854cfa9206f54233d8b16dfa7ad"
+},
+"fx-leaf__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "8b9612e66dcb6f449e487b4ec47b8e799cc42ca3"
+},
+"fx-qi__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "dc7ea7b9b96720d41c2d057853fe0be90390bdbd"
+},
+"fx-seal__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "fb16ddcfbb2acbc30a1bdd28138859470ccb0620"
+},
+"fx-shield__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "43a9bd86c976e36467ddbc544749a6b539bf9ae0"
+},
+"fx-slash__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "e22ea0773d814cae67e1c4efd19a4ebccdb8aa16"
+},
+"fx-splat__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "baf8767895e163fd8981de08555827d0ddeeaea5"
+},
+"fx-thunder-1__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "0106b3e7aa4e188c97499d5ff70d929790de4635"
+},
+"fx-thunder-2__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "bc9b9020c025b20762a8552a4300ff6eb2e13e1f"
+},
+"fx-water__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "1ba8e559583ce066ffb89197629b387b4e385319"
+},
+"fx-wind__fx.png": {
+"branch": "art/nantianmen-feijian-20261024",
+"raw": "663715de3700726aa1d005175f04cd501405dc44"
+},
 "ginseng__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "eec1819ecab07c964f08da74f747c866a1b4bc6a"
+},
+"haipao__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "fb98163e0c5d84fc3ce436ce37f177f01b9bf85e"
 },
 "heixiong__attack.png": {
 "branch": "art/nantianmen-enemies",
@@ -255,6 +427,10 @@
 "branch": "art/nantianmen-people",
 "raw": "6be98a0fd9734eefbee69b80100b8145fbceb2db"
 },
+"heshouwu__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "d7070b67f9420ce30489453303bec9fb42b72878"
+},
 "hexie__idle.png": {
 "branch": "art/nantianmen-xiyou",
 "raw": "445ff058a1c25f3b2d9b8519a780c02e31eb1967"
@@ -283,6 +459,10 @@
 "branch": "art/nantianmen-xiyou",
 "raw": "fc456e768131e538f53121e914a5e7b32d552579"
 },
+"huli__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "ba0874baa9333243077424e181fa94a5a4cea638"
+},
 "hulu__field.png": {
 "branch": "art/nantianmen-feijian-20261024",
 "raw": "8d75733a1c0567d5eb3cac08a7d0bf14eca996aa"
@@ -303,6 +483,14 @@
 "branch": "art/nantianmen-enemies",
 "raw": "5872a9a81ea2d25e9101501d9fa8ddd6d66c4952"
 },
+"jiang__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "b1581f88b32e697b6598a25fbdaf0bdb250ea0b8"
+},
+"jiang__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "b999a3c1ca049e27336bbb94fc9765a238310e1d"
+},
 "jiangshi__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "5f27a23d25c71b5d53baeb58626338572d0e8475"
@@ -311,6 +499,14 @@
 "branch": "art/nantianmen-partners",
 "raw": "058c459fa95c95a8533f84b1340481db5cccec82"
 },
+"jingwei__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "546fbe937d2391086d215e093e822c27dcdaa08e"
+},
+"jingwei__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "932426c27170b8df3a0f03c7b32632e2035195e5"
+},
 "jiuwei__attack.png": {
 "branch": "art/nantianmen-partners",
 "raw": "29843c642a1f926c5b17b669fef757c6fc1a817b"
@@ -318,6 +514,30 @@
 "jiuwei__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "f21cca6880a558b2944f547347bed5a645aa9088"
+},
+"jiuying__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "75bc218a6cd222db976d08c098393fc7d5196497"
+},
+"jiuying__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "f368d209cfd827edf2bc6aeee4f90825eeacdb19"
+},
+"kaiming__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "1111e99c05e0c76fa2c4b94063811037559d2210"
+},
+"kuangshi__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "df0a0947bfb2fa4ff7e784a5470373ba3b426623"
+},
+"kui__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "3408235eb72622a7186b3be6911ba462b52f7f8c"
+},
+"kui__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "1addef0a7050ab6009d531b31c291a5c2b375c99"
 },
 "kuilei__attack.png": {
 "branch": "art/nantianmen-enemies",
@@ -355,6 +575,10 @@
 "branch": "art/nantianmen-enemies",
 "raw": "281d586a6b437a51d1b68c7d26f7d3271d1b2bfb"
 },
+"lingzhi__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "9c6d5280bb89a87804980a6c5e6472e20af59e49"
+},
 "liuer__attack.png": {
 "branch": "art/nantianmen-xiyou",
 "raw": "533d1dbb2c65ea1ca81082b8a9d23270cd607c99"
@@ -363,13 +587,45 @@
 "branch": "art/nantianmen-xiyou",
 "raw": "457d409e88abe3d5176759a4109817da95fceffc"
 },
+"longwang__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "15fa08829ffd51094fb35b229751c09755841055"
+},
+"longwang__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "9f10d5ddc594aeb178cb6be537203bb7c6a9fd55"
+},
+"luanshu__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "0262ea3e82aaaca712ba067c8f355d170b3422a1"
+},
 "lushu__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "0074aeee4b32e21061a5790c9d4cd7a9569fa3fc"
 },
+"luwu__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "d4f2be26ab4f2e87994a0d9b7759742294a79aba"
+},
+"luwu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "3a04e0fbd716b76e7ad8f62bf5d4fe8016120155"
+},
+"lv__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "2e7c742338deb914e18e6154e2566d2585c3d3b5"
+},
 "mogu__idle.png": {
 "branch": "art/nantianmen-characters-20261024",
 "raw": "f42d5a618ca0514e5e8d88efea7a2dd39f6c54fe"
+},
+"mojia__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "3de8bd176b25b3441bebf074d949006e9c2a563e"
+},
+"mojia__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "d9d9edfacac8c961800cb4f9e01b5f9e782066b5"
 },
 "nezha__attack.png": {
 "branch": "art/nantianmen-fengshen",
@@ -395,6 +651,10 @@
 "branch": "art/nantianmen-enemies",
 "raw": "c2c388aff3142a57ed1cb5d4f08635f757e7db8d"
 },
+"pangxie__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "8699621e475b56213a5770db151cf1b55dc899eb"
+},
 "qilin__attack.png": {
 "branch": "art/nantianmen-partners",
 "raw": "dc4e6606d82a0f37faf1ac7bd0ab238374689c33"
@@ -411,6 +671,14 @@
 "branch": "art/nantianmen-partners",
 "raw": "2dea594044049631d3d6be2b042959c742dd8e2c"
 },
+"qiongqi__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "dbcecf027cfaf6a0292a2a16c0af6bf4a0a7bf5e"
+},
+"qiongqi__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "c016f03270ac174956cc47967733700fb622f184"
+},
 "rongyangui__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "e7ae5e3ffc6389f6c739c1e213bf1e242e4d41eb"
@@ -423,6 +691,14 @@
 "branch": "art/nantianmen-feijian-20261024",
 "raw": "a988dcbf9e9b1fa9a39e201a6c311f817c2f2cdb"
 },
+"sanqing__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "2fd8c5236ed9c085d9bf43be5c9fb74f66fc8d40"
+},
+"shangbing__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "666f56e3a9fcea88ce086e72e6b9b22dbf98ab28"
+},
 "shanshen__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "cf25d061fae780242b3b1ff4967244ca558806a9"
@@ -434,6 +710,14 @@
 "shen__idle.png": {
 "branch": "art/nantianmen-people",
 "raw": "1af6e146838a3d89afbb88fe5209d033f927cdc3"
+},
+"shengongbao__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "8a35534d018b1b90e51b02ea3cf44a0cde6e2259"
+},
+"shengongbao__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "f4472f95f6c50f27d967c014d79d12380eb95387"
 },
 "shenquan__idle.png": {
 "branch": "art/nantianmen-enemies",
@@ -451,9 +735,17 @@
 "branch": "art/nantianmen-enemies",
 "raw": "55da78c98e5a58376d6617a305f71aad22b10a41"
 },
+"shixie__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "33e54a946e0fa4733fbc046a0fb72d03c07a43e9"
+},
 "shuangjing__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "1d6f65c98facef82f09dccbbf4e660fd96c6c186"
+},
+"shuimu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "b260ed6bae30a0223b6d509bb69306a63122d547"
 },
 "shuyao__attack.png": {
 "branch": "art/nantianmen-enemies",
@@ -462,6 +754,10 @@
 "shuyao__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "376bd89fc46baf33acf4ec7c4dccf3dd61bd4ee6"
+},
+"shuyaojing__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "9c953b95b56d18f51da984ba30fe0d6ef84449ff"
 },
 "shuzhuang__idle.png": {
 "branch": "art/nantianmen-enemies",
@@ -478,6 +774,14 @@
 "taotie__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "88f0cb49f519ddcd1d709a45781f6e323de5f4fe"
+},
+"taowu__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "b71339cec56629016fb90b6ff6e3b8643ba607cf"
+},
+"taowu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "9e153ea1e9c59e56d272cfd0234913dadcc87270"
 },
 "tianbing__idle.png": {
 "branch": "art/nantianmen-enemies",
@@ -503,6 +807,10 @@
 "branch": "art/nantianmen-people",
 "raw": "66f2e9bd3a830fd16496c1737f3652aad05629d7"
 },
+"tongzhu__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "e0cbf4f3b49b32df1cfc1d73b2cdda91a3dff395"
+},
 "tudigong__idle.png": {
 "branch": "art/nantianmen-partners",
 "raw": "15a8db1cbb990c95fd25db1d2f0a6ed1a8e9b853"
@@ -511,9 +819,209 @@
 "branch": "art/nantianmen-partners",
 "raw": "c821112c9f6068fb34ef4421d69f83f62c916547"
 },
+"ui-banner__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "c702d1a46899519fc742259ac607fee7fc4f2f37"
+},
+"ui-bar__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "a48dabc7a5b504e3bb158f463c927c54d712c01c"
+},
+"ui-btn2__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "05ba84543ab4ec97977141e7f973895d389b78f9"
+},
+"ui-btn__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "11ffa62566b2e4b5743f23981d8e39e4b7350737"
+},
+"ui-callout-glow__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "7bc9b16629729ed1f2b07150f1afa3b9dfd235b2"
+},
+"ui-callout-long__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "8a60d91f23d24ce3dba2f1de6ba22ec79948ecd3"
+},
+"ui-callout-mid__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "8c444ecc3644cb27682b16d6741f2510c17070a4"
+},
+"ui-callout-short__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "e39792be32ec567644b33e0ccaf1e3e276634a1b"
+},
+"ui-card__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "fcc8f04dbcf273cf087be9d55c577cbf831b2f2a"
+},
+"ui-ic-atk__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "b2216a8ef37ddd73564f2d97762eea3501167f05"
+},
+"ui-ic-auto__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "2f2da27b6ff8d383aca85fe883ecff0706107512"
+},
+"ui-ic-blood__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "3ebb19651603671862a4ba956dd3115824940017"
+},
+"ui-ic-boss__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "98b4da62aa9ccc6e0e5f8a8f8dbea552031b9e21"
+},
+"ui-ic-break__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "d3934645be0144081bffcfaae16329f6dd68a841"
+},
+"ui-ic-crit__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "4e741b73c4e49ba337ff67c4fea297489c975b76"
+},
+"ui-ic-critdmg__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "07c78dc40d64d47c339166bc498b2c48d0059300"
+},
+"ui-ic-egg__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "f227fc9d39649d1bbc7c44197bc85d0b5988934e"
+},
+"ui-ic-gear__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "7897e10fb9a6fd3ce7963557f848ccfe646fa37f"
+},
+"ui-ic-gift__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "d25f1935d252f38a26655fe04987d3e4eb982a1b"
+},
+"ui-ic-herb__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "1424c9695e6843c45570b3c048b4bd219aaa1c48"
+},
+"ui-ic-hp__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "d73fd9c58225e923397d8a36c4842ee379df22b7"
+},
+"ui-ic-iron__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "5e4c58d6d4d3d8fc46de46b5c7038975edc56886"
+},
+"ui-ic-lock__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "5b0cf3db0b7d194e7dea6c090e45acbf8d6f3810"
+},
+"ui-ic-log__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "1e3d6458a42a1658a232e38db213edf57e7445a7"
+},
+"ui-ic-outfit__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "6a5acacb3152cddc80cd149c0b781f02f9243b86"
+},
+"ui-ic-page__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "6704a97b3d4f4f778a4c47c729343b73f70662ae"
+},
+"ui-ic-partner__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "52693ee638ccf65a7c78c1122fbcd738fe637ad8"
+},
+"ui-ic-pets__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "b3a1b1f8c6789416cd7354760f12130e1bf7fe1d"
+},
+"ui-ic-regen__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "78255d5014383d75899e2632b14536489cb55b7c"
+},
+"ui-ic-skill__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "dce94d971badca7d2bf48881348a8147ddd99fda"
+},
+"ui-ic-soul__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "baa485e068cffe78375fb1911d1555b4e81d173f"
+},
+"ui-ic-spd__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "68314abf60e344826f7cc3831dd608d23358423b"
+},
+"ui-ic-speed__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "4ad41242b516c60faa2fa80a427a35488c7413d5"
+},
+"ui-ic-star__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "f52ee46a0b4bf081198f4732295cc63dc83b8387"
+},
+"ui-ic-stone__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "ea5a8053d36c0a29dc000b964cdc11d7d6553c78"
+},
+"ui-ic-ticket__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "faf359c20cce5fa5f3c7234ab5b40f62a3d3e713"
+},
+"ui-ic-train__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "9a50ec6c78ff8537513550f5178c6e756b9593a9"
+},
+"ui-ic-wash__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "48b6df50d4d149334b1f42ff7a183c24e0523358"
+},
+"ui-ic-xp__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "467bf6349b2fb8e34e68971877a6890433ad5f43"
+},
+"ui-logo__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "75df776c097f76ef0c0afec7b774a357a332bf9a"
+},
+"ui-panel__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "db06d74411b08ac5a51fcdd57018f94020ae4521"
+},
 "ui-paper__ui.png": {
 "branch": "art/nantianmen-bg",
 "raw": "f99c2fb0b2102e96baedb2288361b4d1a2be8b52"
+},
+"ui-scroll__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "01e3b78647e06c3bc268133c046113b84e0202e8"
+},
+"ui-seal-1__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "a0aaa98057552673b695bcdb6e33ddbc38b19261"
+},
+"ui-seal-2__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "b253939496c8f06561b6678e26914776c18a529a"
+},
+"ui-seal-3__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "5999c7a16007f400e51fd0361fa330b2071a1185"
+},
+"ui-seal__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "7962eaee91c3794b03bd2e197bee542b66bb5096"
+},
+"ui-tab-on__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "f8f17e9e81caa0c1466152e77da3a2a10147d2d9"
+},
+"ui-tab__ui.png": {
+"branch": "art/nantianmen-bg",
+"raw": "7c26763f2938e72c74e7cfc5a2587233b82d2f3a"
+},
+"wentaishi__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "3a03dff8f9b35cd0034b5c4bb2bede74cbbc9015"
+},
+"wentaishi__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "ec62c3d236686ec57c5ea85739df6025fa0dd1f8"
 },
 "wujing__attack.png": {
 "branch": "art/nantianmen-xiyou",
@@ -535,6 +1043,14 @@
 "branch": "art/nantianmen-enemies",
 "raw": "07937fa8beae75cc473d0f9d744662adafbe7340"
 },
+"xiangliu__attack.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "1953f7d729036a7b0961853923db52e8ba587aef"
+},
+"xiangliu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "1ea61dcb9b469de582da0aa17c0dccfea10268ed"
+},
 "xianhe__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "6020931f796788df7e428a4ec7ad06180b777745"
@@ -555,6 +1071,18 @@
 "branch": "art/nantianmen-partners",
 "raw": "f0e8efbdabbdb43aaca5a07c777f7067bf90af97"
 },
+"xuehu__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "6a127a79265ee8af142edbd960527c82fca10f28"
+},
+"yangjian__attack.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "8eca44b5a445fa55f92d5fe4fc70e681c125341e"
+},
+"yangjian__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "45b6c4578a50310f9e15b3d98f41c2d769b03c67"
+},
 "yanjiangshe__idle.png": {
 "branch": "art/nantianmen-xiyou",
 "raw": "9d5e540f6a469ad48cc9e4345e097b05695738b4"
@@ -571,13 +1099,33 @@
 "branch": "art/nantianmen-people",
 "raw": "0786900830eb9063e0ac311a33dd6ec6dd060b21"
 },
+"yecha__idle.png": {
+"branch": "art/nantianmen-fengshen",
+"raw": "6dcbe05a2fdf0d5fa48a385daa7197a719c548ad"
+},
 "yezhu__idle.png": {
 "branch": "art/nantianmen-xiyou",
 "raw": "a4a7669b824239dd02031e11a080f845250c1367"
 },
+"yuansuhou__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "e67f474542f6a491fd5d5d54a9490a6f23f75883"
+},
+"yuansuling__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "102bc9686d7bbb362440b2fb0601854938c44345"
+},
+"yuansushi__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "5717bc9584525400fdcf7544b0462457e37f38f6"
+},
 "yunduo__idle.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "7ff5ed25b4b2df88878db747ed4684e68f94ba46"
+},
+"yushi__idle.png": {
+"branch": "art/nantianmen-shanhai",
+"raw": "a67d1b002ac95b6859707284f8ee7141a55bfb9f"
 },
 "zhihe__idle.png": {
 "branch": "art/nantianmen-partners",
