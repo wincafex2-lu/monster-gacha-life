@@ -253,7 +253,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v32</div>
+    <div class="ver">v33</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -3700,6 +3700,34 @@ window.IDLE_INK = {
     ]
    }
   ],
+  "cangjing": [
+   {
+    "src": "bg-cangjing__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.41,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "chentang": [
+   {
+    "src": "bg-chentang__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.425,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
   "cloud": [
    {
     "src": "bg-cloud__L1.webp",
@@ -3729,6 +3757,20 @@ window.IDLE_INK = {
     "units": 240,
     "gy": 0.833,
     "horizon": 0.449,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "donghai": [
+   {
+    "src": "bg-donghai__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.431,
     "feet": [
      0.55,
      0.95
@@ -3797,6 +3839,34 @@ window.IDLE_INK = {
     "gy": 0.833
    }
   ],
+  "kuangdong": [
+   {
+    "src": "bg-kuangdong__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.42,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "kunlun": [
+   {
+    "src": "bg-kunlun__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.437,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
   "palace": [
    {
     "src": "bg-palace__L1.webp",
@@ -3826,6 +3896,34 @@ window.IDLE_INK = {
     "units": 240,
     "gy": 0.833,
     "horizon": 0.42,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "shenshou": [
+   {
+    "src": "bg-shenshou__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.395,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "tianshan": [
+   {
+    "src": "bg-tianshan__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.466,
     "feet": [
      0.55,
      0.95
@@ -3901,6 +3999,62 @@ window.IDLE_INK = {
      0.95
     ]
    }
+  ],
+  "wuxing": [
+   {
+    "src": "bg-wuxing__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.415,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "xiqi": [
+   {
+    "src": "bg-xiqi__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.413,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "yaotian": [
+   {
+    "src": "bg-yaotian__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.439,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
+  ],
+  "zhaoge": [
+   {
+    "src": "bg-zhaoge__full.webp",
+    "speed": 1.0,
+    "n": 0,
+    "units": 240,
+    "gy": 0.833,
+    "horizon": 0.42,
+    "feet": [
+     0.55,
+     0.95
+    ]
+   }
   ]
  },
  "items": {
@@ -3955,7 +4109,7 @@ window.IDLE_INK = {
   "shell": "egg-shell.webp"
  }
 };
-if (window.IDLE_INK) window.IDLE_INK.ver = '1aa72e35';
+if (window.IDLE_INK) window.IDLE_INK.ver = 'd2e49232';
 // 水墨圖：一張（或兩張）去背的圖 + 程式動作。沒有圖的角色照舊用點陣圖。
 // window.IDLE_INK 由 tools/ink_pack.py 產生：{ base, sprites: { key: { idle, attack, w, h, cx, fy, size, motion } }, bg: { area: [layers] }, items: {...}, eggs: {...} }
 var IdleInk = (function () {
@@ -4058,7 +4212,7 @@ var IdleInk = (function () {
       else { dh = (l.units || 216) * S; y = feetPx - gy * dh; }
       var dw = im.naturalWidth * dh / im.naturalHeight, off = ((scroll * l.speed) % dw + dw) % dw;
       // 一整張的背景（__full）左右接不起來：每隔一張左右翻過來畫，接縫就會對得上
-      var idx = Math.floor(scroll * l.speed / dw), mirror = l.n === 0;
+      var idx = Math.floor(scroll * l.speed / dw), mirror = l.n === 0 && !l.horizon;  // 新的一整張深地面頭尾已經接好，不用翻
       function tile(sx, sy, sw, sh, dx, dy, w, h, flip) {
         if (!flip) { ctx.drawImage(im, sx, sy, sw, sh, dx, dy, w, h); return; }
         ctx.save(); ctx.translate(dx + w, dy); ctx.scale(-1, 1); ctx.drawImage(im, sx, sy, sw, sh, 0, 0, w, h); ctx.restore();
