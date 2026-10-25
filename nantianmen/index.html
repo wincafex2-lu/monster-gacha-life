@@ -253,7 +253,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v33</div>
+    <div class="ver">v34</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1177,34 +1177,34 @@ var IDLE_DATA = (function () {
     // ── 封神篇 ──
     { name: '陳塘關', theme: 'town', el: 'shui', chapter: '封神篇',
       enemies: [['kulou', '巡海夜叉', 'shield', 'yecha'], ['sheyao', '蝦兵', 'fast', 'xiabing'], ['shijing', '螃蟹將', 'shell', 'pangxie']],
-      mid: { key: 'heijiao', name: '東海龍王', say: '東海龍王：「誰把我家水晶宮震得一直晃？」' },
-      boss: { key: 'qinglong', name: '敖丙', hint: '冰龍吐息讓你變慢：帶辟邪鈴、白龍馬解掉，或用土屬性剋牠的水。', partner: ['nezha'], move: { id: 'ice', name: '冰龍吐息', cd: 8 },
+      mid: { art: 'longwang', key: 'heijiao', name: '東海龍王', say: '東海龍王：「誰把我家水晶宮震得一直晃？」' },
+      boss: { art: 'aobing', key: 'qinglong', name: '敖丙', hint: '冰龍吐息讓你變慢：帶辟邪鈴、白龍馬解掉，或用土屬性剋牠的水。', partner: ['nezha'], move: { id: 'ice', name: '冰龍吐息', cd: 8 },
         say: '敖丙：「哪吒拿走我的龍筋！⋯⋯咦，你不是哪吒？算了，一起打。」' } },
     { name: '西岐城', theme: 'town', el: 'tu', chapter: '封神篇',
       enemies: [['kulou', '商軍小兵', 'guard', 'shangbing'], ['langyao', '押糧驢', 'flee', 'lv'], ['shuzhuang', '稻草人', 'revive', 'daocao']],
-      mid: { key: 'kuilei', name: '魔家四將', say: '魔家四將：「我們四兄弟一起上！」「哥，你踩到我的腳了。」' },
-      boss: { key: 'elder', name: '聞太師', hint: '第三眼神雷很痛：血要厚，或帶八卦鏡。', big: true, partner: ['yangjian'], move: { id: 'thunderB', name: '第三眼神雷', cd: 7 },
+      mid: { art: 'mojia', key: 'kuilei', name: '魔家四將', say: '魔家四將：「我們四兄弟一起上！」「哥，你踩到我的腳了。」' },
+      boss: { art: 'wentaishi', key: 'elder', name: '聞太師', hint: '第三眼神雷很痛：血要厚，或帶八卦鏡。', big: true, partner: ['yangjian'], move: { id: 'thunderB', name: '第三眼神雷', cd: 7 },
         say: '聞太師：「我額頭上這隻眼睛，看你很久了。」' } },
     { name: '朝歌', theme: 'palace', el: 'huo', chapter: '封神篇',
       enemies: [['limao', '狐狸小妖', 'dodge', 'huli'], ['zhiren', '宮女紙人', 'split'], ['kulou', '銅柱兵', 'tank', 'tongzhu']],
-      mid: { key: 'shen2', name: '申公豹', big: true, say: '申公豹：「道友請留步！⋯⋯欸，我還沒說完，你別走啊！」' },
-      boss: { key: 'jiuwei', name: '妲己', hint: '妲己會迷住神獸：讓夥伴多出力，或帶辟邪鈴解除魅惑；姜子牙能多給 10 秒。', partner: ['jiang'], move: { id: 'charm', name: '魅惑', cd: 9 },
+      mid: { art: 'shengongbao', key: 'shen2', name: '申公豹', big: true, say: '申公豹：「道友請留步！⋯⋯欸，我還沒說完，你別走啊！」' },
+      boss: { art: 'daji', key: 'jiuwei', name: '妲己', hint: '妲己會迷住神獸：讓夥伴多出力，或帶辟邪鈴解除魅惑；姜子牙能多給 10 秒。', partner: ['jiang'], move: { id: 'charm', name: '魅惑', cd: 9 },
         say: '妲己：「你的神獸好可愛，給我玩一下嘛～」' } },
     // ── 山海篇 ──
     { name: '東海・發鳩山', theme: 'cloud', el: 'shui', chapter: '山海篇',
       enemies: [['shijing', '石頭蟹', 'shell', 'shixie'], ['denglong', '海泡妖', 'split', 'haipao'], ['mogu', '水母精', 'frost', 'shuimu']],
-      mid: { key: 'heijiao', name: '相柳', say: '相柳：「我有九個頭，所以吵架從來沒輸過。」' },
-      boss: { key: 'mohu', name: '九嬰', hint: '九嬰一下噴火一下噴水：玉如意、辟邪鈴幫你解掉，或用土屬性剋水。', join: 'jingwei', move: { id: 'heads', name: '九頭齊吐', cd: 7 },
+      mid: { art: 'xiangliu', key: 'heijiao', name: '相柳', say: '相柳：「我有九個頭，所以吵架從來沒輸過。」' },
+      boss: { art: 'jiuying', key: 'mohu', name: '九嬰', hint: '九嬰一下噴火一下噴水：玉如意、辟邪鈴幫你解掉，或用土屬性剋水。', join: 'jingwei', move: { id: 'heads', name: '九頭齊吐', cd: 7 },
         say: '九嬰：「誰在往海裡丟石頭？吵到我睡覺了！」' } },
     { name: '天山', theme: 'cloud', el: 'jin', chapter: '山海篇',
       enemies: [['limao', '雪狐妖', 'fast', 'xuehu'], ['bianfu', '冰穴蝙蝠', 'frost', 'bingbianfu'], ['zhiren', '赤鶴', 'ranged', 'chihe']],
-      mid: { key: 'baihu', name: '窮奇', say: '窮奇：「我是會飛的老虎。對，有翅膀。不要笑。」' },
-      boss: { key: 'heixiong', name: '檮杌', hint: '檮杌血少就會暴怒變強：用山河圖、大招一口氣收掉牠。', join: 'dijiang', move: { id: 'rage', name: '暴怒', cd: 8 },
+      mid: { art: 'qiongqi', key: 'baihu', name: '窮奇', say: '窮奇：「我是會飛的老虎。對，有翅膀。不要笑。」' },
+      boss: { art: 'taowu', key: 'heixiong', name: '檮杌', hint: '檮杌血少就會暴怒變強：用山河圖、大招一口氣收掉牠。', join: 'dijiang', move: { id: 'rage', name: '暴怒', cd: 8 },
         say: '檮杌：「我脾氣很差。真的很差。你確定要打？」' } },
     { name: '崑崙丘', theme: 'palace', el: 'tu', chapter: '山海篇',
       enemies: [['langyao', '開明獸小兵', 'guard', 'kaiming'], ['bianfu', '三青鳥', 'ranged', 'sanqing'], ['shijing', '玉石精', 'tank', 'yushi']],
-      mid: { key: 'fenghuang', name: '畢方', say: '畢方：「我只有一隻腳，但是我跳得比你快！」' },
-      boss: { key: 'baihu', name: '陸吾', hint: '陸吾會叫小老虎幫忙：要能打全部的法器（雷晶珠、符紙陣、風火輪）。', join: 'kui', move: { id: 'cubs', name: '召喚小虎', cd: 10 },
+      mid: { art: 'bifang', key: 'fenghuang', name: '畢方', say: '畢方：「我只有一隻腳，但是我跳得比你快！」' },
+      boss: { art: 'luwu', key: 'baihu', name: '陸吾', hint: '陸吾會叫小老虎幫忙：要能打全部的法器（雷晶珠、符紙陣、風火輪）。', join: 'kui', move: { id: 'cubs', name: '召喚小虎', cd: 10 },
         say: '陸吾：「崑崙由我看守。想上去？先打贏我和我的小老虎們。」' } }
   ];
 
@@ -2755,6 +2755,22 @@ if (typeof module !== 'undefined') module.exports = IdleCore;
 window.IDLE_INK = {
  "base": "ink/",
  "sprites": {
+  "aobing": {
+   "attack": "aobing__attack.webp",
+   "atk": {
+    "w": 173,
+    "h": 173,
+    "cx": 106.2,
+    "fy": 173.4
+   },
+   "w": 188,
+   "h": 187,
+   "cx": 99.6,
+   "fy": 187.2,
+   "idle": "aobing__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
   "baigu": {
    "attack": "baigu__attack.webp",
    "atk": {
@@ -2844,6 +2860,56 @@ window.IDLE_INK = {
    "size": 24.17,
    "motion": "fly"
   },
+  "bifang": {
+   "attack": "bifang__attack.webp",
+   "atk": {
+    "w": 253,
+    "h": 165,
+    "cx": 58.8,
+    "fy": 165.0
+   },
+   "w": 230,
+   "h": 154,
+   "cx": 55.2,
+   "fy": 153.6,
+   "idle": "bifang__idle.webp",
+   "size": 42.67,
+   "motion": "hop"
+  },
+  "bingbianfu": {
+   "w": 122,
+   "h": 70,
+   "cx": 61.2,
+   "fy": 70.2,
+   "idle": "bingbianfu__idle.webp",
+   "size": 19.5,
+   "motion": "fly"
+  },
+  "chihe": {
+   "w": 74,
+   "h": 108,
+   "cx": 45.6,
+   "fy": 108.0,
+   "idle": "chihe__idle.webp",
+   "size": 30.0,
+   "motion": "fly"
+  },
+  "daji": {
+   "attack": "daji__attack.webp",
+   "atk": {
+    "w": 190,
+    "h": 190,
+    "cx": 115.8,
+    "fy": 190.2
+   },
+   "w": 154,
+   "h": 187,
+   "cx": 105.6,
+   "fy": 187.2,
+   "idle": "daji__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
   "dangkang": {
    "w": 213,
    "h": 166,
@@ -2853,6 +2919,15 @@ window.IDLE_INK = {
    "size": 46.0,
    "motion": "walk"
   },
+  "daocao": {
+   "w": 88,
+   "h": 108,
+   "cx": 48.6,
+   "fy": 108.0,
+   "idle": "daocao__idle.webp",
+   "size": 30.0,
+   "motion": "hop"
+  },
   "denglong": {
    "w": 97,
    "h": 108,
@@ -2860,6 +2935,31 @@ window.IDLE_INK = {
    "fy": 108.0,
    "idle": "denglong__idle.webp",
    "size": 30.0,
+   "motion": "fly"
+  },
+  "dengxin": {
+   "w": 80,
+   "h": 108,
+   "cx": 45.0,
+   "fy": 108.0,
+   "idle": "dengxin__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
+  "dijiang": {
+   "attack": "dijiang__attack.webp",
+   "atk": {
+    "w": 212,
+    "h": 161,
+    "cx": 115.8,
+    "fy": 161.4
+   },
+   "w": 223,
+   "h": 164,
+   "cx": 125.4,
+   "fy": 163.8,
+   "idle": "dijiang__idle.webp",
+   "size": 45.5,
    "motion": "fly"
   },
   "feng": {
@@ -2902,6 +3002,15 @@ window.IDLE_INK = {
    "idle": "ginseng__idle.webp",
    "size": 30.0,
    "motion": "walk"
+  },
+  "haipao": {
+   "w": 87,
+   "h": 108,
+   "cx": 40.2,
+   "fy": 108.0,
+   "idle": "haipao__idle.webp",
+   "size": 30.0,
+   "motion": "fly"
   },
   "heixiong": {
    "attack": "heixiong__attack.webp",
@@ -2986,10 +3095,10 @@ window.IDLE_INK = {
   "hero-sword": {
    "attack": "hero-sword__attack.webp",
    "atk": {
-    "w": 149,
+    "w": 148,
     "h": 113,
-    "cx": 55.8,
-    "fy": 113.4
+    "cx": 55.2,
+    "fy": 112.8
    },
    "w": 101,
    "h": 126,
@@ -3014,6 +3123,15 @@ window.IDLE_INK = {
    "idle": "hero-talisman__idle.webp",
    "size": 35.0,
    "motion": "walk"
+  },
+  "heshouwu": {
+   "w": 81,
+   "h": 108,
+   "cx": 43.2,
+   "fy": 107.4,
+   "idle": "heshouwu__idle.webp",
+   "size": 30.0,
+   "motion": "hop"
   },
   "hexie": {
    "w": 122,
@@ -3090,6 +3208,15 @@ window.IDLE_INK = {
    "size": 26.67,
    "motion": "walk"
   },
+  "huli": {
+   "w": 95,
+   "h": 108,
+   "cx": 54.6,
+   "fy": 108.0,
+   "idle": "huli__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
   "huoshu": {
    "w": 122,
    "h": 98,
@@ -3117,6 +3244,22 @@ window.IDLE_INK = {
    "size": 29.83,
    "motion": "walk"
   },
+  "jiang": {
+   "attack": "jiang__attack.webp",
+   "atk": {
+    "w": 140,
+    "h": 136,
+    "cx": 64.2,
+    "fy": 136.2
+   },
+   "w": 116,
+   "h": 126,
+   "cx": 52.2,
+   "fy": 126.0,
+   "idle": "jiang__idle.webp",
+   "size": 35.0,
+   "motion": "walk"
+  },
   "jiangshi": {
    "w": 98,
    "h": 108,
@@ -3135,6 +3278,22 @@ window.IDLE_INK = {
    "size": 46.0,
    "motion": "walk"
   },
+  "jingwei": {
+   "attack": "jingwei__attack.webp",
+   "atk": {
+    "w": 229,
+    "h": 139,
+    "cx": 58.2,
+    "fy": 138.6
+   },
+   "w": 223,
+   "h": 147,
+   "cx": 55.8,
+   "fy": 147.0,
+   "idle": "jingwei__idle.webp",
+   "size": 40.83,
+   "motion": "fly"
+  },
   "jiuwei": {
    "attack": "jiuwei__attack.webp",
    "atk": {
@@ -3150,6 +3309,56 @@ window.IDLE_INK = {
    "idle": "jiuwei__idle.webp",
    "size": 42.17,
    "motion": "walk"
+  },
+  "jiuying": {
+   "attack": "jiuying__attack.webp",
+   "atk": {
+    "w": 215,
+    "h": 191,
+    "cx": 97.8,
+    "fy": 190.8
+   },
+   "w": 206,
+   "h": 187,
+   "cx": 113.4,
+   "fy": 187.2,
+   "idle": "jiuying__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
+  "kaiming": {
+   "w": 95,
+   "h": 108,
+   "cx": 51.6,
+   "fy": 108.0,
+   "idle": "kaiming__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
+  "kuangshi": {
+   "w": 113,
+   "h": 108,
+   "cx": 58.8,
+   "fy": 108.0,
+   "idle": "kuangshi__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
+  "kui": {
+   "attack": "kui__attack.webp",
+   "atk": {
+    "w": 237,
+    "h": 152,
+    "cx": 120.0,
+    "fy": 152.4
+   },
+   "w": 223,
+   "h": 164,
+   "cx": 126.0,
+   "fy": 164.4,
+   "idle": "kui__idle.webp",
+   "size": 45.67,
+   "motion": "hop"
   },
   "kuilei": {
    "attack": "kuilei__attack.webp",
@@ -3212,6 +3421,15 @@ window.IDLE_INK = {
    "size": 24.0,
    "motion": "walk"
   },
+  "lingzhi": {
+   "w": 121,
+   "h": 108,
+   "cx": 66.0,
+   "fy": 108.0,
+   "idle": "lingzhi__idle.webp",
+   "size": 30.0,
+   "motion": "hop"
+  },
   "liuer": {
    "attack": "liuer__attack.webp",
    "atk": {
@@ -3228,6 +3446,31 @@ window.IDLE_INK = {
    "size": 52.0,
    "motion": "walk"
   },
+  "longwang": {
+   "attack": "longwang__attack.webp",
+   "atk": {
+    "w": 179,
+    "h": 175,
+    "cx": 99.0,
+    "fy": 174.6
+   },
+   "w": 178,
+   "h": 187,
+   "cx": 93.6,
+   "fy": 187.2,
+   "idle": "longwang__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
+  "luanshu": {
+   "w": 122,
+   "h": 99,
+   "cx": 72.0,
+   "fy": 99.0,
+   "idle": "luanshu__idle.webp",
+   "size": 27.5,
+   "motion": "walk"
+  },
   "lushu": {
    "w": 173,
    "h": 166,
@@ -3235,6 +3478,31 @@ window.IDLE_INK = {
    "fy": 165.6,
    "idle": "lushu__idle.webp",
    "size": 46.0,
+   "motion": "walk"
+  },
+  "luwu": {
+   "attack": "luwu__attack.webp",
+   "atk": {
+    "w": 211,
+    "h": 188,
+    "cx": 166.2,
+    "fy": 187.8
+   },
+   "w": 210,
+   "h": 187,
+   "cx": 139.8,
+   "fy": 187.2,
+   "idle": "luwu__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
+  "lv": {
+   "w": 109,
+   "h": 108,
+   "cx": 55.2,
+   "fy": 108.0,
+   "idle": "lv__idle.webp",
+   "size": 30.0,
    "motion": "walk"
   },
   "mogu": {
@@ -3245,6 +3513,38 @@ window.IDLE_INK = {
    "idle": "mogu__idle.webp",
    "size": 30.0,
    "motion": "hop"
+  },
+  "mojia": {
+   "attack": "mojia__attack.webp",
+   "atk": {
+    "w": 391,
+    "h": 189,
+    "cx": 202.8,
+    "fy": 189.0
+   },
+   "w": 346,
+   "h": 194,
+   "cx": 181.2,
+   "fy": 193.8,
+   "idle": "mojia__idle.webp",
+   "size": 53.83,
+   "motion": "walk"
+  },
+  "nezha": {
+   "attack": "nezha__attack.webp",
+   "atk": {
+    "w": 128,
+    "h": 112,
+    "cx": 51.0,
+    "fy": 112.2
+   },
+   "w": 114,
+   "h": 126,
+   "cx": 61.8,
+   "fy": 126.0,
+   "idle": "nezha__idle.webp",
+   "size": 35.0,
+   "motion": "walk"
   },
   "niumo": {
    "attack": "niumo__attack.webp",
@@ -3276,6 +3576,15 @@ window.IDLE_INK = {
    "fy": 156.6,
    "idle": "niutou__idle.webp",
    "size": 43.5,
+   "motion": "walk"
+  },
+  "pangxie": {
+   "w": 122,
+   "h": 106,
+   "cx": 48.6,
+   "fy": 106.2,
+   "idle": "pangxie__idle.webp",
+   "size": 29.5,
    "motion": "walk"
   },
   "qilin": {
@@ -3310,6 +3619,22 @@ window.IDLE_INK = {
    "size": 34.67,
    "motion": "fly"
   },
+  "qiongqi": {
+   "attack": "qiongqi__attack.webp",
+   "atk": {
+    "w": 250,
+    "h": 134,
+    "cx": 176.4,
+    "fy": 133.8
+   },
+   "w": 230,
+   "h": 133,
+   "cx": 138.0,
+   "fy": 133.2,
+   "idle": "qiongqi__idle.webp",
+   "size": 37.0,
+   "motion": "walk"
+  },
   "rongyangui": {
    "w": 122,
    "h": 95,
@@ -3317,6 +3642,24 @@ window.IDLE_INK = {
    "fy": 94.8,
    "idle": "rongyangui__idle.webp",
    "size": 26.33,
+   "motion": "walk"
+  },
+  "sanqing": {
+   "w": 109,
+   "h": 108,
+   "cx": 72.6,
+   "fy": 108.0,
+   "idle": "sanqing__idle.webp",
+   "size": 30.0,
+   "motion": "fly"
+  },
+  "shangbing": {
+   "w": 72,
+   "h": 108,
+   "cx": 39.6,
+   "fy": 108.0,
+   "idle": "shangbing__idle.webp",
+   "size": 30.0,
    "motion": "walk"
   },
   "shanshen": {
@@ -3342,6 +3685,22 @@ window.IDLE_INK = {
    "fy": 126.0,
    "idle": "shen__idle.webp",
    "size": 35.0,
+   "motion": "walk"
+  },
+  "shengongbao": {
+   "attack": "shengongbao__attack.webp",
+   "atk": {
+    "w": 288,
+    "h": 184,
+    "cx": 165.6,
+    "fy": 183.6
+   },
+   "w": 230,
+   "h": 167,
+   "cx": 139.8,
+   "fy": 167.4,
+   "idle": "shengongbao__idle.webp",
+   "size": 46.5,
    "motion": "walk"
   },
   "shenquan": {
@@ -3389,6 +3748,15 @@ window.IDLE_INK = {
    "size": 30.0,
    "motion": "hop"
   },
+  "shixie": {
+   "w": 122,
+   "h": 82,
+   "cx": 54.0,
+   "fy": 81.6,
+   "idle": "shixie__idle.webp",
+   "size": 22.67,
+   "motion": "walk"
+  },
   "shuangjing": {
    "w": 95,
    "h": 108,
@@ -3397,6 +3765,15 @@ window.IDLE_INK = {
    "idle": "shuangjing__idle.webp",
    "size": 30.0,
    "motion": "hop"
+  },
+  "shuimu": {
+   "w": 122,
+   "h": 107,
+   "cx": 56.4,
+   "fy": 106.8,
+   "idle": "shuimu__idle.webp",
+   "size": 29.67,
+   "motion": "fly"
   },
   "shuyao": {
    "attack": "shuyao__attack.webp",
@@ -3412,6 +3789,15 @@ window.IDLE_INK = {
    "fy": 186.6,
    "idle": "shuyao__idle.webp",
    "size": 51.83,
+   "motion": "walk"
+  },
+  "shuyaojing": {
+   "w": 122,
+   "h": 90,
+   "cx": 73.2,
+   "fy": 90.0,
+   "idle": "shuyaojing__idle.webp",
+   "size": 25.0,
    "motion": "walk"
   },
   "shuzhuang": {
@@ -3448,6 +3834,22 @@ window.IDLE_INK = {
    "size": 35.67,
    "motion": "walk"
   },
+  "taowu": {
+   "attack": "taowu__attack.webp",
+   "atk": {
+    "w": 236,
+    "h": 183,
+    "cx": 148.2,
+    "fy": 183.0
+   },
+   "w": 220,
+   "h": 187,
+   "cx": 137.4,
+   "fy": 187.2,
+   "idle": "taowu__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
   "tianbing": {
    "w": 117,
    "h": 108,
@@ -3482,6 +3884,15 @@ window.IDLE_INK = {
    "size": 35.0,
    "motion": "walk"
   },
+  "tongzhu": {
+   "w": 102,
+   "h": 108,
+   "cx": 59.4,
+   "fy": 108.0,
+   "idle": "tongzhu__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
   "tudigong": {
    "w": 104,
    "h": 126,
@@ -3498,6 +3909,22 @@ window.IDLE_INK = {
    "fy": 106.8,
    "idle": "tuxingsun__idle.webp",
    "size": 29.67,
+   "motion": "walk"
+  },
+  "wentaishi": {
+   "attack": "wentaishi__attack.webp",
+   "atk": {
+    "w": 190,
+    "h": 187,
+    "cx": 109.8,
+    "fy": 187.2
+   },
+   "w": 185,
+   "h": 187,
+   "cx": 99.0,
+   "fy": 187.2,
+   "idle": "wentaishi__idle.webp",
+   "size": 52.0,
    "motion": "walk"
   },
   "wujing": {
@@ -3539,6 +3966,22 @@ window.IDLE_INK = {
    "fy": 100.8,
    "idle": "xiabing__idle.webp",
    "size": 28.0,
+   "motion": "walk"
+  },
+  "xiangliu": {
+   "attack": "xiangliu__attack.webp",
+   "atk": {
+    "w": 204,
+    "h": 185,
+    "cx": 127.8,
+    "fy": 185.4
+   },
+   "w": 205,
+   "h": 187,
+   "cx": 127.8,
+   "fy": 187.2,
+   "idle": "xiangliu__idle.webp",
+   "size": 52.0,
    "motion": "walk"
   },
   "xianhe": {
@@ -3584,6 +4027,31 @@ window.IDLE_INK = {
    "size": 35.5,
    "motion": "walk"
   },
+  "xuehu": {
+   "w": 122,
+   "h": 85,
+   "cx": 79.8,
+   "fy": 85.2,
+   "idle": "xuehu__idle.webp",
+   "size": 23.67,
+   "motion": "walk"
+  },
+  "yangjian": {
+   "attack": "yangjian__attack.webp",
+   "atk": {
+    "w": 127,
+    "h": 108,
+    "cx": 66.6,
+    "fy": 108.0
+   },
+   "w": 120,
+   "h": 126,
+   "cx": 53.4,
+   "fy": 126.0,
+   "idle": "yangjian__idle.webp",
+   "size": 35.0,
+   "motion": "walk"
+  },
   "yanjiangshe": {
    "w": 122,
    "h": 106,
@@ -3618,6 +4086,15 @@ window.IDLE_INK = {
    "size": 35.0,
    "motion": "walk"
   },
+  "yecha": {
+   "w": 96,
+   "h": 108,
+   "cx": 50.4,
+   "fy": 108.0,
+   "idle": "yecha__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
   "yezhu": {
    "w": 122,
    "h": 108,
@@ -3625,6 +4102,33 @@ window.IDLE_INK = {
    "fy": 108.0,
    "idle": "yezhu__idle.webp",
    "size": 30.0,
+   "motion": "walk"
+  },
+  "yuansuhou": {
+   "w": 94,
+   "h": 108,
+   "cx": 57.0,
+   "fy": 108.0,
+   "idle": "yuansuhou__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
+  },
+  "yuansuling": {
+   "w": 122,
+   "h": 104,
+   "cx": 72.0,
+   "fy": 104.4,
+   "idle": "yuansuling__idle.webp",
+   "size": 29.0,
+   "motion": "fly"
+  },
+  "yuansushi": {
+   "w": 122,
+   "h": 92,
+   "cx": 82.2,
+   "fy": 92.4,
+   "idle": "yuansushi__idle.webp",
+   "size": 25.67,
    "motion": "walk"
   },
   "yunduo": {
@@ -3635,6 +4139,15 @@ window.IDLE_INK = {
    "idle": "yunduo__idle.webp",
    "size": 25.83,
    "motion": "fly"
+  },
+  "yushi": {
+   "w": 73,
+   "h": 108,
+   "cx": 35.4,
+   "fy": 108.0,
+   "idle": "yushi__idle.webp",
+   "size": 30.0,
+   "motion": "walk"
   },
   "zhihe": {
    "w": 122,
@@ -4107,9 +4620,440 @@ window.IDLE_INK = {
   "legend": "egg-legend.webp",
   "rare": "egg-rare.webp",
   "shell": "egg-shell.webp"
+ },
+ "fx": {
+  "bloom": {
+   "src": "fx-bloom.webp",
+   "w": 24.0,
+   "h": 23.8
+  },
+  "burst": {
+   "src": "fx-burst.webp",
+   "w": 68.8,
+   "h": 70.0
+  },
+  "claw": {
+   "src": "fx-claw.webp",
+   "w": 50.0,
+   "h": 46.3
+  },
+  "cloud": {
+   "src": "fx-cloud.webp",
+   "w": 32.0,
+   "h": 21.7
+  },
+  "crack": {
+   "src": "fx-crack.webp",
+   "w": 78.5,
+   "h": 24.0
+  },
+  "dot": {
+   "src": "fx-dot.webp",
+   "w": 6.0,
+   "h": 5.8
+  },
+  "fire": {
+   "src": "fx-fire.webp",
+   "w": 40.0,
+   "h": 14.6
+  },
+  "flame": {
+   "src": "fx-flame.webp",
+   "w": 50.0,
+   "h": 17.8
+  },
+  "heal": {
+   "src": "fx-heal.webp",
+   "w": 32.0,
+   "h": 29.6
+  },
+  "leaf": {
+   "src": "fx-leaf.webp",
+   "w": 8.0,
+   "h": 4.0
+  },
+  "qi": {
+   "src": "fx-qi.webp",
+   "w": 60.0,
+   "h": 38.0
+  },
+  "seal": {
+   "src": "fx-seal.webp",
+   "w": 20.0,
+   "h": 19.7
+  },
+  "shield": {
+   "src": "fx-shield.webp",
+   "w": 48.0,
+   "h": 45.9
+  },
+  "slash": {
+   "src": "fx-slash.webp",
+   "w": 60.0,
+   "h": 34.7
+  },
+  "splat": {
+   "src": "fx-splat.webp",
+   "w": 39.4,
+   "h": 40.0
+  },
+  "thunder-1": {
+   "src": "fx-thunder-1.webp",
+   "w": 24.0,
+   "h": 115.7
+  },
+  "thunder-2": {
+   "src": "fx-thunder-2.webp",
+   "w": 24.0,
+   "h": 119.2
+  },
+  "water": {
+   "src": "fx-water.webp",
+   "w": 60.0,
+   "h": 26.0
+  },
+  "wind": {
+   "src": "fx-wind.webp",
+   "w": 25.1,
+   "h": 60.0
+  }
+ },
+ "ui": {
+  "banner": {
+   "src": "ui-banner.webp",
+   "w": 512,
+   "h": 96,
+   "slice": [
+    31,
+    30,
+    31,
+    30
+   ]
+  },
+  "bar": {
+   "src": "ui-bar.webp",
+   "w": 512,
+   "h": 55,
+   "slice": [
+    16,
+    15,
+    16,
+    15
+   ]
+  },
+  "btn": {
+   "src": "ui-btn.webp",
+   "w": 512,
+   "h": 132,
+   "slice": [
+    15,
+    9,
+    15,
+    9
+   ]
+  },
+  "btn2": {
+   "src": "ui-btn2.webp",
+   "w": 512,
+   "h": 132,
+   "slice": [
+    16,
+    12,
+    16,
+    12
+   ]
+  },
+  "callout-glow": {
+   "src": "ui-callout-glow.webp",
+   "w": 512,
+   "h": 79
+  },
+  "callout-long": {
+   "src": "ui-callout-long.webp",
+   "w": 512,
+   "h": 59,
+   "text": {
+    "x0": 57.5,
+    "x1": 448.0,
+    "y0": 10.0,
+    "y1": 50.5
+   },
+   "seal": {
+    "size": 44.5,
+    "x": 11.0,
+    "y": 8.0
+   }
+  },
+  "callout-mid": {
+   "src": "ui-callout-mid.webp",
+   "w": 512,
+   "h": 99,
+   "text": {
+    "x0": 90.0,
+    "x1": 420.5,
+    "y0": 23.5,
+    "y1": 83.5
+   },
+   "seal": {
+    "size": 66.0,
+    "x": 21.0,
+    "y": 20.5
+   }
+  },
+  "callout-short": {
+   "src": "ui-callout-short.webp",
+   "w": 512,
+   "h": 104,
+   "text": {
+    "x0": 86.5,
+    "x1": 403.5,
+    "y0": 26.5,
+    "y1": 82.5
+   },
+   "seal": {
+    "size": 61.5,
+    "x": 22.0,
+    "y": 23.5
+   }
+  },
+  "card": {
+   "src": "ui-card.webp",
+   "w": 376,
+   "h": 512,
+   "slice": [
+    26,
+    26,
+    26,
+    26
+   ]
+  },
+  "ic-atk": {
+   "src": "ui-ic-atk.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-auto": {
+   "src": "ui-ic-auto.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-blood": {
+   "src": "ui-ic-blood.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-boss": {
+   "src": "ui-ic-boss.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-break": {
+   "src": "ui-ic-break.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-crit": {
+   "src": "ui-ic-crit.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-critdmg": {
+   "src": "ui-ic-critdmg.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-egg": {
+   "src": "ui-ic-egg.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-gear": {
+   "src": "ui-ic-gear.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-gift": {
+   "src": "ui-ic-gift.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-herb": {
+   "src": "ui-ic-herb.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-hp": {
+   "src": "ui-ic-hp.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-iron": {
+   "src": "ui-ic-iron.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-lock": {
+   "src": "ui-ic-lock.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-log": {
+   "src": "ui-ic-log.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-outfit": {
+   "src": "ui-ic-outfit.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-page": {
+   "src": "ui-ic-page.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-partner": {
+   "src": "ui-ic-partner.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-pets": {
+   "src": "ui-ic-pets.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-regen": {
+   "src": "ui-ic-regen.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-skill": {
+   "src": "ui-ic-skill.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-soul": {
+   "src": "ui-ic-soul.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-spd": {
+   "src": "ui-ic-spd.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-speed": {
+   "src": "ui-ic-speed.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-star": {
+   "src": "ui-ic-star.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-stone": {
+   "src": "ui-ic-stone.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-ticket": {
+   "src": "ui-ic-ticket.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-train": {
+   "src": "ui-ic-train.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-wash": {
+   "src": "ui-ic-wash.webp",
+   "w": 128,
+   "h": 128
+  },
+  "ic-xp": {
+   "src": "ui-ic-xp.webp",
+   "w": 128,
+   "h": 128
+  },
+  "logo": {
+   "src": "ui-logo.webp",
+   "w": 512,
+   "h": 128
+  },
+  "panel": {
+   "src": "ui-panel.webp",
+   "w": 512,
+   "h": 380,
+   "slice": [
+    26,
+    26,
+    26,
+    26
+   ]
+  },
+  "paper": {
+   "src": "ui-paper.webp",
+   "w": 256,
+   "h": 256
+  },
+  "scroll": {
+   "src": "ui-scroll.webp",
+   "w": 512,
+   "h": 252,
+   "slice": [
+    36,
+    32,
+    36,
+    32
+   ]
+  },
+  "seal-1": {
+   "src": "ui-seal-1.webp",
+   "w": 512,
+   "h": 491
+  },
+  "seal-2": {
+   "src": "ui-seal-2.webp",
+   "w": 512,
+   "h": 496
+  },
+  "seal-3": {
+   "src": "ui-seal-3.webp",
+   "w": 512,
+   "h": 502
+  },
+  "seal": {
+   "src": "ui-seal.webp",
+   "w": 512,
+   "h": 508
+  },
+  "tab-on": {
+   "src": "ui-tab-on.webp",
+   "w": 512,
+   "h": 185,
+   "slice": [
+    17,
+    12,
+    17,
+    12
+   ]
+  },
+  "tab": {
+   "src": "ui-tab.webp",
+   "w": 512,
+   "h": 184,
+   "slice": [
+    15,
+    12,
+    15,
+    12
+   ]
+  }
  }
 };
-if (window.IDLE_INK) window.IDLE_INK.ver = 'd2e49232';
+if (window.IDLE_INK) window.IDLE_INK.ver = '4d6294d3';
 // 水墨圖：一張（或兩張）去背的圖 + 程式動作。沒有圖的角色照舊用點陣圖。
 // window.IDLE_INK 由 tools/ink_pack.py 產生：{ base, sprites: { key: { idle, attack, w, h, cx, fy, size, motion } }, bg: { area: [layers] }, items: {...}, eggs: {...} }
 var IdleInk = (function () {
@@ -4132,6 +5076,8 @@ var IdleInk = (function () {
     for (k in M.bg) M.bg[k].forEach(function (L) { img(L.src); });
     for (k in M.items) { img(M.items[k].field); img(M.items[k].xian); }
     for (k in M.eggs) img(M.eggs[k]);
+    for (k in M.fx || {}) img(M.fx[k].src);
+    for (k in M.ui || {}) if (/^(callout|seal)/.test(k)) img(M.ui[k].src);
   }
   function onReady(f) { ready.push(f); }
   function def(key) { return M.sprites[key] || null; }
@@ -4243,8 +5189,12 @@ var IdleInk = (function () {
   function item(t, q) { var d = M.items[t]; if (!d) return null; return (q >= 3 && img(d.xian)) || img(d.field); }
   function itemAng(t, q) { var d = M.items[t]; if (!d) return null; return q >= 3 && img(d.xian) ? (d.xianAng || 0) : img(d.field) ? (d.fieldAng || 0) : null; }
   function egg(k) { return img(M.eggs[k]); }
+  // 招式特效圖：{ img, w, h }（w、h 是畫面單位）
+  function fx(k) { var d = M.fx && M.fx[k]; var im = d && img(d.src); return im ? { img: im, w: d.w, h: d.h } : null; }
+  // 介面圖：{ img, url, w, h, slice, text, seal }
+  function ui(k) { var d = M.ui && M.ui[k]; if (!d) return null; var im = img(d.src); return { img: im, url: (M.base || 'ink/') + d.src + (M.ver ? '?v=' + M.ver : ''), w: d.w, h: d.h, slice: d.slice, text: d.text, seal: d.seal }; }
   if (typeof document !== 'undefined') preload();
-  return { has: has, def: def, draw: draw, fit: fit, bg: bg, ground: ground, item: item, itemAng: itemAng, egg: egg, onReady: onReady, M: M };
+  return { has: has, def: def, draw: draw, fit: fit, bg: bg, ground: ground, item: item, itemAng: itemAng, egg: egg, fx: fx, ui: ui, onReady: onReady, M: M };
 })();
 
 </script>
@@ -4256,7 +5206,7 @@ var IdleStage = (function (C, D, ART) {
   // 水墨背景是側面看過去的一條地面線，大家都要踩在線上，前後只差一點點
   // 站位分三排：後排（高一點、小一點）、主角那一排、前排。同一排左右錯開，前後排只遮到一小塊
   var cv, ctx, time = 0;
-  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], splats: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0, calls: [] };
+  var fx = { proj: [], text: [], parts: [], rings: [], bolts: [], splats: [], shake: 0, flash: 0, flashColor: '#fff', tint: 0, tintColor: '#ff8a3c', banner: null, leaves: 0, calls: [], spr: [] };
   var gearAnim = {};                    // 法器的出招動畫狀態 id → {t, kind, tx, ty}
   var petJump = {};
 
@@ -4625,6 +5575,38 @@ var IdleStage = (function (C, D, ART) {
     fx.calls.unshift({ txt: txt, col: col || '#ffcf4a', t: 0, life: 1.7, foe: !!foe, seal: seal || '', seed: Math.floor(Math.random() * 997) + 1 });
     if (fx.calls.length > 3) fx.calls.length = 3;
   }
+  // 美術畫的招式條（ui-callout-short/mid/long + ui-seal-1..3）：字放在 text 框裡，印放在 seal 框裡；敵人的招左右翻過來放右邊
+  function drawCallArt(c, i, fs, y, grow, a) {
+    if (!INK || !INK.ui) return false;
+    var n = c.txt.length, bar = INK.ui(n <= 4 ? 'callout-short' : n <= 7 ? 'callout-mid' : 'callout-long');
+    var seal = c.seal ? INK.ui('seal-' + (1 + c.seed % 3)) : null;
+    if (!bar || !bar.img || !bar.text || (c.seal && (!seal || !seal.img))) return false;
+    var tb = bar.text, sc = fs * 1.55 / (tb.y1 - tb.y0);
+    ctx.font = '900 ' + fs + 'px ' + FONT;
+    var tw = ctx.measureText(c.txt).width, boxW = (tb.x1 - tb.x0) * sc;
+    if (tw > boxW) { sc *= tw / boxW; }
+    var bw = bar.w * sc, bh = bar.h * sc, dir = c.foe ? -1 : 1, x0 = c.foe ? (W - 4) * S : 4 * S;
+    ctx.save(); ctx.translate(x0, y - (tb.y0 + tb.y1) / 2 * sc); ctx.scale(dir, 1);
+    ctx.save(); ctx.beginPath(); ctx.rect(-2, -bh, bw * grow + 2, bh * 3); ctx.clip();
+    ctx.drawImage(bar.img, 0, 0, bw, bh); ctx.restore();
+    if (grow > 0.35) {
+      var fa = Math.min(1, (grow - 0.35) / 0.4);
+      if (seal && bar.seal) {
+        var ss = bar.seal.size * sc, sx = bar.seal.x * sc, sy = bar.seal.y * sc;
+        // 印框是空心的朱紅框：裡面墊一塊米色紙，再寫朱紅字
+        ctx.globalAlpha = a * fa; ctx.fillStyle = '#f1e4c8'; ctx.fillRect(sx + ss * 0.08, sy + ss * 0.08, ss * 0.84, ss * 0.84); ctx.drawImage(seal.img, sx, sy, ss, ss);
+        ctx.save(); ctx.translate(sx + ss / 2, sy + ss / 2); ctx.scale(dir, 1);
+        ctx.font = '900 ' + ss * 0.6 + 'px ' + FONT; ctx.fillStyle = '#c8261b'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(c.seal, 0, ss * 0.04);
+        ctx.restore();
+      }
+      ctx.save(); ctx.translate((tb.x0 + tb.x1) / 2 * sc, (tb.y0 + tb.y1) / 2 * sc); ctx.scale(dir, 1);
+      ctx.font = '900 ' + fs + 'px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.globalAlpha = a * fa * (i ? 0.85 : 1);
+      ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(20,17,14,0.95)'; ctx.strokeText(c.txt, 0, 0);
+      ctx.fillStyle = c.col; ctx.fillText(c.txt, 0, 0); ctx.restore();
+    }
+    ctx.restore();
+    return true;
+  }
   // 招式欄：毛筆刷一筆的墨底（頭圓、尾巴飛白），左邊一顆朱紅小印寫是誰放的招
   function drawCalls() {
     var row = { a: 0, b: 0 };
@@ -4637,6 +5619,7 @@ var IdleStage = (function (C, D, ART) {
       var mt = ctx.measureText(c.txt), tw = mt.width, asc = mt.actualBoundingBoxAscent || fs * 0.88, dsc = mt.actualBoundingBoxDescent || fs * 0.12;
       var ss = fs * 1.25, pad = 5 * S, L = ss + tw + pad * 3.2, h = asc + dsc + 7 * S;
       var x0 = c.foe ? (W - 6) * S : 6 * S, R = rng(c.seed), len = L * grow;
+      if (drawCallArt(c, i, fs, y, grow, a)) { ctx.restore(); return; }
       // 墨條：上下緣用小亂數抖動，起筆圓頭、收筆分岔飛白
       ctx.save(); ctx.translate(x0, y); ctx.scale(dir, 1);
       ctx.fillStyle = 'rgba(20,17,14,0.8)'; ctx.beginPath();
@@ -4672,6 +5655,23 @@ var IdleStage = (function (C, D, ART) {
   function burst(x, y, col, n, spd, life) {
     for (var i = 0; i < n; i++) { var a = Math.random() * 6.28, v = (0.4 + Math.random()) * (spd || 40); fx.parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 20, t: 0, life: life || 0.6, col: col, s: 1 + Math.floor(Math.random() * 2) }); }
   }
+  // 美術畫的特效圖（pack/fx）：沒有圖就回 false，照舊用程式畫的
+  // o: { life, s 大小倍數, rot, flip, mode: 'pop' 放大淡出 | 'grow' 從小長大 | 'fade', delay, alpha }
+  var MELEE = { baihu: 1, qilin: 1, taotie: 1, qinglong: 1, xuanwu: 1, jiao: 1, dangkang: 1 };  // 撲上去咬的神獸：打中畫爪痕
+  function sfx(name, x, y, o) {
+    if (!INK || !INK.fx || !INK.fx(name)) return false;
+    o = o || {}; fx.spr.push({ n: name, x: x, y: y, t: -(o.delay || 0), life: o.life || 0.35, s: o.s || 1, rot: o.rot || 0, flip: !!o.flip, mode: o.mode || 'pop', a: o.alpha || 1, spin: o.spin || 0, vx: o.vx || 0, vy: o.vy || 0 });
+    return true;
+  }
+  function drawSfx(sp) {
+    var d = INK.fx(sp.n); if (!d || sp.t < 0) return;
+    var q = Math.min(1, sp.t / sp.life), sc = sp.s, al = sp.a;
+    if (sp.mode === 'pop') { sc *= 0.7 + 0.4 * Math.min(1, q * 3); al *= q < 0.5 ? 1 : 1 - (q - 0.5) / 0.5; }
+    else if (sp.mode === 'grow') { sc *= 0.3 + 1.0 * q; al *= 1 - q * q; }
+    else al *= 1 - q;
+    ctx.save(); ctx.globalAlpha = Math.max(0, al); ctx.translate((sp.x + sp.vx * sp.t) * S, (sp.y + sp.vy * sp.t) * S); ctx.rotate(sp.rot + sp.spin * sp.t); if (sp.flip) ctx.scale(-1, 1);
+    var w = d.w * sc * S, h = d.h * sc * S; ctx.drawImage(d.img, -w / 2, -h / 2, w, h); ctx.restore();
+  }
   function shot(x, y, tx, ty, col, dur, kind) { fx.proj.push({ x: x, y: y, tx: tx, ty: ty, col: col, t: 0, dur: dur || 0.35, kind: kind || 'orb' }); }
   function fmt(n) { return IdleFmt(n); }
 
@@ -4687,23 +5687,26 @@ var IdleStage = (function (C, D, ART) {
       if (merged) { merged.val += d.dmg; merged.txt = fmt(merged.val); merged.t = Math.min(merged.t, 0.06); }
       else if (d.crit || nd < 8) { var nt = addText(c.x + (Math.random() * 8 - 4), c.top - 4, fmt(d.dmg), col, d.crit ? 8.5 : 6.5, d.crit ? 1 : 0.8, d.crit ? 'crit' : 'dmg', ek); nt.val = d.dmg; }
       if (d.src === 'hero') { burst(c.x - 6, c.y, '#ffffff', 4, 30, 0.25); }
-      if (fx.splats.length < 14) fx.splats.push({ x: c.x - 3 + Math.random() * 6, y: c.y - 2 + Math.random() * 4, t: 0, life: d.crit ? 0.7 : 0.45, seed: Math.floor(Math.random() * 999), big: d.crit ? 1.6 : 1, col: d.ke > 0 ? '#c8322c' : null });
+      if (d.crit && sfx('splat', c.x, c.y, { s: 0.35, life: 0.45, rot: Math.random() * 6, mode: 'grow', alpha: 0.85 })) {}
+      else if (fx.splats.length < 14) fx.splats.push({ x: c.x - 3 + Math.random() * 6, y: c.y - 2 + Math.random() * 4, t: 0, life: d.crit ? 0.7 : 0.45, seed: Math.floor(Math.random() * 999), big: d.crit ? 1.6 : 1, col: d.ke > 0 ? '#c8322c' : null });
       if (d.ke && Math.random() < 0.25) addText(c.x + 10, c.top + 4, d.ke > 0 ? '剋！' : '被剋', d.ke > 0 ? '#ffcf4a' : '#9aa4b5', 7, 0.8, 'miss');
     } else if (type === 'kill') {
       var k = enemyCenter(d.e);
       burst(k.x, k.y, '#ffe27a', d.e.boss ? 24 : 6, 50, 0.7);
+      sfx(d.e.boss ? 'burst' : 'bloom', k.x, k.y, { s: d.e.boss ? 0.9 : 0.9, life: d.e.boss ? 0.6 : 0.45, mode: 'grow', alpha: 0.75 });
       if (d.e.boss) { fx.shake = 0.4; }
       if (d.iron) addText(k.x, k.top - 14, '+1 玄鐵', '#c7d2e0', 8, 1.2);
       if (d.egg) { addText(k.x, k.top - 22, '+1 靈獸蛋', '#ffe27a', 9, 1.6); burst(k.x, k.y, '#ffe27a', 10, 30, 0.6); }
       var dy = 0; for (var rk in (d.drops || {})) { dy += 9; addText(k.x, k.top - 14 - dy, '+' + d.drops[rk] + ' ' + D.RES[rk].name, D.RES[rk].color, 7, 1.3); }
     } else if (type === 'heroAtk') {
-      fx.rings.push({ kind: 'slash', x: hp.x + 18, y: FEET - 18, t: 0, life: 0.18 });
+      if (!sfx('slash', hp.x + 22, FEET - 20, { s: 0.42, life: 0.22, rot: -0.2 })) fx.rings.push({ kind: 'slash', x: hp.x + 18, y: FEET - 18, t: 0, life: 0.18 });
     } else if (type === 'heroSkill') {
       fx.leaves = 1.2;
       addCall('秋風起！', '#ffb36b', false, '我');
     } else if (type === 'petAtk') {
       var pp = petPos(d.pet), tc = enemyCenter(d.e);
-      shot(pp.x + 12, pp.feet - 26, tc.x, tc.y, d.color, 0.35);
+      if (MELEE[d.pet.key] && sfx('claw', tc.x, tc.y, { s: 0.45, life: 0.3, delay: 0.15 })) {}
+      else shot(pp.x + 12, pp.feet - 26, tc.x, tc.y, d.color, 0.35);
     } else if (type === 'petSkill') petSkillFx(d, hp);
     else if (type === 'partnerAtk') { var ppa = partnerPos(d.p), tca = enemyCenter(d.e); shot(ppa.x + 10, ppa.feet - 22, tca.x, tca.y, d.color, 0.3); }
     else if (type === 'partnerSkill') partnerSkillFx(d, hp);
@@ -4837,7 +5840,7 @@ var IdleStage = (function (C, D, ART) {
   function update(dt) {
     time += dt;
     if (fx.parts.length > 260) fx.parts.splice(0, fx.parts.length - 260);
-    ['proj', 'text', 'parts', 'rings', 'bolts', 'splats', 'calls'].forEach(function (k) {
+    ['proj', 'text', 'parts', 'rings', 'bolts', 'splats', 'calls', 'spr'].forEach(function (k) {
       fx[k] = fx[k].filter(function (o) { o.t += dt; return o.t < (o.life || o.dur || 1) + (o.kind === 'rock' ? 0.05 : 0); });
     });
     fx.parts.forEach(function (p) { p.x += p.vx * dt; p.y += p.vy * dt; if (!p.float) p.vy += 90 * dt; });
@@ -4945,7 +5948,11 @@ var IdleStage = (function (C, D, ART) {
     list.forEach(function (o) { o.draw(); });
 
     // 護盾、石頭牆、天眼
-    if (h.shield > 0) { ctx.globalAlpha = 0.35 + 0.1 * Math.sin(time * 6); ellipse(hp.x, FEET - 18, 22, 24, '#7fe0ff'); ctx.globalAlpha = 1; }
+    if (h.shield > 0) {
+      var shd = INK && INK.fx && INK.fx('shield');
+      if (shd) { ctx.save(); ctx.globalAlpha = 0.7 + 0.15 * Math.sin(time * 6); ctx.translate(hp.x * S, (FEET - 18) * S); ctx.rotate(time * 0.8); var sw2 = 46 * S; ctx.drawImage(shd.img, -sw2 / 2, -sw2 / 2, sw2, sw2); ctx.restore(); }
+      else { ctx.globalAlpha = 0.35 + 0.1 * Math.sin(time * 6); ellipse(hp.x, FEET - 18, 22, 24, '#7fe0ff'); ctx.globalAlpha = 1; }
+    }
     if (h.guardT > 0) { px(hp.x + 20, FEET - 30, 10, 30, '#9a9086'); px(hp.x + 21, FEET - 29, 8, 4, '#b8afa4'); px(hp.x + 28, FEET - 8, 4, 3, '#d9a066'); }
     if (h.critT > 0) { px(hp.x - 5, FEET - 56, 10, 5, '#ffe27a'); px(hp.x - 2, FEET - 55, 4, 3, '#3a2a10'); }
 
@@ -4999,6 +6006,12 @@ var IdleStage = (function (C, D, ART) {
     });
     fx.bolts.forEach(function (b) {
       if (b.t < 0) return;
+      var th = b.big && INK && INK.fx && INK.fx(b.x % 2 < 1 ? 'thunder-1' : 'thunder-2');
+      if (th) { // 美術畫的閃電：從天上拉到目標
+        var len = Math.max(20, b.ty - b.y), bw = th.w * len / th.h, bf2 = 1 - b.t / b.life;
+        ctx.save(); ctx.globalAlpha = bf2; ctx.drawImage(th.img, (b.tx - bw / 2) * S, b.y * S, bw * S, len * S); ctx.restore();
+        wash(b.tx, b.ty, 16, 'rgba(140,190,255,1)', 0.5 * bf2); return;
+      }
       // 墨色閃電：一筆一筆折下來，外面一層淡藍的暈
       if (!b.pts) { b.pts = []; var bn = 7; for (var i = 0; i <= bn; i++) { var q = i / bn; b.pts.push([b.x + (b.tx - b.x) * q + (i && i < bn ? (Math.random() - 0.5) * 12 : 0), b.y + (b.ty - b.y) * q]); } }
       var fine = []; for (var bi = 0; bi < b.pts.length - 1; bi++) for (var bj = 0; bj < 4; bj++) { var u = bj / 4; fine.push([b.pts[bi][0] + (b.pts[bi + 1][0] - b.pts[bi][0]) * u, b.pts[bi][1] + (b.pts[bi + 1][1] - b.pts[bi][1]) * u]); }
@@ -5010,6 +6023,8 @@ var IdleStage = (function (C, D, ART) {
     });
     fx.rings.forEach(function (r) {
       var q = r.t / r.life;
+      if ((r.kind === 'slash' || r.kind === 'tornado') && !r.spr) { r.spr = 1; var rd = r.kind === 'slash' ? sfx('slash', r.x, r.y, { s: 0.42, life: r.life + 0.05, rot: -0.2 }) : sfx('wind', r.x, r.y - 26, { s: 0.75, life: r.life, mode: 'fade', alpha: 0.9 }); if (rd) r.skip = 1; }
+      if (r.skip) return;
       if (r.kind === 'slash') { // 一道彎月墨痕
         var sa = 1 - Math.max(0, q - 0.4) / 0.6;
         brush(arcPts(r.x - 4, r.y, 15, -1.3, 0.9, 18, 1.15), 2.2, INKC, sa, 31, Math.min(1, q * 3));
@@ -5026,9 +6041,12 @@ var IdleStage = (function (C, D, ART) {
     });
     // 命中墨花：一圈墨點飛濺，剋屬性時帶一點朱紅
     fx.splats.forEach(function (sp) { var u = sp.t / sp.life; if (sp.col) wash(sp.x, sp.y, 8 * sp.big, sp.col, 0.3 * (1 - u)); splat(sp.x, sp.y, Math.round(9 * sp.big), (4 + 10 * u) * sp.big, INKC, (1 - u) * 0.9, sp.seed); });
+    fx.spr.forEach(drawSfx);
     fx.parts.forEach(function (p) { inkDot(p.x, p.y, 0.45 + p.s * 0.45, p.col, Math.max(0, 1 - p.t / p.life), p.vx, p.vy); });
     ctx.globalAlpha = 1;
-    if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = FEET - 98 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
+    var lf = fx.leaves > 0 && INK && INK.fx && INK.fx('leaf');
+    if (lf) { for (var l2 = 0; l2 < 24; l2++) { var lx2 = ((l2 * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly2 = FEET - 98 + (l2 * 37) % 130 + Math.sin(time * 8 + l2) * 6; ctx.save(); ctx.globalAlpha = 0.9; ctx.translate(lx2 * S, ly2 * S); ctx.rotate(time * 3 + l2); var lw = lf.w * 1.1 * S; ctx.drawImage(lf.img, -lw / 2, -lw / 4, lw, lw / 2); ctx.restore(); } }
+    else if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = FEET - 98 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
     if (fx.pillar) { var pq = fx.pillar.t / fx.pillar.life; for (var py = 0; py < FEET; py += 6) wash(hp.x, py, 12, 'rgba(255,226,122,1)', 0.22 * (1 - pq)); wash(hp.x, FEET - 10, 24, 'rgba(255,251,224,1)', 0.4 * (1 - pq)); }
 
     // 主角血條（放在腳底下，不擋到造型）
