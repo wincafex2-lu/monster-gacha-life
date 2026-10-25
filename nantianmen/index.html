@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v28</div>
+    <div class="ver">v29</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4052,6 +4052,15 @@ var IdleInk = (function () {
         } else tile(0, 0, im.naturalWidth, im.naturalHeight, Math.floor(x), y, Math.ceil(dw) + 1, dh, fl);
       }
     });
+    // 地板蓋一層淡淡的宣紙色，花紋退後，角色比較跳出來（越下面蓋越多）
+    var veil = typeof window !== 'undefined' && window.IDLE_VEIL !== undefined ? window.IDLE_VEIL : 1;
+    if (veil > 0) {
+      var g0 = deep ? horPx : feetPx - 24 * S;
+      ctx.fillStyle = 'rgba(243,234,216,' + 0.08 * veil + ')'; ctx.fillRect(0, 0, W, g0);
+      var gr = ctx.createLinearGradient(0, g0, 0, bottom);
+      gr.addColorStop(0, 'rgba(243,234,216,' + 0.22 * veil + ')'); gr.addColorStop(1, 'rgba(243,234,216,' + 0.42 * veil + ')');
+      ctx.fillStyle = gr; ctx.fillRect(0, g0, W, bottom - g0);
+    }
     ctx.restore();
     return true;
   }
@@ -4109,8 +4118,17 @@ var IdleStage = (function (C, D, ART) {
   // 腳底在 (cx, feet)（邏輯座標）
   // minH：水墨圖至少要畫多高（首領借用夥伴的圖時，不能比小怪還小）
   // inkMul：水墨圖再縮放（神獸和夥伴站位比較擠，畫小一點）
+  var SHADOW = typeof window === 'undefined' || window.IDLE_SHADOW !== 0;
   function drawSpr(key, act, fr, flip, sc, cx, feet, alpha, minH, inkMul) {
     var ik = inkKey(key);
+    // 腳下的影子（會飛的不畫）
+    if (ik && SHADOW && (alpha === undefined || alpha > 0.6)) {
+      var dd = INK.def(ik);
+      if (dd && dd.motion !== 'fly') {
+        var rx = inkHeight(key, ik, sc, minH) * (inkMul || 1) * dd.w / dd.h * 0.3;
+        ctx.fillStyle = 'rgba(40,28,18,0.38)'; ctx.beginPath(); ctx.ellipse(cx * S, feet * S, rx, rx * 0.2, 0, 0, 7); ctx.fill();
+      }
+    }
     if (ik && INK.draw(ctx, ik, act, fr, flip, cx * S, feet * S, inkHeight(key, ik, sc, minH) * (inkMul || 1), alpha, time, seedOf(key))) return;
     var m = ART.meta(key), img = sprite(key, act, fr, flip, sc);
     var x = Math.round(cx * S - (m.w / 2 + 8) * sc), y = Math.round(feet * S - (m.feet + 8) * sc);
