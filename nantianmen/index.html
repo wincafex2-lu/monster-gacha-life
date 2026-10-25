@@ -267,7 +267,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v41</div>
+    <div class="ver">v42</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -3042,6 +3042,22 @@ window.IDLE_INK = {
    "size": 30.0,
    "motion": "fly"
   },
+  "heijiao": {
+   "attack": "heijiao__attack.webp",
+   "atk": {
+    "w": 208,
+    "h": 182,
+    "cx": 90.6,
+    "fy": 181.8
+   },
+   "w": 200,
+   "h": 187,
+   "cx": 103.2,
+   "fy": 187.2,
+   "idle": "heijiao__idle.webp",
+   "size": 52.0,
+   "motion": "walk"
+  },
   "heixiong": {
    "attack": "heixiong__attack.webp",
    "atk": {
@@ -3535,6 +3551,15 @@ window.IDLE_INK = {
    "size": 30.0,
    "motion": "walk"
   },
+  "mo": {
+   "w": 105,
+   "h": 126,
+   "cx": 45.0,
+   "fy": 126.0,
+   "idle": "mo__idle.webp",
+   "size": 35.0,
+   "motion": "walk"
+  },
   "mogu": {
    "w": 113,
    "h": 108,
@@ -3543,6 +3568,22 @@ window.IDLE_INK = {
    "idle": "mogu__idle.webp",
    "size": 30.0,
    "motion": "hop"
+  },
+  "mohu": {
+   "attack": "mohu__attack.webp",
+   "atk": {
+    "w": 240,
+    "h": 148,
+    "cx": 20.4,
+    "fy": 148.2
+   },
+   "w": 230,
+   "h": 141,
+   "cx": 141.0,
+   "fy": 141.0,
+   "idle": "mohu__idle.webp",
+   "size": 39.17,
+   "motion": "walk"
   },
   "mojia": {
    "attack": "mojia__attack.webp",
@@ -5098,7 +5139,7 @@ window.IDLE_INK = {
   }
  }
 };
-if (window.IDLE_INK) window.IDLE_INK.ver = '36c49c71';
+if (window.IDLE_INK) window.IDLE_INK.ver = '4d3ecd41';
 // 水墨圖：一張（或兩張）去背的圖 + 程式動作。沒有圖的角色照舊用點陣圖。
 // window.IDLE_INK 由 tools/ink_pack.py 產生：{ base, sprites: { key: { idle, attack, w, h, cx, fy, size, motion } }, bg: { area: [layers] }, items: {...}, eggs: {...} }
 var IdleInk = (function () {
@@ -6340,7 +6381,8 @@ function IdleFmt(n) {
   }
   // 大一點會動的角色圖（孵蛋、加入、覺醒）：有水墨圖就用水墨圖 + 程式動作
   function showChar(canvas, key, skillTimes, fps) {
-    var ik = inkFor(key);
+    // 開場時水墨圖可能還在下載：有這張圖的資料就先走水墨，載好就會畫出來
+    var ik = inkFor(key) || (INK && key !== 'hero' && INK.def(key) ? key : null);
     if (!ik) { var a = ART.animate(canvas, key, { scale: 3, fps: fps || 6 }); if (skillTimes) a.play('skill', skillTimes); return a; }
     var m = ART.meta(key), w = canvas.width = (m.w + 16) * 3, h = canvas.height = (m.h + 16) * 3, x = canvas.getContext('2d'), t0 = performance.now(), id = 0;
     var hpx = (INK.def(ik).size || m.h * 1.1) * 3;
