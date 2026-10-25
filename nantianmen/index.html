@@ -162,14 +162,14 @@ button:disabled { cursor: default; opacity: 0.45; }
 .mini.warn { background: #7a3426; }
 .big { background: var(--cinnabar); color: #fff6ea; border-radius: 6px; padding: 10px 18px; min-height: 46px; font-family: var(--display); font-weight: 900; font-size: 17px; letter-spacing: .06em; box-shadow: 0 3px 0 #6e2219, inset 0 0 0 1px rgba(255,255,255,.12); }
 .big:disabled { background: #3d362d; color: var(--muted); box-shadow: none; }
-.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 4px 0 8px; }
-.seg button { background: var(--panel2); color: var(--text); border: 2px solid var(--line); border-radius: 10px; padding: 10px; font-weight: 900; font-size: 16px; }
-.seg button.on { border-color: var(--gold); color: var(--gold); }
-.seg button:disabled { opacity: .5; }
+.pseg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 4px 0 8px; }
+.pseg button { background: var(--panel2); color: var(--text); border: 2px solid var(--line); border-radius: 10px; padding: 10px; font-weight: 900; font-size: 16px; }
+.pseg button.on { border-color: var(--gold); color: var(--gold); }
+.pseg button:disabled { opacity: .5; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
 .chips button { background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-weight: 800; color: var(--text); }
 .chips button.on { border-color: var(--gold); background: var(--ink); }
-.pgrid, .seg, .chips, .team { min-width: 0; }
+.pgrid, .pseg, .chips, .team { min-width: 0; }
 .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; margin-bottom: 8px; }
 .pgrid.small { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 4px; }
 .pc { position: relative; background: var(--panel2); border: 2px solid var(--line); border-radius: 10px; padding: 6px 4px; text-align: center; display: grid; justify-items: center; gap: 2px; cursor: pointer; }
@@ -253,7 +253,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v34</div>
+    <div class="ver">v35</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -6560,7 +6560,7 @@ function IdleFmt(n) {
     var h = '<div class="sec"><h3>修煉</h3><div class="seg" role="group" aria-label="一次升幾級">' +
       [[1, '×1'], [10, '×10'], ['max', '最大']].map(function (m) { return '<button type="button" data-mult="' + m[0] + '" class="' + (mult === m[0] ? 'on' : '') + '">' + m[1] + '</button>'; }).join('') + '</div></div><div class="ups">';
     D.UPGRADES.forEach(function (u) {
-      h += '<div class="up"><div><div class="nm">' + u.name + '<small id="lv_' + u.key + '"></small></div><div class="val" id="val_' + u.key + '"></div><div class="note" style="font-size:12px">' + u.desc + '</div></div>' +
+      h += '<div class="up"><div><div class="nm"><i class="ic u-' + u.key + '"></i>' + u.name + '<small id="lv_' + u.key + '"></small></div><div class="val" id="val_' + u.key + '"></div><div class="note" style="font-size:12px">' + u.desc + '</div></div>' +
         '<button class="buy" type="button" data-buy="' + u.key + '" id="buy_' + u.key + '">升級<small id="cost_' + u.key + '"></small></button></div>';
     });
     h += '</div><div class="bonus" id="bonus"></div>';
@@ -6613,7 +6613,7 @@ function IdleFmt(n) {
   function petsHtml() {
     var S = C.S, pOn = C.partnerSlots() > 0, nP = Object.keys(S.pets).length, nA = Object.keys(S.partners).length;
     if (!pOn) petView = 'pets';
-    var h = '<div class="seg">' +
+    var h = '<div class="pseg">' +
       '<button type="button" data-pview="pets" class="' + (petView === 'pets' ? 'on' : '') + '">神獸 ' + nP + '/' + D.PETS.length + '</button>' +
       '<button type="button" data-pview="partners" class="' + (petView === 'partners' ? 'on' : '') + '"' + (pOn ? '' : ' disabled') + '>夥伴 ' + (pOn ? nA + '/' + D.PARTNERS.length : '🔒 打完南天門') + '</button></div>';
     var kind = petView === 'partners' ? 'a' : 'p', list = kind === 'a' ? D.PARTNERS : D.PETS, own = kind === 'a' ? S.partners : S.pets;
@@ -6693,7 +6693,7 @@ function IdleFmt(n) {
     return h + '</div>';
   }
   // ───────── 功法：副本、心法、煉丹、搭配、轉世 ─────────
-  function resLine(k) { var r = D.RES[k]; return '<span class="note">' + r.name + ' <b style="color:' + r.color + '" data-res="' + k + '">' + fmt(C.S[k] || 0) + '</b></span>'; }
+  function resLine(k) { var r = D.RES[k]; return '<span class="note"><i class="ic r-' + k + '"></i>' + r.name + ' <b style="color:' + r.color + '" data-res="' + k + '">' + fmt(C.S[k] || 0) + '</b></span>'; }
   function skillHtml() {
     var S = C.S, h = '';
     var duns = D.DUNGEONS.filter(function (d) { return C.sysOn(d.sys); });
@@ -7030,6 +7030,40 @@ function IdleFmt(n) {
     else if (hiddenAt && C.S.started) { var sec = (Date.now() - hiddenAt) / 1000; hiddenAt = 0; last = performance.now(); if (sec >= 60) doOffline(sec); }
   });
   window.addEventListener('pagehide', function () { if (C.S.started) save(); });
+
+  // ───────── 介面美術（GPT 畫的框、按鈕、圖示）：有圖就換上，沒有就用原本的 CSS ─────────
+  function skinUI() {
+    if (!INK || !INK.ui || !INK.ui('panel')) return;
+    var u = function (k) { return INK.ui(k); }, css = [];
+    function frame(sel, k, bw, extra) {
+      var d = u(k); if (!d || !d.slice) return;
+      css.push(sel + '{border-style:solid;border-width:' + bw + ';border-image:url("' + d.url + '") ' + d.slice.join(' ') + ' fill / ' + bw + ' stretch;background:none;border-radius:0;' + (extra || '') + '}');
+    }
+    function icon(sel, k, size) { var d = u('ic-' + k); if (d) css.push(sel + '{background:url("' + d.url + '") center/contain no-repeat;width:' + (size || 18) + 'px;height:' + (size || 18) + 'px;transform:none;box-shadow:none;border-radius:0;vertical-align:-4px}'); }
+    frame('#panel', 'panel', '14px');
+    frame('#modalCard', 'scroll', '18px 22px', 'box-shadow:0 10px 40px rgba(0,0,0,.6);');
+    frame('.pc,.slot,.up,.pet,.of,.gslot,.gi,.dun,.pill,.xn', 'card', '9px', 'box-shadow:none;');
+    frame('.pc.on', 'card', '9px', 'box-shadow:0 0 0 2px var(--gold);');
+    frame('button.big,#breakBtn.ready,#bossBtn', 'btn', '6px 8px', 'color:#fff6e6;text-shadow:0 1px 2px rgba(0,0,0,.6);');
+    frame('button.go,.buy', 'btn2', '6px 8px', 'color:#f2fff6;text-shadow:0 1px 2px rgba(0,0,0,.6);');
+    frame('button.big:disabled,button.go:disabled,.buy:disabled', 'btn2', '6px 8px', 'filter:grayscale(1) brightness(.7);');
+    frame('.tabs button', 'tab', '6px 8px');
+    frame('.tabs button[aria-selected=true]', 'tab-on', '6px 8px', 'color:var(--gold);');
+    frame('.realmrow .bar', 'bar', '4px 6px');
+    var ic = { stone: 'stone', egg: 'egg', iron: 'iron', herb: 'herb' };
+    for (var k in ic) icon('.ic.' + k, ic[k]);
+    var rs = { page: 'page', herb: 'herb', stone: 'wash', soul: 'soul', blood: 'blood' };
+    for (k in rs) icon('.ic.r-' + k, rs[k]);
+    var us = { atk: 'atk', hp: 'hp', reg: 'regen', spd: 'spd', crit: 'crit', cd: 'critdmg' };
+    for (k in us) icon('.ic.u-' + k, us[k], 22);
+    var tabs = { train: 'train', pets: 'pets', gear: 'gear', skill: 'skill', log: 'log' };
+    for (k in tabs) { var d = u('ic-' + tabs[k]); if (d) css.push('.tabs button[data-tab=' + k + ']::before{content:"";display:block;margin:0 auto 1px;width:24px;height:24px;background:url("' + d.url + '") center/contain no-repeat}'); }
+    var btns = { autoBtn: 'auto', spdBtn: 'speed', bossBtn: 'boss', breakBtn: 'break' };
+    for (k in btns) { var d2 = u('ic-' + btns[k]); if (d2) css.push('#' + k + '::before{content:"";display:inline-block;width:16px;height:16px;margin-right:3px;vertical-align:-3px;background:url("' + d2.url + '") center/contain no-repeat}'); }
+    var logo = u('logo'); if (logo) css.push('.titlebar .title{color:transparent;background:url("' + logo.url + '") left center/contain no-repeat;min-height:30px;min-width:160px;overflow:hidden;white-space:nowrap}');
+    var st = document.createElement('style'); st.id = 'uiSkin'; st.textContent = css.join('\n'); document.head.appendChild(st);
+  }
+  skinUI();
 
   // ───────── 開始 ─────────
   var saved = readSave();
