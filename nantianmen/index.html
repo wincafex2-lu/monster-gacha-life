@@ -267,7 +267,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v39</div>
+    <div class="ver">v40</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1251,13 +1251,13 @@ var IDLE_DATA = (function () {
       hello: '白澤：「我什麼都知道。例如你昨天沒寫功課。」' },
     { key: 'qinglong', name: '青龍', rar: 'epic', shot: '#4fd1c5', cd: 13, skill: '龍捲水', desc: '水龍捲掃過全部妖怪。', fx: 'tornado',
       hello: '青龍：「我的龍珠是不是在你那裡？沒有？那我先跟著你找。」' },
-    { key: 'qilin', name: '麒麟', rar: 'epic', shot: '#ff9a3c', cd: 12, skill: '踏雲火', desc: '踩著火雲衝過去，對前面的妖怪超大傷害。', fx: 'charge',
+    { key: 'qilin', tune: 0.85, name: '麒麟', rar: 'epic', shot: '#ff9a3c', cd: 12, skill: '踏雲火', desc: '踩著火雲衝過去，對前面的妖怪超大傷害。', fx: 'charge',
       hello: '麒麟：「火山太熱了，跟你走比較涼。」' },
-    { key: 'jiuwei', name: '九尾狐', rar: 'epic', shot: '#ff7ab8', cd: 13, skill: '狐火', desc: '九顆狐火亂砸一通。', fx: 'foxfire',
+    { key: 'jiuwei', tune: 0.85, name: '九尾狐', rar: 'epic', shot: '#ff7ab8', cd: 13, skill: '狐火', desc: '九顆狐火亂砸一通。', fx: 'foxfire',
       hello: '九尾狐：「九條尾巴梳一次要一個時辰，你懂我的辛苦嗎？」' },
     { key: 'taotie', name: '饕餮', rar: 'epic', shot: '#b58b5a', cd: 12, skill: '吞天', desc: '把前面的妖怪吃掉，吐出 3 倍靈石。', fx: 'devour',
       hello: '饕餮：「好吧，我跟你走。但是飯要管飽。」' },
-    { key: 'fenghuang', name: '鳳凰', rar: 'legend', shot: '#ffcf4a', cd: 15, skill: '浴火重生', desc: '火焰燒遍全場，主角回血。', fx: 'phoenix',
+    { key: 'fenghuang', tune: 1.35, name: '鳳凰', rar: 'legend', shot: '#ffcf4a', cd: 15, skill: '浴火重生', desc: '火焰燒遍全場，主角回血。', fx: 'phoenix',
       hello: '鳳凰：「⋯⋯阿鳳那隻雞說牠是我？」' },
     // ── 2026-10-24 加的普通、稀有神獸（圖還沒到，先借相近的點陣圖）──
     { key: 'huoshu', name: '火鼠', rar: 'common', shot: '#ff8a3c', cd: 8, skill: '小火球', desc: '丟一顆小火球，前面的妖怪會燒 3 秒。', fx: 'fireball',
@@ -1283,7 +1283,7 @@ var IDLE_DATA = (function () {
       hello: '精衛：「你剛剛幫我把九嬰趕走了！我還要繼續填海，你也一起嗎？」' },
     { key: 'dijiang', name: '帝江', rar: 'epic', shot: '#ffd36e', cd: 14, skill: '混沌之舞', desc: '跳一支舞，主角 5 秒內攻速變快。', fx: 'dance',
       hello: '帝江沒有臉，但牠很開心地轉了三圈。（應該是很開心吧？）' },
-    { key: 'kui', name: '夔', rar: 'legend', shot: '#9fd3ff', cd: 13, skill: '雷鼓', desc: '一隻腳踩地打雷，全部妖怪受傷並暈一下。', fx: 'thunder',
+    { key: 'kui', tune: 1.15, name: '夔', rar: 'legend', shot: '#9fd3ff', cd: 13, skill: '雷鼓', desc: '一隻腳踩地打雷，全部妖怪受傷並暈一下。', fx: 'thunder',
       hello: '夔：「咚！」（牠一說話就打雷）' }
   ];
   // 夥伴：西遊篇、封神篇打贏地區首領加入，放在夥伴格，用靈石升級
@@ -1291,7 +1291,7 @@ var IDLE_DATA = (function () {
   var PARTNERS = [
     { key: 'wukong', rar: 'legend', el: 'jin', name: '孫悟空', from: '花果山', cd: 12, skill: '金箍棒橫掃', desc: '金箍棒掃全部妖怪，再拔毛變出 3 隻小猴分身，一起打 6 秒。', passive: { crit: 0.1 }, ptext: '暴擊率 +10%', shot: '#ffcf4a',
       hello: '孫悟空：「好，俺老孫陪你走一段！掃把借我耍耍。」' },
-    { key: 'bajie', rar: 'epic', el: 'tu', name: '豬八戒', from: '高老莊・流沙河', cd: 10, skill: '吃飽再打', desc: '釘耙打前面的妖怪，再吃東西幫主角回血（偶爾吃太飽睡著）。', passive: { hp: 0.2 }, ptext: '生命 +20%', shot: '#f5b8c4',
+    { key: 'bajie', tune: 0.8, rar: 'epic', el: 'tu', name: '豬八戒', from: '高老莊・流沙河', cd: 10, skill: '吃飽再打', desc: '釘耙打前面的妖怪，再吃東西幫主角回血（偶爾吃太飽睡著）。', passive: { hp: 0.2 }, ptext: '生命 +20%', shot: '#f5b8c4',
       hello: '豬八戒：「有饅頭嗎？有饅頭我就跟你走。」' },
     { key: 'wujing', rar: 'epic', el: 'shui', name: '沙悟淨', from: '高老莊・流沙河', cd: 9, skill: '降妖寶杖', desc: '寶杖打前面的妖怪，還幫主角擋住下一擊。', passive: { gold: 0.2 }, ptext: '扛行李：靈石 +20%', shot: '#9fc8e8',
       hello: '沙悟淨：「行李我來扛。大師兄、二師兄都不扛。」' },
@@ -1322,7 +1322,7 @@ var IDLE_DATA = (function () {
       hello: '土行孫：「我個子小，但是鑽得快。你看——」（他已經不見了）' }
   ];
   var PARTNER_RAR = { common: 50, rare: 30, epic: 15, legend: 5 };  // 從蛋裡抽夥伴時的權重
-  var PARTNER_POW = { common: 0.85, rare: 1, epic: 1.2, legend: 1.4 };
+  var PARTNER_POW = { common: 0.7, rare: 1, epic: 1.3, legend: 1.7 };  // 2026-10-25 拉開稀有度
   // 還沒有水墨圖的角色，先借現有的點陣圖
   var SPRITE_ALIAS = { shitoujing: 'shijing', jingwei: 'fenghuang', dijiang: 'xuanwu', kui: 'qilin',
     huoshu: 'limao', zhihe: 'zhiren', zhusun: 'shuzhuang', yunduo: 'denglong', dangkang: 'langyao', xuangui: 'xuanwu', jiao: 'langyao', lushu: 'baize',
@@ -1347,19 +1347,19 @@ var IDLE_DATA = (function () {
     { name: '仙器', color: '#ffcf4a', mul: 4.2, rate: 2, salvage: 8 }
   ];
   var TREASURES = [
-    { key: 'feijian', name: '飛劍', cd: 1.8, power: 1.2, desc: '衝出去一路刺穿整排妖怪。仙器：變成三把劍。' },
+    { key: 'feijian', name: '飛劍', cd: 1.8, power: 1.05, desc: '衝出去一路刺穿整排妖怪。仙器：變成三把劍。' },
     { key: 'hulu', name: '紫金葫蘆', cd: 4, power: 0.9, desc: '血少的小妖直接收進葫蘆，多給靈石；沒有就噴火。仙器：收得更多、靈石更多。' },
     { key: 'leizhu', name: '雷晶珠', cd: 2.6, power: 1.2, desc: '連鎖閃電，從一隻跳到下一隻。仙器：跳更多次，還會麻痺。' },
     { key: 'bagua', name: '八卦鏡', cd: 8, power: 0.3, desc: '反彈受到的傷害，每 8 秒展開八卦護盾。仙器：護盾加倍。' },
-    { key: 'fuzhen', name: '符紙陣', cd: 4, power: 0.5, desc: '在地上畫符陣，妖怪持續掉血、變慢。仙器：還會看穿弱點。' },
+    { key: 'fuzhen', name: '符紙陣', cd: 4, power: 1.2, desc: '在地上畫符陣，妖怪持續掉血、變慢。仙器：還會看穿弱點。' },
     { key: 'tieguo', name: '大鐵鍋', cd: 5, power: 3, desc: '從天而降「噹！」砸暈前面的妖怪並震退。仙器：震波打全部。' },
     { key: 'ruyi', name: '玉如意', cd: 10, power: 0.15, desc: '全隊傷害加成，每 10 秒幫主角回血。仙器：還會解除火、毒、冰凍。' },
     // 後面的地區才煉得出來（need = 打到第幾關）
     { key: 'kunxian', name: '捆仙繩', cd: 6, power: 1, need: 60, desc: '綁住最前面的妖怪 3 秒（首領 1.5 秒），綁著的時候受到的傷害加倍。仙器：一次綁兩隻。' },
-    { key: 'fenghuo', name: '風火輪', cd: 5, power: 0.8, need: 60, desc: '在地上滾過整排妖怪，妖怪越多每隻越痛，還會留下火。仙器：兩個輪子。' },
-    { key: 'bixie', name: '辟邪鈴', cd: 7, power: 0.4, need: 90, desc: '叮鈴一聲，解除主角的火、毒、冰凍、濕透、風，還有神獸被魅惑。仙器：之後 3 秒都不會再中。' },
+    { key: 'fenghuo', name: '風火輪', cd: 5, power: 1.3, need: 60, desc: '在地上滾過整排妖怪，妖怪越多每隻越痛，還會留下火。仙器：兩個輪子。' },
+    { key: 'bixie', name: '辟邪鈴', cd: 7, power: 0.6, need: 90, desc: '叮鈴一聲，解除主角的火、毒、冰凍、濕透、風，還有神獸被魅惑。仙器：之後 3 秒都不會再中。' },
     { key: 'jubao', name: '聚寶盆', cd: 6, power: 0, need: 90, desc: '不打妖怪，每次發動倒出一堆靈石，偶爾掉玄鐵。仙器：倒更多、更常掉玄鐵。' },
-    { key: 'shanhe', name: '山河圖', cd: 15, power: 4, need: 120, desc: '把整個畫面捲進畫裡，全部妖怪一起受重傷。冷卻很長。仙器：還會暈 1 秒。' }
+    { key: 'shanhe', name: '山河圖', cd: 15, power: 7, need: 120, desc: '把整個畫面捲進畫裡，全部妖怪一起受重傷。冷卻很長。仙器：還會暈 1 秒。' }
   ];
 
   // ── 主角升級 ──
@@ -1606,11 +1606,13 @@ var IdleCore = (function (D) {
   var L = { HERO_X: 152, ENGAGE_X: 206, SPACING: 22, SPAWN_X: 340, WALK: 80 };
   // 數值（用 tools/sim.js 的自動玩家調過：地區 1 約 10 分鐘，第一輪南天門約 3 小時的不停手操作）
   var BAL = {
-    realmMul: 1.2, heroAtk: [10, 1], heroHp: [120, 12], heroReg: [2, 0.2], lvGrow: 1.05,
+    realmMul: 1.2, firstPartner: 59,
+    // 2026-10-25 平衡（泓：西遊篇都靠夥伴打）：夥伴、法器等級改成每級加固定比例，主角、神獸傷害拉高，讓四邊大約各占一份
+    pLin: 0.06, pCost: 1.16, gLin: 0.07, petMul: 2.5, heroHit: 3, heroAtk: [10, 1], heroHp: [120, 12], heroReg: [2, 0.2], lvGrow: 1.05,
     cost: { atk: [6, 1.115], hp: [6, 1.115], reg: [8, 1.125], spd: [25, 1.24], crit: [20, 1.22], cd: [15, 1.16] },
     // 妖怪每關變強的倍數分三段：前 3 區、4～6 區、西遊篇以後（每段開頭的關卡數 = eCut）
     eCut: [30, 60], eHp: [60, [1.37, 1.31, 1.22]], eAtk: [14, [1.3, 1.24, 1.16]],
-    areaTune: [null, [2.3, 1], [1.8, 1], [0.95, 0.9], [0.8, 0.9], [0.5, 0.75], [0.5, 0.75], [0.6, 0.8], [0.45, 0.7], [0.75, 0.85], [0.7, 0.85], [0.75, 0.85]], eGold: [3, [1.17, 1.17, 1.15]], eXp: [2, [1.165, 1.165, 1.15]],
+    areaTune: [[1.25, 1], [2.9, 1], [2.6, 1], [1.5, 0.9], [1.3, 0.9], [0.8, 0.75], [0.5, 0.75], [0.6, 0.8], [0.45, 0.7], [0.6, 0.85], [0.42, 0.75], [0.5, 0.85]], eGold: [3, [1.17, 1.17, 1.15]], eXp: [2, [1.165, 1.165, 1.15]],
     // 境界：小突破修為 ×step、力量 ×step；跨大境界（雷劫）修為 ×big、力量 ×big。練氣九層自己一套
     mobEgg: 0.004, partnerEgg: [0.4, 0.6], partnerPity: 6, repeatBossEgg: 0.3, starNeed: [1, 1, 2, 2], starBlood: [6, 10, 14, 20],
     xpNeed: [40, 1.56], realmXp: { qi: 1.42, step: 1.39, big: 3 }, realmPow: { qi: 1.19, step: 1.1, big: 1.3 }, offlineEff: 0.8, offlineCap: 12 * 3600
@@ -1674,7 +1676,7 @@ var IdleCore = (function (D) {
   var R_ZHUJI = D.realmStart('築基'), R_JINDAN = D.realmStart('金丹');
   function gearSlots() { return S.realm < R_ZHUJI ? 1 : S.realm < R_JINDAN ? 2 : 3; }
   function equipped() { var a = []; for (var i = 0; i < gearSlots(); i++) { var it = S.gear[i] && item(S.gear[i]); if (it) a.push({ slot: i, it: it }); } return a; }
-  function gearPower(it) { return TR_BY[it.t].power * D.QUALITY[it.q].mul * (1 + 0.12 * it.lv); }
+  function gearPower(it) { return TR_BY[it.t].power * D.QUALITY[it.q].mul * (1 + BAL.gLin * it.lv); }
   function stats() {
     var m = realmMul(), c = collection().mul, g = BAL.lvGrow;
     var dmgMul = 1;
@@ -1847,7 +1849,7 @@ var IdleCore = (function (D) {
   function alive() { return R.enemies.filter(function (e) { return !e.dead; }); }
   function front() { var a = alive(); return a.length ? a[0] : null; }
   function randomEnemy() { var a = alive(); return a.length ? a[Math.floor(rnd() * a.length)] : null; }
-  function petPower(k) { var p = PET_BY[k], s = S.pets[k]; return D.RARITY[p.rar].ratio * (1 + 0.6 * (s.star - 1)) * (s.aw ? 1.6 : 1); }
+  function petPower(k) { var p = PET_BY[k], s = S.pets[k]; return BAL.petMul * (p.tune || 1) * D.RARITY[p.rar].ratio * (1 + 0.6 * (s.star - 1)) * (s.aw ? 1.6 : 1); }
   function roll(st, bonus) { return rnd() < Math.min(0.95, st.crit + (bonus || 0)); }
 
   // 排一次傷害（delay 秒後打到）
@@ -1927,13 +1929,13 @@ var IdleCore = (function (D) {
       h.atkCd += 1 / (st.spd * (h.slowT > 0 ? 0.6 : 1) * (h.danceT > 0 ? 1.4 : 1)); if (h.atkCd < 0) h.atkCd = 0;
       if (h.windT > 0 && rnd() < 0.4) { h.atkT = 0.3; emit('miss', { e: f, wind: true }); return; }
       var c = roll(st, h.critT > 0 ? 0.4 : 0);
-      queueHit(f, st.atk * st.dmgMul * (c ? st.cd : 1) * (0.9 + rnd() * 0.2) * (h.wetT > 0 ? 0.7 : 1), c, 'hero', 0.12);
+      queueHit(f, BAL.heroHit * st.atk * st.dmgMul * (c ? st.cd : 1) * (0.9 + rnd() * 0.2) * (h.wetT > 0 ? 0.7 : 1), c, 'hero', 0.12);
       h.atkT = 0.3;
       emit('heroAtk', { e: f });
     }
     if (S.realm >= 3 && h.skillCd <= 0) {
       h.skillCd = 12;
-      alive().forEach(function (e, i) { queueHit(e, st.atk * st.dmgMul * 3, false, 'skill', 0.3 + i * 0.05, { noRetarget: true }); });
+      alive().forEach(function (e, i) { queueHit(e, BAL.heroHit * st.atk * st.dmgMul * 3, false, 'skill', 0.3 + i * 0.05, { noRetarget: true }); });
       h.atkT = 0.6;
       emit('heroSkill', {});
     }
@@ -2232,6 +2234,8 @@ var IdleCore = (function (D) {
         // 夥伴不直接給：打倒之後才會出現在靈獸蛋裡
         // 夥伴要從蛋裡抽：這一關打開了哪些夥伴，就多送幾顆蛋
         if (g >= pk0) { rew.pOpen = D.PARTNERS.filter(function (p) { return partnerFromStage(p.key) === g && !S.partners[p.key]; }).map(function (p) { return p.key; }); rew.eggs += rew.pOpen.length; }
+        // 打贏南天門：孫悟空直接加入，西遊篇一開始就有夥伴
+        if (g === BAL.firstPartner && !S.partners.wukong) { addPartner('wukong'); rew.pJoin = 'wukong'; }
       } else { rew.iron = 2; if (b.tier >= 2 && rnd() < BAL.repeatBossEgg) rew.eggs = 1; }  // 再打一次首領也有機會掉蛋
       S.eggs += rew.eggs; S.iron += rew.iron;
       S.stage = g + 1; S.maxStage = Math.max(S.maxStage, S.stage); S.wave = 1; S.farming = false;
@@ -2496,10 +2500,11 @@ var IdleCore = (function (D) {
   function partnerOpen(k) { return peak() > partnerFromStage(k); }
   function partnerFromStage(k) { var pd = PART_BY[k]; if (pd && pd.open !== undefined) return pd.open * 10 + 9; return partnerFromStage0(k); }
   function partnerFromStage0(k) { for (var a = 0; a < D.AREAS.length; a++) if ((D.AREAS[a].boss.partner || []).indexOf(k) >= 0) return a * 10 + 9; return 60; }
-  function partnerPower(k) { return (D.PARTNER_POW[PART_BY[k].rar] || 1.2) * Math.pow(1.12, S.partners[k].lv); }
+  // 夥伴等級：pLin > 0 時每級加固定比例（不會越滾越大，跟法器強化一樣），0 = 舊的每級 ×1.12
+  function partnerPower(k) { var lv = S.partners[k].lv; return (D.PARTNER_POW[PART_BY[k].rar] || 1.2) * (PART_BY[k].tune || 1) * (BAL.pLin ? 1 + BAL.pLin * lv : Math.pow(1.12, lv)); }
   // 每位夥伴都用同一條價錢曲線（不管從哪一區來），傳說的貴一點
   var P_COST_RAR = { common: 0.6, rare: 0.8, epic: 1, legend: 1.3 };
-  function partnerCost(k) { return Math.ceil(eScale(60, 'Gold') * 20 * (P_COST_RAR[PART_BY[k].rar] || 1) * Math.pow(1.22, S.partners[k].lv)); }
+  function partnerCost(k) { return Math.ceil(eScale(60, 'Gold') * 20 * (P_COST_RAR[PART_BY[k].rar] || 1) * Math.pow(BAL.pCost, S.partners[k].lv)); }
   function upPartner(k) { var c = partnerCost(k); if (!S.partners[k] || S.gold < c) return false; S.gold -= c; S.partners[k].lv++; return true; }
   function addPartner(k) {
     S.partners[k] = { lv: 0 };
@@ -2749,6 +2754,8 @@ var IdleCore = (function (D) {
     S.inv.forEach(function (it) { if (!it.el) it.el = rollEl(); if (!it.aff) it.aff = rollAffixes(it.q); });
     // 舊存檔：已經解鎖的道袍記下來（轉世後才不會不見）
     D.OUTFITS.forEach(function (o) { if (outfitUnlocked(o.key)) S.outfitsSeen[o.key] = 1; });
+    // 舊存檔：已經打完南天門卻沒有孫悟空，補給他
+    if (peak() > BAL.firstPartner && !S.partners.wukong) { S.partners.wukong = { lv: 0 }; if (!S.pteam[0]) S.pteam[0] = 'wukong'; else if (!S.pteam[1]) S.pteam[1] = 'wukong'; }
     R = null; newRuntime();
   }
   function reset() { S = newSave(); R = null; newRuntime(); }
@@ -7018,6 +7025,11 @@ function IdleFmt(n) {
         var p = C.PET_BY[d.join], s = C.S.pets[d.join];
         modal('<h2>' + esc(p.name) + (d.boss && d.boss.name !== p.name ? '加入了！' : '被你打服了！') + '</h2><canvas id="joinC"></canvas><p class="say">' + esc(p.hello) + '</p><p>' + (s.star === 1 && s.dup === 0 ? esc(p.name) + '加入了神獸圖鑑，可以帶牠出戰。' : '牠又跟上來了，算一次重複。') + '</p><div class="btns"><button class="big" type="button" data-m="close">太好了</button></div>',
           function (root) { anims.push(showChar(root.querySelector('#joinC'), p.key, 2)); });
+      }
+      if (d.pJoin) {
+        var pj = C.PART_BY[d.pJoin];
+        modal('<h2>' + esc(pj.name) + '加入了！</h2><canvas id="pjC"></canvas><p class="say">' + esc(pj.hello) + '</p><p>夥伴格打開了，' + esc(pj.name) + '已經站上第 1 格，會跟你一起打。</p><p class="note">招式「' + esc(pj.skill) + '」：' + esc(pj.desc) + '</p><div class="btns"><button class="big" type="button" data-m="close">一起出發</button></div>',
+          function (root) { anims.push(showChar(root.querySelector('#pjC'), pj.key, 2)); });
       }
       if (d.pOpen && d.pOpen.length) {
         var names = d.pOpen.map(function (k) { return C.PART_BY[k].name; }).join('、');
