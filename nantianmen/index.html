@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v29</div>
+    <div class="ver">v30</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1569,7 +1569,7 @@ if (typeof module !== 'undefined') module.exports = IDLE_DATA;
 // 《一路掃到南天門》遊戲核心：數值、戰鬥、存檔、離線收益。不碰畫面，畫面只聽事件。
 var IdleCore = (function (D) {
   // 版面（邏輯座標，畫面 320×180）
-  var L = { HERO_X: 124, ENGAGE_X: 180, SPACING: 30, SPAWN_X: 340, WALK: 80 };
+  var L = { HERO_X: 168, ENGAGE_X: 222, SPACING: 20, SPAWN_X: 340, WALK: 80 };
   // 數值（用 tools/sim.js 的自動玩家調過：地區 1 約 10 分鐘，第一輪南天門約 3 小時的不停手操作）
   var BAL = {
     realmMul: 1.2, heroAtk: [10, 1], heroHp: [120, 12], heroReg: [2, 0.2], lvGrow: 1.05,
@@ -2454,7 +2454,9 @@ var IdleCore = (function (D) {
   function partnerFromStage(k) { var pd = PART_BY[k]; if (pd && pd.open !== undefined) return pd.open * 10 + 9; return partnerFromStage0(k); }
   function partnerFromStage0(k) { for (var a = 0; a < D.AREAS.length; a++) if ((D.AREAS[a].boss.partner || []).indexOf(k) >= 0) return a * 10 + 9; return 60; }
   function partnerPower(k) { return (D.PARTNER_POW[PART_BY[k].rar] || 1.2) * Math.pow(1.12, S.partners[k].lv); }
-  function partnerCost(k) { return Math.ceil(eScale(partnerFromStage(k), 'Gold') * 20 * Math.pow(1.22, S.partners[k].lv)); }
+  // 每位夥伴都用同一條價錢曲線（不管從哪一區來），傳說的貴一點
+  var P_COST_RAR = { common: 0.6, rare: 0.8, epic: 1, legend: 1.3 };
+  function partnerCost(k) { return Math.ceil(eScale(60, 'Gold') * 20 * (P_COST_RAR[PART_BY[k].rar] || 1) * Math.pow(1.22, S.partners[k].lv)); }
   function upPartner(k) { var c = partnerCost(k); if (!S.partners[k] || S.gold < c) return false; S.gold -= c; S.partners[k].lv++; return true; }
   function addPartner(k) {
     S.partners[k] = { lv: 0 };
@@ -4397,25 +4399,25 @@ var IdleStage = (function (C, D, ART) {
     if (sig === formCache.sig) return formCache.pos;
     // 站位（泓 v28）：主角最前面；夥伴站主角背後上、下兩點；第 1 格神獸站中間緊跟在後；
     // 第 2、3 格神獸再往左後方，上、下排同一直排。大小固定，不會因為隻數變多而縮小
-    var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'mid', k: 0.92 }, { row: 'top', k: 0.86 }, { row: 'bot', k: 1 }];
-    pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
+    var AT = [{ row: 'top', k: 0.96, fix: 1 }, { row: 'bot', k: 1.04, fix: 1 }], PT = [{ row: 'mid', k: 0.92 }, { row: 'top', k: 0.86 }, { row: 'bot', k: 1 }];
+    pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; m.fix = 1; });  // 夥伴跟主角一樣大
     pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
     var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
     var groups = [];
     if (pars.length) groups.push(pars);
     if (pets.length) groups.push([pets[0]]);
     if (pets.length > 1) groups.push(pets.slice(1));
-    var SH = DEEP ? 0.9 : 0.8;  // 固定大小
+    var SH = DEEP ? 0.8 : 0.72;  // 固定大小
     // 每隻左右各佔多寬（圖不一定左右對稱，像青龍尾巴拖很長，所以照腳底位置分左右算）
     function ext(m) {
       var ik = inkKey(m.key), d = ik && INK.def(ik);
       if (!d) { var hw = ART.meta(m.key).w / 2 * SH; return { l: hw, r: hw }; }
-      var sc = inkHeight(m.key, ik, S, 0) * m.k * SH / S / d.h * 0.88;
+      var sc = inkHeight(m.key, ik, S, 0) * m.k * (m.fix ? 1 : SH) / S / d.h * 0.88;
       return { l: d.cx * sc, r: (d.w - d.cx) * sc };
     }
     if (groups.length) {
       var GE = groups.map(function (g) { var es = g.map(ext); return { l: Math.max.apply(null, es.map(function (e) { return e.l; })), r: Math.max.apply(null, es.map(function (e) { return e.r; })) }; });
-      var OV = DEEP ? 0.35 : 0.2, xs, left;
+      var OV = DEEP ? 0.12 : 0.08, xs, left;
       // 太擠就讓前後多疊一點（不縮小）
       for (; ; OV += 0.05) {
         xs = [];
@@ -4429,7 +4431,7 @@ var IdleStage = (function (C, D, ART) {
         xs = xs.map(function (x, i) { return x - gap * i; });
       }
       // 同一直排的上、下兩隻稍微錯開一點，看起來不會像排隊
-      groups.forEach(function (g, gi) { g.forEach(function (m, j) { pos[m.id] = { x: xs[gi] - (g.length > 1 && m.row === 'top' ? 6 : 0), feet: ROWS[m.row], k: m.k * SH }; }); });
+      groups.forEach(function (g, gi) { g.forEach(function (m, j) { pos[m.id] = { x: xs[gi] - (g.length > 1 && m.row === 'top' ? 6 : 0), feet: ROWS[m.row], k: m.k * (m.fix ? 1 : SH) }; }); });
     }
     formCache = { sig: sig, pos: pos };
     return pos;
@@ -4765,7 +4767,7 @@ var IdleStage = (function (C, D, ART) {
         if (e.shieldN > 0 && !e.dead) { px(e.x - 1, feet - tall / 2 - 5, 4, 10, '#9fd3ff'); px(e.x, feet - tall / 2 - 4, 2, 8, '#d8f1ff'); }
         if (e.elite && !e.dead && Math.random() < 0.15) fx.parts.push({ x: e.x + Math.random() * w, y: feet - Math.random() * tall, vx: 0, vy: -20, t: 0, life: 0.6, col: '#ffe27a', s: 1 });
         if (!e.dead && !e.boss && e.hp < e.maxHp) {
-          var top = feet - m.feet * sc / S - 5;
+          var top = feet + 2;  // 小怪血條也放腳底
           px(e.x + w / 2 - 10, top, 20, 2, 'rgba(0,0,0,0.5)'); px(e.x + w / 2 - 10, top, 20 * Math.max(0, e.hp / e.maxHp), 2, '#ff5a5a');
         }
         if (e.stun > 0 && !e.dead) { var tp = feet - m.feet * sc / S - 10; for (var s2 = 0; s2 < 3; s2++) { var an = time * 6 + s2 * 2.1; px(e.x + w / 2 + Math.cos(an) * 7, tp + Math.sin(an) * 2, 2, 2, '#ffe27a'); } }
@@ -4861,9 +4863,9 @@ var IdleStage = (function (C, D, ART) {
     if (fx.leaves > 0) { for (var l = 0; l < 30; l++) { var lx = ((l * 53 + (1.2 - fx.leaves) * 420) % 420) - 20, ly = FEET - 98 + (l * 37) % 130 + Math.sin(time * 8 + l) * 6, la = time * 3 + l; brush([[lx - Math.cos(la) * 3, ly - Math.sin(la) * 1.5], [lx, ly], [lx + Math.cos(la) * 3, ly + Math.sin(la) * 1.5]], 1.3, l % 3 ? '#c8862a' : '#5f8f3a', 0.85, l); } }
     if (fx.pillar) { var pq = fx.pillar.t / fx.pillar.life; for (var py = 0; py < FEET; py += 6) wash(hp.x, py, 12, 'rgba(255,226,122,1)', 0.22 * (1 - pq)); wash(hp.x, FEET - 10, 24, 'rgba(255,251,224,1)', 0.4 * (1 - pq)); }
 
-    // 主角血條
+    // 主角血條（放在腳底下，不擋到造型）
     if (!down) {
-      var hbY = FEET - 50, hpR = Math.max(0, h.hp / h.maxHp);
+      var hbY = FEET + 3, hpR = Math.max(0, h.hp / h.maxHp);
       ctx.fillStyle = 'rgba(29,26,31,0.6)'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect((hp.x - 15) * S, (hbY - 0.5) * S, 30 * S, 4 * S, 2 * S) : ctx.rect((hp.x - 15) * S, (hbY - 0.5) * S, 30 * S, 4 * S); ctx.fill();
       ctx.fillStyle = hpR > 0.3 ? '#4fbf7a' : '#c8322c'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect((hp.x - 14) * S, hbY * S, 28 * hpR * S, 3 * S, 1.5 * S) : ctx.rect((hp.x - 14) * S, hbY * S, 28 * hpR * S, 3 * S); ctx.fill();
       if (h.shield > 0) { ctx.fillStyle = '#9fd8ff'; ctx.fillRect((hp.x - 14) * S, (hbY - 1) * S, 28 * Math.min(1, h.shield / h.maxHp) * S, 1 * S); }
