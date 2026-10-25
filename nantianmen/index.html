@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v27</div>
+    <div class="ver">v28</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4377,36 +4377,41 @@ var IdleStage = (function (C, D, ART) {
     var pets = R.pets.map(function (p) { return { id: 'p:' + p.key, key: p.key }; }), pars = R.partners.map(function (p) { return { id: 'a:' + p.key, key: p.key }; });
     var sig = pets.concat(pars).map(function (m) { return m.id + '=' + inkKey(m.key); }).join(',') + '|' + inkKey('hero') + '|' + FEET;
     if (sig === formCache.sig) return formCache.pos;
-    // 夥伴：第 1 位上、第 2 位下；神獸：第 1 隻上、第 2 隻下、第 3 隻中間最後；上面那排比較遠，畫小一點
-    var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.92 }];
+    // 站位（泓 v28）：主角最前面；夥伴站主角背後上、下兩點；第 1 格神獸站中間緊跟在後；
+    // 第 2、3 格神獸再往左後方，上、下排同一直排。大小固定，不會因為隻數變多而縮小
+    var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'mid', k: 0.92 }, { row: 'top', k: 0.86 }, { row: 'bot', k: 1 }];
     pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
-    // 站位照出戰格的順序：第 1 格的神獸站最靠近主角，第 3 格最後面（玩家自己排）
     pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
     var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
-    // 從主角背後往左一個一個排（夥伴上、夥伴下、神獸上、神獸下、神獸中），上下排交錯，
-    // 每一個都有自己的 x，不會兩隻疊在同一個位置；整隊平均攤開到畫面左邊
-    var mem = pars.concat(pets);
+    var groups = [];
+    if (pars.length) groups.push(pars);
+    if (pets.length) groups.push([pets[0]]);
+    if (pets.length > 1) groups.push(pets.slice(1));
+    var SH = DEEP ? 0.9 : 0.8;  // 固定大小
     // 每隻左右各佔多寬（圖不一定左右對稱，像青龍尾巴拖很長，所以照腳底位置分左右算）
-    function ext(m, sh) {
+    function ext(m) {
       var ik = inkKey(m.key), d = ik && INK.def(ik);
-      if (!d) { var hw = ART.meta(m.key).w / 2 * sh; return { l: hw, r: hw }; }
-      var sc = inkHeight(m.key, ik, S, 0) * m.k * sh / S / d.h * 0.88;
+      if (!d) { var hw = ART.meta(m.key).w / 2 * SH; return { l: hw, r: hw }; }
+      var sc = inkHeight(m.key, ik, S, 0) * m.k * SH / S / d.h * 0.88;
       return { l: d.cx * sc, r: (d.w - d.cx) * sc };
     }
-    if (mem.length) {
-      var OV = DEEP ? 0.5 : 0.22, sh = 1, xs, E, left;  // 深地面上下排離很遠，左右可以多疊一點
-      for (; ; sh -= 0.04) {
-        E = mem.map(function (m) { return ext(m, sh); }); xs = [];
-        mem.forEach(function (m, i) { xs.push(i ? xs[i - 1] - (E[i - 1].l + E[i].r) * (1 - OV) : heroL - E[0].r * 0.45); });
-        left = xs[xs.length - 1] - E[E.length - 1].l;
-        if (left >= -4 || sh <= 0.62) break;
+    if (groups.length) {
+      var GE = groups.map(function (g) { var es = g.map(ext); return { l: Math.max.apply(null, es.map(function (e) { return e.l; })), r: Math.max.apply(null, es.map(function (e) { return e.r; })) }; });
+      var OV = DEEP ? 0.35 : 0.2, xs, left;
+      // 太擠就讓前後多疊一點（不縮小）
+      for (; ; OV += 0.05) {
+        xs = [];
+        GE.forEach(function (e, i) { xs.push(i ? xs[i - 1] - (GE[i - 1].l + e.r) * (1 - OV) : heroL - e.r * 0.7); });
+        left = xs[xs.length - 1] - GE[GE.length - 1].l;
+        if (left >= 10 || OV >= 0.7) break;
       }
       // 左邊還有空就平均攤開（每個間隔最多多拉開半隻的寬度）
-      if (left > 4 && mem.length > 1) {
-        var avg = E.reduce(function (t, e) { return t + e.l + e.r; }, 0) / E.length, gap = Math.min((left - 4) / (mem.length - 1), avg * 0.5);
+      if (left > 14 && groups.length > 1) {
+        var avg = GE.reduce(function (t, e) { return t + e.l + e.r; }, 0) / GE.length, gap = Math.min((left - 14) / (groups.length - 1), avg * 0.5);
         xs = xs.map(function (x, i) { return x - gap * i; });
       }
-      mem.forEach(function (m, i) { pos[m.id] = { x: xs[i], feet: ROWS[m.row], k: m.k * sh }; });
+      // 同一直排的上、下兩隻稍微錯開一點，看起來不會像排隊
+      groups.forEach(function (g, gi) { g.forEach(function (m, j) { pos[m.id] = { x: xs[gi] - (g.length > 1 && m.row === 'top' ? 6 : 0), feet: ROWS[m.row], k: m.k * SH }; }); });
     }
     formCache = { sig: sig, pos: pos };
     return pos;
@@ -5387,7 +5392,7 @@ function IdleFmt(n) {
     return h + '</div>';
   }
   function petsHtml() {
-    var S = C.S, h = partnersHtml() + '<div class="sec"><h3>出戰隊伍</h3><p class="note">先點一個格子，再按神獸的「出戰」。第 1 格的神獸站在主角後面最近的地方，第 3 格站最後面；想讓誰站前面，就把牠放第 1 格。</p></div><div class="team">';
+    var S = C.S, h = partnersHtml() + '<div class="sec"><h3>出戰隊伍</h3><p class="note">先點一個格子，再按神獸的「出戰」。第 1 格的神獸緊跟在主角後面（中間那排），第 2、3 格站在左後方的上、下排。</p></div><div class="team">';
     S.team.forEach(function (k, i) {
       h += '<div class="slot' + (i === petSlot ? ' sel' : '') + '" data-slot="' + i + '" role="button" tabindex="0">';
       if (k) { var p = C.PET_BY[k]; h += petBox(k, 2) + '<div class="pn" style="color:' + D.RARITY[p.rar].color + '">' + esc(p.name) + '</div><div class="stars">' + stars(S.pets[k].star) + '</div><button class="mini" type="button" data-rest="' + i + '">休息</button>'; }
