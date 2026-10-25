@@ -190,6 +190,16 @@ button:disabled { cursor: default; opacity: 0.45; }
 .pet .sk b { color: var(--text); }
 .pet .act { grid-column: 1 / -1; display: flex; gap: 6px; justify-content: flex-end; }
 
+.dps { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.dpsHead { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.dpsHead b { color: var(--gold); font-size: 15px; }
+.dpsRow { display: grid; grid-template-columns: 7.5em 1fr 6.5em; gap: 6px; align-items: center; font-size: 14px; }
+.dpsRow .dn { font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dpsRow .dn small { font-weight: 400; color: var(--muted); font-size: 11px; margin-right: 4px; }
+.dpsRow .db { height: 12px; background: rgba(0,0,0,.3); border-radius: 6px; overflow: hidden; }
+.dpsRow .db i { display: block; height: 100%; background: linear-gradient(90deg, #c98a2b, #f2c14e); border-radius: 6px; }
+.dpsRow .dv { text-align: right; font-variant-numeric: tabular-nums; }
+.dpsRow .dv small { color: var(--muted); margin-left: 4px; font-size: 11px; }
 .gears { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 8px; }
 .gi { display: flex; flex-direction: column; gap: 4px; background: var(--panel2); border-radius: 10px; padding: 6px 8px; min-width: 0; }
 .gi .gtop { display: grid; grid-template-columns: 52px 1fr; gap: 8px; align-items: center; }
@@ -257,7 +267,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v38</div>
+    <div class="ver">v39</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1842,8 +1852,13 @@ var IdleCore = (function (D) {
 
   // 排一次傷害（delay 秒後打到）
   var curEl = null;  // 現在出手的人的五行（主角看道袍、法器看自己、夥伴看自己）
+  // 傷害統計：誰打的（hero、p:神獸、a:夥伴、g:法器），只算真的扣到的血，時間只算戰鬥中
+  var curWho = 'hero', DPS = { t: 0, by: {} };
+  function dpsAdd(who, dmg, e) { var d = Math.min(dmg, Math.max(0, e.hp)); if (d > 0 && who) DPS.by[who] = (DPS.by[who] || 0) + d; }
+  function dpsStats() { return { t: DPS.t, by: DPS.by }; }
+  function dpsReset() { DPS = { t: 0, by: {} }; }
   function queueHit(tgt, dmg, crit, src, delay, extra) {
-    R.hits.push({ t: delay || 0, tgt: tgt, dmg: dmg, crit: crit, src: src, extra: extra || null, el: curEl });
+    R.hits.push({ t: delay || 0, tgt: tgt, dmg: dmg, crit: crit, src: src, extra: extra || null, el: curEl, who: curWho });
   }
   function applyHit(h) {
     var e = h.tgt;
@@ -1863,7 +1878,7 @@ var IdleCore = (function (D) {
     var a = alive(), me = a.indexOf(e);
     for (var gi = 0; gi < me; gi++) if (a[gi].trait === 'guard') { dmg *= 0.7; break; }
     if (S.testGod) dmg = Math.max(dmg * 20, e.maxHp * 0.34);  // 測試模式：三下就倒
-    e.hp -= dmg; e.hurtT = 0.2; h = { dmg: dmg, crit: h.crit, src: h.src, extra: h.extra, ke: ke };
+    dpsAdd(h.who, dmg, e); e.hp -= dmg; e.hurtT = 0.2; h = { dmg: dmg, crit: h.crit, src: h.src, extra: h.extra, ke: ke };
     if (h.extra && h.extra.stun) e.stun = Math.max(e.stun, e.boss ? Math.min(0.5, h.extra.stun) : h.extra.stun);  // 首領最多只暈 0.5 秒
     emit('hit', { e: e, dmg: h.dmg, crit: h.crit, src: h.src, ke: h.ke });
     if (e.hp <= 0) {
@@ -1905,7 +1920,7 @@ var IdleCore = (function (D) {
 
   function heroAct(dt, st) {
     var h = R.hero, f = front();
-    curEl = heroEl();
+    curEl = heroEl(); curWho = 'hero';
     h.atkCd -= dt; h.skillCd -= dt;
     if (!f) return;
     if (h.atkCd <= 0) {
@@ -1927,6 +1942,7 @@ var IdleCore = (function (D) {
     curEl = null;
     R.pets.forEach(function (p) {
       if (p.charmT > 0) { p.charmT -= dt; return; }  // 被妲己迷住了
+      curWho = 'p:' + p.key;
       p.atkCd -= dt; p.skillCd -= dt;
       var f = front(); if (!f) return;
       var base = st.atk * st.dmgMul * petPower(p.key) * (1 + ob('pet') + bn('pet')), def = PET_BY[p.key];
@@ -1965,13 +1981,13 @@ var IdleCore = (function (D) {
       case 'dance': h.danceT = 5; break;
       case 'stones': alive().forEach(function (e) { queueHit(e, base * 1.5, false, 'petSkill', 0.4, { noRetarget: true }); e.slowT = 4; e.x += 16; ev.targets.push(e); }); break;
       case 'thunder': hitAll(3, { stun: 0.8 }); break;
-      case 'fireball': queueHit(f, base * 2.2, false, 'petSkill', 0.35); f.burnE = Math.max(f.burnE || 0, 3); f.burnEDps = Math.max(f.burnEDps || 0, base * 0.4); ev.targets.push(f); break;
+      case 'fireball': queueHit(f, base * 2.2, false, 'petSkill', 0.35); f.burnE = Math.max(f.burnE || 0, 3); f.burnWho = curWho, f.burnEDps = Math.max(f.burnEDps || 0, base * 0.4); ev.targets.push(f); break;
       case 'crane': queueHit(f, base * 1.2, false, 'petSkill', 0.3); ev.targets.push(f); ev.gold = eScale(S.stage, 'Gold') * 3 * aw * (1 + ob('gold') + bn('gold')); S.gold += ev.gold; break;
       case 'leech': queueHit(f, base * 2, false, 'petSkill', 0.3); ev.targets.push(f); ev.heal = heal(h.maxHp * 0.06 * aw); break;
       case 'sprout': queueHit(f, base * 2.5, false, 'petSkill', 0.4); f.slowT = Math.max(f.slowT || 0, 4); ev.targets.push(f); break;
       case 'cloud': h.guardT = Math.max(h.guardT, 1.2); h.shield = Math.max(h.shield, h.maxHp * 0.1 * aw); break;
       case 'lucky': h.luckyT = 6; break;
-      case 'reflect': h.reflT = 5; break;
+      case 'reflect': h.reflT = 5; h.reflWho = curWho; break;
       case 'howl': h.critT = Math.max(h.critT, 4); queueHit(f, base * 1.5, false, 'petSkill', 0.3); ev.targets.push(f); break;
       case 'gallop': h.danceT = Math.max(h.danceT || 0, 4); hitAll(1.2); break;
     }
@@ -1986,7 +2002,7 @@ var IdleCore = (function (D) {
       var same = wuxingOn() && it.el && it.el === heroEl() ? 1.2 : 1;  // 道袍和法器同屬性再加 2 成
       var pw = st.atk * st.dmgMul * gearPower(it) * (1 + ob('gear')) * same, ev = { g: g, t: g.t, targets: [] };
       g.cd = tr.cd * Math.max(0.3, 1 - ob('gearCd') - affOf(it, 'cdr')); g.actT = 0.6;
-      curEl = wuxingOn() ? it.el || null : null;
+      curEl = wuxingOn() ? it.el || null : null; curWho = 'g:' + g.t;
       var xian = it.q === 3, a = alive(), combo = outfitCombo(g.t), h = R.hero; ev.xian = xian;
       var rg = affOf(it, 'regen'); if (rg) heal(h.maxHp * rg);
       function goldMul() { return 1 + ob('gold') + bn('gold'); }
@@ -2015,7 +2031,7 @@ var IdleCore = (function (D) {
           h.shield = Math.max(h.shield, h.maxHp * (xian ? 0.35 : 0.18)); break;
         case 'fuzhen': // 符陣：地上的符燒 4 秒，妖怪持續掉血、變慢；仙器還會看穿弱點
           a.forEach(function (e, i) {
-            e.burnE = 4; e.burnEDps = pw * 0.6; e.slowT = Math.max(e.slowT || 0, 4); if (xian) e.exposeT = 4; ev.targets.push(e);
+            e.burnE = 4; e.burnWho = curWho, e.burnEDps = pw * 0.6; e.slowT = Math.max(e.slowT || 0, 4); if (xian) e.exposeT = 4; ev.targets.push(e);
             if (combo) queueHit(e, pw * 1.5, false, 'gear', 0.5 + i * 0.1, { noRetarget: true });
           });
           if (combo) ev.combo = combo.name;
@@ -2035,7 +2051,7 @@ var IdleCore = (function (D) {
         case 'fenghuo': // 滾過整排，妖怪越多每隻越痛，還留下火
           for (var w = 0; w < (xian ? 2 : 1); w++) a.forEach(function (e, i) {
             queueHit(e, pw * (1 + 0.25 * (a.length - 1)), false, 'gear', 0.15 + i * 0.08 + w * 0.4, { noRetarget: true });
-            if (!w) { ev.targets.push(e); e.burnE = Math.max(e.burnE || 0, 2); e.burnEDps = Math.max(e.burnEDps || 0, pw * 0.3); }
+            if (!w) { ev.targets.push(e); e.burnE = Math.max(e.burnE || 0, 2); e.burnWho = curWho, e.burnEDps = Math.max(e.burnEDps || 0, pw * 0.3); }
           });
           ev.wheels = xian ? 2 : 1;
           break;
@@ -2065,15 +2081,15 @@ var IdleCore = (function (D) {
     if (h.shield > 0) {
       var s = Math.min(h.shield, dmg); h.shield -= s; dmg -= s;
       if (h.shield <= 0 && outfitCombo('bagua') && equipped().some(function (q) { return q.it.t === 'bagua'; })) { // 以靜制動
-        var st = stats(); curEl = null;
+        var st = stats(); curEl = null; curWho = 'g:bagua';
         alive().forEach(function (o, i) { queueHit(o, st.atk * st.dmgMul * 3, false, 'reflect', 0.15 + i * 0.05, { noRetarget: true }); });
         emit('comboBurst', { name: '以靜制動' });
       }
     }
     h.hp -= dmg; if (dmg > 0) h.hurtT = 0.25;
     emit('enemyAtk', { e: e, dmg: dmg, blocked: h.guardT > 0, move: move || null });
-    if (refl) queueHit(e, stats().atk * refl, false, 'reflect', 0.1, { noRetarget: true });
-    if (h.reflT > 0 && e && !e.dead) queueHit(e, stats().atk * 1.5, false, 'reflect', 0.1, { noRetarget: true });  // 旋龜的殼
+    if (refl) curWho = 'g:bagua', queueHit(e, stats().atk * refl, false, 'reflect', 0.1, { noRetarget: true });
+    if (h.reflT > 0 && e && !e.dead) curWho = h.reflWho || 'hero', queueHit(e, stats().atk * 1.5, false, 'reflect', 0.1, { noRetarget: true });  // 旋龜的殼
   }
   function bossMove(e, refl) {
     var m = e.move, h = R.hero, ev = { e: e, id: m.id, name: m.name };
@@ -2123,7 +2139,7 @@ var IdleCore = (function (D) {
       if (e.trait === 'healer') { e.skCd -= dt; if (e.skCd <= 0) { e.skCd = 5; var lo = null; a.forEach(function (o) { if (!o.dead && (!lo || o.hp / o.maxHp < lo.hp / lo.maxHp)) lo = o; }); if (lo && lo.hp < lo.maxHp) { var hv = Math.min(lo.maxHp - lo.hp, lo.maxHp * 0.15); lo.hp += hv; emit('enemyHeal', { e: e, to: lo, heal: hv }); } } }
       if (e.slowT > 0) e.slowT -= dt;
       if (e.exposeT > 0) e.exposeT -= dt;
-      if (e.burnE > 0) { e.burnE -= dt; e.hp -= e.burnEDps * dt; if (e.hp <= 0 && !e.dead) { if (e.lives > 0) { e.lives--; e.hp = e.maxHp * 0.5; } else { kill(e); return; } } }
+      if (e.burnE > 0) { e.burnE -= dt; dpsAdd(e.burnWho, e.burnEDps * dt, e); e.hp -= e.burnEDps * dt; if (e.hp <= 0 && !e.dead) { if (e.lives > 0) { e.lives--; e.hp = e.maxHp * 0.5; } else { kill(e); return; } } }
       if (e.bindT > 0) { e.bindT -= dt; return; }
       if (e.stun > 0) { e.stun -= dt; return; }
       if (e.trait === 'ranged' && e.x > tx + 1) { e.atkCd -= dt; if (e.atkCd <= 0) { e.atkCd = 2; e.atkT = 0.3; emit('feather', { e: e }); hurtHero(e, e.atk * 0.7, refl); } return; }
@@ -2187,6 +2203,7 @@ var IdleCore = (function (D) {
       return;
     }
     // fight
+    DPS.t += dt;
     heroAct(dt, st); petAct(dt, st); partnerAct(dt, st); cloneAct(dt, st); gearAct(dt, st);
     for (var i = R.hits.length - 1; i >= 0; i--) {
       R.hits[i].t -= dt;
@@ -2502,7 +2519,7 @@ var IdleCore = (function (D) {
       if (p.sleepT > 0) { p.sleepT -= dt; return; }
       var f = front(); if (!f) return;
       var def = PART_BY[p.key], base = st.atk * st.dmgMul * partnerPower(p.key), h = R.hero;
-      curEl = def.el || null;
+      curEl = def.el || null; curWho = 'a:' + p.key;
       if (p.atkCd <= 0) {
         p.atkCd = 1.3; p.atkT = 0.3;
         var c = roll(st);
@@ -2533,7 +2550,7 @@ var IdleCore = (function (D) {
         case 'tudigong': ev.gold = eScale(S.stage, 'Gold') * 6 * (1 + ob('gold') + bn('gold')); S.gold += ev.gold; break;
         case 'shanshen': alive().forEach(function (e, i) { queueHit(e, base * 1.5, false, 'partner', 0.3 + i * 0.05, { stun: 0.5, noRetarget: true }); ev.targets.push(e); }); break;
         case 'xiabing': h.guardT = Math.max(h.guardT, 1); queueHit(f, base * 2, false, 'partner', 0.3); ev.targets.push(f); break;
-        case 'honghaier': alive().forEach(function (e) { e.burnE = Math.max(e.burnE || 0, 4); e.burnEDps = Math.max(e.burnEDps || 0, base * 0.8); ev.targets.push(e); }); queueHit(f, base, false, 'partner', 0.3); break;
+        case 'honghaier': alive().forEach(function (e) { e.burnE = Math.max(e.burnE || 0, 4); e.burnWho = curWho, e.burnEDps = Math.max(e.burnEDps || 0, base * 0.8); ev.targets.push(e); }); queueHit(f, base, false, 'partner', 0.3); break;
         case 'tieshan': alive().forEach(function (e) { e.x += 50; e.arrived = false; if (e.fuse !== undefined) delete e.fuse; ev.targets.push(e); }); h.burnT = 0; ev.cleanse = true; break;
         case 'leizhenzi': for (var lz = 0; lz < 3; lz++) { var lt = randomEnemy(); if (lt) { queueHit(lt, base * 1.6, false, 'partner', 0.25 + lz * 0.15, { stun: 0.3 }); ev.targets.push(lt); } } break;
         case 'tuxingsun': queueHit(f, base * 2.5, false, 'partner', 0.5, { stun: 1.5 }); ev.targets.push(f); break;
@@ -2551,7 +2568,7 @@ var IdleCore = (function (D) {
     if (!R.clones || !R.clones.length) return;
     var pw = R.partners.filter(function (p) { return p.key === 'wukong'; })[0];
     var base = st.atk * st.dmgMul * (S.partners.wukong ? partnerPower('wukong') : 1) * 0.6;
-    curEl = PART_BY.wukong.el;
+    curEl = PART_BY.wukong.el; curWho = 'a:wukong';
     R.clones = R.clones.filter(function (c) {
       c.t -= dt; c.cd -= dt; c.atkT = Math.max(0, c.atkT - dt);
       var f = front();
@@ -2750,7 +2767,7 @@ var IdleCore = (function (D) {
     wuxingOn: wuxingOn, heroEl: heroEl, wash: wash, washCost: washCost, rerollEl: rerollEl, EL_COST: EL_COST,
     xinPoints: xinPoints, xinUsed: xinUsed, xinUp: xinUp, xinReset: xinReset, brew: brew,
     AWAKEN: AWAKEN, awakenText: awakenText, canAwaken: canAwaken, bloodStarCost: bloodStarCost, canBloodStar: canBloodStar, bloodStar: bloodStar, study: study, PAGE_COST: PAGE_COST,
-    DUN_BY: DUN_BY, TIX_MAX: TIX_MAX, dunState: dunState, dunNextTix: dunNextTix, dayEl: dayEl, canDungeon: canDungeon, startDungeon: startDungeon, redeem: redeem, testJump: testJump, testGift: testGift, awaken: awaken, rebirth: rebirth, rebirthGain: rebirthGain, canRebirth: canRebirth, peak: peak, eScale: eScale,
+    DUN_BY: DUN_BY, TIX_MAX: TIX_MAX, dunState: dunState, dunNextTix: dunNextTix, dayEl: dayEl, canDungeon: canDungeon, startDungeon: startDungeon, redeem: redeem, testJump: testJump, testGift: testGift, dpsStats: dpsStats, dpsReset: dpsReset, rt: function () { return R; }, awaken: awaken, rebirth: rebirth, rebirthGain: rebirthGain, canRebirth: canRebirth, peak: peak, eScale: eScale,
     sync: function () { if (R) syncTeam(); }, offline: offline, measureRate: measureRate, newRuntime: function () { R = null; newRuntime(); }
   };
 })(IDLE_DATA);
@@ -6551,6 +6568,7 @@ function IdleFmt(n) {
     p.querySelectorAll('canvas[data-tr]').forEach(function (c) { treasureIcon(c, c.dataset.tr, +c.dataset.q); c.style.width = '52px'; });
     if (tab === 'log') { mountLooks(p); p.querySelectorAll('canvas[data-of]').forEach(function (c) { portrait(c, 'hero', 2, { look: fullLook(c.dataset.of), sil: false }); c.style.width = '52px'; if (!C.outfitUnlocked(c.dataset.of)) c.style.filter = 'brightness(0.25)'; }); }
     if (tab === 'train') updaters.push(updTrain);
+    if (tab === 'log') { updDps(); updaters.push(updDps); }
     if (tab === 'skill') updaters.push(updSkill);
     if (tab === 'pets') updaters.push(function () { var b = $('hatchBtn'); if (b) { b.disabled = C.S.eggs < 1; b.textContent = '孵靈獸蛋（' + C.S.eggs + '）'; } var t = $('tenBtn'); if (t) t.hidden = C.S.eggs < 10; });
     if (tab === 'gear') updaters.push(function () {
@@ -6586,6 +6604,29 @@ function IdleFmt(n) {
     });
     h += '</div><div class="bonus" id="bonus"></div>';
     return h;
+  }
+  // 傷害統計：主角、神獸、夥伴、法器各打了多少
+  var dpsT = 0;
+  function dpsName(k) {
+    var t = k.slice(0, 2), key = k.slice(2);
+    if (k === 'hero') return ['主角', ''];
+    if (t === 'p:') return [C.PET_BY[key] ? C.PET_BY[key].name : key, '神獸'];
+    if (t === 'a:') return [C.PART_BY[key] ? C.PART_BY[key].name : key, '夥伴'];
+    if (t === 'g:') return [C.TR_BY[key] ? C.TR_BY[key].name : key, '法器'];
+    return [k, ''];
+  }
+  function updDps() {
+    var box = $('dpsBox'); if (!box) return;
+    var now = performance.now(); if (now - dpsT < 900) return; dpsT = now;
+    var d = C.dpsStats(), tot = 0, rows = [];
+    for (var k in d.by) { tot += d.by[k]; rows.push([k, d.by[k]]); }
+    if (d.t < 1 || !tot) { box.innerHTML = '<p class="note">還沒打到妖怪，打一下再來看。</p>'; return; }
+    rows.sort(function (a, b) { return b[1] - a[1]; });
+    var top = rows[0][1];
+    box.innerHTML = '<div class="dpsHead"><span>戰鬥 ' + Math.floor(d.t) + ' 秒</span><span>全隊每秒 <b>' + fmt(tot / d.t) + '</b></span></div>' + rows.map(function (r) {
+      var nm = dpsName(r[0]);
+      return '<div class="dpsRow"><span class="dn"><small>' + nm[1] + '</small>' + esc(nm[0]) + '</span><span class="db"><i style="width:' + Math.max(2, r[1] / top * 100).toFixed(1) + '%"></i></span><span class="dv">' + fmt(r[1] / d.t) + '<small>' + Math.round(r[1] / tot * 100) + '%</small></span></div>';
+    }).join('') + (C.S.testGod ? '<p class="note" style="color:#ff8a8a">無敵模式開著：傷害被放大，比例不準，要看平衡請先關掉。</p>' : '');
   }
   function updTrain() {
     var st = C.stats();
@@ -6815,7 +6856,8 @@ function IdleFmt(n) {
   }
   function logHtml() {
     var S = C.S, si = C.stageInfo(S.maxStage), t = Math.floor(S.playTime);
-    var h = '<div class="sec"><h3>修行紀錄</h3></div><div class="stats">' +
+    var h = '<div class="sec"><h3>傷害統計</h3><button class="mini" type="button" data-act="dpsReset">重新計算</button></div><p class="note">每秒傷害（DPS）只算戰鬥中的時間、真的扣到的血。燒傷算在放火的人身上。換隊伍或升級後按「重新計算」，打幾波再看。</p><div id="dpsBox" class="dps"></div>' +
+      '<div class="sec"><h3>修行紀錄</h3></div><div class="stats">' +
       '<div>最遠走到<b>' + si.label + ' ' + esc(si.title) + '</b></div><div>打倒妖怪<b>' + fmt(S.kills) + '</b></div><div>打倒首領<b>' + S.bossKills + '</b></div>' +
       '<div>被打倒<b>' + S.deaths + ' 次</b></div><div>孵蛋<b>' + S.eggsHatched + ' 顆</b></div><div>煉器<b>' + S.forged + ' 件</b></div>' +
       '<div>修行時間<b>' + Math.floor(t / 3600) + ' 時 ' + Math.floor(t % 3600 / 60) + ' 分</b></div></div>';
@@ -6847,6 +6889,7 @@ function IdleFmt(n) {
     else if (d.act === 'hatch') doHatch();
     else if (d.act === 'hatchTen') doHatchTen();
     else if (d.act === 'forge') doForge();
+    else if (d.act === 'dpsReset') { C.dpsReset(); dpsT = 0; updDps(); }
     else if (d.act === 'export') modal('<h2>你的進度碼</h2><p class="note">整串都要存起來，少一個字就讀不出來。</p><textarea readonly rows="5" style="width:100%;font-size:11px;word-break:break-all">' + exportCode() + '</textarea><div class="btns"><button class="big" type="button" data-m="copyCode">複製</button><button class="mini" type="button" data-m="close" style="padding:8px 16px">關閉</button></div>');
     else if (d.act === 'import') modal('<h2>匯入進度</h2><p>把進度碼貼在下面。<b>現在這台的進度會被蓋掉</b>（會先存一份備份）。</p><textarea rows="5" style="width:100%;font-size:11px;word-break:break-all" placeholder="XXIDLE1:⋯"></textarea><p id="impErr" class="note" style="color:#ff8a8a" hidden>這串看不懂，是不是少複製了一段？</p><div class="btns"><button class="big" type="button" data-m="doImport">讀取</button><button class="mini" type="button" data-m="close" style="padding:8px 16px">取消</button></div>');
     else if (d.act === 'reset') modal('<h2>真的要重來？</h2><p>境界、神獸、法器全部會清空，沒辦法復原。</p><div class="btns"><button class="mini warn" type="button" data-m="reset" style="padding:8px 16px">清除，重新開始</button><button class="big" type="button" data-m="close">不要</button></div>');
