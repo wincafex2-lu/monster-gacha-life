@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -35,7 +35,7 @@ body { font-family: var(--body); font-size: 15px; line-height: 1.5; margin: 0; -
 button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 button:disabled { cursor: default; opacity: 0.45; }
-#app { position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100vw, 760px); height: 100dvh;
+#app { position: fixed; top: 0; bottom: 0; left: 0; right: 0; margin: 0 auto; max-width: 760px; height: 100dvh; box-sizing: border-box; overflow: hidden;
   display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; grid-template-areas: "head" "stage" "panel" "tabs"; grid-template-columns: minmax(0, 1fr); gap: 8px;
   padding: max(8px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 0 max(10px, env(safe-area-inset-left, 0px)); }
 @supports not (height: 100dvh) { #app { height: 100vh; } }
@@ -126,7 +126,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 .tabs button[aria-selected="true"] { color: var(--gold); background: radial-gradient(ellipse at 50% 120%, rgba(195,65,47,.45), transparent 70%); }
 .tabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 3px; height: 4px; border-radius: 3px; background: var(--cinnabar); transform: skewX(-20deg); }
 .tabs .dot { position: absolute; top: 6px; right: 12%; width: 9px; height: 9px; border-radius: 50%; background: var(--cinnabar); box-shadow: 0 0 0 2px #15120f; }
-#panel { background: linear-gradient(180deg, rgba(255,255,255,.025), transparent 120px), var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: grid; gap: 10px; align-content: start;
+#panel { overflow-x: hidden; min-width: 0; background: linear-gradient(180deg, rgba(255,255,255,.025), transparent 120px), var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: grid; gap: 10px; align-content: start;
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; min-height: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
 .sec { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
 .sec h3 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 900; }
@@ -150,10 +150,10 @@ button:disabled { cursor: default; opacity: 0.45; }
 
 .team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .team.pteam { grid-template-columns: repeat(2, 1fr); }
-.slot { background: var(--panel2); border: 2px dashed var(--line); border-radius: 10px; padding: 6px; text-align: center; min-height: 112px; display: grid; align-content: start; justify-items: center; gap: 2px; }
+.slot { min-width: 0; overflow: hidden; background: var(--panel2); border: 2px dashed var(--line); border-radius: 10px; padding: 6px; text-align: center; min-height: 112px; display: grid; align-content: start; justify-items: center; gap: 2px; }
 .slot.sel { border-style: solid; border-color: var(--gold); }
 .slot.locked { opacity: .5; }
-.slot canvas, .pet canvas, .gi canvas { image-rendering: pixelated; }
+.slot canvas, .pet canvas, .gi canvas { image-rendering: pixelated; max-width: 100%; height: auto; }
 .slot .pn { font-weight: 900; font-size: 13px; }
 .stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; font-weight: 400; }
 .stars .off { color: #4a4f6c; }
@@ -169,6 +169,7 @@ button:disabled { cursor: default; opacity: 0.45; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
 .chips button { background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-weight: 800; color: var(--text); }
 .chips button.on { border-color: var(--gold); background: var(--ink); }
+.pgrid, .seg, .chips, .team { min-width: 0; }
 .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; margin-bottom: 8px; }
 .pgrid.small { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 4px; }
 .pc { position: relative; background: var(--panel2); border: 2px solid var(--line); border-radius: 10px; padding: 6px 4px; text-align: center; display: grid; justify-items: center; gap: 2px; cursor: pointer; }
@@ -252,7 +253,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v31</div>
+    <div class="ver">v32</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4435,22 +4436,16 @@ var IdleStage = (function (C, D, ART) {
       return { l: d.cx * sc, r: (d.w - d.cx) * sc };
     }
     if (groups.length) {
-      var GE = groups.map(function (g) { var es = g.map(ext); return { l: Math.max.apply(null, es.map(function (e) { return e.l; })), r: Math.max.apply(null, es.map(function (e) { return e.r; })) }; });
-      var OV = DEEP ? 0.12 : 0.08, xs, left;
-      // 太擠就讓前後多疊一點（不縮小）
-      for (; ; OV += 0.05) {
-        xs = [];
-        GE.forEach(function (e, i) { xs.push(i ? xs[i - 1] - (GE[i - 1].l + e.r) * (1 - OV) : heroL - e.r - 4); });  // 第一排跟主角留一點空隙
-        left = xs[xs.length - 1] - GE[GE.length - 1].l;
-        if (left >= 10 || OV >= 0.7) break;
-      }
-      // 左邊還有空就平均攤開（每個間隔最多多拉開半隻的寬度）
-      if (left > 14 && groups.length > 1) {
-        var avg = GE.reduce(function (t, e) { return t + e.l + e.r; }, 0) / GE.length, gap = Math.min((left - 14) / (groups.length - 1), avg * 0.5);
-        xs = xs.map(function (x, i) { return x - gap * i; });
-      }
-      // 同一直排的上、下兩隻稍微錯開一點，看起來不會像排隊
-      groups.forEach(function (g, gi) { g.forEach(function (m, j) { pos[m.id] = { x: xs[gi] - (g.length > 1 && m.row === 'top' ? 6 : 0), feet: ROWS[m.row], k: m.k * (m.fix ? 1 : SH) }; }); });
+      // 每一直排的位置固定（泓：放不同隻上去，站的地方不要變）：第一排在主角背後，最後一排靠畫面左邊，中間平均分
+      var x0 = heroL - 30, xL = 44, n = groups.length, step = n > 1 ? Math.min(58, (x0 - xL) / (n - 1)) : 0;
+      groups.forEach(function (g, gi) {
+        g.forEach(function (m) {
+          var x = x0 - step * gi;
+          if (gi === 0) x = Math.min(x, heroL - 4 - ext(m).r);  // 特別寬的才往左讓一點，不壓到主角
+          // 同一直排的上、下兩隻稍微錯開一點，看起來不會像排隊
+          pos[m.id] = { x: x - (g.length > 1 && m.row === 'top' ? 6 : 0), feet: ROWS[m.row], k: m.k * (m.fix ? 1 : SH) };
+        });
+      });
     }
     formCache = { sig: sig, pos: pos };
     return pos;
