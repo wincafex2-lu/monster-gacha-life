@@ -190,11 +190,15 @@ button:disabled { cursor: default; opacity: 0.45; }
 .pet .sk b { color: var(--text); }
 .pet .act { grid-column: 1 / -1; display: flex; gap: 6px; justify-content: flex-end; }
 
-.gears { display: grid; gap: 8px; }
-.gi { display: grid; grid-template-columns: 56px 1fr auto; gap: 8px; align-items: center; background: var(--panel2); border-radius: 10px; padding: 6px 8px; }
+.gears { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 8px; }
+.gi { display: flex; flex-direction: column; gap: 4px; background: var(--panel2); border-radius: 10px; padding: 6px 8px; min-width: 0; }
+.gi .gtop { display: grid; grid-template-columns: 52px 1fr; gap: 8px; align-items: center; }
 .gi .gn { font-weight: 900; }
+.gi.on { box-shadow: 0 0 0 2px var(--gold) inset; }
+.gi .gn .tag { margin-left: 6px; background: var(--gold); color: #2a2018; font-size: 11px; border-radius: 6px; padding: 1px 5px; vertical-align: 1px; }
 .gi .gd { font-size: 12px; color: var(--muted); line-height: 1.35; }
-.gi .ga { display: flex; flex-direction: column; gap: 4px; align-items: stretch; }
+.gi .ga { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: auto; padding-top: 2px; }
+.gi .ga button { width: 100%; white-space: nowrap; }
 .gslots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 #modal textarea { background: var(--ink); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px; font-family: monospace; resize: vertical; }
 .gslot { background: var(--panel2); border: 2px dashed var(--line); border-radius: 10px; padding: 6px; text-align: center; min-height: 84px; display: grid; align-content: center; justify-items: center; gap: 2px; font-size: 13px; }
@@ -253,7 +257,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v35</div>
+    <div class="ver">v36</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -6677,18 +6681,22 @@ function IdleFmt(n) {
     h += '</div><div class="sec"><h3>背包 ' + S.inv.length + '</h3><button class="big" type="button" id="forgeBtn" data-act="forge">煉器（' + C.FORGE_COST + ' 玄鐵）</button></div>';
     h += '<p class="note">玄鐵從首領身上掉，小妖怪偶爾也會掉。品階：<span style="color:' + D.QUALITY[0].color + '">凡器</span>、<span style="color:' + D.QUALITY[1].color + '">靈器</span>、<span style="color:' + D.QUALITY[2].color + '">寶器</span>、<span style="color:' + D.QUALITY[3].color + '">仙器</span>。</p>' + (C.wuxingOn() ? '<p class="note">五行：金剋木、木剋土、土剋水、水剋火、火剋金。剋到 ×1.5，被剋 ×0.75。法器和身上道袍同屬性再 +20%。現在道袍：' + (C.heroEl() ? elChip(C.heroEl()) : '無屬性（雜役服：主角傷害 +5%）') + '</p>' : '') + '<div class="gears">';
     var onTypes = {}; S.gear.slice(0, slots).forEach(function (id) { var x = id && C.item(id); if (x) onTypes[x.t] = 1; });
-    var inv = S.inv.slice().sort(function (a, b) { return C.gearPower(b) - C.gearPower(a); });
+    // 固定排序：裝備中的照格子順序在最前，其他照品階（高到低）→ 法器種類 → 拿到的先後。強化、洗煉都不會換位置
+    var TR_IDX = {}; D.TREASURES.forEach(function (t, i) { TR_IDX[t.key] = i; });
+    var eqAt = function (it) { var s = S.gear.slice(0, slots).indexOf(it.id); return s < 0 ? 9 : s; };
+    var inv = S.inv.slice().sort(function (a, b) { return (eqAt(a) - eqAt(b)) || (b.q - a.q) || (TR_IDX[a.t] - TR_IDX[b.t]) || (a.id - b.id); });
     inv.forEach(function (it) {
       var tr = C.TR_BY[it.t], q = D.QUALITY[it.q], on = S.gear.slice(0, slots).indexOf(it.id) >= 0;
       var pw = it.t === 'ruyi' ? '全隊傷害 +' + Math.round(C.gearPower(it) * 100) + '%' : it.t === 'bagua' ? '反彈 ' + Math.round(C.gearPower(it) * 100) + '% 攻擊' : it.t === 'jubao' ? '每次倒出靈石' : '每下 ' + Math.round(C.gearPower(it) * 100) + '% 攻擊';
       var cb = null; D.OUTFIT_COMBOS.forEach(function (c) { if (c.t === it.t) cb = c; });
       var cbText = cb ? '<br><span class="combo">' + (S.outfit === cb.o ? '★ ' : '☆ 穿' + esc(C.OUT_BY[cb.o].name) + '：') + esc(cb.name) + '　' + esc(cb.desc) + '</span>' : '';
       var affs = (it.aff || []).map(function (a) { return '<div class="aff">・' + affText(a) + '</div>'; }).join('');
-      h += '<div class="gi"><canvas data-tr="' + it.t + '" data-q="' + it.q + '"></canvas><div><div class="gn" style="color:' + q.color + '">' + q.name + '・' + esc(tr.name) + ' +' + it.lv + elChip(it.el) + '</div>' + affs + '<div class="gd">' + esc(tr.desc) + '<br>' + pw + cbText + '</div></div><div class="ga">' +
-        (on ? '<span class="note">裝備中</span>' : '<button class="mini go" type="button" data-eq="' + it.id + '">' + (onTypes[it.t] ? '換上' : '裝上') + '</button>') +
+      h += '<div class="gi' + (on ? ' on' : '') + '"><div class="gtop"><canvas data-tr="' + it.t + '" data-q="' + it.q + '"></canvas><div><div class="gn" style="color:' + q.color + '">' + q.name + '・' + esc(tr.name) + ' +' + it.lv + elChip(it.el) + '</div><div class="gd">' + pw + '</div></div></div>' +
+        affs + '<div class="gd">' + esc(tr.desc) + cbText + '</div><div class="ga">' +
+        (on ? '<button class="mini" type="button" disabled>裝備中</button>' : '<button class="mini go" type="button" data-eq="' + it.id + '">' + (onTypes[it.t] ? '換上' : '裝上') + '</button>') +
         '<button class="mini" type="button" data-enh="' + it.id + '">強化 ' + fmt(C.enhanceCost(it)) + '</button>' +
-        (it.q && C.sysOn('wash') ? '<button class="mini" type="button" data-wash="' + it.id + '">洗煉</button>' : '') +
-        (on ? '' : '<button class="mini warn" type="button" data-salv="' + it.id + '">分解</button>') + '</div></div>';
+        (it.q && C.sysOn('wash') ? '<button class="mini" type="button" data-wash="' + it.id + '">洗煉</button>' : '<span></span>') +
+        (on ? '<span></span>' : '<button class="mini warn" type="button" data-salv="' + it.id + '">分解</button>') + '</div></div>';
     });
     return h + '</div>';
   }
@@ -6837,7 +6845,7 @@ function IdleFmt(n) {
     else if (d.pup) { if (C.upPartner(d.pup)) render(); else toast('靈石不夠'); }
     else if (d.uneq !== undefined) { C.unequip(+d.uneq); render(); }
     else if (d.eq) { gearSlot = Math.min(gearSlot, C.gearSlots() - 1); var free = -1; for (var i = 0; i < C.gearSlots(); i++) if (!S.gear[i]) { free = i; break; } C.equip(+d.eq, S.gear[gearSlot] && free >= 0 ? free : gearSlot); render(); }
-    else if (d.enh) { if (C.enhance(+d.enh)) render(); }
+    else if (d.enh) { if (C.enhance(+d.enh)) { var pn = $('panel'), st = pn.scrollTop; render(); pn.scrollTop = st; } }
     else if (d.salv) { var got = C.salvage(+d.salv); if (got) { toast('分解了，拿回 ' + got + ' 玄鐵'); render(); } }
     else if (d.gslot !== undefined) { gearSlot = +d.gslot; render(); }
     else if (d.xin) { if (C.xinUp(d.xin)) { save(); render(); } }
@@ -7044,6 +7052,7 @@ function IdleFmt(n) {
     frame('#modalCard', 'scroll', '18px 22px', 'box-shadow:0 10px 40px rgba(0,0,0,.6);');
     frame('.pc,.slot,.up,.pet,.of,.gslot,.gi,.dun,.pill,.xn', 'card', '9px', 'box-shadow:none;');
     frame('.pc.on', 'card', '9px', 'box-shadow:0 0 0 2px var(--gold);');
+    frame('.gi.on', 'card', '9px', 'box-shadow:0 0 0 2px var(--gold);');
     frame('button.big,#breakBtn.ready,#bossBtn', 'btn', '6px 8px', 'color:#fff6e6;text-shadow:0 1px 2px rgba(0,0,0,.6);');
     frame('button.go,.buy', 'btn2', '6px 8px', 'color:#f2fff6;text-shadow:0 1px 2px rgba(0,0,0,.6);');
     frame('button.big:disabled,button.go:disabled,.buy:disabled', 'btn2', '6px 8px', 'filter:grayscale(1) brightness(.7);');
