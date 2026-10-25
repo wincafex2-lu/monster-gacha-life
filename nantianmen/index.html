@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v26</div>
+    <div class="ver">v27</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -1733,7 +1733,7 @@ var IdleCore = (function (D) {
       var n = waveSize(w), list = si.area.enemies, tn = areaTune(si);
       for (var i = 0; i < n; i++) {
         var e = list[Math.floor(rnd() * list.length)];
-        var en = mkEnemy(e[0], e[1], eScale(g, 'Hp') * (0.9 + 0.03 * w) * tn[0], eScale(g, 'Atk') * tn[1], L.SPAWN_X + i * L.SPACING, false); en.art = e[3];
+        var en = mkEnemy(e[0], e[1], eScale(g, 'Hp') * (0.9 + 0.03 * w) * tn[0], eScale(g, 'Atk') * tn[1], L.SPAWN_X + i * L.SPACING, false); en.art = e[3]; en.slot = i;
         var tr = e[2] || (si.round >= 1 ? D.ROUND2_TRAITS[Math.floor(rnd() * D.ROUND2_TRAITS.length)] : null);
         if (tr) addTrait(en, tr);
         en.el = enemyEl(si, false);
@@ -1838,6 +1838,7 @@ var IdleCore = (function (D) {
     }
     var a = alive(), me = a.indexOf(e);
     for (var gi = 0; gi < me; gi++) if (a[gi].trait === 'guard') { dmg *= 0.7; break; }
+    if (S.testGod) dmg = Math.max(dmg * 20, e.maxHp * 0.34);  // 測試模式：三下就倒
     e.hp -= dmg; e.hurtT = 0.2; h = { dmg: dmg, crit: h.crit, src: h.src, extra: h.extra, ke: ke };
     if (h.extra && h.extra.stun) e.stun = Math.max(e.stun, e.boss ? Math.min(0.5, h.extra.stun) : h.extra.stun);  // 首領最多只暈 0.5 秒
     emit('hit', { e: e, dmg: h.dmg, crit: h.crit, src: h.src, ke: h.ke });
@@ -2036,7 +2037,7 @@ var IdleCore = (function (D) {
   function hurtHero(e, dmg, refl, move) {
     var h = R.hero;
     if (refl) dmg *= 0.92;
-    if (h.guardT > 0) dmg = 0;
+    if (h.guardT > 0 || S.testGod) dmg = 0;
     if (h.shield > 0) {
       var s = Math.min(h.shield, dmg); h.shield -= s; dmg -= s;
       if (h.shield <= 0 && outfitCombo('bagua') && equipped().some(function (q) { return q.it.t === 'bagua'; })) { // 以靜制動
@@ -2084,6 +2085,7 @@ var IdleCore = (function (D) {
     }
     if (h.burnT > 0) { h.burnT -= dt; h.hp -= h.burnDps * dt; }
     if (h.poisonT > 0) { h.poisonT -= dt; h.hp -= h.poisonDps * dt; }
+    if (S.testGod) h.hp = h.maxHp;
     if (h.wetT > 0) h.wetT -= dt;
     if (h.slowT > 0) h.slowT -= dt;
     if (h.windT > 0) h.windT -= dt;
@@ -2374,7 +2376,7 @@ var IdleCore = (function (D) {
     R.enemies = [];
     for (var i = 0; i < n; i++) {
       var e = def.enemies[Math.floor(rnd() * def.enemies.length)];
-      var en = mkEnemy(e[0], e[1], eScale(dn.lvl, 'Hp') * tu[0] * grow, eScale(dn.lvl, 'Atk') * tu[1] * 0.9 * grow, L.SPAWN_X + i * L.SPACING, false);
+      var en = mkEnemy(e[0], e[1], eScale(dn.lvl, 'Hp') * tu[0] * grow, eScale(dn.lvl, 'Atk') * tu[1] * 0.9 * grow, L.SPAWN_X + i * L.SPACING, false); en.slot = i;
       en.goldMul = 0.5; en.xpMul = 0.5; en.ghost = def.key === 'shenshou'; en.art = e[3];
       en.el = dn.el || (wuxingOn() ? rollEl() : null);
       R.enemies.push(en);
@@ -2408,6 +2410,28 @@ var IdleCore = (function (D) {
       else { S[k] = (S[k] || 0) + c[k]; got[k] = c[k]; }
     }
     return { ok: true, text: c.text, got: got };
+  }
+
+  // ───────── 測試模式（給大人測後面的地區；本來的進度由介面另外存一份）─────────
+  var TEST_REALM = ['練氣', '練氣', '築基', '築基', '金丹', '金丹', '元嬰', '元嬰', '化神', '化神', '煉虛', '煉虛', '合體', '大乘', '渡劫'];
+  function testJump(a) {
+    if (!R || R.dun || a < 0 || a >= D.AREAS.length) return false;
+    var g = a * 10, r = D.realmStart(TEST_REALM[a] || '渡劫');
+    S.stage = g; S.maxStage = Math.max(S.maxStage, g); S.wave = 1; S.farming = false; S.bossOk = -1;
+    if (S.realm < r) { S.realm = r; S.xp = 0; }
+    var st = stats(); R.hero.maxHp = st.hp;
+    R.phase = 'fight'; R.hits = []; R.clones = []; R.eHits = []; R.hero.burnT = R.hero.wetT = R.hero.poisonT = R.hero.slowT = R.hero.windT = 0; R.hero.hp = R.hero.maxHp;
+    spawnWave();
+    // 跳關時一次解鎖很多東西，不要連跳十幾個說明視窗
+    if (!S.sysSeen) S.sysSeen = {}; if (!S.outfitsSeen) S.outfitsSeen = { chores: 1 };
+    D.SYSTEMS.forEach(function (x) { if (sysOn(x.key)) S.sysSeen[x.key] = 1; });
+    D.OUTFITS.forEach(function (o) { if (outfitUnlocked(o.key)) S.outfitsSeen[o.key] = 1; });
+    return true;
+  }
+  function testGift() {
+    S.eggs = (S.eggs || 0) + 30; S.blood = (S.blood || 0) + 60; S.iron = (S.iron || 0) + 200;
+    S.stone = (S.stone || 0) + 50; S.herb = (S.herb || 0) + 40; S.page = (S.page || 0) + 25; S.soul = (S.soul || 0) + 20;
+    S.gold += eScale(Math.max(S.maxStage, 1), 'Gold') * 5000;
   }
 
   // ───────── 轉世飛升 ─────────
@@ -2698,7 +2722,7 @@ var IdleCore = (function (D) {
     wuxingOn: wuxingOn, heroEl: heroEl, wash: wash, washCost: washCost, rerollEl: rerollEl, EL_COST: EL_COST,
     xinPoints: xinPoints, xinUsed: xinUsed, xinUp: xinUp, xinReset: xinReset, brew: brew,
     AWAKEN: AWAKEN, awakenText: awakenText, canAwaken: canAwaken, bloodStarCost: bloodStarCost, canBloodStar: canBloodStar, bloodStar: bloodStar, study: study, PAGE_COST: PAGE_COST,
-    DUN_BY: DUN_BY, TIX_MAX: TIX_MAX, dunState: dunState, dunNextTix: dunNextTix, dayEl: dayEl, canDungeon: canDungeon, startDungeon: startDungeon, redeem: redeem, awaken: awaken, rebirth: rebirth, rebirthGain: rebirthGain, canRebirth: canRebirth, peak: peak, eScale: eScale,
+    DUN_BY: DUN_BY, TIX_MAX: TIX_MAX, dunState: dunState, dunNextTix: dunNextTix, dayEl: dayEl, canDungeon: canDungeon, startDungeon: startDungeon, redeem: redeem, testJump: testJump, testGift: testGift, awaken: awaken, rebirth: rebirth, rebirthGain: rebirthGain, canRebirth: canRebirth, peak: peak, eScale: eScale,
     sync: function () { if (R) syncTeam(); }, offline: offline, measureRate: measureRate, newRuntime: function () { R = null; newRuntime(); }
   };
 })(IDLE_DATA);
@@ -4322,7 +4346,13 @@ var IdleStage = (function (C, D, ART) {
     return { x: e.x + w / 2, y: enemyFeet(e) - h * 0.5, top: enemyFeet(e) - m.feet * sc / S, w: w };
   }
   function enemyScale(e) { if (!e.boss) return e.mini ? S * 0.7 : S; return e.def.big ? 5 : e.def.tier === 3 ? 4 : S; }
-  function enemyFeet(e) { return e.boss ? FEET + 1 : FEET + [0, 2, -2, 1][e.id % 4]; }
+  // 小怪分上、中、下幾排站（照出場順序），不要一出來就疊成一團
+  var E_ROW = [0, -0.8, 0.8, -0.4, 0.4];
+  function enemyFeet(e) {
+    if (e.boss) return FEET + 1;
+    var r = E_ROW[(e.slot !== undefined ? e.slot : e.id) % 5];
+    return Math.round(FEET + r * (r < 0 ? FEET - ROWS.top : ROWS.bot - FEET));
+  }
   function heroPos() { return { x: C.L.HERO_X + 16, feet: FEET }; }
   // 站位（泓定的菱形）：主角站最前面那一點，兩位夥伴站菱形上、下兩點；神獸排在菱形後面的上下兩排
   // （第 3 隻站兩排中間、最後面）。會飛的就飄在自己的位置上空。x 照實際畫出來的寬度排，太擠就整隊一起縮小。
@@ -5010,6 +5040,7 @@ function IdleFmt(n) {
   // ───────── 存檔 ─────────
   // 存兩份：主存檔壞掉（寫到一半被關掉之類）就讀備份
   var BACKUP_KEY = SAVE_KEY + '-backup';
+  var TEST_KEY = SAVE_KEY + '-before-test';  // 進測試模式前的進度
   function parseSave(s) { try { var o = JSON.parse(s); return o && o.v === 1 && o.lv && o.pets ? o : null; } catch (e) { return null; } }
   function readSave() {
     var main = null, bak = null;
@@ -5515,6 +5546,11 @@ function IdleFmt(n) {
     h += '</div><div class="sec"><h3>換髮型</h3></div>' + lookGrid().replace(/data-m="look"/g, 'data-look-pick="1"');
     h += '<div class="sec"><h3>搬家用的進度碼</h3><div class="btns" style="margin:0"><button class="mini go" type="button" data-act="export">匯出進度</button><button class="mini" type="button" data-act="import">匯入進度</button></div></div><p class="note">換裝置前先「匯出進度」，把那串文字存好；到新裝置按「匯入進度」貼上就能接著玩。</p>';
     h += '<div class="sec"><h3>兌換碼</h3></div><div class="sec" style="justify-content:flex-start"><input id="codeIn" type="text" autocomplete="off" spellcheck="false" placeholder="輸入兌換碼" style="flex:1;min-width:0;background:var(--ink);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:15px;text-transform:uppercase"><button class="mini go" type="button" data-act="redeem">兌換</button></div>';
+    if (S.testMode) {
+      h += '<div class="sec"><h3>測試模式</h3><button class="mini warn" type="button" data-act="testEnd">結束測試，回到本來的進度</button></div><p class="note">進測試以前的進度已經另外存好了；測試時隨便玩，按上面的按鈕就回到原本的樣子。跳過去會把境界拉到差不多的程度。</p><div class="btns" style="flex-wrap:wrap;justify-content:flex-start">';
+      D.AREAS.forEach(function (a, i) { h += '<button class="mini' + (Math.floor(S.stage / 10) === i ? ' go' : '') + '" type="button" data-tjump="' + i + '">' + (i + 1) + ' ' + esc(a.name) + '</button>'; });
+      h += '</div><div class="btns" style="justify-content:flex-start"><button class="mini' + (S.testGod ? ' go' : '') + '" type="button" data-act="testGod">無敵：' + (S.testGod ? '開' : '關') + '</button><button class="mini" type="button" data-act="testGift">送一堆蛋和材料</button></div><p class="note">無敵打開時主角不會扣血，妖怪三下就倒，可以很快看完一區。</p>';
+    }
     h += '<div class="sec"><h3>重新開始</h3><button class="mini warn" type="button" data-act="reset">清除進度</button></div><p class="note">進度存在這台裝置的瀏覽器裡（會自動多存一份備份）。清除瀏覽器資料就會不見，記得偶爾匯出進度。</p>';
     var ver = document.querySelector('.ver');
     h += '<p class="note" style="text-align:center;margin-top:14px">遊戲版本 <b>' + esc(ver ? ver.textContent : '?') + '</b>　不是最新版的話，把這個分頁關掉再打開一次</p>';
@@ -5553,10 +5589,24 @@ function IdleFmt(n) {
     else if (d.bstar) { if (C.bloodStar(d.bstar)) { var bp = C.PET_BY[d.bstar]; toast(bp.name + ' 升到 ' + C.S.pets[d.bstar].star + ' 星！', 2.4); render(); save(); } }
     else if (d.awaken) { if (C.awaken(d.awaken)) { var ap = C.PET_BY[d.awaken]; render(); save(); modal('<h2>' + esc(ap.name) + '覺醒了！</h2><canvas id="awC"></canvas><p>攻擊變 1.6 倍，招式變成「覺醒・' + esc(ap.skill) + '」，更強、冷卻更短。</p><div class="btns"><button class="big" type="button" data-m="close">好帥</button></div>', function (root) { anims.push(showChar(root.querySelector('#awC'), ap.key, 3)); }); } }
     else if (d.act === 'redeem') {
-      var inp = $('codeIn'), r = C.redeem(inp.value);
-      if (r.bad) toast('這個代碼不對喔', 3);
+      var inp = $('codeIn'), r = /^\s*ceshi\s*$/i.test(inp.value) ? { test: true } : C.redeem(inp.value);
+      if (r.test) {
+        inp.value = '';
+        if (!C.S.testMode) { try { save(); localStorage.setItem(TEST_KEY, localStorage.getItem(SAVE_KEY) || ''); } catch (er) {} C.S.testMode = true; save(); }
+        render(); toast('打開測試模式（在這一頁最下面）', 3);
+      }
+      else if (r.bad) toast('這個代碼不對喔', 3);
       else if (r.used) toast('這個代碼今天用過了，明天再來', 3);
       else { inp.value = ''; toast('收到：' + r.text + '！', 4); save(); hud(); }
+    }
+    else if (d.tjump) { if (C.testJump(+d.tjump)) { toast('跳到 ' + D.AREAS[+d.tjump].name, 2.4); save(); render(); hud(); } else toast('副本裡不能跳，先打完副本', 3); }
+    else if (d.act === 'testGod') { C.S.testGod = !C.S.testGod; save(); render(); }
+    else if (d.act === 'testGift') { C.testGift(); save(); render(); hud(); toast('送了 30 顆蛋、60 滴精血和一堆材料', 3); }
+    else if (d.act === 'testEnd') {
+      var real = null; try { real = parseSave(localStorage.getItem(TEST_KEY)); } catch (er) {}
+      if (C.R && C.R.dun) toast('先把副本打完再結束測試', 3);
+      else if (!real) { C.S.testMode = false; C.S.testGod = false; save(); render(); toast('找不到測試前的進度，只關掉測試模式', 3); }
+      else { C.load(real); try { localStorage.removeItem(TEST_KEY); } catch (er) {} C.S.lastSeen = Date.now(); backupT = Date.now(); save(); applyLook(); C.checkOutfits(); render(); hud(); toast('回到本來的進度了', 3); }
     }
     else if (d.lookPick) { pickLook(+d.i); save(); render(); }
     else if (d.wear) { if (C.wearOutfit(d.wear)) { applyLook(); toast('換上' + C.OUT_BY[d.wear].name + '！' + C.OUT_BY[d.wear].desc, 3); save(); render(); } }
