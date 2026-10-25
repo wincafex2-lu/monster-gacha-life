@@ -267,7 +267,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v40</div>
+    <div class="ver">v41</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -6457,7 +6457,7 @@ function IdleFmt(n) {
   function intro() {
     modal('<h2>一路掃到南天門</h2><canvas id="moC"></canvas>' +
       '<p class="say">墨老頭：「後山的妖怪又跑出來了，你去掃一掃。對，用掃帚。一直往右走就對了。這把飛劍給你，只是有點生鏽，不是壞掉。」</p>' +
-      '<p class="note">先選一個髮型（之後可以在「紀錄」換）。身上這件雜役服，修煉越久會解鎖更多道袍：</p>' + lookGrid() +
+      '<p class="note">身上這件雜役服，修煉越久會解鎖更多道袍。</p>' +
       '<p class="note">關掉網頁也會繼續打，回來記得領收益。</p><div class="btns"><button class="big" type="button" data-m="start">出發！</button></div>',
       function (root) { mountLooks(root); anims.push(showChar(root.querySelector('#moC'), 'mo', 0, 4)); });
   }
@@ -6875,7 +6875,7 @@ function IdleFmt(n) {
         '<div class="sk">' + (un ? esc(o.desc) : '🔒 ' + esc(o.needText)) + '</div>' + (un ? '' : '<div class="note">能力：' + esc(o.desc) + '</div>') + '</div>' +
         '<div class="act">' + (on ? '<span class="note">穿著</span>' : un ? '<button class="mini go" type="button" data-wear="' + o.key + '">穿上</button>' : '') + '</div></div>';
     });
-    h += '</div><div class="sec"><h3>換髮型</h3></div>' + lookGrid().replace(/data-m="look"/g, 'data-look-pick="1"');
+    h += '</div>';  // 換髮型拿掉了：水墨主角的頭髮畫在圖上，換了也看不出來
     h += '<div class="sec"><h3>搬家用的進度碼</h3><div class="btns" style="margin:0"><button class="mini go" type="button" data-act="export">匯出進度</button><button class="mini" type="button" data-act="import">匯入進度</button></div></div><p class="note">換裝置前先「匯出進度」，把那串文字存好；到新裝置按「匯入進度」貼上就能接著玩。</p>';
     h += '<div class="sec"><h3>兌換碼</h3></div><div class="sec" style="justify-content:flex-start"><input id="codeIn" type="text" autocomplete="off" spellcheck="false" placeholder="輸入兌換碼" style="flex:1;min-width:0;background:var(--ink);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:15px;text-transform:uppercase"><button class="mini go" type="button" data-act="redeem">兌換</button></div>';
     if (S.testMode) {
