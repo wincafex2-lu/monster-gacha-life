@@ -371,6 +371,14 @@
 "branch": "art/nantianmen-shanhai",
 "raw": "fb98163e0c5d84fc3ce436ce37f177f01b9bf85e"
 },
+"heijiao__attack.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "b7d520091c2281b7e131d2d5f06fae477fc91c39"
+},
+"heijiao__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "32fb99ce31f63dab4ee2fca9aced3de401a66114"
+},
 "heixiong__attack.png": {
 "branch": "art/nantianmen-enemies",
 "raw": "1d6ad0e14f19cb2738c8cb1c2d0863efee44980f"
@@ -615,9 +623,21 @@
 "branch": "art/nantianmen-fengshen",
 "raw": "2e7c742338deb914e18e6154e2566d2585c3d3b5"
 },
+"mo__idle.png": {
+"branch": "art/nantianmen-people",
+"raw": "e42ed2ce050f0d1e5ced5c5a36ca553c39037a48"
+},
 "mogu__idle.png": {
 "branch": "art/nantianmen-characters-20261024",
 "raw": "f42d5a618ca0514e5e8d88efea7a2dd39f6c54fe"
+},
+"mohu__attack.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "6291276bccca4db9fa9da60025fbdf4ce49540b0"
+},
+"mohu__idle.png": {
+"branch": "art/nantianmen-enemies",
+"raw": "7663f85f46badb404955ea788f2e18e5bd689352"
 },
 "mojia__attack.png": {
 "branch": "art/nantianmen-fengshen",
