@@ -233,7 +233,7 @@ button:disabled { cursor: default; opacity: 0.45; }
     <div class="banner" id="banner" hidden></div>
     <div class="bubble" id="bubble" hidden></div>
     <div class="toast" id="toast"></div>
-    <div class="ver">v25</div>
+    <div class="ver">v26</div>
   </section>
 
   <nav class="tabs" role="tablist">
@@ -4350,6 +4350,7 @@ var IdleStage = (function (C, D, ART) {
     // 夥伴：第 1 位上、第 2 位下；神獸：第 1 隻上、第 2 隻下、第 3 隻中間最後；上面那排比較遠，畫小一點
     var AT = [{ row: 'top', k: 0.82 }, { row: 'bot', k: 0.92 }], PT = [{ row: 'top', k: 0.86 }, { row: 'bot', k: 1 }, { row: 'mid', k: 0.92 }];
     pars.forEach(function (m, i) { m.row = AT[i].row; m.k = AT[i].k; });
+    // 站位照出戰格的順序：第 1 格的神獸站最靠近主角，第 3 格最後面（玩家自己排）
     pets.forEach(function (m, i) { m.row = PT[i].row; m.k = PT[i].k; });
     var heroL = heroPos().x - drawnW('hero', 1) / 2, pos = {};
     // 從主角背後往左一個一個排（夥伴上、夥伴下、神獸上、神獸下、神獸中），上下排交錯，
@@ -5355,7 +5356,7 @@ function IdleFmt(n) {
     return h + '</div>';
   }
   function petsHtml() {
-    var S = C.S, h = partnersHtml() + '<div class="sec"><h3>出戰隊伍</h3><p class="note">先點一個格子，再按神獸的「出戰」。</p></div><div class="team">';
+    var S = C.S, h = partnersHtml() + '<div class="sec"><h3>出戰隊伍</h3><p class="note">先點一個格子，再按神獸的「出戰」。第 1 格的神獸站在主角後面最近的地方，第 3 格站最後面；想讓誰站前面，就把牠放第 1 格。</p></div><div class="team">';
     S.team.forEach(function (k, i) {
       h += '<div class="slot' + (i === petSlot ? ' sel' : '') + '" data-slot="' + i + '" role="button" tabindex="0">';
       if (k) { var p = C.PET_BY[k]; h += petBox(k, 2) + '<div class="pn" style="color:' + D.RARITY[p.rar].color + '">' + esc(p.name) + '</div><div class="stars">' + stars(S.pets[k].star) + '</div><button class="mini" type="button" data-rest="' + i + '">休息</button>'; }
