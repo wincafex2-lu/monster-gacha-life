@@ -93,7 +93,7 @@
 },
 "bg-gaolao__full.png": {
 "branch": "art/nantianmen-xiyou",
-"raw": "3eeb9e5504e3e40e5ddcc5d0761adcee547d7735"
+"raw": "1bf389a12a13a405db335692c69f02f853cebd7d"
 },
 "bg-herb__far.png": {
 "branch": "art/nantianmen-bg",
@@ -109,11 +109,11 @@
 },
 "bg-huaguo__full.png": {
 "branch": "art/nantianmen-xiyou",
-"raw": "2757b0cc6168f2cb822b8069c1150411f4bddccc"
+"raw": "112e831d0d05d310e464fc4c99b0653fc8c8d302"
 },
 "bg-huoyan__full.png": {
 "branch": "art/nantianmen-xiyou",
-"raw": "ced324f869ce8d74307e66def1b91600ceebb116"
+"raw": "c41309f6b2df5b245c3fa72249e44bb0981c0155"
 },
 "bg-kuangdong__full.png": {
 "branch": "art/nantianmen-enemies",
