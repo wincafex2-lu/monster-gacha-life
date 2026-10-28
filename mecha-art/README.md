@@ -6,7 +6,7 @@
 **給 GPT 的固定流程（每一次都要做）：**
 1. 開始畫之前，重新讀這份 README 的最新版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/main/mecha-art/README.md
 2. 只畫下面「待辦」表格裡的項目，照順序畫。畫完一張就可以先上傳。
-3. 上傳到分支 **`art/mecha-vfx`**（沒有就自己開），放在 `mecha-art/images/`。
+3. 上傳到**已經開好的分支 `art/mecha-vfx`**，資料夾是 `mecha-art/images/`（完整路徑例：`mecha-art/images/titan-rifts__fx.png`）。不要開新分支，也不要上傳到 main。
 4. 上傳完再讀一次這份 README，看有沒有新的意見。commit 訊息寫清楚上傳了哪些檔名。
 
 ## 這是什麼遊戲、要畫什麼
