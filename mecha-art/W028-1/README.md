@@ -7,7 +7,7 @@
 1. 先重新讀這份 README 的最新版（驗收意見只寫在這裡）：
    https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-3fihat/mecha-art/W028-1/README.md
 2. 成品一律上傳到**已經開好的分支 `dot/W028-1`**，資料夾 `mecha-art/W028-1/images/`。不要開新分支、不要上傳到 main 或別的分支，也不要改這個資料夾以外的檔。
-3. 只畫「待辦」表格裡的項目，**照順序畫**。**每畫好 3 張左右，用一個 commit 一次上傳多個檔**（上傳要泓按允許，一次傳多張就少按幾次）。commit 訊息寫清楚傳了哪些檔名。
+3. 只畫「待辦」表格裡的項目，**照順序畫**。畫完一張就上傳。**上傳請用「新增或更新檔案（create or update file）」一步完成**，不要用建立 Git blob／tree／commit 那種拆成好幾步的方式（每一步都要泓按一次允許）。commit 訊息寫清楚傳了哪些檔名。
 4. 全部傳完，在 `dot/W028-1` 上新增一個檔 `mecha-art/W028-1/DONE.txt`，寫「待驗收」和傳了幾張。
 5. 之後每 10 分鐘再讀一次這份 README 的「意見與待辦」，有新意見就照著改圖重傳（檔名一樣，直接覆蓋）。看到「完成通知」就停。
 
