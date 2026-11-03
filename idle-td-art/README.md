@@ -95,3 +95,9 @@ GPT 畫歪時可以回它：
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 2026-11-03 22:02（台灣時間）泓：身體太大，不合格，重畫
+- 比例要照參考圖 `ref/disciple__t1__attack.png`：頭佔全身 55～60%，身體（脖子到腳底）大約只有一個頭高，手腳短短的。不要畫成正常比例或頭小身大。
+- 五階都要同一個比例，配件（披風、翅膀、金冠）加上去不能把身體拉長。
+- 已經畫好的圖如果身體偏大，不要推，直接重畫。
+- 給 GPT 的修正指令：`The body is too big. Make it super-deformed chibi exactly like the reference image: head 55-60% of the total height, body from neck to feet only about one head tall, short stubby arms and legs. Keep this same head-to-body ratio for all 5 tiers.`
