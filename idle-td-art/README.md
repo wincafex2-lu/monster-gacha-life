@@ -8,6 +8,8 @@
 
 > **2026-11-03 22:07 更新：參考圖以泓直接給 GPT 的比例參考圖為主，畫法改成每階單張，詳見最下面「意見與待辦」。**
 
+> **2026-11-03 22:15 比例已鎖死：一律以 `ref/STANDARD__t2__stand.png`（泓通過的 2 階）為標準，不准更動，詳見最下面「意見與待辦」。**
+
 ## 固定流程（接手的人照做）
 
 1. 開工前先 `git fetch origin claude/project-thread-74yvlw`，讀那個分支上最新的這份 README（驗收意見只寫在最下面「意見與待辦」）。
@@ -65,7 +67,7 @@ OUTPUT
 
 | # | 檔名（放 `idle-td-art/images/`） | 內容 | 怎麼下指令 |
 |---|---|---|---|
-| 1 | `disciple__tiers.png` | 1～5 階站立圖，一張圖橫排 5 隻，左 1 右 5 | 附參考圖，貼「畫風」後說：Draw the SAME character as 5 evolution tiers side by side in ONE image, left = tier 1 (exactly the reference design), right = tier 5. Same face, same idle standing pose holding the broom, same size and style. Then follow the tier table (翻成英文寫進去). |
+| 1 | ~~`disciple__tiers.png`~~（作廢，改每階單張，見最下面） | 1～5 階站立圖，一張圖橫排 5 隻，左 1 右 5 | 附參考圖，貼「畫風」後說：Draw the SAME character as 5 evolution tiers side by side in ONE image, left = tier 1 (exactly the reference design), right = tier 5. Same face, same idle standing pose holding the broom, same size and style. Then follow the tier table (翻成英文寫進去). |
 | 2 | `disciple__t2__attack.png` | 2 階攻擊 4 格，橫排 | 附兩張圖：A＝第 1 張裡的 2 階，B＝`ref/disciple__t1__attack.png`。貼下面「升階動作」那段，【N】填 2。 |
 | 3 | `disciple__t3__attack.png` | 3 階攻擊 4 格 | 同上，【N】填 3 |
 | 4 | `disciple__t4__attack.png` | 4 階攻擊 4 格 | 同上，【N】填 4 |
@@ -130,3 +132,15 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 - 現在的 `disciple__t2__stand.png`（22:07）是在主參考之前畫的，**不算數，照主參考圖重畫 2 階**：比例、大小、站姿、點陣畫風照主參考圖；長相和服裝照 `ref/disciple__t1__stand.png`＋階級表。站姿要像主參考圖那樣輕鬆站，掃帚放身側或扛著，不要斜擋在身前。
 - 畫 GPT 時把主參考圖放第一張附上，指令照上面 22:05、22:07 兩段。
 - 重畫好的 2 階推上來後等 Claude 驗收，通過才畫 3～5 階。
+
+### 2026-11-03 22:15（台灣時間）泓：2 階（22:12 版）通過，**比例鎖死，不准更動**
+- 22:12 重畫的 `disciple__t2__stand.png` 通過，已複製成 **`ref/STANDARD__t2__stand.png`＝比例標準**。之後每一張（站立、攻擊、每一階）都照它，**不准改**：
+  - 頭身比、身高、角色大小、像素粗細、畫風，全部和標準圖一樣。
+  - 畫布 1254×1254 時角色本體（不含飄帶、武器、翅膀）高約 700px，腳底在 y≈978，左右置中。
+  - 配件（披風、飛劍、翅膀、金冠、光球）只能「加在外面」，不能把身體拉長、放大或縮小。
+- 每次畫都附 `ref/STANDARD__t2__stand.png`（放第一張）＋泓給的主參考圖，指令加一句：`LOCKED PROPORTIONS: match the first image EXACTLY in head size, body size, total height, pixel size and ground line. Do not change proportions at all; only change colors, outfit and accessories.`
+- 接下來的順序：
+  1. **1 階站立重畫**（`disciple__t1__stand.png`，覆蓋舊的）：照標準圖比例，外型照 1 階（淺藍補丁袍、紅腰帶、竹掃帚）。
+  2. 3、4、5 階站立（`disciple__t3__stand.png`～`t5`）。
+  3. 攻擊動畫改用新比例：**1～5 階都要**（`disciple__t1__attack.png`～`t5`，各 4 格橫排），動作參考 `ref/disciple__t1__attack.png` 的 4 個姿勢，但比例、大小、像素照標準圖。舊的 1 階攻擊圖只看動作，不看比例。
+- 每張畫好就推，Claude 每 5 分鐘驗一次。
