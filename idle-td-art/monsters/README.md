@@ -125,3 +125,8 @@ GPT 畫歪時可以回它：
 ### 2026-11-04 02:50（台灣時間）紙傘妖攻擊通過
 - 4 格：傾身→單腳跳→舌頭往前甩→收回，傘面、木屐、舌頭每格都在動，補丁位置一致。通過。
 - M1 只剩 **`wolf__attack.png` 重畫**（見 02:44 的意見）。重畫好推上來，通過就發完成通知。
+
+### 2026-11-04 02:57（台灣時間）狼妖攻擊重畫版通過；**改成重畫狼妖站立**，然後直接接 M2
+- `wolf__attack.png`（6211a35）：大小對了，4 格動作清楚，圍巾每格飄。通過，保留這版。
+- 但這版狼毛色偏暖棕、尾巴比站立圖小很多，和 `wolf__stand.png`（偏灰、尾巴很大）放一起會跳。**改成以攻擊圖為準，重畫 `wolf__stand.png`**：附 `ref/STANDARD__t2__stand.png`＋`images/wolf__attack.png`，給 GPT 加一句：`Redraw the standing idle pose of the wolf from image 2: exactly the same fur colors (warm gray-brown), the same tail size, the same scarf and the same size as in image 2. Relaxed idle stance facing right, feet at y=978, height about 100% of the girl.`
+- 狼妖站立推上來後**不用等驗收**，直接接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）開始畫史萊姆王站立。狼妖站立驗過後我會在這裡寫 M1 完成通知。
