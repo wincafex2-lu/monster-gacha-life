@@ -115,3 +115,9 @@ Solid magenta #FF00FF background.
 ```
 3. 1 階直接交 `ref/disciple__t1__stand.png` 不用畫。先畫 2 階推上來，Claude 驗過比例 OK 再畫 3～5 階。
 4. 之後攻擊圖（待辦 2～5）的圖 A 改用這裡的單階站立圖。
+
+### 2026-11-03 22:05（台灣時間）泓：比例參考改成這種
+泓給了一張比例參考（另一款遊戲的角色點陣圖，版權關係不放進這個公開 repo，用文字描述）。每階站立圖的英文指令最後加上這段：
+```
+PROPORTIONS (most important): compact cute game sprite. Head about HALF of the total height, body from neck to feet about ONE head tall, but arms and legs clearly visible (short, not stumps), feet visible. Relaxed idle stance in 3/4 view facing right, weapon held at the side or resting, NOT held horizontally across the body. The whole character fits in a squarish box, a little taller than wide (not counting wings/weapon).
+```
