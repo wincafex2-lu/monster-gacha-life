@@ -86,3 +86,9 @@ Redraw image B frame by frame using the tier N design from image A.
 - 站立 2～5 階：紅甲小紅旗 → 金鱗紋龍頭肩甲 → 黑金重甲暗紅髮＋小紅龍 → 金紅龍鱗甲金髮＋龍角金盔＋赤金龍翼＋大龍繞身，比例腳底一致。通過。
 - 1 階攻擊：長槍前刺 4 格，手都握在槍上、腳在同一條線，服裝一致。通過（之後 2～5 階攻擊的圖 B 用它）。
 - 2 階攻擊：背後小紅旗和紅纓每格都在擺動，服裝和 2 階站立一致。通過。繼續 3～5 階攻擊（小龍、龍翼要跟著動作動）。
+
+### 2026-11-04 03:38（台灣時間）3、4 階攻擊通過；5 階攻擊退件
+- 3 階：龍頭肩甲、龍牙槍頭、紅旗紅纓每格都在且會擺。通過。
+- 4 階：黑金甲、暗紅髮、肩上小紅龍、火紋槍每格一致。通過。
+- **5 階攻擊退件：龍翼和繞身大龍都比 5 階站立圖小很多**（站立圖翅膀展開約身高 1.7 倍，攻擊圖只剩約 1 倍，大龍也縮成肩上一顆頭）。翅膀、大龍的大小要和 `dragon__t5__stand.png` 一樣；翅膀照之前說的要拍動（第 1 格上收、第 2～3 格往後拍開、第 4 格半開），大龍身體跟著動作扭動。重畫整條。
+- 給 GPT 加一句：`The dragon wings and the big coiling dragon must be the SAME SIZE as in image A (wingspan about 1.7x the character height) in every frame. Do not shrink them.`
