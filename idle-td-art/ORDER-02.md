@@ -66,3 +66,6 @@ Keep the feet on the same ground line in all frames. The talisman projectile and
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 2026-11-04 02:01（台灣時間）1 階站立通過
+- 身高、腳底和標準圖一致（283～977 vs 275～978）；橘髮狐耳、白衣紅褲、1 條尾巴、黃符紙都對。通過，繼續 2～5 階站立（附這張當第二張參考，臉要同一個人）。
