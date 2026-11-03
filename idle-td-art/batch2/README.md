@@ -111,6 +111,7 @@ GPT 畫歪時可以回它：
 | `images/qinglong__stand.png` | 1536×1024 | 2 | 懸浮上／下兩格，S 形身體、鬍鬚與尾部有變化；四肢及白珍珠一致。 |
 | `images/qinglong__attack.png` | 2172×724 | 4 | 蓄力盤身、起衝、張口前衝、回復 S 形；已收窄第三格尾部，保留格間空隙。 |
 | `images/zhuque__stand.png` | 1536×1024 | 2 | 懸浮上／下拍翼兩格，三羽金冠、兩翼與長尾羽保持同一造型；無火焰特效。 |
+| `images/zhuque__attack.png` | 2172×724 | 4 | 抬翼、下拍、雙翼向右揮出、半開翼滑翔；尾羽隨動，無火焰或風效。 |
 
 原檔 SHA-256：
 
@@ -119,6 +120,7 @@ GPT 畫歪時可以回它：
 - `qinglong__stand.png`：`6b159aea569e7c835a7501af42492807669eacf68b08decc6a09182ebf0aabb5`
 - `qinglong__attack.png`：`21f33c99c089287f35d15b4e3b21cff81cb4baa75ea35cd009f495ce641229dd`
 - `zhuque__stand.png`：`4d239d80dbcdf9a3990302cb53a0256a3ef986c949ee8fbe86f950b5c54ce198`
+- `zhuque__attack.png`：`88ee78e815c730f11b152459f3c652f63b668115dae13bc2ab06fd222b002a4b`
 
 ## 意見與待辦
 
