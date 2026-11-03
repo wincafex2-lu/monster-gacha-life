@@ -77,3 +77,8 @@ Redraw image B frame by frame using the tier N design from image A.
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 2026-11-04 05:16（台灣時間）1 階站立：小改葫蘆後重推
+- 比例、腳底一致（316～977），土黃道袍、雙丸子頭、表情都很好。
+- **只改一處：手上的葫蘆現在是單顆圓肚、像布袋或小酒瓶。** 葫蘆要畫成上小下大兩顆球疊起來（8 字形、中間有腰繩），一眼看得出是葫蘆；之後大葫蘆、玉葫蘆、金葫蘆都照這個形狀。其他都不要動，重推這張後繼續 2～5 階站立。
+- 給 GPT 加一句：`The gourd must be a classic calabash: two stacked round bulbs, small on top and big on the bottom, with a cord tied at the narrow waist and a cork on top.`
