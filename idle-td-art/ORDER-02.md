@@ -73,3 +73,9 @@ Keep the feet on the same ground line in all frames. The talisman projectile and
 ### 2026-11-04 02:16（台灣時間）2、3 階站立通過
 - 2 階：3 條尾巴、白衣金邊、藍狐火、一疊符，比例一致。通過。
 - 3 階：5 條尾巴、狐面具、花紋巫女服、神樂鈴，比例一致。通過。繼續 4、5 階。
+
+### 2026-11-04 02:24（台灣時間）4、5 階站立通過；1 階攻擊第 3 格退件
+- 4 階：7 條銀白尾巴、紫黑楓葉和服、浮空符紙圈、金鈴杖，比例一致。通過。
+- 5 階：9 條金尖大尾巴扇形展開、金冠、三團狐火、白金和服、金長鈴杖，比例一致。通過。
+- `fox__t1__attack.png`：比例、服裝 4 格一致，丟符動作清楚；**但第 3 格尾巴從身後左邊跳到身體前面右邊（從兩腿間跑出來），看起來很怪。** 尾巴要一直留在身後（左邊），只改變擺的角度：第 1 格往後下垂、第 2 格往上甩、第 3 格往上往後揚起最高、第 4 格回落。重畫整條（之後 2～5 階都照這條，所以要先修好）。
+- 給 GPT 加一句：`The tail must ALWAYS stay behind her body on the LEFT side and never pass between or in front of her legs. Show the swing only by changing the tail's angle: frame 1 low, frame 2 rising, frame 3 highest and flared up behind her, frame 4 coming down.`
