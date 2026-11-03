@@ -144,3 +144,7 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
   2. 3、4、5 階站立（`disciple__t3__stand.png`～`t5`）。
   3. 攻擊動畫改用新比例：**1～5 階都要**（`disciple__t1__attack.png`～`t5`，各 4 格橫排），動作參考 `ref/disciple__t1__attack.png` 的 4 個姿勢，但比例、大小、像素照標準圖。舊的 1 階攻擊圖只看動作，不看比例。
 - 每張畫好就推，Claude 每 5 分鐘驗一次。
+
+### 2026-11-03 22:20（台灣時間）1 階站立（22:18 版）通過
+- 和標準圖比對：身高 698 vs 702px、腳底 y 976 vs 978，比例一致。外型（淺藍補丁袍、紅腰帶、竹掃帚）正確。
+- 繼續畫 3、4、5 階站立。
