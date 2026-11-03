@@ -1,6 +1,6 @@
 # 放置塔防角色點陣圖：工單 5　機甲少年五階（A4）
 
-狀態：待接手（前一張工單出現「完成通知」後才接，順序見 `QUEUE.md`）
+狀態：進行中（1 階攻擊退件重畫）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -84,3 +84,9 @@ Redraw image B frame by frame using the tier N design from image A.
 ### 2026-11-04 04:50（台灣時間）2～5 階站立通過
 - 2 階：白藍外骨骼、噴射背包、機械拳套。3 階：黃條紋裝甲、雙肩大肩甲、天線、雙拳套。4 階：深藍金甲、發光面罩、浮空小機器人、藍光能量拳。5 階：亮藍髮、全罩頭盔、片狀推進翼、兩座浮空砲台、金色巨拳。配件累加都對，身體大小、腳底和 1 階一致。通過。
 - 繼續 1 階攻擊（4 格），再 2～5 階攻擊。噴射背包、天線、機器人、推進翼、砲台在攻擊 4 格要跟著動（翼要張合、砲台要上下或轉向），每格都要在，攻擊圖和站立圖一樣大。
+
+### 2026-11-04 05:00（台灣時間）2～5 階攻擊通過；1 階攻擊退件重畫
+- 2～5 階攻擊：蓄力、出拳、打到底、收回 4 格清楚；服裝每格和同階站立一致；噴射背包、天線、機器人每格都在且位置有變，5 階推進翼第 3 格張最開、兩座砲台每格轉向。通過。5 階攻擊人畫得比站立小一點，Claude 打包時會統一縮放，不用重畫。
+- `mecha__t1__attack.png` 退件：**第 1 格扳手在後面那隻手，第 2～4 格換到前面那隻手**，換手看起來很怪。扳手要一直在同一隻手（前面那隻、和站立圖一樣）。動作也改成揮擊比較有力：第 1 格扳手舉過肩、第 2 格往前下揮、第 3 格揮到底身體前傾、第 4 格收回。
+- 給 GPT 加一句：`He holds the wrench in the SAME hand (his front hand, like in the standing image) in ALL four frames; never switch hands. Frame 1: wrench raised over his shoulder. Frame 2: swinging it forward and down. Frame 3: follow-through, wrench low in front, body leaning forward. Frame 4: recovering to idle.`
+- 重畫完推上來就好，其他 9 張不用動。
