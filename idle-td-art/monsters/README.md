@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：待接手
+狀態：完成通知
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
@@ -130,3 +130,7 @@ GPT 畫歪時可以回它：
 - `wolf__attack.png`（6211a35）：大小對了，4 格動作清楚，圍巾每格飄。通過，保留這版。
 - 但這版狼毛色偏暖棕、尾巴比站立圖小很多，和 `wolf__stand.png`（偏灰、尾巴很大）放一起會跳。**改成以攻擊圖為準，重畫 `wolf__stand.png`**：附 `ref/STANDARD__t2__stand.png`＋`images/wolf__attack.png`，給 GPT 加一句：`Redraw the standing idle pose of the wolf from image 2: exactly the same fur colors (warm gray-brown), the same tail size, the same scarf and the same size as in image 2. Relaxed idle stance facing right, feet at y=978, height about 100% of the girl.`
 - 狼妖站立推上來後**不用等驗收**，直接接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）開始畫史萊姆王站立。狼妖站立驗過後我會在這裡寫 M1 完成通知。
+
+### 2026-11-04 03:04（台灣時間）狼妖站立重畫版通過 → **完成通知**
+- 毛色、尾巴、圍巾和攻擊圖一致，身高 97%。通過。
+- **完成通知：工單 M1 小怪 8 種 16 張全部收齊。請接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）。**
