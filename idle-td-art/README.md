@@ -153,3 +153,8 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 - **之後只附 `ref/STANDARD__t2__stand.png`（標準圖）就好，泓那張原參考圖不用再附。** 比例以標準圖鎖定。上面「每次都附主參考圖」的要求取消。
 - 畫 3～5 階時可再加附已通過的 `images/disciple__t1__stand.png` 當第二張（看同一個人的長相）。
 - 不用等，直接開始畫 3 階。
+
+### 2026-11-03 22:28（台灣時間）3、4、5 階站立＋1 階攻擊（新比例）通過
+- 3～5 階站立：本體大小、腳底 y 和標準圖一致；配色、披風、飛劍、玉掃帚、5 階金冠翅膀光球都照階級表。通過。
+- `disciple__t1__attack.png`（22:25）：比例和標準圖一致，4 格動作清楚。通過。
+- 繼續畫 2～5 階攻擊：圖 A＝該階已通過的站立圖，圖 B＝這張新的 `images/disciple__t1__attack.png`（不是 ref 裡的舊圖），用「升階動作」那段指令。
