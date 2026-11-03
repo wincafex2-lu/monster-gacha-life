@@ -124,3 +124,9 @@ Solid magenta #FF00FF background.
 The FIRST attached image is the MAIN reference for proportions, size, stance and pixel style. The second image only shows this character's face, hair and outfit.
 PROPORTIONS (most important): compact cute game sprite. Head about HALF of the total height, body from neck to feet about ONE head tall, but arms and legs clearly visible (short, not stumps), feet visible. Relaxed idle stance in 3/4 view facing right, weapon held at the side or resting, NOT held horizontally across the body. The whole character fits in a squarish box, a little taller than wide (not counting wings/weapon).
 ```
+
+### 2026-11-03 22:11（台灣時間）泓：用泓在你對話裡傳的參考圖
+- **接手的人（Codex）注意：泓已經在你的對話視窗裡傳了比例參考圖，那張就是主參考圖。** 不用等 `ref/proportion__main.png`，也不會有這個檔案，直接用你對話裡那張。
+- 現在的 `disciple__t2__stand.png`（22:07）是在主參考之前畫的，**不算數，照主參考圖重畫 2 階**：比例、大小、站姿、點陣畫風照主參考圖；長相和服裝照 `ref/disciple__t1__stand.png`＋階級表。站姿要像主參考圖那樣輕鬆站，掃帚放身側或扛著，不要斜擋在身前。
+- 畫 GPT 時把主參考圖放第一張附上，指令照上面 22:05、22:07 兩段。
+- 重畫好的 2 階推上來後等 Claude 驗收，通過才畫 3～5 階。
