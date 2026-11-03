@@ -174,3 +174,9 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 - 4 階：白袍藍刺繡、深藍髮、飛劍、玉掃帚每格一致，動作正常。通過。
 - 5 階：金冠、翅膀、雙飛劍、光球、白光掃帚每格都在，動作正常。小提醒：攻擊圖翅膀比站立圖略小，先不改，等泓看驗收頁決定。
 - 10 張全部驗過，等泓最後確認後寫「完成通知」。
+
+### 2026-11-03 22:56（台灣時間）泓：5 階攻擊退件，重畫
+- `disciple__t5__attack.png` **第 3 格服裝和其他格不一樣**：下半身變成藍色裙＋紅腰帶，少了金色菱格紋華麗袍。4 格都要和 `disciple__t5__stand.png` 一模一樣的衣服。
+- 翅膀也要和站立圖一樣大（現在攻擊圖翅膀偏小）。
+- 重畫整條 4 格，給 GPT 加一句：`Every frame must wear EXACTLY the same outfit as image A: the gold diamond-pattern robe with red gems on the whole body, including the lower half. Do not change the outfit in any frame. Wings the same size as in image A.`
+- 畫完推上來，其他 9 張已通過不用動。
