@@ -109,12 +109,14 @@ GPT 畫歪時可以回它：
 | `images/baihu__stand.png` | 1254×1254 | 1 | 2026-11-04 02:33 TW 通過；本體約 684px、腳底 y≈971，細微偏差由 Claude 後製。 |
 | `images/baihu__attack.png` | 2172×724 | 4 | 蓄勢、跳躍、揮爪、落地；尾巴與鈴鐺擺動，已修正每格三顆鈴鐺。 |
 | `images/qinglong__stand.png` | 1536×1024 | 2 | 懸浮上／下兩格，S 形身體、鬍鬚與尾部有變化；四肢及白珍珠一致。 |
+| `images/qinglong__attack.png` | 2172×724 | 4 | 蓄力盤身、起衝、張口前衝、回復 S 形；已收窄第三格尾部，保留格間空隙。 |
 
 原檔 SHA-256：
 
 - `baihu__stand.png`：`4d70250273a2f910c9a158ef48df7a5200dcf8e17bcdaaa36bd028a228cfbb7e`
 - `baihu__attack.png`：`9ec4b173f06c7dfe7b7b77c7580ac6004bbf54a2db21a88600de481047c49080`
 - `qinglong__stand.png`：`6b159aea569e7c835a7501af42492807669eacf68b08decc6a09182ebf0aabb5`
+- `qinglong__attack.png`：`21f33c99c089287f35d15b4e3b21cff81cb4baa75ea35cd009f495ce641229dd`
 
 ## 意見與待辦
 
