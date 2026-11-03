@@ -79,3 +79,9 @@ Keep the feet on the same ground line in all frames. The talisman projectile and
 - 5 階：9 條金尖大尾巴扇形展開、金冠、三團狐火、白金和服、金長鈴杖，比例一致。通過。
 - `fox__t1__attack.png`：比例、服裝 4 格一致，丟符動作清楚；**但第 3 格尾巴從身後左邊跳到身體前面右邊（從兩腿間跑出來），看起來很怪。** 尾巴要一直留在身後（左邊），只改變擺的角度：第 1 格往後下垂、第 2 格往上甩、第 3 格往上往後揚起最高、第 4 格回落。重畫整條（之後 2～5 階都照這條，所以要先修好）。
 - 給 GPT 加一句：`The tail must ALWAYS stay behind her body on the LEFT side and never pass between or in front of her legs. Show the swing only by changing the tail's angle: frame 1 low, frame 2 rising, frame 3 highest and flared up behind her, frame 4 coming down.`
+
+### 2026-11-04 02:31（台灣時間）1 階攻擊重畫通過；2、3 階攻擊退件重畫
+- `fox__t1__attack.png`（02:27 版）：尾巴一直在身後，第 3 格往上揚起，服裝一致。通過。**之後 2～5 階攻擊的圖 B 一律用這個新版。**
+- `fox__t2__attack.png`、`fox__t3__attack.png` 是照舊的 1 階畫的，第 3、4 格尾巴跑到身體前面右邊、蓋到腿，退件。用新的 1 階攻擊當圖 B 重畫。
+- 多條尾巴的規則：尾巴從屁股後面長出，**整把在身體後面像扇子展開**（可以從身體兩側露出來，和該階站立圖一樣），但不能從兩腿間或身體前面穿出來、不能蓋住腿和衣服。尾巴條數每格都要對（2 階 3 條、3 階 5 條、4 階 7 條、5 階 9 條）。
+- 給 GPT 加一句：`All tails grow from behind her hips and fan out BEHIND her body like in image A; they may show on both sides of her body but must never pass in front of her legs or body. Keep exactly N tails in every frame.`
