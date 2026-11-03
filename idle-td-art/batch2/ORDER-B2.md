@@ -93,12 +93,14 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/crossbow__t1__stand.png` | 1254×1254 | 1 | 弩箭塔 1 階首張，待造型驗收；木塔、石底座、繩結、朝右弩具與紅旗。 |
 | `images/furnace__t1__stand.png` | 1254×1254 | 1 | 丹爐炮塔 1 階首張，待造型驗收；鐵爐、三短腳、石底座、帶鈕爐蓋與朝右短炮口。 |
 | `images/bell__t1__stand.png` | 1254×1254 | 1 | 雷音鐘塔 1 階首張，待造型驗收；木架、石底座、銅鐘與雙繩吊木槌。 |
+| `images/frost__t1__stand.png` | 1254×1254 | 1 | 寒冰燈塔 1 階首張，待造型驗收；樸素石燈與朝右淡藍晶片，無光暈或冰霧。 |
 
 原檔 SHA-256：
 
 - `crossbow__t1__stand.png`：`0f61ad9cc8aa69ab1a2633b07596879c864190fb98045b5d1e04df1410412aa2`
 - `furnace__t1__stand.png`：`f8d5149cbdd8328d910d40ed43a0130f868fa1d138d2c2d24949c8f5e49c6042`
 - `bell__t1__stand.png`：`8c9581b21bc6a7f04fa8f9181aadca94761caaf078af48b29afc65fa17638107`
+- `frost__t1__stand.png`：`5dedc88bb006cdc965aeb154b0c6db00d174d6dc1cb1615c9b44bef838eb8f86`
 
 ## 意見與待辦
 
