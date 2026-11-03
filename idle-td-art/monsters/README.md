@@ -121,3 +121,7 @@ GPT 畫歪時可以回它：
   1. 狼在攻擊條裡畫得太小（只有格子高度的 45%，其他怪約 60～75%），放大到站立圖大小後像素會變粗。請讓狼**填滿格子高度約 85%**。
   2. 尾巴在攻擊格裡比站立圖大很多（快跟身體一樣大），要和 `wolf__stand.png` 一樣大小。
   3. 給 GPT 加一句：`Draw the wolf BIGGER, filling about 85% of the frame height. The tail must be the same size as in image 2, not bigger. Keep the same poses: crouch, leap, claw swipe, land.`
+
+### 2026-11-04 02:50（台灣時間）紙傘妖攻擊通過
+- 4 格：傾身→單腳跳→舌頭往前甩→收回，傘面、木屐、舌頭每格都在動，補丁位置一致。通過。
+- M1 只剩 **`wolf__attack.png` 重畫**（見 02:44 的意見）。重畫好推上來，通過就發完成通知。
