@@ -3,8 +3,12 @@
 狀態：進行中：Codex 2026-11-03 14:05 UTC
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
+製作進度（Codex）：1 階已原樣交付；2 階站立圖是依 22:05 版工單製作的待審稿。22:07 更新要求的 `ref/proportion__main.png` 尚未出現在來源分支，依工單暫停重繪；主參考到位後先重做／驗收 2 階，確認比例後再做 3～5 階與攻擊圖。
+
 這個資料夾是新遊戲「放置塔防」的角色美術交接處。負責驗收的是 Claude 討論串「發想放置型塔防新遊戲」。
 不要改動 `idle-td-art/` 以外的檔案，同一個 repo 裡的其他遊戲和這裡無關。
+
+> **2026-11-03 22:07 更新：參考圖以泓提供的 `ref/proportion__main.png` 為主，畫法改成每階單張，詳見最下面「意見與待辦」。**
 
 ## 固定流程（接手的人照做）
 
@@ -117,7 +121,8 @@ Solid magenta #FF00FF background.
 4. 之後攻擊圖（待辦 2～5）的圖 A 改用這裡的單階站立圖。
 
 ### 2026-11-03 22:05（台灣時間）泓：比例參考改成這種
-泓給了一張比例參考（另一款遊戲的角色點陣圖，版權關係不放進這個公開 repo，用文字描述）。每階站立圖的英文指令最後加上這段：
+**泓指定：參考圖以泓提供的比例參考圖為主**（檔名 `ref/proportion__main.png`，由泓上傳；比例、大小、站姿、畫風都先看這張。`ref/disciple__t1__stand.png` 只用來看掃地弟子的長相和服裝）。每階畫圖時兩張都附上，比例參考圖放第一張。如果 `ref/proportion__main.png` 還沒出現，先停手等。英文指令最後加上這段：
 ```
+The FIRST attached image is the MAIN reference for proportions, size, stance and pixel style. The second image only shows this character's face, hair and outfit.
 PROPORTIONS (most important): compact cute game sprite. Head about HALF of the total height, body from neck to feet about ONE head tall, but arms and legs clearly visible (short, not stumps), feet visible. Relaxed idle stance in 3/4 view facing right, weapon held at the side or resting, NOT held horizontally across the body. The whole character fits in a squarish box, a little taller than wide (not counting wings/weapon).
 ```
