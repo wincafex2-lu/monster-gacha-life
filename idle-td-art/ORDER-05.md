@@ -1,6 +1,6 @@
 # 放置塔防角色點陣圖：工單 5　機甲少年五階（A4）
 
-狀態：進行中（1 階攻擊退件重畫）
+狀態：完成通知
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -90,3 +90,7 @@ Redraw image B frame by frame using the tier N design from image A.
 - `mecha__t1__attack.png` 退件：**第 1 格扳手在後面那隻手，第 2～4 格換到前面那隻手**，換手看起來很怪。扳手要一直在同一隻手（前面那隻、和站立圖一樣）。動作也改成揮擊比較有力：第 1 格扳手舉過肩、第 2 格往前下揮、第 3 格揮到底身體前傾、第 4 格收回。
 - 給 GPT 加一句：`He holds the wrench in the SAME hand (his front hand, like in the standing image) in ALL four frames; never switch hands. Frame 1: wrench raised over his shoulder. Frame 2: swinging it forward and down. Frame 3: follow-through, wrench low in front, body leaning forward. Frame 4: recovering to idle.`
 - 重畫完推上來就好，其他 9 張不用動。
+
+### 2026-11-04 05:06（台灣時間）1 階攻擊重畫通過 → 完成通知
+- `mecha__t1__attack.png`（05:02 版）：扳手 4 格都在前手，舉過肩、往前下揮、揮到底、收回，動作有力，服裝一致。通過。
+- **完成通知：工單 5 機甲少年 10 張全部收齊。請接 `QUEUE.md` 下一張：`ORDER-06.md` 煉丹童子（分支 `dot/idle-td-6`）。**
