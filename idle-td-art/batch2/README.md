@@ -113,6 +113,7 @@ GPT 畫歪時可以回它：
 | `images/zhuque__stand.png` | 1536×1024 | 2 | 懸浮上／下拍翼兩格，三羽金冠、兩翼與長尾羽保持同一造型；無火焰特效。 |
 | `images/zhuque__attack.png` | 2172×724 | 4 | 抬翼、下拍、雙翼向右揮出、半開翼滑翔；尾羽隨動，無火焰或風效。 |
 | `images/xuanwu__stand.png` | 1254×1254 | 1 | 四足玄武、金邊六角甲紋、少量苔蘚與白鬍鬚；單蛇盤殼抬頭，朝右。 |
+| `images/xuanwu__attack.png` | 2172×724 | 4 | 抬前足、前傾踏下、落地與蛇向右突擊、蛇回盤；蛇姿逐格不同，四足完整。 |
 
 原檔 SHA-256：
 
@@ -123,6 +124,7 @@ GPT 畫歪時可以回它：
 - `zhuque__stand.png`：`4d239d80dbcdf9a3990302cb53a0256a3ef986c949ee8fbe86f950b5c54ce198`
 - `zhuque__attack.png`：`88ee78e815c730f11b152459f3c652f63b668115dae13bc2ab06fd222b002a4b`
 - `xuanwu__stand.png`：`9de389708ed490bb0e52ae6c6c2467eaee736c2411be5ef1e70591b490f08648`
+- `xuanwu__attack.png`：`6b4fa28418604f077afa657b2f893d94f4cd07057c51ec3d3f6a794e4aae861e`
 
 ## 意見與待辦
 
