@@ -1,6 +1,6 @@
 # 放置塔防（修仙守山門）角色點陣圖：工單 1　掃地弟子五階
 
-狀態：進行中：Codex 2026-11-03 13:58 UTC
+狀態：進行中：Codex 2026-11-03 14:05 UTC
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這個資料夾是新遊戲「放置塔防」的角色美術交接處。負責驗收的是 Claude 討論串「發想放置型塔防新遊戲」。
@@ -95,3 +95,29 @@ GPT 畫歪時可以回它：
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 2026-11-03 22:02（台灣時間）泓：身體太大，不合格，重畫
+- 比例要照參考圖 `ref/disciple__t1__attack.png`：頭佔全身 55～60%，身體（脖子到腳底）大約只有一個頭高，手腳短短的。不要畫成正常比例或頭小身大。
+- 五階都要同一個比例，配件（披風、翅膀、金冠）加上去不能把身體拉長。
+- 已經畫好的圖如果身體偏大，不要推，直接重畫。
+- 給 GPT 的修正指令：`The body is too big. Make it super-deformed chibi exactly like the reference image: head 55-60% of the total height, body from neck to feet only about one head tall, short stubby arms and legs. Keep this same head-to-body ratio for all 5 tiers.`
+
+### 2026-11-03 22:05（台灣時間）泓：第二版「重畫變奇怪了」，改畫法
+第二版頭變大了，但變成正面僵直站、手腳縮成一小截、掃帚橫拿，跟參考圖的角色不像同一個人。原因是五隻擠在一張圖，GPT 會把每隻縮小、重新設計。改成這樣畫：
+
+1. **不要再五隻畫在一張。** 改成每階一張，檔名 `disciple__t1__stand.png`～`disciple__t5__stand.png`（`disciple__tiers.png` 不用交了，Claude 會自己拼）。
+2. 每張都附新參考圖 **`ref/disciple__t1__stand.png`**（從 1 階攻擊第 4 格裁出來的單隻），貼「畫風」那段，再貼：
+```
+The attached image is tier 1 of this character. Redraw this EXACT image: same pose, same 3/4 view facing right, same head-to-body ratio, same size on the canvas, same pixel style.
+Change ONLY the appearance to tier 【N】: <該階那一列翻成英文：衣服頭髮配色、新增大配件、武器>.
+Accessories are added ON TOP; they must not change the body proportions or the pose.
+Solid magenta #FF00FF background.
+```
+3. 1 階直接交 `ref/disciple__t1__stand.png` 不用畫。先畫 2 階推上來，Claude 驗過比例 OK 再畫 3～5 階。
+4. 之後攻擊圖（待辦 2～5）的圖 A 改用這裡的單階站立圖。
+
+### 2026-11-03 22:05（台灣時間）泓：比例參考改成這種
+泓給了一張比例參考（另一款遊戲的角色點陣圖，版權關係不放進這個公開 repo，用文字描述）。每階站立圖的英文指令最後加上這段：
+```
+PROPORTIONS (most important): compact cute game sprite. Head about HALF of the total height, body from neck to feet about ONE head tall, but arms and legs clearly visible (short, not stumps), feet visible. Relaxed idle stance in 3/4 view facing right, weapon held at the side or resting, NOT held horizontally across the body. The whole character fits in a squarish box, a little taller than wide (not counting wings/weapon).
+```
