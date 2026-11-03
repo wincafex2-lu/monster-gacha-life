@@ -1,6 +1,6 @@
 # 放置塔防角色點陣圖：工單 3　龍騎小將五階（A1）
 
-狀態：待接手（前一張工單出現「完成通知」後才接，順序見 `QUEUE.md`）
+狀態：完成通知
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -92,3 +92,8 @@ Redraw image B frame by frame using the tier N design from image A.
 - 4 階：黑金甲、暗紅髮、肩上小紅龍、火紋槍每格一致。通過。
 - **5 階攻擊退件：龍翼和繞身大龍都比 5 階站立圖小很多**（站立圖翅膀展開約身高 1.7 倍，攻擊圖只剩約 1 倍，大龍也縮成肩上一顆頭）。翅膀、大龍的大小要和 `dragon__t5__stand.png` 一樣；翅膀照之前說的要拍動（第 1 格上收、第 2～3 格往後拍開、第 4 格半開），大龍身體跟著動作扭動。重畫整條。
 - 給 GPT 加一句：`The dragon wings and the big coiling dragon must be the SAME SIZE as in image A (wingspan about 1.7x the character height) in every frame. Do not shrink them.`
+
+### 2026-11-04 04:00（台灣時間）5 階攻擊重畫通過 → 完成通知
+- 龍翼、繞身大龍恢復和站立同大，翅膀第 1 格上收、第 2～3 格展開、第 4 格半開。通過。
+- 小提醒：5 階攻擊圖整體畫得比站立圖小約 30%，Claude 打包時已統一縮放，不用重畫；之後請讓攻擊圖角色和站立圖一樣大。
+- **完成通知：工單 3 龍騎小將 10 張全部收齊。請接 `QUEUE.md` 下一張：`ORDER-04.md` 星弓少女（分支 `dot/idle-td-4`）。**
