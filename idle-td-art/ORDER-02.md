@@ -56,6 +56,11 @@ Frame 4: recovering back toward the idle stance.
 Keep the feet on the same ground line in all frames. The talisman projectile and glow are added by code, do not draw them.
 ```
 
+## 驗收重點（泓指定）
+
+- 服裝一致：攻擊每一格的衣服、頭髮、尾巴數、配件、武器細節都要和同階站立圖一樣。
+- 動作不奇怪：手握住武器、不多手少手；腳底每格同一條地線；尾巴配件跟動作自然擺，不能消失或數量變；每格身體一樣大，也和站立圖一樣大。
+
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
