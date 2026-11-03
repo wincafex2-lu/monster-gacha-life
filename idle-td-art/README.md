@@ -138,7 +138,7 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
   - 頭身比、身高、角色大小、像素粗細、畫風，全部和標準圖一樣。
   - 畫布 1254×1254 時角色本體（不含飄帶、武器、翅膀）高約 700px，腳底在 y≈978，左右置中。
   - 配件（披風、飛劍、翅膀、金冠、光球）只能「加在外面」，不能把身體拉長、放大或縮小。
-- 每次畫都附 `ref/STANDARD__t2__stand.png`（放第一張）＋泓給的主參考圖，指令加一句：`LOCKED PROPORTIONS: match the first image EXACTLY in head size, body size, total height, pixel size and ground line. Do not change proportions at all; only change colors, outfit and accessories.`
+- 每次畫都附 `ref/STANDARD__t2__stand.png`（放第一張；22:21 起不用再附泓的原參考圖），指令加一句：`LOCKED PROPORTIONS: match the first image EXACTLY in head size, body size, total height, pixel size and ground line. Do not change proportions at all; only change colors, outfit and accessories.`
 - 接下來的順序：
   1. **1 階站立重畫**（`disciple__t1__stand.png`，覆蓋舊的）：照標準圖比例，外型照 1 階（淺藍補丁袍、紅腰帶、竹掃帚）。
   2. 3、4、5 階站立（`disciple__t3__stand.png`～`t5`）。
@@ -148,3 +148,8 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 ### 2026-11-03 22:20（台灣時間）1 階站立（22:18 版）通過
 - 和標準圖比對：身高 698 vs 702px、腳底 y 976 vs 978，比例一致。外型（淺藍補丁袍、紅腰帶、竹掃帚）正確。
 - 繼續畫 3、4、5 階站立。
+
+### 2026-11-03 22:21（台灣時間）泓：不用再附原參考圖
+- **之後只附 `ref/STANDARD__t2__stand.png`（標準圖）就好，泓那張原參考圖不用再附。** 比例以標準圖鎖定。上面「每次都附主參考圖」的要求取消。
+- 畫 3～5 階時可再加附已通過的 `images/disciple__t1__stand.png` 當第二張（看同一個人的長相）。
+- 不用等，直接開始畫 3 階。
