@@ -77,3 +77,6 @@ Redraw image B frame by frame using the tier N design from image A.
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 2026-11-04 04:01（台灣時間）1 階站立通過
+- 棕馬尾、灰綠斗篷、棕皮衣、木短弓，比例腳底一致。通過，繼續 2～5 階站立（附這張當第二張參考）。攻擊圖請和站立圖一樣大。
