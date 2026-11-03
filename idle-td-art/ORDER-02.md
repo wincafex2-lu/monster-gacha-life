@@ -49,7 +49,8 @@ LOCKED PROPORTIONS: match the attached image EXACTLY in head size, body size, to
 
 ```
 Draw a 4-frame attack animation strip of this character, frames side by side in ONE image, same frame spacing and ground line as the disciple strip (that strip is ONLY a layout reference, do not copy the broom or the poses).
-Frame 1: wind-up, raises the talisman beside her head, tail swings back.
+Frame 1: wind-up, raises the talisman beside her head, tails swing back.
+All tails, sleeves and hair must visibly swing with the motion in every frame; they must NOT look identical across frames.
 Frame 2: throws the talisman forward with the right arm extended, body leaning forward.
 Frame 3: follow-through, arm fully extended, tail swings forward.
 Frame 4: recovering back toward the idle stance.
@@ -59,6 +60,7 @@ Keep the feet on the same ground line in all frames. The talisman projectile and
 ## 驗收重點（泓指定）
 
 - 服裝一致：攻擊每一格的衣服、頭髮、尾巴數、配件、武器細節都要和同階站立圖一樣。
+- 會動的配件要動（泓指定）：尾巴、袖子、飄帶、符紙在攻擊 4 格要跟著甩動，不能每格都一樣。
 - 動作不奇怪：手握住武器、不多手少手；腳底每格同一條地線；尾巴配件跟動作自然擺，不能消失或數量變；每格身體一樣大，也和站立圖一樣大。
 
 ## 意見與待辦
