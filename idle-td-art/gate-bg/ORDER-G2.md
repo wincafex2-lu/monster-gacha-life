@@ -84,6 +84,7 @@ GPT 畫歪時可以回它：
 | `bg-meadow__far.png` | 通過 |
 | `bg-meadow__mid.png` | 已交圖，待驗收 |
 | `bg-meadow__ground.png` | 已交圖，待驗收 |
+| `bg-bamboo__far.png` | 已交圖，待驗收 |
 
 ## 意見與待辦
 
