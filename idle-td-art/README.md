@@ -158,3 +158,6 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 - 3～5 階站立：本體大小、腳底 y 和標準圖一致；配色、披風、飛劍、玉掃帚、5 階金冠翅膀光球都照階級表。通過。
 - `disciple__t1__attack.png`（22:25）：比例和標準圖一致，4 格動作清楚。通過。
 - 繼續畫 2～5 階攻擊：圖 A＝該階已通過的站立圖，圖 B＝這張新的 `images/disciple__t1__attack.png`（不是 ref 裡的舊圖），用「升階動作」那段指令。
+
+### 2026-11-03 22:29（台灣時間）2、3 階攻擊通過
+- 姿勢、格位、腳底和 1 階攻擊一致，外型照該階站立圖。通過，繼續 4、5 階攻擊。
