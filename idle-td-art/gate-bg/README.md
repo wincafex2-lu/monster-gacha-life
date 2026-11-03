@@ -113,6 +113,7 @@ GPT 畫歪時可以回它：
 | `gate2__ok.png` | 已交圖，待驗收 |
 | `gate2__broken.png` | 已交圖，待驗收 |
 | `gate3__ok.png` | 已交圖，待驗收 |
+| `gate3__broken.png` | 已交圖，待驗收 |
 
 ## 意見與待辦
 
