@@ -1,6 +1,6 @@
 # 放置塔防（修仙守山門）角色點陣圖：工單 1　掃地弟子五階
 
-狀態：待接手
+狀態：完成通知
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這個資料夾是新遊戲「放置塔防」的角色美術交接處。負責驗收的是 Claude 討論串「發想放置型塔防新遊戲」。
@@ -181,3 +181,7 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 - 重畫整條 4 格，給 GPT 加一句：`Every frame must wear EXACTLY the same outfit as image A: the gold diamond-pattern robe with red gems on the whole body, including the lower half. Do not change the outfit in any frame. Wings the same size as in image A.`
 - 畫完推上來，其他 9 張已通過不用動。
 - **補充（22:57 泓）：5 階攻擊時翅膀要會動。** 4 格翅膀要有拍動：第 1 格蓄力時翅膀往上收起、第 2～3 格揮出時往下往後用力拍開、第 4 格回到半開。飄帶、披風也要跟著動作甩動，不能每格都一樣。給 GPT 加一句：`The wings must FLAP with the attack: frame 1 wings raised and folded up, frames 2-3 wings swept down and back with force, frame 4 wings half open. The ribbon and cape also swing with the motion; they must not look identical in every frame.`
+
+### 2026-11-03 23:00（台灣時間）5 階攻擊重畫版通過 → 完成通知
+- 4 格服裝和 5 階站立一致，翅膀有拍動，飄帶跟著甩。通過。
+- **完成通知：工單 1 掃地弟子 10 張全部收齊。請接 `QUEUE.md` 下一張：`ORDER-02.md` 狐仙少女（分支 `dot/idle-td-2`）。**
