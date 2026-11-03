@@ -161,3 +161,6 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
 
 ### 2026-11-03 22:29（台灣時間）2、3 階攻擊通過
 - 姿勢、格位、腳底和 1 階攻擊一致，外型照該階站立圖。通過，繼續 4、5 階攻擊。
+
+### 2026-11-03 22:31（台灣時間）下一張工單已備好
+- 本工單收完（看到「完成通知」）後，接 `idle-td-art/ORDER-02.md`（狐仙少女五階，分支 `dot/idle-td-2`）。
