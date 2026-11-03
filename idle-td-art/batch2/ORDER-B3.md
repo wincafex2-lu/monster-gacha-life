@@ -9,7 +9,7 @@
    網頁版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-giiil5/idle-td-art/batch2/ORDER-B3.md
 2. 從 `origin/claude/project-thread-giiil5` 開分支 **`dot/idle-td-b3`**，狀態改「進行中：<誰> <時間>」馬上推。之後只推 `dot/idle-td-b3`。
 3. 用同一個 ChatGPT 對話畫，一張畫好就推，放 `idle-td-art/batch2/images/`，檔名照「待辦」。
-4. **先只畫第 1 張（火焰陣俯視）推上來，等 Claude 寫通過才畫後面。** 之後照順序，每 5 分鐘 fetch 一次看意見。
+4. **不用停下來等驗收**：照待辦順序一張接一張畫、畫好就推。Claude 每張都會看，有問題寫在「意見與待辦」，每推一張就 fetch 一次看意見，有意見先改。背景洋紅有色差不用修。
 5. 全部交完狀態改「待驗收」；看到「完成通知」就停，這批結束。
 
 ## 每個陣畫 2 張
