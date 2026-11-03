@@ -1,6 +1,6 @@
 # 放置塔防（修仙守山門）角色點陣圖：工單 1　掃地弟子五階
 
-狀態：進行中：Codex 2026-11-03 14:05 UTC
+狀態：待驗收
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這個資料夾是新遊戲「放置塔防」的角色美術交接處。負責驗收的是 Claude 討論串「發想放置型塔防新遊戲」。
@@ -138,9 +138,26 @@ PROPORTIONS (most important): compact cute game sprite. Head about HALF of the t
   - 頭身比、身高、角色大小、像素粗細、畫風，全部和標準圖一樣。
   - 畫布 1254×1254 時角色本體（不含飄帶、武器、翅膀）高約 700px，腳底在 y≈978，左右置中。
   - 配件（披風、飛劍、翅膀、金冠、光球）只能「加在外面」，不能把身體拉長、放大或縮小。
-- 每次畫都附 `ref/STANDARD__t2__stand.png`（放第一張）＋泓給的主參考圖，指令加一句：`LOCKED PROPORTIONS: match the first image EXACTLY in head size, body size, total height, pixel size and ground line. Do not change proportions at all; only change colors, outfit and accessories.`
+- 每次畫都附 `ref/STANDARD__t2__stand.png`（放第一張；22:21 起不用再附泓的原參考圖），指令加一句：`LOCKED PROPORTIONS: match the first image EXACTLY in head size, body size, total height, pixel size and ground line. Do not change proportions at all; only change colors, outfit and accessories.`
 - 接下來的順序：
   1. **1 階站立重畫**（`disciple__t1__stand.png`，覆蓋舊的）：照標準圖比例，外型照 1 階（淺藍補丁袍、紅腰帶、竹掃帚）。
   2. 3、4、5 階站立（`disciple__t3__stand.png`～`t5`）。
   3. 攻擊動畫改用新比例：**1～5 階都要**（`disciple__t1__attack.png`～`t5`，各 4 格橫排），動作參考 `ref/disciple__t1__attack.png` 的 4 個姿勢，但比例、大小、像素照標準圖。舊的 1 階攻擊圖只看動作，不看比例。
 - 每張畫好就推，Claude 每 5 分鐘驗一次。
+
+### 2026-11-03 22:20（台灣時間）1 階站立（22:18 版）通過
+- 和標準圖比對：身高 698 vs 702px、腳底 y 976 vs 978，比例一致。外型（淺藍補丁袍、紅腰帶、竹掃帚）正確。
+- 繼續畫 3、4、5 階站立。
+
+### 2026-11-03 22:21（台灣時間）泓：不用再附原參考圖
+- **之後只附 `ref/STANDARD__t2__stand.png`（標準圖）就好，泓那張原參考圖不用再附。** 比例以標準圖鎖定。上面「每次都附主參考圖」的要求取消。
+- 畫 3～5 階時可再加附已通過的 `images/disciple__t1__stand.png` 當第二張（看同一個人的長相）。
+- 不用等，直接開始畫 3 階。
+
+### 2026-11-03 22:28（台灣時間）3、4、5 階站立＋1 階攻擊（新比例）通過
+- 3～5 階站立：本體大小、腳底 y 和標準圖一致；配色、披風、飛劍、玉掃帚、5 階金冠翅膀光球都照階級表。通過。
+- `disciple__t1__attack.png`（22:25）：比例和標準圖一致，4 格動作清楚。通過。
+- 繼續畫 2～5 階攻擊：圖 A＝該階已通過的站立圖，圖 B＝這張新的 `images/disciple__t1__attack.png`（不是 ref 裡的舊圖），用「升階動作」那段指令。
+
+### 2026-11-03 22:29（台灣時間）2、3 階攻擊通過
+- 姿勢、格位、腳底和 1 階攻擊一致，外型照該階站立圖。通過，繼續 4、5 階攻擊。
