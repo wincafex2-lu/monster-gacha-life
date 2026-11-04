@@ -72,6 +72,8 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ultname{position:absolute;left:50%;top:15%;transform:translateX(-50%);font-family:var(--title);font-size:clamp(26px,5vw,46px);font-weight:700;pointer-events:none;opacity:0;white-space:nowrap;color:#fff;text-shadow:0 0 12px var(--c,#ffd86a),0 3px 0 rgba(0,0,0,.6)}
 .ultname.show{animation:un 1.1s ease-out forwards}
 @keyframes un{0%{opacity:0;letter-spacing:.6em}15%{opacity:1;letter-spacing:.12em}75%{opacity:1}100%{opacity:0}}
+.farm{position:absolute;left:max(10px,env(safe-area-inset-left));top:calc(max(8px,env(safe-area-inset-top)) + 54px);z-index:3;font:700 13px/1.2 inherit;font-family:inherit;color:#fff4dc;background:rgba(40,24,12,.78);border:2px solid rgba(255,216,106,.55);border-radius:10px;padding:5px 10px;cursor:pointer}
+.farm.on{background:#2a7a3a;border-color:#9be07a}.farm.go{background:#b8400e;border-color:#ffb06a;animation:pulse2 1.2s infinite alternate}
 .dps{position:absolute;right:max(10px,env(safe-area-inset-right));top:calc(max(8px,env(safe-area-inset-top)) + 54px);width:210px;background:rgba(30,18,8,.62);border:1px solid rgba(255,216,106,.35);border-radius:10px;padding:6px 8px 7px;color:#fff4dc;font-size:12px;pointer-events:auto;cursor:pointer;display:block;z-index:3}
 .dps.min .r,.dps.min .e{display:none}.dps.min{width:auto}
 @media (max-height:520px){.dps{width:170px;font-size:10px;padding:4px 6px}.dps .r{height:14px;line-height:14px;margin-top:1px}.dps h4{font-size:11px}}
@@ -194,7 +196,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
       <button class="btn spd" id="musBtn">🎵</button><button class="btn spd" id="sfxBtn">🔊</button><button class="btn spd" id="spdBtn">1×</button>
     </div>
   </div>
-  <div class="dps" id="dps"></div><div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
+  <button class="farm" id="farmBtn"></button><div class="dps" id="dps"></div><div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
   <div class="banner" id="banner"></div>
   <div class="ultname" id="ultName"></div>
   <div class="rotate">把手機轉橫的玩比較大喔</div>
@@ -584,7 +586,7 @@ function step(dt){
  for(const b of B.beasts){if(B.state==='run'){b.charge=Math.min(100,b.charge+dt*100/24*(1+PS.charge));if(b.charge>=100&&S.auto&&S.auto['b_'+b.k]&&alive.length)castBeast(B.beasts.indexOf(b))}}
  for(const b of B.beasts){const d=BEAST[b.k];b.anim=Math.max(0,b.anim-dt);b.cd-=dt;
   const reach=b.k==='qinglong'?520:b.k==='zhuque'?620:200;
-  const near=alive.filter(e=>(d.fly||!e.fly)&&e.x>b.x-30&&e.x<b.x+reach);
+  const near=alive.filter(e=>(d.fly||!e.fly)&&e.x>L.front-40&&e.x<b.x+reach);// 走到神獸身後、在打山門的怪也打
   if(b.cd<=0&&near.length&&B.state==='run'){b.cd=1/d.rate;b.anim=.45;b.hitAt=.18;b.targets=b.k==='baihu'?near.slice(0,3):near}
   if(b.hitAt!=null){b.hitAt-=dt;if(b.hitAt<=0){b.hitAt=null;DSRC='b:'+b.k;const a=beastAtk(b.k);const T=b.targets.filter(e=>!e.dead);
    if(b.k==='baihu'){T.forEach(e=>hit(e,a,{c:'#ffffff',kb:14}));addFx({k:'claw',x:b.x+90,y:G-60,life:.25});shake(2)}
@@ -714,16 +716,16 @@ function stageWin(){
  if(boss){const n=demon?(first?2:1):((first&&Math.random()<.35)||(!first&&Math.random()<.08)?1:0);for(let i=0;i<n;i++){const r=giveFb();fbMsg+=`${FB[r.k].n} ${r.txt}　`}}
  if(fbMsg)setTimeout(()=>toast('法寶：'+fbMsg),1600);
  if(first)S.best=s;
- S.stage=s+1;
- toast(`過關！ +${fmt(coin)} 銅錢　+${gem} 靈石　+${stone} 山門石${pill?`　+${pill} 進階丹`:''}`);
+ if(S.farm){S.farmN=(S.farmN||0)+1}else S.stage=s+1;
+ toast(`${S.farm?`刷關 ${S.farmN} 次｜`:''}過關！ +${fmt(coin)} 銅錢　+${gem} 靈石　+${stone} 山門石${pill?`　+${pill} 進階丹`:''}`);
  banner('過關！');SND.play('win');SND.setBoss(false);
  if(first&&GIFTS[s])giveGift(GIFTS[s]);
  persist();updHud();
 }
 function stageLose(){
- B.state='lose';B.stateT=0;const s=S.stage;const back=Math.max(1,Math.floor((s-1)/10)*10+1);
- S.stage=back;banner('山門被打破了…',true);SND.play('lose');SND.setBoss(false);
- toast(`退回第 ${back} 關。升級弟子、山門後會更強！`);
+ B.state='lose';B.stateT=0;const s=S.stage;const back=Math.max(1,s-1);
+ S.stage=back;S.farm=1;S.farmN=0;banner('山門被打破了…',true);SND.play('lose');SND.setBoss(false);
+ toast(`退回第 ${back} 關原地刷資源。變強後按左上「挑戰」再往前！`);
  B.enemies.forEach(e=>{if(!e.dead){e.dead=.001}});document.getElementById('bossBar').style.display='none';
  persist();updHud();
 }
@@ -1062,7 +1064,8 @@ function updLive(){
  const now=performance.now();if(now-lastLive>400){lastLive=now;$('coinT').textContent=fmt(S.coin);$('gemT').textContent=fmt(S.gem);$('stoneT').textContent=fmt(S.stone);
   $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv)||turUpgradable())}
 }
-function updHud(){$('stageT').textContent=`第 ${S.stage} 關`;$('gateName').textContent=`山門 Lv${S.gateLv}`;lastLive=0}
+function updFarm(){const b=$('farmBtn');if(!b)return;b.className='farm '+(S.farm?'on':'');b.textContent=S.farm?`刷關中（第 ${S.stage} 關）｜按這裡挑戰 ▶`:'一路往前（按這裡改成原地刷）'}
+function updHud(){updFarm();$('stageT').textContent=`第 ${S.stage} 關`;$('gateName').textContent=`山門 Lv${S.gateLv}`;lastLive=0}
 function canUpgradeAny(){return S.team.some(id=>S.roster[id]&&S.roster[id].lv<lvCap(id)&&S.coin>=lvCost(S.roster[id].lv))}
 function turUpgradable(){return Object.keys(S.tur).some(k=>S.coin>=turCost(S.tur[k].lv)*3)}
 function banner(t,boss){const b=$('banner');b.textContent=t;b.classList.toggle('boss',!!boss);b.classList.remove('show');void b.offsetWidth;b.classList.add('show')}
@@ -1073,6 +1076,7 @@ let panel=null,tab=null,sel=null;
 function openPanel(p,t){panel=p;tab=t||null;$('sheet').classList.add('open');render()}
 function closePanel(){$('sheet').classList.remove('open');panel=null;sel=null}
 $('shX').onclick=closePanel;
+$('farmBtn').onclick=()=>{if(S.farm){S.farm=0;toast('打完這關就往下一關挑戰！')}else{S.farm=1;S.farmN=0;toast('之後會一直重打這一關')}persist();updFarm()};
 $('dps').onclick=()=>{dpsOn=!dpsOn;try{localStorage.setItem('idle-td-dps',dpsOn?'1':'0')}catch(e){}dpsLast=0;renderDps()};
 {const mb=$('musBtn'),sb=$('sfxBtn');const um=()=>{mb.style.opacity=SND.musOn?1:.45;mb.textContent=SND.musOn?'🎵':'🎵✕'},us=()=>{sb.textContent=SND.sfxOn?'🔊':'🔇';sb.style.opacity=SND.sfxOn?1:.45};um();us();
  mb.onclick=()=>{SND.togMus();um();toast(SND.musOn?'音樂：開':'音樂：關')};sb.onclick=()=>{SND.togSfx();us();toast(SND.sfxOn?'音效：開':'音效：關')}}
