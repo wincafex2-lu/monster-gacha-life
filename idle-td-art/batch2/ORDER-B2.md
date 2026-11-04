@@ -1,6 +1,6 @@
 # 放置塔防第二批點陣圖：工單 B2　塔 5 種 × 3 階
 
-狀態：進行中：ChatGPT 修訂 09:35 TW 指定的六張攻擊圖；已通過 24 張保持不變
+狀態：進行中：ChatGPT 六張攻擊圖比例修訂
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -90,7 +90,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 
 ## 交付紀錄
 
-- B2 共 30 張已交齊（15 張站立、15 張四格攻擊）；已從遠端分支讀回核對全部 SHA-256、PNG 格式與尺寸。站立為 1254×1254，攻擊為 2172×724。修改範圍僅本工單及這 30 張原圖。
+- 依 2026-11-04 09:35 TW 驗收，24 張已通過；本輪僅修訂丹爐三階、鐘塔一階、冰塔二三階的六張攻擊圖。
 - 全部圖片在本第二批專用 ChatGPT 工作對話使用 ImageGen 製作，每次均以標準圖為第一張參考。
 - 提交生成原始 PNG；不裁切、不縮放、不替換背景，不用程式繪圖。程式僅讀取尺寸與校驗檔案；各次原圖保留在工作環境。
 - 依 2026-11-04 04:25 TW 最新流程，不用停等驗收；每張推送後 fetch 意見，有意見先改。寒冰塔升階晶體需明顯變大、變藍。
@@ -109,7 +109,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/crossbow__t3__attack.png` | 2172×724 | 4 | 3 階三聯金弩沿用攻擊節奏；弩具、旗幟與兩枚金羽逐格變化，無空中投射物。 |
 | `images/furnace__t2__stand.png` | 1254×1254 | 1 | 丹爐炮塔 2 階：青銅爐體、銅鉚釘與把手、加寬炮口、後方煙囪。 |
 | `images/furnace__t3__stand.png` | 1254×1254 | 1 | 丹爐炮塔 3 階：金色八卦爐、紅玉寶石、朝右龍口炮嘴、微浮爐蓋。 |
-| `images/furnace__t1__attack.png` | 2172×724 | 4 | 丹爐炮塔 1 階攻擊四格：爐體膨脹、壓低、拉長後復位，爐蓋每格起落，底座固定。 |
 | `images/furnace__t2__attack.png` | 2172×724 | 4 | 丹爐炮塔 2 階攻擊四格：青銅爐、鉚釘、環耳與煙囪，沿用 1 階擠壓與爐蓋動作。 |
 | `images/furnace__t3__attack.png` | 2172×724 | 4 | 丹爐炮塔 3 階攻擊四格：金色八卦爐、紅玉與龍口炮嘴，爐體擠壓、爐蓋起落。 |
 | `images/bell__t2__stand.png` | 1254×1254 | 1 | 雷音鐘塔 2 階：紅漆曲簷鐘亭、雕雲紋青銅鐘、魚形木槌。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/talisman__t1__attack.png` | 2172×724 | 4 | 符咒塔 1 階攻擊四格：三張黃符後揚、抬起、向右展扇與回落；紙根維持連接。 |
 | `images/talisman__t2__attack.png` | 2172×724 | 4 | 符咒塔 2 階攻擊四格：六張黃符後揚、抬起、右展、回落；已修正初稿符紙缺張。 |
 | `images/talisman__t3__attack.png` | 2172×724 | 4 | 符咒塔 3 階攻擊四格：兩排黃紫符紙共八張，後揚、抬起、右展與回落；毛筆與流蘇起伏。 |
+| `images/furnace__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：爐身、三足與底座固定，只動爐蓋與炮口；第 4 格關蓋回站立。 |
 
 原檔 SHA-256：
 
@@ -142,7 +142,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `crossbow__t3__attack.png`：`2b25d12eccc02864864061856ae375fba9c78b1f5555a0ebecaf1b5ee6bcb7fb`
 - `furnace__t2__stand.png`：`781f15cbfc6efc76796b2c149109255b5ae95f5ad1888a0e9d963bd8a5a9466e`
 - `furnace__t3__stand.png`：`df186ad507579341121b437695ed75fc48eb59ec2d980169994577354251a868`
-- `furnace__t1__attack.png`：`116be5bebf179e2fa46cf1d68a57493f519d041e73150e0196adf8e61510f9bd`
 - `furnace__t2__attack.png`：`5780f7272a73fc3eb23f582cdeb48bfd652282f2281525425e1b0f5b6b065f70`
 - `furnace__t3__attack.png`：`1fea1bc1e23619f46c28dd592deac9ad91bbdc2461f0c0cf4da1d27416f44dbb`
 - `bell__t2__stand.png`：`2a3be635c6d519583d30175a87678bfd4fcf153d0381a4049b85c586093e01ea`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `talisman__t1__attack.png`：`576ccac0df753056e7d531c252d91cdc21491e7f38ca0e6ab4a6d0b88af48bd9`
 - `talisman__t2__attack.png`：`3e819d5920fab3d44ae707d5c801c2be48d615bb9b912b15068ae16380953a89`
 - `talisman__t3__attack.png`：`0a585c1d00ce61b2523bb5fc2adcb56b1a5ab396b6b02e970298adabbd91db6f`
+- `furnace__t1__attack.png`：`d5c2b44fa5d3a8c4fc2852cf410b7fb3692249ecd5b4fc28dc3e0853ce76a84d`
 
 ## 意見與待辦
 
