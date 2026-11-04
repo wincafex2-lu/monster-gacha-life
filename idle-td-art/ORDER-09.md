@@ -166,11 +166,12 @@ Redraw image B frame by frame using the tier N design from image A.
 - **身體高**：下巴到腳底。
 
 攻擊圖每一格的頭高、身體高都要跟同一階站立圖一樣，兩個數字任何一個差超過 3% 就退件（彎腰、蹲下的格子量伸直的部位，例如腿長）。
+寬度也要對（泓 08:50 補充）：以站立圖兩腳站立的寬度（左腳外緣到右腳外緣）當基準，再加上肩寬、單腳鞋子的寬度。第 4 格（待機）兩腳站寬要跟站立圖一樣；跨步、出招的格子腳會張開，就比肩寬和鞋子寬，差超過 3% 一樣退件。
 4 格全部都量，不是只看第 1 格：第 4 格（回到待機）要跟站立圖幾乎一模一樣，第 1～3 格動作不同，就量頭高和沒彎的那段身體。升階攻擊指令最後加這兩行：
 
 ```
 - Every frame must have EXACTLY the same head size and the same body length as image A (the standing sprite). Do not stretch the torso or legs, do not make the character bigger.
-- The head is usually fine; the problem is the BODY getting longer. Keep BOTH the head height (top of head to chin) and the body height (chin to soles) exactly as in image A; the head : body ratio must stay the same. Compare EVERY frame (1-4) with image A side by side before finishing; frame 4 (back to idle) must match image A almost exactly.
+- The head is usually fine; the problem is the BODY getting longer. Keep BOTH the head height (top of head to chin) and the body height (chin to soles) exactly as in image A; the head : body ratio must stay the same. Compare EVERY frame (1-4) with image A side by side before finishing; frame 4 (back to idle) must match image A almost exactly, including the width between the two feet. Shoulder width and shoe size must stay the same as image A in every frame.
 ```
 
 1 階攻擊指令也加同樣兩行（image A ＝ 1 階站立圖，請一起附上）。
