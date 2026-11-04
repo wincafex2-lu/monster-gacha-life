@@ -109,7 +109,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/crossbow__t3__attack.png` | 2172×724 | 4 | 3 階三聯金弩沿用攻擊節奏；弩具、旗幟與兩枚金羽逐格變化，無空中投射物。 |
 | `images/furnace__t2__stand.png` | 1254×1254 | 1 | 丹爐炮塔 2 階：青銅爐體、銅鉚釘與把手、加寬炮口、後方煙囪。 |
 | `images/furnace__t3__stand.png` | 1254×1254 | 1 | 丹爐炮塔 3 階：金色八卦爐、紅玉寶石、朝右龍口炮嘴、微浮爐蓋。 |
-| `images/furnace__t3__attack.png` | 2172×724 | 4 | 丹爐炮塔 3 階攻擊四格：金色八卦爐、紅玉與龍口炮嘴，爐體擠壓、爐蓋起落。 |
 | `images/bell__t2__stand.png` | 1254×1254 | 1 | 雷音鐘塔 2 階：紅漆曲簷鐘亭、雕雲紋青銅鐘、魚形木槌。 |
 | `images/bell__t3__stand.png` | 1254×1254 | 1 | 雷音鐘塔 3 階：紫金鐘樓、雷雲紋金鐘、雙鼓與三枚浮雲飾件。 |
 | `images/bell__t1__attack.png` | 2172×724 | 4 | 雷音鐘塔 1 階攻擊四格：木槌後擺、敲鐘、鐘身右擺、回擺；鐘架與底座固定。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/talisman__t3__attack.png` | 2172×724 | 4 | 符咒塔 3 階攻擊四格：兩排黃紫符紙共八張，後揚、抬起、右展與回落；毛筆與流蘇起伏。 |
 | `images/furnace__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：爐身、三足與底座固定，只動爐蓋與炮口；第 4 格關蓋回站立。 |
 | `images/furnace__t2__attack.png` | 2172×724 | 4 | 09:35 返工修正版：青銅爐身不擠壓、不拉長，只動蓋與炮口；第 4 格關蓋，比例已重新對照站立。 |
+| `images/furnace__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：金色爐身固定，只有爐蓋起落與龍口微縮；第 4 格回到站立圖微浮蓋位置。 |
 
 原檔 SHA-256：
 
@@ -142,7 +142,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `crossbow__t3__attack.png`：`2b25d12eccc02864864061856ae375fba9c78b1f5555a0ebecaf1b5ee6bcb7fb`
 - `furnace__t2__stand.png`：`781f15cbfc6efc76796b2c149109255b5ae95f5ad1888a0e9d963bd8a5a9466e`
 - `furnace__t3__stand.png`：`df186ad507579341121b437695ed75fc48eb59ec2d980169994577354251a868`
-- `furnace__t3__attack.png`：`1fea1bc1e23619f46c28dd592deac9ad91bbdc2461f0c0cf4da1d27416f44dbb`
 - `bell__t2__stand.png`：`2a3be635c6d519583d30175a87678bfd4fcf153d0381a4049b85c586093e01ea`
 - `bell__t3__stand.png`：`105f8b94be9cf7f084b91bc69212e23db8b898d0e2eadb51dbde364412474484`
 - `bell__t1__attack.png`：`b119c457773efc2e91250ca0a3bc62de69c31de5b3cb320948023f084b620ce2`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `talisman__t3__attack.png`：`0a585c1d00ce61b2523bb5fc2adcb56b1a5ab396b6b02e970298adabbd91db6f`
 - `furnace__t1__attack.png`：`d5c2b44fa5d3a8c4fc2852cf410b7fb3692249ecd5b4fc28dc3e0853ce76a84d`
 - `furnace__t2__attack.png`：`b07f508a27710703821c57f6f54329d6914c35e869678b5435d12a9e692f4509`
+- `furnace__t3__attack.png`：`2f4ea2ec5dad341e75289008a46422ecab203214e04f8400cd5464ba826adbab`
 
 ## 意見與待辦
 
