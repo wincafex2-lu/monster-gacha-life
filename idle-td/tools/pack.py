@@ -107,7 +107,13 @@ for c in chars:
     for t in range(1, 6):
         n = f'{c}__t{t}__stand.png'
         if n in files:
-            sprite(f'c_{c}_{t}', n, sc, ground_y_of(n))
+            gy = ground_y_of(n)
+            fx = sprite(f'c_{c}_{t}', n, sc, gy)
+            # 攻擊格：從站姿改出來的（身體鎖住），用站姿的腳底對齊
+            for f in (1, 2, 3):
+                na = f'{c}__t{t}__attack_f{f}.png'
+                if na in files:
+                    sprite(f'c_{c}_{t}_a{f}', na, sc, gy, foot_x=fx)
 
 # 塔（地面，朝右）
 for c in ('crossbow', 'furnace', 'bell', 'frost', 'talisman'):
