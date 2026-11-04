@@ -47,6 +47,7 @@ Solid flat magenta #FF00FF background.
 | 12 | `ui_ult_frame.png` | 1254×1254 | 大招按鈕框：`a round ultimate-skill button frame: thick gold-and-jade ring with cloud ornaments and a small flame crest on top, the inside circle (about 70% of the width) left empty magenta` |
 | 13 | `card_common.png` | 1024×1536 | 普通卡框：`a vertical character card frame, simple wood border with small bronze corners, the inner area empty magenta` |
 | 14 | `card_rare.png` | 1024×1536 | 稀有卡框：`a vertical character card frame, polished blue jade border with silver corners and cloud patterns, the inner area empty magenta` |
+| 15b | `card_epic.png` | 1024×1536 | 史詩卡框（2026-11-04 泓加的稀有度，介於稀有和傳說之間）：`a vertical character card frame, deep blue-violet amethyst border with gold corners, small crystal studs and swirling cloud patterns, fancier than the jade one but simpler than the gold dragon one, the inner area empty magenta` |
 | 15 | `card_legend.png` | 1024×1536 | 傳說卡框：`a vertical character card frame, ornate gold border with red gems, dragon-and-phoenix corner ornaments, a crown crest on top, the inner area empty magenta` |
 | 16 | `card_back.png` | 1024×1536 | 卡背：`the back of a gacha card: dark teal with a gold taiji-and-cloud pattern in the center and a gold border, fully filled (not empty)` |
 | 17 | `ui_panel.png` | 1254×1254 | 面板框：`a square UI panel frame like an unrolled scroll / carved wood board border with gold corner brackets, the inside empty magenta, border equally thick on all four sides` |
@@ -81,3 +82,4 @@ GPT 畫歪時可以回它：
 - 2026-11-04 13:30 TW　**`res_beastsoul`、`res_soulcrystal`、5 個 `el_` 元素圖示、`ui_ult_frame`、3 張卡框、`card_back`、`ui_panel`、`ui_button` 通過（14 張）。** 沒有字；外框類中間是乾淨的洋紅，四邊粗細一致；圖示縮到 48px 都分得出；卡框普通（木）→稀有（玉）→傳說（金龍鳳＋冠）一眼看得出高低。魂晶的紫色去背後完整保留。剩 `bar_gate`、`bar_boss`、`gacha_altar`，畫完接 ORDER-C4，不用停。
 - 2026-11-04 13:40 TW　**`bar_gate`、`bar_boss`、`gacha_altar` 通過。** 兩條血條中間是乾淨的洋紅，左端裝飾（山門屋頂、牛角骷髏）可愛不恐怖；祭壇整張畫滿，中間丹爐前有空地放卡片。
 - **完成通知：C3 UI 21 張全部通過。** C4 已經在畫了，照常繼續。
+- 2026-11-04 13:47 TW　**追加 1 張：`card_epic.png`（史詩卡框）。** 泓在遊戲裡加了「史詩」稀有度（稀有和傳說之間）。照上面待辦 15b 那行畫：藍紫色紫水晶外框＋金角，比稀有（玉）華麗、比傳說（金龍鳳）樸素；紫色要偏藍，不要粉紫（會被去背）。**畫完 C4 剩下的大招後畫這張，推到 `dot/idle-td-c4` 就好**（不用回 c3 分支）。
