@@ -152,3 +152,32 @@ Redraw image B frame by frame using the tier N design from image A.
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+### 新規則（2026-11-04 08:45 台灣時間，泓 要求，本單起全部適用）
+
+**1. 攻擊圖鎖比例。** 攻擊圖每一格的頭大小、頭身比都要跟同一階的站立圖一模一樣，身體、腿不可以拉長，人也不可以整個變大。Claude 驗收時會把站立圖跟攻擊圖第 1 格對齊臉來量，差超過 3% 就退件。升階攻擊指令最後加這兩行：
+
+```
+- Every frame must have EXACTLY the same head size and the same body length as image A (the standing sprite). Do not stretch the torso or legs, do not make the character bigger.
+- Before finishing, compare frame 1 with image A side by side: head width, head-to-feet height and leg length must match.
+```
+
+1 階攻擊指令也加同樣兩行（image A ＝ 1 階站立圖，請一起附上）。
+
+**2. 每個角色的臉要不一樣。** 不可以每個角色都是同一張臉只換眼睛顏色。眼型、眉毛、嘴巴要照下面畫，1 階站立圖指令最後加上該角色那一行：
+
+| 角色 | 眼睛 | 眉毛 | 嘴巴 |
+|---|---|---|---|
+| 木乃伊 | 一眼露出、半瞇的細長眼，另一眼被繃帶蓋住 | 看不到（繃帶） | 小小歪嘴、有點睏 |
+| 雪女 | 細長下垂的冷淡眼、長睫毛 | 細淡、平直 | 小小抿嘴，不笑 |
+| 貓武士 | 貓眼（直瞳孔）、眼角上挑 | 粗短、往中間皺（認真） | 貓嘴「ω」，露一顆小尖牙 |
+| 廚師阿嬤 | 笑瞇成彎月的眼、眼角有皺紋 | 灰白、彎彎的 | 張大笑，嘴角很高 |
+| 鯊魚潛水兵 | 圓圓的大眼、小瞳孔（有點緊張） | 粗、八字往上 | 咧嘴露出一排鯊魚尖牙 |
+
+英文提示（接在角色描述後面）：
+
+```
+Give this character a UNIQUE face, not the default chibi face: eyes = <眼睛>, eyebrows = <眉毛>, mouth = <嘴巴>. Do not reuse the same face as other characters.
+```
+
+已交的 3 張 1 階站立圖（貓武士、廚師阿嬤、鯊魚）若臉沒照上表，會退件重畫。
