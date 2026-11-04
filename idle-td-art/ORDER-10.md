@@ -155,3 +155,4 @@ Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resiz
 攻擊格的武器**一律留在站立圖那隻手**，舉起、揮出都用同一隻手。逐格改指令最後加：`The weapon must stay in the SAME hand as in the original sprite. Do not move it to the other hand.` 換手的格子會退件。
 - 13:05 台灣時間 15 支 1 階站立改臉 **全部通過**：大小、位置、衣服完全沒變（外框差 0～1 px），臉都照臉表而且彼此不同。下一步：各角色其他階站立改臉（附新 1 階當臉參考），然後攻擊逐格改。
 - 13:08 台灣時間 狐仙少女 2～5 階站立改臉 **通過**（外框跟舊圖差 0～1 px，臉跟新 1 階一樣）。
+- 13:18 台灣時間 龍騎、星弓、機甲 2～5 階站立改臉 **通過**（外框差 0～1 px，臉一致）。狐仙 1 階攻擊 f1 **通過**（頭 +0.2%、身體 0.0%，符咒留在同一隻手，尾巴有擺）。
