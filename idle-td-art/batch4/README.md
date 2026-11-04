@@ -66,8 +66,8 @@ Do not make the body or legs longer, do not shrink the head, do not move the fee
 
 | # | 代號 | 名字 | 外型（英文） | 蓄力 windup（英文） | 出招 strike（英文） |
 |---|---|---|---|---|---|
-| 1 | hunshi | 混世魔王 | a huge chibi demon king: dark crimson skin, two big curved black horns with gold rings, a wild orange flame-shaped mane (solid colors, not glowing), heavy black-and-gold spiked armor with a snarling tiger face on the chest plate, a tattered dark red cape, holding a giant black iron spiked mace in his right hand. Grinning arrogant face with one fang showing. | both hands raise the giant spiked mace high over the head | the mace smashed down in front (right side), mace head near the ground |
-| 2 | jiuyou | 九幽冥帝 | a huge chibi underworld emperor: a skeletal demon king with a big skull face wearing a tall dark-iron emperor crown with deep blue-violet gems, cold cyan-blue ghost flames (solid colors, not glowing) burning in the eye sockets and on the crown, heavy black-and-silver imperial armor with a bone-and-cloud pattern, a long tattered deep-indigo royal robe and cape, holding a tall black scepter-halberd topped with a skull ornament. Cool and spooky-funny, not gory. | the scepter-halberd raised high in both hands, robe and ghost flames flaring up | the scepter-halberd swung down forward to the right, robe and flames flying back |
+| 1 | hunshi | 混世魔王 | a huge chibi demon king: dark crimson skin, two big curved black horns with gold rings, a wild orange flame-shaped mane (solid colors, not glowing), heavy black-and-gold spiked armor with a snarling tiger face on the chest plate, a tattered dark red cape, holding a giant black iron spiked mace in his right hand. Grinning arrogant face with one fang showing. | both hands pull the giant spiked mace back behind the left shoulder at shoulder height, mace head behind his back, nothing above the top of the head | the mace smashed down in front (right side), mace head near the ground |
+| 2 | jiuyou | 九幽冥帝 | a huge chibi underworld emperor: a skeletal demon king with a big skull face wearing a tall dark-iron emperor crown with deep blue-violet gems, cold cyan-blue ghost flames (solid colors, not glowing) burning in the eye sockets and on the crown, heavy black-and-silver imperial armor with a bone-and-cloud pattern, a long tattered deep-indigo royal robe and cape, holding a tall black scepter-halberd topped with a skull ornament. Cool and spooky-funny, not gory. | the scepter-halberd pulled back behind the left shoulder in both hands, ready to swing, nothing above the top of the crown, robe and ghost flames flaring | the scepter-halberd swung down forward to the right, robe and flames flying back |
 | 3 | moshu | 萬年魔樹 | a huge chibi ten-thousand-year demon tree, much bigger and darker than a normal tree spirit: a massive twisted dark-brown trunk body with a grumpy ancient face (thick moss beard, angry glowing yellow-green eyes drawn as solid shapes), a crown of dark-green and black leaves with thorny vines, two huge thick branch arms ending in claw-like twig hands, thick root legs, a few big purple-blue poison fruits hanging (blue-violet, not pink). | both huge branch arms pulled back behind the trunk, vines and leaves swinging | both branch arms whipping forward to the right, mouth open roaring, fruits swinging |
 
 ## 待辦（照順序畫）
@@ -99,3 +99,10 @@ GPT 畫歪時可以回它：
 （Claude 驗收後寫在這裡）
 - 2026-11-04 19:10 TW　**`hunshi__stand`、`jiuyou__stand`、`moshu__stand` 3 張站立通過。** 高 1161／1194／1195px，沒有被畫布切到；放在牛魔大王旁邊明顯更壯、更華麗，三隻剪影一眼分得出。像素粗細、描邊和 Boss 一致。九幽冥帝、萬年魔樹比 1160 高一點、腳底位置三張不一樣（1183～1222），都**不用重畫**，Claude 用程式對齊。
   接下來拿這 3 張站立圖照「蓄力、出招指令」改：`hunshi__windup`、`hunshi__strike`，然後九幽冥帝、萬年魔樹。只動手和武器，頭和身體一格都不要動。不用停。
+- 2026-11-04 19:30 TW　**`hunshi__strike` 通過。** 和站立圖對齊後頭、身體、腿都是 100%、位置差 0px，只有手和狼牙棒在動，完全照規則。
+  **`hunshi__windup` 退回重畫。** 頭只有站立的 80%、身體 90%，整隻被縮小了（因為狼牙棒舉過頭會超出畫布，GPT 就把人縮小）。
+  **改動作**：不要舉過頭，改成「往後拉到肩膀後面」，這樣畫布放得下，頭和身體就不用縮。指令照「蓄力、出招指令」，`<動作>` 換成：
+  ```
+  both hands pull the giant spiked mace back behind the left shoulder at shoulder height, the mace head behind his back on the left side, ready to swing. Nothing goes above the top of the head.
+  ```
+  只附通過的 `hunshi__stand.png`，檔名不變，覆蓋舊檔推 `dot/idle-td-d1`。九幽冥帝、萬年魔樹的蓄力也一樣：**武器不要舉過頭頂**，往後拉就好，頭身大小不能變。可以先畫九幽冥帝，不用等。
