@@ -1,11 +1,27 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：進行中：ChatGPT 怪物美術 2026-11-04 01:02 UTC（09:05 三張攻擊圖修訂）
+狀態：待驗收
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
 角色美術是另一組工單（分支 `claude/project-thread-74yvlw`），和這裡無關，兩邊各畫各的。
 不要改動 `idle-td-art/monsters/` 以外的檔案。
+
+## 09:05 修訂交付紀錄
+
+- 已依 2026-11-04 09:05 意見重畫並逐張覆蓋 `golem__attack.png`（`f06f0e3`）、`wolf__attack.png`（`abadcd8`）、`umbrella__attack.png`（`b6e432d`）。其餘已通過圖不變。
+- 3 張皆為畫圖工具原始 PNG 的逐位元複本，2172×724，四格各 543px 寬；每格前景都留在自己的格內，無碰邊裁切。未以程式繪圖、縮放、裁切、拼接或改色。
+- 每次附標準圖、對應站立圖與攻擊排版，並加入工單的 LOCKED PROPORTIONS；第 4 格改回站立參考姿勢。逐格核對頭部、未彎曲身體部位及腳距，彎曲／旋轉的動作不拿整體外框直接當肢體長度。
+- 石頭怪第 4 格寬高比 1.319（站立 1.356，差約 2.7%）；來源 09:16 已重量通過，包含各格頭身及回待機站寬。
+- 狼妖四格耳尖至嘴內紅色區底緣的像素距離為 238／233／235／235px（用作頭部尺寸的穩定檢查點，非下巴精確分割）；第 4 格已回站姿，腳掌外緣跨度 229px。以同一比例比較站立圖，頭部檢查點、嘴底至腳底與待機腳距均接近原比例。彎曲的第 1～3 格另核對腿段及軀幹，不以蹲／跳造成的整體高度差判定縮小。
+- 紙傘妖第 4 格總高 477px，對應站立圖 597px 的 0.8 倍；木屐外緣約 119px，對應站立約 145px 的同一比例差約 2.7%。各格仍只有一腿；傘面旋轉、跳躍與舌頭動作保留，回待機腿長已恢復。
+- 目前只把來源已寫通過的石頭怪列為通過；狼妖與紙傘妖等待 Claude 依 09:05 的頭高／身高／站寬 3% 規則逐格重量。03:04 舊完成通知不適用本輪修訂。
+
+| 原檔（`images/`） | 原始 PNG SHA-256 |
+|---|---|
+| `golem__attack.png` | `8bfc66fc9d881f3817f956e13c70415d85618b6e3c36faaa06255f540e13cdcb` |
+| `wolf__attack.png` | `e89c096b475fc98e3902ac1c729541a97342b32d50e3c65b14732529df6d610a` |
+| `umbrella__attack.png` | `20a6b145c10cba47f39e190911a575a307081524ff00ef9631f1c34c5dfd706d` |
 
 ## 固定流程（接手的人照做）
 
@@ -150,3 +166,7 @@ GPT 畫歪時可以回它：
 LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
 ```
 畫好推到 `dot/idle-td-m1` 覆蓋原檔，Claude 每 5 分鐘巡一次。
+
+### 2026-11-04 09:16（台灣時間）石頭怪攻擊重畫版通過
+- 第 4 格和站立圖比：高度差 0%、站寬差 1%，臉對得上。第 1～3 格頭和身體大小一致（差 3% 左右以內）。通過。
+- 繼續狼妖、紙傘妖。
