@@ -58,7 +58,7 @@ Demon lord: <外型那一格的英文>
 
 ```
 Edit this exact sprite. Keep the head, face, body, legs, feet, armor, size and position EXACTLY the same (same pixels where possible).
-ONLY change the arms and the weapon to this pose: <動作那一格的英文>. Moving accessories (cape, mane, flames, tail, ribbons) may swing a little.
+ONLY change the arms and the weapon to this pose: <動作那一格的英文>. Moving accessories (cape, robe, mane, flames, vines, leaves, fruits) may swing a little.
 Do not make the body or legs longer, do not shrink the head, do not move the feet, do not resize anything. Same 1254x1254 canvas, same magenta #FF00FF background.
 ```
 
@@ -67,8 +67,8 @@ Do not make the body or legs longer, do not shrink the head, do not move the fee
 | # | 代號 | 名字 | 外型（英文） | 蓄力 windup（英文） | 出招 strike（英文） |
 |---|---|---|---|---|---|
 | 1 | hunshi | 混世魔王 | a huge chibi demon king: dark crimson skin, two big curved black horns with gold rings, a wild orange flame-shaped mane (solid colors, not glowing), heavy black-and-gold spiked armor with a snarling tiger face on the chest plate, a tattered dark red cape, holding a giant black iron spiked mace in his right hand. Grinning arrogant face with one fang showing. | both hands raise the giant spiked mace high over the head | the mace smashed down in front (right side), mace head near the ground |
-| 2 | jiaomo | 蛟魔王 | a huge chibi flood-dragon demon lord standing on two clawed legs: deep teal-blue scales, a long finned dragon tail curling behind, a pale gold belly, two short antler horns, long whiskers, a jade-and-silver armored collar and shoulder plates with wave patterns, a flowing sea-green sash, holding a big silver trident. Proud smirking face with sharp but cute teeth. | the trident pulled back over the shoulder ready to throw, sash and fins flaring | the trident thrust forward to the right at full arm length, sash and fins flying back |
-| 3 | taotie | 饕餮 | a huge chibi glutton beast demon standing on two thick legs: round dark-bronze body with ancient taotie swirl patterns etched on its armor plates, a HUGE grinning mouth full of square teeth, big round golden eyes, curled ram horns, a fluffy dark-green mane, little stubby arms with big claws, a big round belly, a gold chain with a tiny bell around its neck. Hungry, greedy and funny, not scary. | stubby arms spread wide and mouth opened even wider as if about to swallow everything, belly puffed | both clawed arms swiping forward to the right, mouth chomping shut, mane swinging |
+| 2 | jiuyou | 九幽冥帝 | a huge chibi underworld emperor: a skeletal demon king with a big skull face wearing a tall dark-iron emperor crown with deep blue-violet gems, cold cyan-blue ghost flames (solid colors, not glowing) burning in the eye sockets and on the crown, heavy black-and-silver imperial armor with a bone-and-cloud pattern, a long tattered deep-indigo royal robe and cape, holding a tall black scepter-halberd topped with a skull ornament. Cool and spooky-funny, not gory. | the scepter-halberd raised high in both hands, robe and ghost flames flaring up | the scepter-halberd swung down forward to the right, robe and flames flying back |
+| 3 | moshu | 萬年魔樹 | a huge chibi ten-thousand-year demon tree, much bigger and darker than a normal tree spirit: a massive twisted dark-brown trunk body with a grumpy ancient face (thick moss beard, angry glowing yellow-green eyes drawn as solid shapes), a crown of dark-green and black leaves with thorny vines, two huge thick branch arms ending in claw-like twig hands, thick root legs, a few big purple-blue poison fruits hanging (blue-violet, not pink). | both huge branch arms pulled back behind the trunk, vines and leaves swinging | both branch arms whipping forward to the right, mouth open roaring, fruits swinging |
 
 ## 待辦（照順序畫）
 
@@ -76,8 +76,8 @@ Do not make the body or legs longer, do not shrink the head, do not move the fee
 |---|---|---|
 | 1 | `hunshi__stand.png` | 混世魔王站立（推上來後不用停，接著畫） |
 | 2 | `hunshi__windup.png`、`hunshi__strike.png` | 混世魔王蓄力、出招（拿通過的站立圖改） |
-| 3 | `jiaomo__stand.png`、`jiaomo__windup.png`、`jiaomo__strike.png` | 蛟魔王 |
-| 4 | `taotie__stand.png`、`taotie__windup.png`、`taotie__strike.png` | 饕餮 |
+| 3 | `jiuyou__stand.png`、`jiuyou__windup.png`、`jiuyou__strike.png` | 九幽冥帝 |
+| 4 | `moshu__stand.png`、`moshu__windup.png`、`moshu__strike.png` | 萬年魔樹 |
 
 站立圖還沒通過就先畫下一隻的站立圖；蓄力、出招一定要拿**通過的**站立圖改。
 
@@ -92,7 +92,7 @@ GPT 畫歪時可以回它：
 - 和標準圖比：像素格子一樣小、畫風一致。
 - 站立圖：高 1120～1160px、腳底 y≈1210、沒被切到；放在 Boss 旁邊明顯更壯、更華麗。
 - 蓄力、出招和站立圖比：**頭高、身高差 3% 以內；肩寬、站姿寬、鞋寬差 6% 以內**；只有手、武器、披風鬃毛尾巴在動。
-- 三隻剪影一眼分得出（人形魔王、龍、圓滾滾大嘴獸）。
+- 三隻剪影一眼分得出（紅色角魔王、骷髏帝王、巨大魔樹）；也要一眼看得出比 Boss 牛魔大王、骷髏將軍、千年樹妖高一級。
 
 ## 意見與待辦
 

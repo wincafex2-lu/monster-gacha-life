@@ -41,18 +41,18 @@ Treasure: <英文那一格>
 
 | # | 檔名（`idle-td-art/batch4/images/`） | 法寶 | 英文（貼給 GPT） |
 |---|---|---|---|
-| 1 | `fb_qiankunquan.png` | 乾坤圈 | a thick shiny golden ring (a chakram-like bracelet) with a raised cloud pattern band and a small red jewel, seen at a tilted angle |
-| 2 | `fb_huntianling.png` | 混天綾 | a long crimson-red magic silk sash swirling in a big S-curve loop, gold-trimmed edges, flowing like it is alive (deep red, not pink) |
-| 3 | `fb_zhaoyaojing.png` | 照妖鏡 | a round bronze hand mirror with an ornate cloud-and-dragon rim and a short handle, the mirror face a clear pale-cyan solid color with a white highlight streak |
-| 4 | `fb_dinghaishen.png` | 定海神針 | a golden staff (the sea-calming pillar) with red bands on both ends and gold caps, lying diagonally from bottom-left to top-right, a few small wave patterns engraved |
-| 5 | `fb_jubaopen.png` | 聚寶盆 | a round golden treasure basin overflowing with gold ingots, bronze coins with square holes and a few jade beads |
-| 6 | `fb_zijinhulu.png` | 紫金葫蘆 | a magic calabash gourd in deep blue-violet and gold, gold bands around the waist, a red cord with a tassel tied at the neck, a gold stopper |
-| 7 | `fb_fenghuolun.png` | 風火輪 | a pair of golden fire wheels, one in front of the other, each a spoked gold ring with solid orange-red flame shapes around the rim |
-| 8 | `fb_bajiaoshan.png` | 芭蕉扇 | a big green banana-leaf fan with clear leaf veins, a wrapped red-and-gold handle and a small jade pendant hanging from it |
-| 9 | `fb_kunxiansheng.png` | 捆仙繩 | a coiled golden magic rope tied in a neat loop with a lucky knot in the middle and small red tassels at both ends |
-| 10 | `fb_taijitu.png` | 太極圖 | a half-unrolled scroll on wooden rollers showing a big black-and-white taiji (yin-yang) symbol surrounded by cloud patterns, no writing |
-| 11 | `fb_fantianyin.png` | 番天印 | a large square jade seal stamp with a carved beast-knob handle on top (a small cute lion), green jade with gold edging, the bottom face plain with cloud patterns only, no characters |
-| 12 | `fb_qibaodeng.png` | 七寶琉璃燈 | an ornate glass lotus lantern with seven colored gem panels (red, orange, yellow, green, cyan, blue, violet) in a gold frame, a solid golden flame shape inside, a gold hanging hook on top |
+| 1 | `fb_qiankun.png` | 乾坤圈 | a thick shiny golden ring (a chakram-like bracelet) with a raised cloud pattern band and a small red jewel, seen at a tilted angle |
+| 2 | `fb_huntian.png` | 混天綾 | a long crimson-red magic silk sash swirling in a big S-curve loop, gold-trimmed edges, flowing like it is alive (deep red, not pink) |
+| 3 | `fb_zhaoyao.png` | 照妖鏡 | a round bronze hand mirror with an ornate cloud-and-dragon rim and a short handle, the mirror face a clear pale-cyan solid color with a white highlight streak |
+| 4 | `fb_dinghai.png` | 定海神針 | a golden staff (the sea-calming pillar) with red bands on both ends and gold caps, lying diagonally from bottom-left to top-right, a few small wave patterns engraved |
+| 5 | `fb_jubao.png` | 聚寶盆 | a round golden treasure basin overflowing with gold ingots, bronze coins with square holes and a few jade beads |
+| 6 | `fb_zijin.png` | 紫金葫蘆 | a magic calabash gourd in deep blue-violet and gold, gold bands around the waist, a red cord with a tassel tied at the neck, a gold stopper |
+| 7 | `fb_fenghuo.png` | 風火輪 | a pair of golden fire wheels, one in front of the other, each a spoked gold ring with solid orange-red flame shapes around the rim |
+| 8 | `fb_bajiao.png` | 芭蕉扇 | a big green banana-leaf fan with clear leaf veins, a wrapped red-and-gold handle and a small jade pendant hanging from it |
+| 9 | `fb_kunxian.png` | 捆仙繩 | a coiled golden magic rope tied in a neat loop with a lucky knot in the middle and small red tassels at both ends |
+| 10 | `fb_taiji.png` | 太極圖 | a half-unrolled scroll on wooden rollers showing a big black-and-white taiji (yin-yang) symbol surrounded by cloud patterns, no writing |
+| 11 | `fb_fantian.png` | 番天印 | a large square jade seal stamp with a carved beast-knob handle on top (a small cute lion), green jade with gold edging, the bottom face plain with cloud patterns only, no characters |
+| 12 | `fb_liuli.png` | 七寶琉璃燈 | an ornate glass lotus lantern with seven colored gem panels (red, orange, yellow, green, cyan, blue, violet) in a gold frame, a solid golden flame shape inside, a gold hanging hook on top |
 
 ## 待辦（照順序畫）
 
