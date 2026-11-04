@@ -123,10 +123,10 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/furnace__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：金色爐身固定，只有爐蓋起落與龍口微縮；第 4 格回到站立圖微浮蓋位置。 |
 | `images/bell__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：重對木架高寬與底座比例；鐘槌敲擊、鐘身擺動，第 4 格回原站立。 |
 | `images/frost__t2__attack.png` | 2172×724 | 4 | 09:35 返工修正版：保留大藍晶體，四格只移位；冰柱擺動、塔身固定，第 4 格回到站立。 |
-| `images/frost__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：大水晶球保持四格同尺寸，只做左移、上浮、右推、回位；雪花移動，第 4 格回到站立。 |
 | `images/crossbow__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：依站立重新生成固定木架、塔腳與平台；只動弩弦、弩身和旗子。 |
 | `images/bell__t3__attack.png` | 2172×724 | 4 | 10:20 返工修正版：降低偏高塔身、保留底座與塔寬；魚槌後擺、撞鐘、回彈及復位，固定亭架。 |
 | `images/talisman__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：加寬偏窄木柱，底座、總高與桌面固定；符紙四格維持不同飄動。 |
+| `images/frost__t3__attack.png` | 2172×724 | 4 | 10:30 再修訂：底座四枚固定冰晶向內收窄、保留高度與四格一致；球體維持已核對大小，只移球與懸浮雪花；待 Claude 複核。 |
 
 原檔 SHA-256：
 
@@ -156,10 +156,10 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t3__attack.png`：`2f4ea2ec5dad341e75289008a46422ecab203214e04f8400cd5464ba826adbab`
 - `bell__t1__attack.png`：`d82d8e56bc2600421dce9e52ebc5f0480949a19a86671ae530694a85e3eae07e`
 - `frost__t2__attack.png`：`63cfed072f1b986b96f84be9ea42f33d07887d1b121ec1dafb55152d8c359296`
-- `frost__t3__attack.png`：`27e8bf6df22fccf028f0f81ef60b5ffe468cd369d539a7f7789b8e8dc666076e`
 - `crossbow__t1__attack.png`：`024bbc87eae142d8fbc1ad77c71d9ef4e79ad26b072e72a111e8c8c94517b3ba`
 - `bell__t3__attack.png`：`e09dcd3416cc53e72dae7a7a7bbc71a27c1317289ed2788c79d964c8893cb50f`
 - `talisman__t1__attack.png`：`95f7b239443d9f6a779237a45569e25efb189d1ea8670f17ba3bf892de1e2f8a`
+- `frost__t3__attack.png`：`f33e2c0953880ccad61e034752ff34176f9a5735cda91a394fc0dc9c59fcf67f`
 
 ## 意見與待辦
 
