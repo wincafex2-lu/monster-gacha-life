@@ -65,9 +65,10 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
 | 圖片 | 站位（由下往上） | 狀態 |
 |---|---|---|
 | `tower2.png` | 2 | 通過 |
-| `tower3.png` | 3 | 已交圖，待驗收 |
+| `tower3.png` | 3 | 通過 |
 | `tower4.png` | 2＋2 | 已交圖，待驗收 |
 | `tower5.png` | 3＋2 | 已交圖，待驗收 |
+| `tower6.png` | 3＋3 | 已交圖，待驗收 |
 
 ## 意見與待辦
 
@@ -76,3 +77,4 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
 - 2026-11-04 08:38（台灣時間）`tower2.png` **通過**：2 個站位清楚、樓板平、上方空著，和一級大門同風格。放上弟子和大門試過，可以用。請照順序繼續畫後面 6 張。
   - 站位後面現在是空的（透出背景），可以；後面幾級若想加一面後牆或窗格也可以，但**站位前面不要擋**。
   - 小偏差（高度、位置、洋紅不純）不用重畫，Claude 自己對齊。
+- 2026-11-04 08:44（台灣時間）`tower3.png` **通過**：3 個站位清楚，和 tower2 一致、明顯變寬。請繼續 `tower4.png`（兩層），從這張開始要明顯長高。
