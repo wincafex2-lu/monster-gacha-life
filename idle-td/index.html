@@ -629,9 +629,9 @@ const SND=(()=>{let ultS='a';try{ultS=localStorage.getItem('idle-td-ultsnd')||'a
    if(boss&&i%2===1)noise(t,.05,.06,mus,7000,1,'highpass');
    if(!boss&&i===12&&bar%2===1)noise(t,.18,.05,mus,5000,2);
    nextT+=sp;step16++;if(step16%16===0)bar++}}
- function play(k){if(!ac||mode===2||ac.state!=='running')return;const now=ac.currentTime;const gap={hit:.06,coin:.07,gate:.18,crit:.08}[k]||0;
+ function play(k,role){if(!ac||mode===2||ac.state!=='running')return;const now=ac.currentTime;const gap={hit:.06,coin:.07,gate:.18,crit:.08}[k]||0;
   if(gap){if(last[k]&&now-last[k]<gap)return;last[k]=now}const t=now+.005;
-  if(k==='ult')k='ult_'+ultS;
+  if(k==='ult')k='ult_'+({melee:'a',tank:'a',magic:'b',support:'c',ranged:'d'}[role]||'d');
   switch(k){
    case 'hit':noise(t,.07,.18,sfx,1800+Math.random()*900,1.2);tone(220+Math.random()*60,t,.08,'square',.04,sfx,{to:110});break;
    case 'crit':noise(t,.12,.3,sfx,2600,1);tone(660,t,.12,'square',.07,sfx,{to:200});break;
@@ -671,9 +671,10 @@ const SND=(()=>{let ultS='a';try{ultS=localStorage.getItem('idle-td-ultsnd')||'a
    case 'click':tone(900,t,.05,'square',.04,sfx);break;
   }}
  return{play,get ultS(){return ultS},setUlt(v){ultS=v;try{localStorage.setItem('idle-td-ultsnd',v)}catch(e){}},setBoss:b=>{boss=b},get mode(){return mode},cycle(){mode=(mode+1)%3;try{localStorage.setItem('idle-td-snd',mode)}catch(e){}resume();apply();return mode}}})();
+const ROLE_OF=id=>CH[id].role;
 /* ---------- 大招 ---------- */
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
- SND.play('ult');const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
+ SND.play('ult',ROLE_OF(h.id));const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 function doUlt(h){
  const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1);shake(10);B.hitstop=.08;
  const alive=()=>B.enemies.filter(e=>!e.dead&&e.x<VW+40);
@@ -962,8 +963,7 @@ function renderGate(){$('shTitle').textContent='山門';
   for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
    h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} +${Math.round(t.per*l*100)}%（下一級 +${Math.round(t.per*(l+1)*100)}%）</div></div>
    <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button></div>`}
-  h+=`</div><h3 class="sec">設定</h3><div class="row"><button class="btn" id="gReset" style="background:linear-gradient(#e2523a,#a8281a);color:#fff">清除存檔，從頭開始</button><span class="hint" id="gResetTip">所有弟子、關卡、資源都會消失，不能復原</span></div>
-  <div class="row" style="margin-top:10px"><b style="color:#7a4a20">大招音效（點了會試聽）</b>${[['a','劍氣'],['b','雷霆'],['c','仙法'],['d','爆氣']].map(([k,n])=>`<button class="btn ${SND.ultS===k?'gold':''}" data-us="${k}">${n}</button>`).join('')}</div>`}
+  h+=`</div><h3 class="sec">設定</h3><div class="row"><button class="btn" id="gReset" style="background:linear-gradient(#e2523a,#a8281a);color:#fff">清除存檔，從頭開始</button><span class="hint" id="gResetTip">所有弟子、關卡、資源都會消失，不能復原</span></div>`}
  if(gtab==='tur'){h+=`<h3 class="sec" style="margin-top:0">塔（擺上 ${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
   for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=giftAt(k);
    if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
@@ -987,7 +987,6 @@ function renderGate(){$('shTitle').textContent='山門';
    const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  $('shBody').innerHTML=h;const Q=(sel,f)=>$('shBody').querySelectorAll(sel).forEach(b=>b.onclick=()=>f(b));
- Q('[data-us]',b=>{SND.setUlt(b.dataset.us);SND.play('ult');renderGate()});
  if($('gReset')){let armed=0;$('gReset').onclick=()=>{if(!armed){armed=1;$('gReset').textContent='真的要清除？再按一次';$('gResetTip').textContent='3 秒內再按一次就會清除';setTimeout(()=>{armed=0;if($('gReset')){$('gReset').textContent='清除存檔，從頭開始';$('gResetTip').textContent='所有弟子、關卡、資源都會消失，不能復原'}},3000);return}
   wiped=true;try{localStorage.removeItem(SKEY)}catch(e){}location.reload()}}
  if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
