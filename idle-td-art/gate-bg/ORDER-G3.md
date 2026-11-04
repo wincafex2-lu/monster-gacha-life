@@ -69,6 +69,7 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
 | `tower4.png` | 2＋2 | 已交圖，待驗收 |
 | `tower5.png` | 3＋2 | 已交圖，待驗收 |
 | `tower6.png` | 3＋3 | 已交圖，待驗收 |
+| `tower7.png` | 3＋2＋2 | 已交圖，待驗收 |
 
 ## 意見與待辦
 
