@@ -94,6 +94,31 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .card .lv{position:absolute;left:4px;top:3px;font-size:12px;font-weight:900;background:rgba(58,36,20,.85);color:#fff;border-radius:6px;padding:0 5px}
 .card .tier{position:absolute;right:4px;top:3px;font-size:11px;color:#ff9a1e;text-shadow:0 1px 0 #fff}
 .card.R{border-color:var(--r)}.card.E{border-color:var(--e);background:linear-gradient(#fbf4ff,#e8d4ff)}.card.L{border-color:var(--l);background:linear-gradient(#fff8dc,#ffe2a0)}.card.S{border-color:var(--s)}
+
+html.uiimg .ico{border-radius:0;transform:none;box-shadow:none;width:22px;height:22px;background-position:center;background-size:contain;background-repeat:no-repeat}
+html.uiimg .ico.coin{background-image:var(--i-coin)}html.uiimg .ico.gem{background-image:var(--i-gem)}html.uiimg .ico.stone{background-image:var(--i-stone)}html.uiimg .ico.pill{background-image:var(--i-pill)}
+html.uiimg .card{border-color:transparent;border-radius:6px}
+html.uiimg .card::after{content:"";position:absolute;inset:0;background:var(--f-N) center/100% 100% no-repeat;pointer-events:none;z-index:2}
+html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{background-image:var(--f-E)}html.uiimg .card.L::after{background-image:var(--f-L)}
+.card>span{z-index:3}.card .cn{left:8%;right:8%;bottom:6%}.card img{bottom:15%;height:70%}
+.card.inteam::before{z-index:3;bottom:16%;left:9%}.card .up{bottom:16%;right:9%}.card .lv{left:9%;top:6%}.card .tier{right:9%;top:6%}
+.pulls .card::before{content:"";position:absolute;inset:0;z-index:5;background:var(--f-back,#2a6a50) center/100% 100% no-repeat;animation:unflip .5s forwards;animation-delay:calc(var(--d,0s) + .25s)}
+@keyframes unflip{0%{opacity:1;transform:none}100%{opacity:0;transform:rotateY(90deg)}}
+.pulls .card{animation-delay:var(--d,0s)}
+.gacha.altar{background:linear-gradient(rgba(255,250,240,.15),rgba(255,250,240,.55)),var(--altar) center/cover no-repeat;border-radius:14px;padding:16px 8px 12px}
+.gacha.altar .rates{background:rgba(255,250,240,.88);border-radius:10px;padding:6px 10px}
+.ultw{position:relative}
+.ult{border-radius:50%;border:none;box-shadow:0 3px 6px rgba(0,0,0,.5)}
+.ult .fill{border-radius:0}
+.ultw .ring{position:absolute;left:-9px;top:-14px;width:84px;height:89px;background:var(--ultring) center/contain no-repeat;pointer-events:none}
+@media (max-height:430px){.ultw .ring{left:-7px;top:-11px;width:68px;height:72px}}
+.ult.ready{animation:pulse2 1s infinite alternate}
+.ult.ready::after{top:auto;bottom:4px;right:50%;transform:translateX(50%)}
+@keyframes pulse2{from{box-shadow:0 0 0 0 rgba(255,216,106,.9)}to{box-shadow:0 0 16px 6px rgba(255,216,106,.95)}}
+.item.on{border-color:#e39a1e;box-shadow:0 0 0 2px #ffd86a inset}
+.sec{margin:14px 0 8px;font-family:var(--title)}
+.hint{font-size:13px;color:#7a5a3a}
+
 .card.locked{filter:grayscale(1) brightness(.55);cursor:default}
 .card.inteam::before{content:"上陣";position:absolute;left:4px;bottom:24px;z-index:1;font-size:11px;font-weight:900;background:#33a04a;color:#fff;border-radius:6px;padding:0 5px}
 .card .up{position:absolute;right:4px;bottom:24px;z-index:1;font-size:11px;font-weight:900;background:#ff4a3a;color:#fff;border-radius:6px;padding:0 5px}
@@ -180,8 +205,8 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 </div>
 <script>
 'use strict';
-const MAN={"c_alchemist_1":[167,245,96.6,244.5],"c_alchemist_2":[177,245,96.4,244.5],"c_alchemist_3":[196,245,116.7,244.5],"c_alchemist_4":[273,245,112.5,244.9],"c_alchemist_5":[418,254,162.8,254.1],"c_archer_1":[202,240,115.8,239.3],"c_archer_2":[211,239,117.6,239.0],"c_archer_3":[225,274,122.4,273.6],"c_archer_4":[274,305,139.2,305.0],"c_archer_5":[399,317,199.1,316.8],"c_catsamurai_1":[202,235,128.5,234.2],"c_catsamurai_2":[217,234,136.1,233.8],"c_catsamurai_3":[222,247,110.8,247.1],"c_disciple_1":[175,259,113.8,258.9],"c_disciple_2":[209,260,148.1,259.6],"c_disciple_3":[209,260,126.9,259.6],"c_disciple_4":[274,260,126.9,259.3],"c_disciple_5":[382,333,204.9,333.0],"c_dragon_1":[160,246,90.7,245.2],"c_dragon_2":[213,246,139.0,245.2],"c_dragon_3":[214,246,139.0,245.6],"c_dragon_4":[225,263,139.4,263.0],"c_dragon_5":[447,315,200.1,314.2],"c_elf_1":[197,232,113.6,232.0],"c_elf_2":[211,232,113.2,232.0],"c_elf_3":[334,251,163.0,250.8],"c_fox_1":[187,257,89.2,256.7],"c_fox_2":[239,257,95.5,256.3],"c_fox_3":[281,258,119.5,257.4],"c_fox_4":[302,301,145.1,300.6],"c_fox_5":[327,315,161.2,314.6],"c_general_1":[214,262,133.7,261.1],"c_general_2":[285,286,184.0,285.4],"c_general_3":[287,333,186.4,332.7],"c_grandma_1":[204,228,115.2,227.9],"c_grandma_2":[209,228,120.8,227.5],"c_grandma_3":[278,290,173.9,289.1],"c_jiangshi_1":[170,252,91.5,251.9],"c_jiangshi_2":[170,266,91.5,265.5],"c_jiangshi_3":[262,266,183.1,265.2],"c_kitsune_1":[173,257,97.2,256.7],"c_kitsune_2":[195,257,96.3,256.7],"c_kitsune_3":[244,257,118.4,257.0],"c_mecha_1":[177,244,105.7,243.4],"c_mecha_2":[161,243,91.6,243.0],"c_mecha_3":[174,243,103.3,242.7],"c_mecha_4":[222,245,151.6,244.1],"c_mecha_5":[364,288,178.7,288.0],"c_mummy_1":[186,231,107.5,230.5],"c_mummy_2":[190,230,123.4,229.8],"c_mummy_3":[195,253,123.4,251.9],"c_panda_1":[146,237,79.8,236.4],"c_panda_2":[150,237,85.0,236.4],"c_panda_3":[196,237,123.5,236.4],"c_pharaoh_1":[169,238,98.8,237.9],"c_pharaoh_2":[181,238,111.0,237.5],"c_pharaoh_3":[213,261,104.2,260.7],"c_pirate_1":[213,235,122.1,234.2],"c_pirate_2":[213,250,122.3,249.7],"c_pirate_3":[228,250,91.6,249.7],"c_shark_1":[194,244,96.6,243.8],"c_shark_2":[194,250,104.6,249.3],"c_shark_3":[219,250,98.7,249.7],"c_swordsman_1":[160,240,85.7,240.1],"c_swordsman_2":[228,240,154.0,240.1],"c_swordsman_3":[241,243,118.9,241.9],"c_vampire_1":[143,227,75.2,226.4],"c_vampire_2":[246,227,120.4,226.1],"c_vampire_3":[249,227,122.4,226.1],"c_witch_1":[194,257,133.7,256.3],"c_witch_2":[237,276,166.5,275.9],"c_witch_3":[237,290,142.0,289.5],"c_yukionna_1":[173,245,102.9,244.9],"c_yukionna_2":[200,245,104.4,244.5],"c_yukionna_3":[200,247,91.3,247.1],"t_crossbow_1":[232,293,103.4,292.8],"t_crossbow_2":[256,376,122.8,375.4],"t_crossbow_3":[281,393,117.3,392.4],"t_furnace_1":[229,271,100.9,271.1],"t_furnace_2":[271,292,129.1,291.3],"t_furnace_3":[277,314,111.6,313.5],"t_bell_1":[276,281,138.1,281.0],"t_bell_2":[308,365,165.4,364.4],"t_bell_3":[347,412,173.1,411.6],"t_frost_1":[169,260,83.3,260.0],"t_frost_2":[222,333,110.8,331.9],"t_frost_3":[238,388,112.7,387.2],"t_talisman_1":[251,336,109.7,335.6],"t_talisman_2":[255,340,110.5,339.7],"t_talisman_3":[200,424,96.8,424.1],"b_baihu":[300,289,154.0,288.4],"b_qinglong":[555,273,388.3,345.6],"b_zhuque":[593,264,307.9,337.1],"b_xuanwu":[299,273,127.2,272.9],"m_slime":[120,116,60.1,115.4],"m_mushroom":[163,162,78.4,161.2],"m_mushroom_a1":[160,157,77.2,156.4],"m_mushroom_a2":[150,168,60.6,167.4],"m_mushroom_a3":[159,154,84.3,153.4],"m_imp":[211,215,88.2,214.6],"m_imp_a1":[200,261,85.7,260.7],"m_imp_a2":[252,215,166.8,214.6],"m_imp_a3":[158,216,75.4,214.3],"m_skeleton":[223,253,90.2,252.3],"m_skeleton_a1":[234,252,69.9,252.3],"m_skeleton_a2":[259,253,126.2,252.3],"m_skeleton_a3":[288,252,156.0,251.9],"m_wolf":[173,252,69.7,251.9],"m_golem":[389,287,194.8,286.9],"m_golem_a1":[351,313,177.5,313.1],"m_golem_a2":[318,287,156.7,286.9],"m_golem_a3":[330,287,202.2,286.9],"m_bat_0":[247,153,121.1,283.2],"m_bat_1":[225,158,112.5,283.2],"m_umbrella":[166,220,89.7,219.4],"m_umbrella_a1":[165,220,87.9,219.4],"m_umbrella_a2":[189,220,112.7,219.4],"m_umbrella_a3":[244,220,162.9,219.4],"k_slimeking":[444,376,211.3,375.4],"k_slimeking_windup":[404,274,195.3,287.7],"k_slimeking_strike":[451,372,217.2,379.9],"k_bullking":[376,383,199.5,382.8],"k_bullking_windup":[396,424,197.8,423.4],"k_bullking_strike":[326,385,169.8,383.2],"k_bonegeneral":[383,439,166.9,438.1],"k_bonegeneral_windup":[421,437,198.2,438.1],"k_bonegeneral_strike":[454,437,220.2,438.1],"k_treeelder":[401,406,197.4,404.9],"k_treeelder_windup":[361,405,179.9,404.9],"k_treeelder_strike":[408,406,226.9,404.9],"g_a_fire":[324,94,162.0,47.0],"i_a_fire":[128,128,64,64],"g_a_frost":[307,113,153.5,56.5],"i_a_frost":[128,144,64,64],"g_a_poison":[338,129,169.0,64.5],"i_a_poison":[128,126,64,64],"g_a_sword":[332,121,166.0,60.5],"i_a_sword":[128,129,64,64],"g_a_thunder":[318,107,159.0,53.5],"i_a_thunder":[128,126,64,64],"g_a_wind":[326,115,163.0,57.5],"i_a_wind":[128,128,64,64],"g_d_gold":[324,120,162.0,60.0],"i_d_gold":[128,127,64,64],"g_d_lotus":[319,100,159.5,50.0],"i_d_lotus":[128,125,64,64],"g_d_mirror":[318,130,159.0,65.0],"i_d_mirror":[128,128,64,64],"g_d_rock":[320,106,160.0,53.0],"i_d_rock":[128,126,64,64],"g_d_star":[323,106,161.5,53.0],"i_d_star":[128,127,64,64],"g_d_taiji":[327,107,163.5,53.5],"i_d_taiji":[128,128,64,64],"tower2":[678,689,0,689,[[232.7,459.5],[470.0,459.5]]],"tower3":[816,683,0,683,[[213.8,454.4],[419.6,454.4],[624.1,454.4]]],"tower4":[756,940,0,940,[[258.3,743.4],[515.3,743.4],[258.3,430.9],[515.3,430.9]]],"tower5":[787,970,0,970,[[217.6,770.3],[418.3,770.3],[619.9,770.3],[238.6,427.6],[436.0,427.6]]],"tower6":[826,1038,0,1038,[[223.0,832.4],[432.6,832.4],[646.8,832.4],[222.6,493.1],[432.6,493.1],[646.8,493.1]]],"tower7":[790,1147,0,1147,[[212.9,936.6],[411.2,936.6],[612.8,936.6],[236.0,580.4],[442.3,580.4],[231.8,251.2],[420.8,251.2]]],"tower8":[774,1210,0,1210,[[202.9,997.9],[391.4,997.9],[581.3,997.9],[203.3,675.4],[391.4,675.4],[581.3,675.4],[267.1,339.4],[513.7,339.4]]],"gate1_ok":[411,420,205.5,420],"gate1_broken":[412,420,206.0,420],"gate2_ok":[368,440,184.0,440],"gate2_broken":[368,440,184.0,440],"gate3_ok":[374,460,187.0,460],"gate3_broken":[374,460,187.0,460],"gate4_ok":[342,480,171.0,480],"gate4_broken":[342,480,171.0,480],"gate5_ok":[307,500,153.5,500],"gate5_broken":[308,500,154.0,500],"bg_meadow":[1536,1024,0,0],"bg_bamboo":[1536,1024,0,0],"bg_nightwood":[1536,1024,0,0]};
-const SRC={"b_baihu":"assets/b_baihu.webp","b_qinglong":"assets/b_qinglong.webp","b_xuanwu":"assets/b_xuanwu.webp","b_zhuque":"assets/b_zhuque.webp","bg_bamboo":"assets/bg_bamboo.webp","bg_meadow":"assets/bg_meadow.webp","bg_nightwood":"assets/bg_nightwood.webp","c_alchemist_1":"assets/c_alchemist_1.webp","c_alchemist_2":"assets/c_alchemist_2.webp","c_alchemist_3":"assets/c_alchemist_3.webp","c_alchemist_4":"assets/c_alchemist_4.webp","c_alchemist_5":"assets/c_alchemist_5.webp","c_archer_1":"assets/c_archer_1.webp","c_archer_2":"assets/c_archer_2.webp","c_archer_3":"assets/c_archer_3.webp","c_archer_4":"assets/c_archer_4.webp","c_archer_5":"assets/c_archer_5.webp","c_catsamurai_1":"assets/c_catsamurai_1.webp","c_catsamurai_2":"assets/c_catsamurai_2.webp","c_catsamurai_3":"assets/c_catsamurai_3.webp","c_disciple_1":"assets/c_disciple_1.webp","c_disciple_2":"assets/c_disciple_2.webp","c_disciple_3":"assets/c_disciple_3.webp","c_disciple_4":"assets/c_disciple_4.webp","c_disciple_5":"assets/c_disciple_5.webp","c_dragon_1":"assets/c_dragon_1.webp","c_dragon_2":"assets/c_dragon_2.webp","c_dragon_3":"assets/c_dragon_3.webp","c_dragon_4":"assets/c_dragon_4.webp","c_dragon_5":"assets/c_dragon_5.webp","c_elf_1":"assets/c_elf_1.webp","c_elf_2":"assets/c_elf_2.webp","c_elf_3":"assets/c_elf_3.webp","c_fox_1":"assets/c_fox_1.webp","c_fox_2":"assets/c_fox_2.webp","c_fox_3":"assets/c_fox_3.webp","c_fox_4":"assets/c_fox_4.webp","c_fox_5":"assets/c_fox_5.webp","c_general_1":"assets/c_general_1.webp","c_general_2":"assets/c_general_2.webp","c_general_3":"assets/c_general_3.webp","c_grandma_1":"assets/c_grandma_1.webp","c_grandma_2":"assets/c_grandma_2.webp","c_grandma_3":"assets/c_grandma_3.webp","c_jiangshi_1":"assets/c_jiangshi_1.webp","c_jiangshi_2":"assets/c_jiangshi_2.webp","c_jiangshi_3":"assets/c_jiangshi_3.webp","c_kitsune_1":"assets/c_kitsune_1.webp","c_kitsune_2":"assets/c_kitsune_2.webp","c_kitsune_3":"assets/c_kitsune_3.webp","c_mecha_1":"assets/c_mecha_1.webp","c_mecha_2":"assets/c_mecha_2.webp","c_mecha_3":"assets/c_mecha_3.webp","c_mecha_4":"assets/c_mecha_4.webp","c_mecha_5":"assets/c_mecha_5.webp","c_mummy_1":"assets/c_mummy_1.webp","c_mummy_2":"assets/c_mummy_2.webp","c_mummy_3":"assets/c_mummy_3.webp","c_panda_1":"assets/c_panda_1.webp","c_panda_2":"assets/c_panda_2.webp","c_panda_3":"assets/c_panda_3.webp","c_pharaoh_1":"assets/c_pharaoh_1.webp","c_pharaoh_2":"assets/c_pharaoh_2.webp","c_pharaoh_3":"assets/c_pharaoh_3.webp","c_pirate_1":"assets/c_pirate_1.webp","c_pirate_2":"assets/c_pirate_2.webp","c_pirate_3":"assets/c_pirate_3.webp","c_shark_1":"assets/c_shark_1.webp","c_shark_2":"assets/c_shark_2.webp","c_shark_3":"assets/c_shark_3.webp","c_swordsman_1":"assets/c_swordsman_1.webp","c_swordsman_2":"assets/c_swordsman_2.webp","c_swordsman_3":"assets/c_swordsman_3.webp","c_vampire_1":"assets/c_vampire_1.webp","c_vampire_2":"assets/c_vampire_2.webp","c_vampire_3":"assets/c_vampire_3.webp","c_witch_1":"assets/c_witch_1.webp","c_witch_2":"assets/c_witch_2.webp","c_witch_3":"assets/c_witch_3.webp","c_yukionna_1":"assets/c_yukionna_1.webp","c_yukionna_2":"assets/c_yukionna_2.webp","c_yukionna_3":"assets/c_yukionna_3.webp","g_a_fire":"assets/g_a_fire.webp","g_a_frost":"assets/g_a_frost.webp","g_a_poison":"assets/g_a_poison.webp","g_a_sword":"assets/g_a_sword.webp","g_a_thunder":"assets/g_a_thunder.webp","g_a_wind":"assets/g_a_wind.webp","g_d_gold":"assets/g_d_gold.webp","g_d_lotus":"assets/g_d_lotus.webp","g_d_mirror":"assets/g_d_mirror.webp","g_d_rock":"assets/g_d_rock.webp","g_d_star":"assets/g_d_star.webp","g_d_taiji":"assets/g_d_taiji.webp","gate1_broken":"assets/gate1_broken.webp","gate1_ok":"assets/gate1_ok.webp","gate2_broken":"assets/gate2_broken.webp","gate2_ok":"assets/gate2_ok.webp","gate3_broken":"assets/gate3_broken.webp","gate3_ok":"assets/gate3_ok.webp","gate4_broken":"assets/gate4_broken.webp","gate4_ok":"assets/gate4_ok.webp","gate5_broken":"assets/gate5_broken.webp","gate5_ok":"assets/gate5_ok.webp","i_a_fire":"assets/i_a_fire.webp","i_a_frost":"assets/i_a_frost.webp","i_a_poison":"assets/i_a_poison.webp","i_a_sword":"assets/i_a_sword.webp","i_a_thunder":"assets/i_a_thunder.webp","i_a_wind":"assets/i_a_wind.webp","i_d_gold":"assets/i_d_gold.webp","i_d_lotus":"assets/i_d_lotus.webp","i_d_mirror":"assets/i_d_mirror.webp","i_d_rock":"assets/i_d_rock.webp","i_d_star":"assets/i_d_star.webp","i_d_taiji":"assets/i_d_taiji.webp","k_bonegeneral":"assets/k_bonegeneral.webp","k_bonegeneral_strike":"assets/k_bonegeneral_strike.webp","k_bonegeneral_windup":"assets/k_bonegeneral_windup.webp","k_bullking":"assets/k_bullking.webp","k_bullking_strike":"assets/k_bullking_strike.webp","k_bullking_windup":"assets/k_bullking_windup.webp","k_slimeking":"assets/k_slimeking.webp","k_slimeking_strike":"assets/k_slimeking_strike.webp","k_slimeking_windup":"assets/k_slimeking_windup.webp","k_treeelder":"assets/k_treeelder.webp","k_treeelder_strike":"assets/k_treeelder_strike.webp","k_treeelder_windup":"assets/k_treeelder_windup.webp","m_bat_0":"assets/m_bat_0.webp","m_bat_1":"assets/m_bat_1.webp","m_golem":"assets/m_golem.webp","m_golem_a1":"assets/m_golem_a1.webp","m_golem_a2":"assets/m_golem_a2.webp","m_golem_a3":"assets/m_golem_a3.webp","m_imp":"assets/m_imp.webp","m_imp_a1":"assets/m_imp_a1.webp","m_imp_a2":"assets/m_imp_a2.webp","m_imp_a3":"assets/m_imp_a3.webp","m_mushroom":"assets/m_mushroom.webp","m_mushroom_a1":"assets/m_mushroom_a1.webp","m_mushroom_a2":"assets/m_mushroom_a2.webp","m_mushroom_a3":"assets/m_mushroom_a3.webp","m_skeleton":"assets/m_skeleton.webp","m_skeleton_a1":"assets/m_skeleton_a1.webp","m_skeleton_a2":"assets/m_skeleton_a2.webp","m_skeleton_a3":"assets/m_skeleton_a3.webp","m_slime":"assets/m_slime.webp","m_umbrella":"assets/m_umbrella.webp","m_umbrella_a1":"assets/m_umbrella_a1.webp","m_umbrella_a2":"assets/m_umbrella_a2.webp","m_umbrella_a3":"assets/m_umbrella_a3.webp","m_wolf":"assets/m_wolf.webp","t_bell_1":"assets/t_bell_1.webp","t_bell_2":"assets/t_bell_2.webp","t_bell_3":"assets/t_bell_3.webp","t_crossbow_1":"assets/t_crossbow_1.webp","t_crossbow_2":"assets/t_crossbow_2.webp","t_crossbow_3":"assets/t_crossbow_3.webp","t_frost_1":"assets/t_frost_1.webp","t_frost_2":"assets/t_frost_2.webp","t_frost_3":"assets/t_frost_3.webp","t_furnace_1":"assets/t_furnace_1.webp","t_furnace_2":"assets/t_furnace_2.webp","t_furnace_3":"assets/t_furnace_3.webp","t_talisman_1":"assets/t_talisman_1.webp","t_talisman_2":"assets/t_talisman_2.webp","t_talisman_3":"assets/t_talisman_3.webp","tower2":"assets/tower2.webp","tower3":"assets/tower3.webp","tower4":"assets/tower4.webp","tower5":"assets/tower5.webp","tower6":"assets/tower6.webp","tower7":"assets/tower7.webp","tower8":"assets/tower8.webp"};
+const MAN={"c_alchemist_1":[167,245,96.6,244.5],"c_alchemist_2":[177,245,96.4,244.5],"c_alchemist_3":[196,245,116.7,244.5],"c_alchemist_4":[273,245,112.5,244.9],"c_alchemist_5":[418,254,162.8,254.1],"c_archer_1":[202,240,115.8,239.3],"c_archer_2":[211,239,117.6,239.0],"c_archer_3":[225,274,122.4,273.6],"c_archer_4":[274,305,139.2,305.0],"c_archer_5":[399,317,199.1,316.8],"c_catsamurai_1":[202,235,128.5,234.2],"c_catsamurai_2":[217,234,136.1,233.8],"c_catsamurai_3":[222,247,110.8,247.1],"c_disciple_1":[175,259,113.8,258.9],"c_disciple_2":[209,260,148.1,259.6],"c_disciple_3":[209,260,126.9,259.6],"c_disciple_4":[274,260,126.9,259.3],"c_disciple_5":[382,333,204.9,333.0],"c_dragon_1":[160,246,90.7,245.2],"c_dragon_2":[213,246,139.0,245.2],"c_dragon_3":[214,246,139.0,245.6],"c_dragon_4":[225,263,139.4,263.0],"c_dragon_5":[447,315,200.1,314.2],"c_elf_1":[197,232,113.6,232.0],"c_elf_2":[211,232,113.2,232.0],"c_elf_3":[334,251,163.0,250.8],"c_fox_1":[187,257,89.2,256.7],"c_fox_2":[239,257,95.5,256.3],"c_fox_3":[281,258,119.5,257.4],"c_fox_4":[302,301,145.1,300.6],"c_fox_5":[327,315,161.2,314.6],"c_general_1":[214,262,133.7,261.1],"c_general_2":[285,286,184.0,285.4],"c_general_3":[287,333,186.4,332.7],"c_grandma_1":[204,228,115.2,227.9],"c_grandma_2":[209,228,120.8,227.5],"c_grandma_3":[278,290,173.9,289.1],"c_jiangshi_1":[170,252,91.5,251.9],"c_jiangshi_2":[170,266,91.5,265.5],"c_jiangshi_3":[262,266,183.1,265.2],"c_kitsune_1":[173,257,97.2,256.7],"c_kitsune_2":[195,257,96.3,256.7],"c_kitsune_3":[244,257,118.4,257.0],"c_mecha_1":[177,244,105.7,243.4],"c_mecha_2":[161,243,91.6,243.0],"c_mecha_3":[174,243,103.3,242.7],"c_mecha_4":[222,245,151.6,244.1],"c_mecha_5":[364,288,178.7,288.0],"c_mummy_1":[186,231,107.5,230.5],"c_mummy_2":[190,230,123.4,229.8],"c_mummy_3":[195,253,123.4,251.9],"c_panda_1":[146,237,79.8,236.4],"c_panda_2":[150,237,85.0,236.4],"c_panda_3":[196,237,123.5,236.4],"c_pharaoh_1":[169,238,98.8,237.9],"c_pharaoh_2":[181,238,111.0,237.5],"c_pharaoh_3":[213,261,104.2,260.7],"c_pirate_1":[213,235,122.1,234.2],"c_pirate_2":[213,250,122.3,249.7],"c_pirate_3":[228,250,91.6,249.7],"c_shark_1":[194,244,96.6,243.8],"c_shark_2":[194,250,104.6,249.3],"c_shark_3":[219,250,98.7,249.7],"c_swordsman_1":[160,240,85.7,240.1],"c_swordsman_2":[228,240,154.0,240.1],"c_swordsman_3":[241,243,118.9,241.9],"c_vampire_1":[143,227,75.2,226.4],"c_vampire_2":[246,227,120.4,226.1],"c_vampire_3":[249,227,122.4,226.1],"c_witch_1":[194,257,133.7,256.3],"c_witch_2":[237,276,166.5,275.9],"c_witch_3":[237,290,142.0,289.5],"c_yukionna_1":[173,245,102.9,244.9],"c_yukionna_2":[200,245,104.4,244.5],"c_yukionna_3":[200,247,91.3,247.1],"t_crossbow_1":[232,293,103.4,292.8],"t_crossbow_2":[256,376,122.8,375.4],"t_crossbow_3":[281,393,117.3,392.4],"t_furnace_1":[229,271,100.9,271.1],"t_furnace_2":[271,292,129.1,291.3],"t_furnace_3":[277,314,111.6,313.5],"t_bell_1":[276,281,138.1,281.0],"t_bell_2":[308,365,165.4,364.4],"t_bell_3":[347,412,173.1,411.6],"t_frost_1":[169,260,83.3,260.0],"t_frost_2":[222,333,110.8,331.9],"t_frost_3":[238,388,112.7,387.2],"t_talisman_1":[251,336,109.7,335.6],"t_talisman_2":[255,340,110.5,339.7],"t_talisman_3":[200,424,96.8,424.1],"b_baihu":[300,289,154.0,288.4],"b_qinglong":[555,273,388.3,345.6],"b_zhuque":[593,264,307.9,337.1],"b_xuanwu":[299,273,127.2,272.9],"m_slime":[120,116,60.1,115.4],"m_mushroom":[163,162,78.4,161.2],"m_mushroom_a1":[160,157,77.2,156.4],"m_mushroom_a2":[150,168,60.6,167.4],"m_mushroom_a3":[159,154,84.3,153.4],"m_imp":[211,215,88.2,214.6],"m_imp_a1":[200,261,85.7,260.7],"m_imp_a2":[252,215,166.8,214.6],"m_imp_a3":[158,216,75.4,214.3],"m_skeleton":[223,253,90.2,252.3],"m_skeleton_a1":[234,252,69.9,252.3],"m_skeleton_a2":[259,253,126.2,252.3],"m_skeleton_a3":[288,252,156.0,251.9],"m_wolf":[173,252,69.7,251.9],"m_golem":[389,287,194.8,286.9],"m_golem_a1":[351,313,177.5,313.1],"m_golem_a2":[318,287,156.7,286.9],"m_golem_a3":[330,287,202.2,286.9],"m_bat_0":[247,153,121.1,283.2],"m_bat_1":[225,158,112.5,283.2],"m_umbrella":[166,220,89.7,219.4],"m_umbrella_a1":[165,220,87.9,219.4],"m_umbrella_a2":[189,220,112.7,219.4],"m_umbrella_a3":[244,220,162.9,219.4],"k_slimeking":[444,376,211.3,375.4],"k_slimeking_windup":[404,274,195.3,287.7],"k_slimeking_strike":[451,372,217.2,379.9],"k_bullking":[376,383,199.5,382.8],"k_bullking_windup":[396,424,197.8,423.4],"k_bullking_strike":[326,385,169.8,383.2],"k_bonegeneral":[383,439,166.9,438.1],"k_bonegeneral_windup":[421,437,198.2,438.1],"k_bonegeneral_strike":[454,437,220.2,438.1],"k_treeelder":[401,406,197.4,404.9],"k_treeelder_windup":[361,405,179.9,404.9],"k_treeelder_strike":[408,406,226.9,404.9],"g_a_fire":[324,94,162.0,47.0],"i_a_fire":[128,128,64,64],"g_a_frost":[307,113,153.5,56.5],"i_a_frost":[128,144,64,64],"g_a_poison":[338,129,169.0,64.5],"i_a_poison":[128,126,64,64],"g_a_sword":[332,121,166.0,60.5],"i_a_sword":[128,129,64,64],"g_a_thunder":[318,107,159.0,53.5],"i_a_thunder":[128,126,64,64],"g_a_wind":[326,115,163.0,57.5],"i_a_wind":[128,128,64,64],"g_d_gold":[324,120,162.0,60.0],"i_d_gold":[128,127,64,64],"g_d_lotus":[319,100,159.5,50.0],"i_d_lotus":[128,125,64,64],"g_d_mirror":[318,130,159.0,65.0],"i_d_mirror":[128,128,64,64],"g_d_rock":[320,106,160.0,53.0],"i_d_rock":[128,126,64,64],"g_d_star":[323,106,161.5,53.0],"i_d_star":[128,127,64,64],"g_d_taiji":[327,107,163.5,53.5],"i_d_taiji":[128,128,64,64],"tower2":[678,689,0,689,[[232.7,459.5],[470.0,459.5]]],"tower3":[816,683,0,683,[[213.8,454.4],[419.6,454.4],[624.1,454.4]]],"tower4":[756,940,0,940,[[258.3,743.4],[515.3,743.4],[258.3,430.9],[515.3,430.9]]],"tower5":[787,970,0,970,[[217.6,770.3],[418.3,770.3],[619.9,770.3],[238.6,427.6],[436.0,427.6]]],"tower6":[826,1038,0,1038,[[223.0,832.4],[432.6,832.4],[646.8,832.4],[222.6,493.1],[432.6,493.1],[646.8,493.1]]],"tower7":[790,1147,0,1147,[[212.9,936.6],[411.2,936.6],[612.8,936.6],[236.0,580.4],[442.3,580.4],[231.8,251.2],[420.8,251.2]]],"tower8":[774,1210,0,1210,[[202.9,997.9],[391.4,997.9],[581.3,997.9],[203.3,675.4],[391.4,675.4],[581.3,675.4],[267.1,339.4],[513.7,339.4]]],"gate1_ok":[411,420,205.5,420],"gate1_broken":[412,420,206.0,420],"gate2_ok":[368,440,184.0,440],"gate2_broken":[368,440,184.0,440],"gate3_ok":[374,460,187.0,460],"gate3_broken":[374,460,187.0,460],"gate4_ok":[342,480,171.0,480],"gate4_broken":[342,480,171.0,480],"gate5_ok":[307,500,153.5,500],"gate5_broken":[308,500,154.0,500],"bg_meadow":[1536,1024,0,0],"bg_bamboo":[1536,1024,0,0],"bg_nightwood":[1536,1024,0,0],"p_arrow":[80,18,48.0,9.0],"p_bolt":[104,38,62.4,19.0],"p_harpoon":[96,21,57.6,10.5],"p_talisman":[48,16,28.8,8.0],"p_ofuda":[48,16,28.8,8.0],"p_pill":[26,26,15.6,13.0],"p_scarab":[40,41,24.0,20.5],"p_foxfire":[56,37,33.6,18.5],"p_bullet":[20,20,12.0,10.0],"p_starbolt":[40,40,24.0,20.0],"p_iceshard":[60,23,36.0,11.5],"p_bun":[32,25,19.2,12.5],"p_seed":[32,21,19.2,10.5],"p_firebomb":[48,44,28.8,22.0],"fx_slash_0":[180,149,90.0,74.5],"fx_slash_1":[180,149,90.0,74.5],"fx_slash_2":[180,149,90.0,74.5],"fx_slash_3":[180,149,90.0,74.5],"fx_blunt_0":[180,173,90.0,86.5],"fx_blunt_1":[180,173,90.0,86.5],"fx_blunt_2":[180,173,90.0,86.5],"fx_blunt_3":[180,173,90.0,86.5],"fx_fire_0":[180,155,90.0,77.5],"fx_fire_1":[180,155,90.0,77.5],"fx_fire_2":[180,155,90.0,77.5],"fx_fire_3":[180,155,90.0,77.5],"fx_ice_0":[157,180,78.5,90.0],"fx_ice_1":[157,180,78.5,90.0],"fx_ice_2":[157,180,78.5,90.0],"fx_ice_3":[157,180,78.5,90.0],"fx_thunder_0":[163,180,81.5,90.0],"fx_thunder_1":[163,180,81.5,90.0],"fx_thunder_2":[163,180,81.5,90.0],"fx_thunder_3":[163,180,81.5,90.0],"fx_poison_0":[168,180,84.0,90.0],"fx_poison_1":[168,180,84.0,90.0],"fx_poison_2":[168,180,84.0,90.0],"fx_poison_3":[168,180,84.0,90.0],"fx_wind_0":[167,180,83.5,90.0],"fx_wind_1":[167,180,83.5,90.0],"fx_wind_2":[167,180,83.5,90.0],"fx_wind_3":[167,180,83.5,90.0],"fx_heal_0":[170,180,85.0,90.0],"fx_heal_1":[170,180,85.0,90.0],"fx_heal_2":[170,180,85.0,90.0],"fx_heal_3":[170,180,85.0,90.0],"fx_stun_0":[158,180,79.0,90.0],"fx_stun_1":[158,180,79.0,90.0],"fx_stun_2":[158,180,79.0,90.0],"fx_stun_3":[158,180,79.0,90.0],"ult_dragon_0":[680,556,340.0,278.0],"ult_dragon_1":[680,556,340.0,278.0],"ult_dragon_2":[680,556,340.0,278.0],"ult_dragon_3":[680,556,340.0,278.0],"ult_dragon_4":[680,556,340.0,278.0],"ult_dragon_5":[680,556,340.0,278.0],"ult_starrain_0":[680,648,340.0,324.0],"ult_starrain_1":[680,648,340.0,324.0],"ult_starrain_2":[680,648,340.0,324.0],"ult_starrain_3":[680,648,340.0,324.0],"ult_starrain_4":[680,648,340.0,324.0],"ult_starrain_5":[680,648,340.0,324.0],"ult_ninetail_0":[680,502,340.0,251.0],"ult_ninetail_1":[680,502,340.0,251.0],"ult_ninetail_2":[680,502,340.0,251.0],"ult_ninetail_3":[680,502,340.0,251.0],"ult_ninetail_4":[680,502,340.0,251.0],"ult_ninetail_5":[680,502,340.0,251.0],"ult_mecha_0":[680,623,340.0,311.5],"ult_mecha_1":[680,623,340.0,311.5],"ult_mecha_2":[680,623,340.0,311.5],"ult_mecha_3":[680,623,340.0,311.5],"ult_mecha_4":[680,623,340.0,311.5],"ult_mecha_5":[680,623,340.0,311.5],"ult_cauldron_0":[607,680,303.5,340.0],"ult_cauldron_1":[607,680,303.5,340.0],"ult_cauldron_2":[607,680,303.5,340.0],"ult_cauldron_3":[607,680,303.5,340.0],"ult_cauldron_4":[607,680,303.5,340.0],"ult_cauldron_5":[607,680,303.5,340.0],"u_res_coin":[89,96,44.5,48.0],"u_res_spirit":[92,96,46.0,48.0],"u_res_gatestone":[134,96,67.0,48.0],"u_res_pill":[91,96,45.5,48.0],"u_res_beastsoul":[74,96,37.0,48.0],"u_res_soulcrystal":[84,96,42.0,48.0],"u_el_fire":[95,96,47.5,48.0],"u_el_ice":[96,96,48.0,48.0],"u_el_poison":[95,96,47.5,48.0],"u_el_thunder":[95,96,47.5,48.0],"u_el_wind":[95,96,47.5,48.0],"u_card_common":[240,320,120,160],"u_card_rare":[240,320,120,160],"u_card_epic":[240,320,120,160],"u_card_legend":[240,320,120,160],"u_card_back":[240,320,120,160],"u_ui_ult_frame":[200,200,100,100],"u_ui_panel":[200,200,100,100],"u_bar_gate":[600,139,0,0],"u_bar_boss":[600,75,0,0],"u_ui_button":[600,165,0,0],"u_gacha_altar":[960,640,0,0]};
+const SRC={"b_baihu":"assets/b_baihu.webp","b_qinglong":"assets/b_qinglong.webp","b_xuanwu":"assets/b_xuanwu.webp","b_zhuque":"assets/b_zhuque.webp","bg_bamboo":"assets/bg_bamboo.webp","bg_meadow":"assets/bg_meadow.webp","bg_nightwood":"assets/bg_nightwood.webp","c_alchemist_1":"assets/c_alchemist_1.webp","c_alchemist_2":"assets/c_alchemist_2.webp","c_alchemist_3":"assets/c_alchemist_3.webp","c_alchemist_4":"assets/c_alchemist_4.webp","c_alchemist_5":"assets/c_alchemist_5.webp","c_archer_1":"assets/c_archer_1.webp","c_archer_2":"assets/c_archer_2.webp","c_archer_3":"assets/c_archer_3.webp","c_archer_4":"assets/c_archer_4.webp","c_archer_5":"assets/c_archer_5.webp","c_catsamurai_1":"assets/c_catsamurai_1.webp","c_catsamurai_2":"assets/c_catsamurai_2.webp","c_catsamurai_3":"assets/c_catsamurai_3.webp","c_disciple_1":"assets/c_disciple_1.webp","c_disciple_2":"assets/c_disciple_2.webp","c_disciple_3":"assets/c_disciple_3.webp","c_disciple_4":"assets/c_disciple_4.webp","c_disciple_5":"assets/c_disciple_5.webp","c_dragon_1":"assets/c_dragon_1.webp","c_dragon_2":"assets/c_dragon_2.webp","c_dragon_3":"assets/c_dragon_3.webp","c_dragon_4":"assets/c_dragon_4.webp","c_dragon_5":"assets/c_dragon_5.webp","c_elf_1":"assets/c_elf_1.webp","c_elf_2":"assets/c_elf_2.webp","c_elf_3":"assets/c_elf_3.webp","c_fox_1":"assets/c_fox_1.webp","c_fox_2":"assets/c_fox_2.webp","c_fox_3":"assets/c_fox_3.webp","c_fox_4":"assets/c_fox_4.webp","c_fox_5":"assets/c_fox_5.webp","c_general_1":"assets/c_general_1.webp","c_general_2":"assets/c_general_2.webp","c_general_3":"assets/c_general_3.webp","c_grandma_1":"assets/c_grandma_1.webp","c_grandma_2":"assets/c_grandma_2.webp","c_grandma_3":"assets/c_grandma_3.webp","c_jiangshi_1":"assets/c_jiangshi_1.webp","c_jiangshi_2":"assets/c_jiangshi_2.webp","c_jiangshi_3":"assets/c_jiangshi_3.webp","c_kitsune_1":"assets/c_kitsune_1.webp","c_kitsune_2":"assets/c_kitsune_2.webp","c_kitsune_3":"assets/c_kitsune_3.webp","c_mecha_1":"assets/c_mecha_1.webp","c_mecha_2":"assets/c_mecha_2.webp","c_mecha_3":"assets/c_mecha_3.webp","c_mecha_4":"assets/c_mecha_4.webp","c_mecha_5":"assets/c_mecha_5.webp","c_mummy_1":"assets/c_mummy_1.webp","c_mummy_2":"assets/c_mummy_2.webp","c_mummy_3":"assets/c_mummy_3.webp","c_panda_1":"assets/c_panda_1.webp","c_panda_2":"assets/c_panda_2.webp","c_panda_3":"assets/c_panda_3.webp","c_pharaoh_1":"assets/c_pharaoh_1.webp","c_pharaoh_2":"assets/c_pharaoh_2.webp","c_pharaoh_3":"assets/c_pharaoh_3.webp","c_pirate_1":"assets/c_pirate_1.webp","c_pirate_2":"assets/c_pirate_2.webp","c_pirate_3":"assets/c_pirate_3.webp","c_shark_1":"assets/c_shark_1.webp","c_shark_2":"assets/c_shark_2.webp","c_shark_3":"assets/c_shark_3.webp","c_swordsman_1":"assets/c_swordsman_1.webp","c_swordsman_2":"assets/c_swordsman_2.webp","c_swordsman_3":"assets/c_swordsman_3.webp","c_vampire_1":"assets/c_vampire_1.webp","c_vampire_2":"assets/c_vampire_2.webp","c_vampire_3":"assets/c_vampire_3.webp","c_witch_1":"assets/c_witch_1.webp","c_witch_2":"assets/c_witch_2.webp","c_witch_3":"assets/c_witch_3.webp","c_yukionna_1":"assets/c_yukionna_1.webp","c_yukionna_2":"assets/c_yukionna_2.webp","c_yukionna_3":"assets/c_yukionna_3.webp","fx_blunt_0":"assets/fx_blunt_0.webp","fx_blunt_1":"assets/fx_blunt_1.webp","fx_blunt_2":"assets/fx_blunt_2.webp","fx_blunt_3":"assets/fx_blunt_3.webp","fx_fire_0":"assets/fx_fire_0.webp","fx_fire_1":"assets/fx_fire_1.webp","fx_fire_2":"assets/fx_fire_2.webp","fx_fire_3":"assets/fx_fire_3.webp","fx_heal_0":"assets/fx_heal_0.webp","fx_heal_1":"assets/fx_heal_1.webp","fx_heal_2":"assets/fx_heal_2.webp","fx_heal_3":"assets/fx_heal_3.webp","fx_ice_0":"assets/fx_ice_0.webp","fx_ice_1":"assets/fx_ice_1.webp","fx_ice_2":"assets/fx_ice_2.webp","fx_ice_3":"assets/fx_ice_3.webp","fx_poison_0":"assets/fx_poison_0.webp","fx_poison_1":"assets/fx_poison_1.webp","fx_poison_2":"assets/fx_poison_2.webp","fx_poison_3":"assets/fx_poison_3.webp","fx_slash_0":"assets/fx_slash_0.webp","fx_slash_1":"assets/fx_slash_1.webp","fx_slash_2":"assets/fx_slash_2.webp","fx_slash_3":"assets/fx_slash_3.webp","fx_stun_0":"assets/fx_stun_0.webp","fx_stun_1":"assets/fx_stun_1.webp","fx_stun_2":"assets/fx_stun_2.webp","fx_stun_3":"assets/fx_stun_3.webp","fx_thunder_0":"assets/fx_thunder_0.webp","fx_thunder_1":"assets/fx_thunder_1.webp","fx_thunder_2":"assets/fx_thunder_2.webp","fx_thunder_3":"assets/fx_thunder_3.webp","fx_wind_0":"assets/fx_wind_0.webp","fx_wind_1":"assets/fx_wind_1.webp","fx_wind_2":"assets/fx_wind_2.webp","fx_wind_3":"assets/fx_wind_3.webp","g_a_fire":"assets/g_a_fire.webp","g_a_frost":"assets/g_a_frost.webp","g_a_poison":"assets/g_a_poison.webp","g_a_sword":"assets/g_a_sword.webp","g_a_thunder":"assets/g_a_thunder.webp","g_a_wind":"assets/g_a_wind.webp","g_d_gold":"assets/g_d_gold.webp","g_d_lotus":"assets/g_d_lotus.webp","g_d_mirror":"assets/g_d_mirror.webp","g_d_rock":"assets/g_d_rock.webp","g_d_star":"assets/g_d_star.webp","g_d_taiji":"assets/g_d_taiji.webp","gate1_broken":"assets/gate1_broken.webp","gate1_ok":"assets/gate1_ok.webp","gate2_broken":"assets/gate2_broken.webp","gate2_ok":"assets/gate2_ok.webp","gate3_broken":"assets/gate3_broken.webp","gate3_ok":"assets/gate3_ok.webp","gate4_broken":"assets/gate4_broken.webp","gate4_ok":"assets/gate4_ok.webp","gate5_broken":"assets/gate5_broken.webp","gate5_ok":"assets/gate5_ok.webp","i_a_fire":"assets/i_a_fire.webp","i_a_frost":"assets/i_a_frost.webp","i_a_poison":"assets/i_a_poison.webp","i_a_sword":"assets/i_a_sword.webp","i_a_thunder":"assets/i_a_thunder.webp","i_a_wind":"assets/i_a_wind.webp","i_d_gold":"assets/i_d_gold.webp","i_d_lotus":"assets/i_d_lotus.webp","i_d_mirror":"assets/i_d_mirror.webp","i_d_rock":"assets/i_d_rock.webp","i_d_star":"assets/i_d_star.webp","i_d_taiji":"assets/i_d_taiji.webp","k_bonegeneral":"assets/k_bonegeneral.webp","k_bonegeneral_strike":"assets/k_bonegeneral_strike.webp","k_bonegeneral_windup":"assets/k_bonegeneral_windup.webp","k_bullking":"assets/k_bullking.webp","k_bullking_strike":"assets/k_bullking_strike.webp","k_bullking_windup":"assets/k_bullking_windup.webp","k_slimeking":"assets/k_slimeking.webp","k_slimeking_strike":"assets/k_slimeking_strike.webp","k_slimeking_windup":"assets/k_slimeking_windup.webp","k_treeelder":"assets/k_treeelder.webp","k_treeelder_strike":"assets/k_treeelder_strike.webp","k_treeelder_windup":"assets/k_treeelder_windup.webp","m_bat_0":"assets/m_bat_0.webp","m_bat_1":"assets/m_bat_1.webp","m_golem":"assets/m_golem.webp","m_golem_a1":"assets/m_golem_a1.webp","m_golem_a2":"assets/m_golem_a2.webp","m_golem_a3":"assets/m_golem_a3.webp","m_imp":"assets/m_imp.webp","m_imp_a1":"assets/m_imp_a1.webp","m_imp_a2":"assets/m_imp_a2.webp","m_imp_a3":"assets/m_imp_a3.webp","m_mushroom":"assets/m_mushroom.webp","m_mushroom_a1":"assets/m_mushroom_a1.webp","m_mushroom_a2":"assets/m_mushroom_a2.webp","m_mushroom_a3":"assets/m_mushroom_a3.webp","m_skeleton":"assets/m_skeleton.webp","m_skeleton_a1":"assets/m_skeleton_a1.webp","m_skeleton_a2":"assets/m_skeleton_a2.webp","m_skeleton_a3":"assets/m_skeleton_a3.webp","m_slime":"assets/m_slime.webp","m_umbrella":"assets/m_umbrella.webp","m_umbrella_a1":"assets/m_umbrella_a1.webp","m_umbrella_a2":"assets/m_umbrella_a2.webp","m_umbrella_a3":"assets/m_umbrella_a3.webp","m_wolf":"assets/m_wolf.webp","p_arrow":"assets/p_arrow.webp","p_bolt":"assets/p_bolt.webp","p_bullet":"assets/p_bullet.webp","p_bun":"assets/p_bun.webp","p_firebomb":"assets/p_firebomb.webp","p_foxfire":"assets/p_foxfire.webp","p_harpoon":"assets/p_harpoon.webp","p_iceshard":"assets/p_iceshard.webp","p_ofuda":"assets/p_ofuda.webp","p_pill":"assets/p_pill.webp","p_scarab":"assets/p_scarab.webp","p_seed":"assets/p_seed.webp","p_starbolt":"assets/p_starbolt.webp","p_talisman":"assets/p_talisman.webp","t_bell_1":"assets/t_bell_1.webp","t_bell_2":"assets/t_bell_2.webp","t_bell_3":"assets/t_bell_3.webp","t_crossbow_1":"assets/t_crossbow_1.webp","t_crossbow_2":"assets/t_crossbow_2.webp","t_crossbow_3":"assets/t_crossbow_3.webp","t_frost_1":"assets/t_frost_1.webp","t_frost_2":"assets/t_frost_2.webp","t_frost_3":"assets/t_frost_3.webp","t_furnace_1":"assets/t_furnace_1.webp","t_furnace_2":"assets/t_furnace_2.webp","t_furnace_3":"assets/t_furnace_3.webp","t_talisman_1":"assets/t_talisman_1.webp","t_talisman_2":"assets/t_talisman_2.webp","t_talisman_3":"assets/t_talisman_3.webp","tower2":"assets/tower2.webp","tower3":"assets/tower3.webp","tower4":"assets/tower4.webp","tower5":"assets/tower5.webp","tower6":"assets/tower6.webp","tower7":"assets/tower7.webp","tower8":"assets/tower8.webp","u_bar_boss":"assets/u_bar_boss.webp","u_bar_gate":"assets/u_bar_gate.webp","u_card_back":"assets/u_card_back.webp","u_card_common":"assets/u_card_common.webp","u_card_epic":"assets/u_card_epic.webp","u_card_legend":"assets/u_card_legend.webp","u_card_rare":"assets/u_card_rare.webp","u_el_fire":"assets/u_el_fire.webp","u_el_ice":"assets/u_el_ice.webp","u_el_poison":"assets/u_el_poison.webp","u_el_thunder":"assets/u_el_thunder.webp","u_el_wind":"assets/u_el_wind.webp","u_gacha_altar":"assets/u_gacha_altar.webp","u_res_beastsoul":"assets/u_res_beastsoul.webp","u_res_coin":"assets/u_res_coin.webp","u_res_gatestone":"assets/u_res_gatestone.webp","u_res_pill":"assets/u_res_pill.webp","u_res_soulcrystal":"assets/u_res_soulcrystal.webp","u_res_spirit":"assets/u_res_spirit.webp","u_ui_button":"assets/u_ui_button.webp","u_ui_panel":"assets/u_ui_panel.webp","u_ui_ult_frame":"assets/u_ui_ult_frame.webp","ult_cauldron_0":"assets/ult_cauldron_0.webp","ult_cauldron_1":"assets/ult_cauldron_1.webp","ult_cauldron_2":"assets/ult_cauldron_2.webp","ult_cauldron_3":"assets/ult_cauldron_3.webp","ult_cauldron_4":"assets/ult_cauldron_4.webp","ult_cauldron_5":"assets/ult_cauldron_5.webp","ult_dragon_0":"assets/ult_dragon_0.webp","ult_dragon_1":"assets/ult_dragon_1.webp","ult_dragon_2":"assets/ult_dragon_2.webp","ult_dragon_3":"assets/ult_dragon_3.webp","ult_dragon_4":"assets/ult_dragon_4.webp","ult_dragon_5":"assets/ult_dragon_5.webp","ult_mecha_0":"assets/ult_mecha_0.webp","ult_mecha_1":"assets/ult_mecha_1.webp","ult_mecha_2":"assets/ult_mecha_2.webp","ult_mecha_3":"assets/ult_mecha_3.webp","ult_mecha_4":"assets/ult_mecha_4.webp","ult_mecha_5":"assets/ult_mecha_5.webp","ult_ninetail_0":"assets/ult_ninetail_0.webp","ult_ninetail_1":"assets/ult_ninetail_1.webp","ult_ninetail_2":"assets/ult_ninetail_2.webp","ult_ninetail_3":"assets/ult_ninetail_3.webp","ult_ninetail_4":"assets/ult_ninetail_4.webp","ult_ninetail_5":"assets/ult_ninetail_5.webp","ult_starrain_0":"assets/ult_starrain_0.webp","ult_starrain_1":"assets/ult_starrain_1.webp","ult_starrain_2":"assets/ult_starrain_2.webp","ult_starrain_3":"assets/ult_starrain_3.webp","ult_starrain_4":"assets/ult_starrain_4.webp","ult_starrain_5":"assets/ult_starrain_5.webp"};
 const VERSION='0.1';
 /* ---------- 資料 ---------- */
 const RAR={S:{n:'起始',mul:1.0},N:{n:'普通',mul:1.0},R:{n:'稀有',mul:1.3},E:{n:'史詩',mul:1.8},L:{n:'傳說',mul:3.0}};
@@ -216,12 +241,12 @@ const CH={
  archer:{n:'星弓少女',r:'L',t:5,role:'ranged',c:'#9dffb0',ult:'rain',rk:'arrow',un:'星箭雨'},
  mecha:{n:'機甲少年',r:'L',t:5,role:'tank',c:'#59c8ff',ult:'laser',un:'能量砲'},
  alchemist:{n:'煉丹童子',r:'L',t:5,role:'support',c:'#ffd84a',ult:'heal',un:'九轉回春丹'},
- pharaoh:{n:'法老王',r:'R',t:3,role:'magic',c:'#ffd24a',ult:'rain',rk:'sand',un:'黃金沙暴'},
+ pharaoh:{n:'法老王',r:'R',t:3,role:'ranged',c:'#ffd24a',ult:'rain',rk:'sand',un:'黃金沙暴'},
  vampire:{n:'吸血鬼',r:'E',t:3,role:'melee',c:'#ff3a6a',ult:'drain',un:'血月之宴'},
  general:{n:'鐵甲將軍',r:'N',t:3,role:'tank',c:'#ffb04a',ult:'slam',un:'大刀震山'},
  swordsman:{n:'流浪劍士',r:'N',t:3,role:'melee',c:'#c8e8ff',ult:'sweep',un:'疾風劍'},
  elf:{n:'森林精靈',r:'R',t:3,role:'magic',c:'#7dff6a',ult:'freeze',fk:'root',un:'古樹纏繞'},
- kitsune:{n:'妖狐',r:'R',t:3,role:'magic',c:'#5ab8ff',ult:'rain',rk:'bluefire',un:'藍狐火'},
+ kitsune:{n:'妖狐',r:'R',t:3,role:'ranged',c:'#5ab8ff',ult:'rain',rk:'bluefire',un:'藍狐火'},
  panda:{n:'熊貓拳師',r:'N',t:3,role:'melee',c:'#ffffff',ult:'slam',un:'熊貓震地拳'},
  pirate:{n:'海盜船長',r:'N',t:3,role:'ranged',c:'#ffcf6a',ult:'rain',rk:'bomb',un:'加農砲齊射'},
  jiangshi:{n:'殭屍道士',r:'N',t:3,role:'support',c:'#ffe86a',ult:'freeze',fk:'talisman',un:'定身符'},
@@ -251,10 +276,45 @@ const TUR={
  bell:{n:'鎮魂鐘',atk:3,rate:.45,kind:'ring',c:'#ffe08a',d:'震暈前排'},
  talisman:{n:'符咒塔',atk:4,rate:1,kind:'tali',c:'#ffe86a',d:'追蹤符紙'}
 };
-const ARR={a_fire:{n:'火焰陣',c:[255,120,40],dps:3,d:'站在陣上的怪物持續燒傷'}};
-const BEAST={baihu:{n:'白虎',atk:14,rate:.8,c:'#e8f4ff',d:'撲咬前方一群怪物'}};
+// 陣法：a_ 攻擊陣（鋪在山門前到神獸）、d_ 防禦陣（鋪在樓閣下）
+const ARR={
+ a_fire:{n:'火焰陣',c:[255,120,40],t:'a',m:1,fx:'fx_fire',d:'站在陣上的怪物持續燒傷'},
+ a_thunder:{n:'雷霆陣',c:[190,140,255],t:'a',m:0,fx:'fx_thunder',d:'每 1.5 秒落雷，打陣上全部怪物'},
+ a_sword:{n:'萬劍陣',c:[210,235,255],t:'a',m:1.4,fx:'fx_slash',d:'飛劍連斬，持續傷害最高'},
+ a_frost:{n:'冰封陣',c:[140,225,255],t:'a',m:.7,fx:'fx_ice',d:'怪物變慢 35%，也會受傷'},
+ a_poison:{n:'毒霧陣',c:[120,220,80],t:'a',m:.6,fx:'fx_poison',d:'中毒越久越痛'},
+ a_wind:{n:'旋風陣',c:[120,240,200],t:'a',m:.6,fx:'fx_wind',d:'把怪物往後吹'},
+ d_gold:{n:'金剛陣',c:[255,210,90],t:'d',d:l=>`山門受到的傷害 -${Math.round(dv('d_gold',l)*100)}%`},
+ d_lotus:{n:'蓮花陣',c:[255,170,210],t:'d',d:l=>`山門每秒回血 ${(dv('d_lotus',l)*100).toFixed(1)}%`},
+ d_rock:{n:'磐石陣',c:[190,170,140],t:'d',d:l=>`山門血量 +${Math.round(dv('d_rock',l)*100)}%`},
+ d_mirror:{n:'鏡光陣',c:[200,240,255],t:'d',d:l=>`打山門的怪物被反彈 ${Math.round(dv('d_mirror',l)*100)}% 傷害（以陣法等級算）`},
+ d_taiji:{n:'太極陣',c:[240,240,240],t:'d',d:l=>`弟子攻擊速度 +${Math.round(dv('d_taiji',l)*100)}%`},
+ d_star:{n:'七星陣',c:[255,240,150],t:'d',d:l=>`大招充能快 ${Math.round(dv('d_star',l)*100)}%`}
+};
+const DV={d_gold:[.2,.01,.6],d_lotus:[.006,.0004,.03],d_rock:[.25,.03,3],d_mirror:[3,.4,99],d_taiji:[.15,.01,.6],d_star:[.2,.01,.6]};
+function dv(k,l){const[a,b,m]=DV[k];return Math.min(m,a+b*(l-1))}
+const BEAST={
+ baihu:{n:'白虎',atk:14,rate:.8,d:'撲咬前方一群怪物'},
+ qinglong:{n:'青龍',atk:9,rate:.6,fly:1,fx:'fx_thunder',d:'在空中放雷，打一整排，也打得到飛的'},
+ zhuque:{n:'朱雀',atk:8,rate:.7,fly:1,fx:'fx_fire',d:'丟火焰，炸一群還會燒傷'},
+ xuanwu:{n:'玄武',atk:7,rate:.45,fx:'fx_stun',d:'震地讓前方怪物暈住，山門受傷 -15%'}
+};
+const BEAST_SLOT=[[1,1],[15,2],[30,3],[45,4]];
+const beastSlots=()=>{let n=0;for(const[l,c]of BEAST_SLOT)if(S.gateLv>=l)n=c;return n};
+// 修煉：用銅錢升，沒有上限
+const TRAIN={atk:{n:'全隊攻擊',per:.05,d:'弟子、塔、陣法、神獸攻擊'},hp:{n:'山門血量',per:.06,d:'山門最大血量'},coin:{n:'銅錢收入',per:.04,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.08,d:'全部大招的傷害'}};
+const trainCost=lv=>Math.ceil(40*Math.pow(1.15,lv));
+const TR=k=>1+TRAIN[k].per*((S.train&&S.train[k])||0);
+// 第三批美術：投射物、打擊特效、傳說大招
+const PSPR={archer:'p_arrow',fox:'p_ofuda',alchemist:'p_pill',pharaoh:'p_scarab',elf:'p_seed',kitsune:'p_foxfire',pirate:'p_bullet',jiangshi:'p_talisman',witch:'p_starbolt',yukionna:'p_iceshard',grandma:'p_bun',shark:'p_harpoon',
+ crossbow:'p_bolt',frost:'p_iceshard',furnace:'p_firebomb',talisman:'p_talisman'};
+const HX={disciple:'fx_wind',fox:'fx_fire',dragon:'fx_blunt',mecha:'fx_blunt',vampire:'fx_slash',general:'fx_blunt',swordsman:'fx_slash',elf:'fx_wind',kitsune:'fx_fire',panda:'fx_blunt',jiangshi:'fx_stun',witch:'fx_thunder',mummy:'fx_blunt',yukionna:'fx_ice',catsamurai:'fx_slash',
+ frost:'fx_ice',furnace:'fx_fire',bell:'fx_stun',crossbow:'fx_blunt'};
+const RAINSPR={arrow:'p_arrow',harpoon:'p_harpoon',star:'p_starbolt',bomb:'p_firebomb',bluefire:'p_foxfire',sand:'p_scarab',fire:'p_ofuda'};
+const ULTFX={dragon:'ult_dragon',archer:'ult_starrain',fox:'ult_ninetail',mecha:'ult_mecha',alchemist:'ult_cauldron'};
 // 首次過關獎勵
-const GIFTS={3:{type:'tur',k:'crossbow'},6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},15:{type:'tur',k:'frost'},25:{type:'tur',k:'furnace'}};
+const GIFTS={3:{type:'tur',k:'crossbow'},6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},20:{type:'beast',k:'qinglong'},30:{type:'beast',k:'zhuque'},40:{type:'beast',k:'xuanwu'}};
+const GP=[...Object.keys(TUR).map(k=>({type:'tur',k})),...Object.keys(ARR).map(k=>({type:'arr',k}))];// 陣法・塔召喚池
 const SLOT_LV=[[1,2],[3,3],[10,4],[18,5],[26,6],[35,7],[45,8]];
 const TUR_SLOT=[[1,1],[6,2],[14,3]];
 const TIER_CAP=[0,20,40,60,80,100];
@@ -266,30 +326,35 @@ const BRK_MAX=20;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），�
 /* ---------- 存檔 ---------- */
 const SKEY='idle-td-save-v1';
 function fresh(){return{v:1,coin:30,gem:100,stone:0,pill:0,gateLv:1,stage:1,best:0,pull:0,pityR:0,pityE:0,pityL:0,
- roster:{disciple:{lv:1,tier:1,dup:0}},team:['disciple'],tur:{},turTeam:[],arr:{},arrOn:null,beast:{},beastOn:null,seen:Date.now(),firstGacha:true}}
+ roster:{disciple:{lv:1,tier:1,dup:0}},team:['disciple'],tur:{},turTeam:[],arr:{},arrA:null,arrD:null,beast:{},beastTeam:[],train:{atk:0,hp:0,coin:0,ult:0},gpull:0,seen:Date.now(),firstGacha:true}}
 let S;
 try{S=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){S=null}
 if(!S||S.v!==1)S=fresh();
+// 舊存檔補欄位
+S.train=Object.assign({atk:0,hp:0,coin:0,ult:0},S.train||{});S.arr=S.arr||{};S.beast=S.beast||{};
+if(S.arrA===undefined){S.arrA=S.arrOn||null;S.arrD=null}
+if(!S.beastTeam){S.beastTeam=S.beastOn?[S.beastOn]:[]}
+S.gpull=S.gpull||0;
 function persist(){S.seen=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}}
 setInterval(persist,5000);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else offline()});
 
 /* ---------- 數值 ---------- */
 const hpBase=s=>14*Math.pow(1.13,s-1);
-const dmgBase=s=>2.6*Math.pow(1.09,s-1);
+const dmgBase=s=>2.6*Math.pow(1.065,s-1);
 const coinKill=(s,m)=>Math.max(1,Math.round(1.6*Math.pow(1.088,s-1)*m));
 const lvCost=lv=>Math.ceil(6*Math.pow(1.12,lv-1));
-const gateCost=lv=>Math.ceil(20*Math.pow(1.105,lv-1));
-const gateMax=lv=>Math.round(120*Math.pow(1.17,lv-1));
+const gateCost=lv=>Math.ceil(20*Math.pow(1.08,lv-1));
+const gateMax=lv=>Math.round(150*Math.pow(1.2,lv-1)*TR('hp')*(1+(S.arrD==='d_rock'&&S.arr.d_rock?dv('d_rock',S.arr.d_rock.lv):0)));
 const turCost=lv=>Math.ceil(14*Math.pow(1.13,lv-1));
-const lvCap=id=>Math.min(TIER_CAP[S.roster[id].tier],S.gateLv*3+10);
+const lvCap=id=>Math.min(TIER_CAP[S.roster[id].tier],S.gateLv*5+10);
 const slots=()=>{let n=2;for(const[l,c]of SLOT_LV)if(S.gateLv>=l)n=c;return n};
 const turSlots=()=>{let n=0;for(const[l,c]of TUR_SLOT)if(S.gateLv>=l)n=c;return n};
 const tierOf=lv=>lv>=20?3:lv>=10?2:1;
-function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*Math.pow(1.5,r.tier-1)*(B.buff>0?1.3:1)*(1+PS.atk+side)*(1+.03*(r.brk||0))}
-function turAtk(k){const l=S.tur[k].lv;return TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)}
-function arrDps(k){return ARR[k].dps*Math.pow(1.1,S.arr[k].lv-1)}
-function beastAtk(k){return BEAST[k].atk*Math.pow(1.1,S.beast[k].lv-1)}
+function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*Math.pow(1.5,r.tier-1)*(B.buff>0?1.3:1)*(1+PS.atk+side)*(1+.03*(r.brk||0))*TR('atk')}
+function turAtk(k){const l=S.tur[k].lv;return TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)*(1+.05*(S.tur[k].brk||0))*TR('atk')}
+function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')}
+function beastAtk(k){return BEAST[k].atk*Math.pow(1.1,S.beast[k].lv-1)*TR('atk')}
 function towerKey(){const n=slots();return 'tower'+Math.min(8,n)}
 function gateKey(broken){const g=Math.min(5,1+Math.floor((S.gateLv-1)/10));return `gate${g}_${broken?'broken':'ok'}`}
 const fmt=n=>n<1e4?String(Math.floor(n)):n<1e6?(n/1e3).toFixed(n<1e5?1:0)+'K':n<1e9?(n/1e6).toFixed(1)+'M':(n/1e9).toFixed(1)+'B';
@@ -309,7 +374,7 @@ function resize(){DPR=Math.min(2,window.devicePixelRatio||1);CW=innerWidth;CH_=i
 addEventListener('resize',resize);
 
 /* ---------- 戰場 ---------- */
-const B={heroes:[],enemies:[],proj:[],fx:[],txt:[],turrets:[],beast:null,arr:null,spawnQ:[],spawnT:0,total:0,killed:0,state:'run',stateT:0,gateHp:100,gateMax:100,shake:0,hitstop:0,buff:0,speed:1,time:0,boss:null,stageFail:false};
+const B={heroes:[],enemies:[],proj:[],fx:[],txt:[],turrets:[],beasts:[],arr:null,arrD:null,spawnQ:[],spawnT:0,total:0,killed:0,state:'run',stateT:0,gateHp:100,gateMax:100,shake:0,hitstop:0,buff:0,speed:1,time:0,boss:null,stageFail:false};
 let L={};// layout
 function layout(){
  const tk=towerKey(),tm=MAN[tk];if(!tm)return;
@@ -318,19 +383,21 @@ function layout(){
  const gx=tx+tw-gw/3+gw/2;
  L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2,G-(th-sy/2)]),gk,gx,gw,front:gx+gw/2};
  L.tur=[L.front+38,L.front+118,L.front+198];
- L.beastX=L.front+(turSlots()>=2?270:200);
- L.arr0=L.front-30;L.arr1=L.beastX+90;L.arrX=(L.arr0+L.arr1)/2;L.arrR=(L.arr1-L.arr0)/2;
+ const b0=L.front+60+Math.max(1,turSlots())*80;L.beastXs=[b0,b0+110,b0+220,b0+330];
+ const nb=Math.max(1,Math.min(S.beastTeam.length,beastSlots()));L.beastX=L.beastXs[nb-1];
+ L.arr0=L.front-30;L.arr1=L.beastX+90;L.dX=(L.tx+L.front)/2;L.dR=(L.front-L.tx)/2+10;L.arrX=(L.arr0+L.arr1)/2;L.arrR=(L.arr1-L.arr0)/2;
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
  B.turrets.forEach((t,i)=>t.x=L.tur[i]);
- if(B.beast)B.beast.x=L.beastX;
+ B.beasts.forEach((b,i)=>b.x=L.beastXs[i]);
  if(B.arr)B.arr.x=L.arrX;
 }
 function buildField(){
  layout();
  B.heroes=S.team.slice(0,slots()).map((id,i)=>({id,x:L.spots[i][0],y:L.spots[i][1],cd:.5+i*.2,anim:null,charge:0,jump:0}));
  B.turrets=S.turTeam.slice(0,turSlots()).map((k,i)=>({k,x:L.tur[i],cd:.6,anim:0}));
- B.beast=S.beastOn?{k:S.beastOn,x:L.beastX,cd:1,anim:0}:null;
- B.arr=S.arrOn?{k:S.arrOn,x:L.arrX,t:0,tick:0}:null;
+ B.beasts=S.beastTeam.slice(0,beastSlots()).map((k,i)=>({k,x:L.beastXs[i],cd:1+i*.3,anim:0}));
+ B.arr=S.arrA&&S.arr[S.arrA]?{k:S.arrA,x:L.arrX,t:0,tick:0,big:0}:null;
+ B.arrD=S.arrD&&S.arr[S.arrD]?S.arrD:null;
  calcPassives();B.gateMax=Math.round(gateMax(S.gateLv)*(1+PS.hp));B.gateHp=Math.min(B.gateHp,B.gateMax);
  buildUlts();
 }
@@ -364,7 +431,7 @@ function mkEnemy(k,boss){
  const s=S.stage;const m=boss?{hp:26,spd:26,dmg:4,coin:20,fly:0}:MON[k];
  const hp=hpBase(s)*m.hp;
  const key=boss?'k_'+k:(k==='bat'?'m_bat_0':'m_'+k);
- const e={k,boss,key,x:VW+60+Math.random()*30,y:G+(m.fly?-150-Math.random()*30:(Math.random()*14-7)),hp,max:hp,spd:m.spd*1.35*(0.92+Math.random()*.16),dmg:dmgBase(s)*m.dmg,coin:Math.round(coinKill(s,m.coin)*(1+PS.coin)),
+ const e={k,boss,key,x:VW+60+Math.random()*30,y:G+(m.fly?-150-Math.random()*30:(Math.random()*14-7)),hp,max:hp,spd:m.spd*1.35*(0.92+Math.random()*.16),dmg:dmgBase(s)*m.dmg,coin:Math.round(coinKill(s,m.coin)*(1+PS.coin)*TR('coin')),
   fly:!!m.fly,hop:!!m.hop,state:'walk',t:Math.random()*6,at:0,flash:0,stun:0,slow:0,slowT:0,burn:0,dead:0,stop:L.front+6+Math.random()*46+(boss?40:0),kb:0};
  const mm=MAN[key];e.w=mm[0]/2;e.h=mm[1]/2;e.ax=mm[2]/2;e.ay=mm[3]/2;
  e.frames=boss?['k_'+k+'_windup','k_'+k+'_strike']:[1,2,3].map(i=>'m_'+k+'_a'+i).filter(f=>MAN[f]);
@@ -386,7 +453,7 @@ function step(dt){
   else if(!B.enemies.some(e=>!e.dead)){B.state='win';B.stateT=0;stageWin()}
  }else{B.stateT+=dt;if(B.stateT>(B.state==='win'?1.8:2.6)&&!giftOpen){if(B.state==='lose'){}startStage()}}
  // 山門回血（輔助）
- let regen=PS.regen*B.gateMax;
+ let regen=(PS.regen+(B.arrD==='d_lotus'?dv('d_lotus',S.arr.d_lotus.lv):0))*B.gateMax;
  if(B.state==='run'&&B.gateHp>0)B.gateHp=Math.min(B.gateMax,B.gateHp+regen*dt);
  // 英雄
  const alive=B.enemies.filter(e=>!e.dead&&e.x<VW+20);
@@ -397,23 +464,35 @@ function step(dt){
    else if(A.type==='ult'){if(!A.fired&&A.t>=.78){A.fired=1;doUlt(h)}if(A.t>1.2)h.anim=null}
   }
   h.cd-=dt;
-  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x-h.x<=R.range);if(tg){h.cd=1/R.rate;h.anim={type:'atk',t:0,target:tg}}}
+  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x-h.x<=R.range);if(tg){h.cd=1/(R.rate*(1+(B.arrD==='d_taiji'?dv('d_taiji',S.arr.d_taiji.lv):0)));h.anim={type:'atk',t:0,target:tg}}}
   if(h.charge>=100&&S.auto&&S.auto[h.id]&&!h.anim&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));
-  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge));
+  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0)));
  }
  // 塔
  for(const t of B.turrets){t.anim=Math.max(0,t.anim-dt);t.cd-=dt;
   if(t.cd<=0&&alive.length&&B.state==='run'){const d=TUR[t.k];t.cd=1/d.rate;t.anim=.25;turFire(t,alive)}}
  // 神獸
- if(B.beast){const b=B.beast;b.anim=Math.max(0,b.anim-dt);b.cd-=dt;
-  const near=alive.filter(e=>!e.fly&&e.x>b.x-20&&e.x<b.x+190);
-  if(b.cd<=0&&near.length&&B.state==='run'){b.cd=1/BEAST[b.k].rate;b.anim=.45;
-   b.hitAt=.18;b.targets=near.slice(0,3)}
-  if(b.hitAt!=null){b.hitAt-=dt;if(b.hitAt<=0){b.hitAt=null;const a=beastAtk(b.k);b.targets.forEach(e=>hit(e,a,{c:'#ffffff',kb:14}));addFx({k:'claw',x:b.x+90,y:G-60,life:.25});shake(2)}}
+ for(const b of B.beasts){const d=BEAST[b.k];b.anim=Math.max(0,b.anim-dt);b.cd-=dt;
+  const reach=b.k==='qinglong'?520:b.k==='zhuque'?620:200;
+  const near=alive.filter(e=>(d.fly||!e.fly)&&e.x>b.x-30&&e.x<b.x+reach);
+  if(b.cd<=0&&near.length&&B.state==='run'){b.cd=1/d.rate;b.anim=.45;b.hitAt=.18;b.targets=b.k==='baihu'?near.slice(0,3):near}
+  if(b.hitAt!=null){b.hitAt-=dt;if(b.hitAt<=0){b.hitAt=null;const a=beastAtk(b.k);const T=b.targets.filter(e=>!e.dead);
+   if(b.k==='baihu'){T.forEach(e=>hit(e,a,{c:'#ffffff',kb:14}));addFx({k:'claw',x:b.x+90,y:G-60,life:.25});shake(2)}
+   else if(b.k==='qinglong'){T.slice(0,6).forEach(e=>{hit(e,a,{c:'#bfa0ff'});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1)})}
+   else if(b.k==='zhuque'){const c=T[0];if(c){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-c.x)<110){hit(e,a,{c:'#ff8a3d'});e.burn=Math.max(e.burn||0,3);e.burnD=a*.3}});sprFx('fx_fire',c.x,c.y-c.ay*.4,1.4)}}
+   else if(b.k==='xuanwu'){T.filter(e=>!e.fly).forEach(e=>{hit(e,a,{c:'#ffe08a'});e.stun=Math.max(e.stun,1.2)});addFx({k:'ring',x:b.x+80,y:G-40,life:.5,c:'#ffe08a',r:200});shake(4)}
+  }}
  }
  // 陣法
- if(B.arr&&B.state==='run'){const a=B.arr;a.t+=dt;a.tick+=dt;if(a.tick>=.5){a.tick=0;const dps=arrDps(a.k);
-  B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&Math.abs(e.x-a.x)<L.arrR)hit(e,dps*.5,{c:'#ffa04a',small:1})})}}
+ if(B.arr&&B.state==='run'){const a=B.arr,d=ARR[a.k];a.t+=dt;a.tick+=dt;a.big+=dt;
+  const on=B.enemies.filter(e=>!e.dead&&!e.fly&&Math.abs(e.x-a.x)<L.arrR);
+  if(a.k==='a_frost')on.forEach(e=>{e.slow=Math.max(e.slow,.35);e.slowT=.6});
+  if(a.k==='a_poison')on.forEach(e=>e.poison=(e.poison||0)+dt);
+  if(a.tick>=.5){a.tick=0;const dps=arrDps(a.k);
+   on.forEach(e=>{let m=d.m;if(a.k==='a_poison')m*=1+e.poison*.35;hit(e,dps*.5*m,{c:`rgb(${d.c})`,small:1,kb:a.k==='a_wind'?12:0});if(Math.random()<.25)sprFx(d.fx,e.x,e.y-e.ay*.4,.8)})}
+  if(a.k==='a_thunder'&&a.big>=1.5){a.big=0;const dps=arrDps(a.k);on.forEach(e=>{hit(e,dps*2.6,{c:'#d0b0ff'});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.1)});if(on.length)shake(3)}}
+ // 燒傷（朱雀）
+ for(const e of B.enemies){if(!e.dead&&e.burn>0){e.burn-=dt;e.bt=(e.bt||0)+dt;if(e.bt>=.5){e.bt=0;hit(e,e.burnD||1,{c:'#ff8a3d',small:1})}}}
  // 敵人
  for(const e of B.enemies){
   if(e.dead){e.dead+=dt;continue}
@@ -425,7 +504,7 @@ function step(dt){
    if(e.x-e.w*.3<=e.stop){e.state='atk';e.at=0}}
   else{e.at+=dt*(1-e.slow*.5);const cyc=e.boss?2.2:1.3;
    const hitT=e.boss?.95:(e.frames.length?.55:.45);
-   if(!e.didHit&&e.at>=hitT){e.didHit=1;gateDamage(e.dmg);if(e.boss){shake(9);B.hitstop=.06;addFx({k:'dust',x:e.x-e.w*.35,y:G,life:.5})}}
+   if(!e.didHit&&e.at>=hitT){e.didHit=1;gateDamage(e.dmg,e);if(e.boss){shake(9);B.hitstop=.06;addFx({k:'dust',x:e.x-e.w*.35,y:G,life:.5})}}
    if(e.at>=cyc){e.at=0;e.didHit=0}
    if(e.x-e.w*.3>e.stop+4)e.state='walk';
   }
@@ -449,7 +528,7 @@ function step(dt){
 function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
- const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h};
+ const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id]};
  if(R.proj==='pill'||R.proj==='orb'&&false){p.arc=140;p.t=0;p.dur=.55}
  if(R.proj==='slash')p.spd=1100;
  if(R.proj==='orb')p.spd=700;
@@ -457,13 +536,13 @@ function heroFire(h){
  if(R.proj==='arrow'||R.proj==='spear')addFx({k:'muzzle',x:p.x+10,y:p.y,life:.12,c:d.c});
 }
 function turFire(t,alive){
- const d=TUR[t.k];const tg=alive[0];const p={x:t.x+20,y:G-62,sx:t.x+20,sy:G-62,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:1000,life:3,dmg:turAtk(t.k),kind:d.kind,c:d.c,aoe:d.aoe||0,slow:d.slow||0};
+ const d=TUR[t.k];const tg=alive[0];const p={x:t.x+20,y:G-62,sx:t.x+20,sy:G-62,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:1000,life:3,dmg:turAtk(t.k),kind:d.kind,c:d.c,aoe:d.aoe||0,slow:d.slow||0,spr:PSPR[t.k],hx:HX[t.k]};
  if(d.kind==='fire'){p.arc=180;p.t=0;p.dur=.7;p.target=null}
- if(d.kind==='ring'){addFx({k:'ring',x:t.x,y:G-40,life:.5,c:d.c,r:220});alive.filter(e=>e.x<t.x+260).forEach(e=>{hit(e,p.dmg,{c:d.c});e.stun=Math.max(e.stun,.6)});return}
+ if(d.kind==='ring'){addFx({k:'ring',x:t.x,y:G-40,life:.5,c:d.c,r:220});alive.filter(e=>e.x<t.x+260).forEach(e=>{hit(e,p.dmg,{c:d.c});e.stun=Math.max(e.stun,.6);sprFx('fx_stun',e.x,e.y-e.ay-10,.7)});return}
  B.proj.push(p);
 }
 function projHit(p){
- p.done=1;
+ p.done=1;if(p.hx)sprFx(p.hx,p.tx,p.ty,p.aoe?1.3:.8);
  if(p.aoe){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<p.aoe&&Math.abs((e.y-e.ay*.45)-p.ty)<p.aoe*1.5)hit(e,p.dmg,{c:p.c,kb:p.knock})});addFx({k:'boom',x:p.tx,y:p.ty,life:.35,c:p.c,r:p.aoe})}
  else if(p.target&&!p.target.dead){hit(p.target,p.dmg,{c:p.c,kb:p.knock,slow:p.slow});addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c})}
  else addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c});
@@ -478,14 +557,18 @@ function hit(e,amt,o={}){
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
 }
-function gateDamage(d){
- if(B.state!=='run')return;B.gateHp-=d;B.gateHit=.2;shake(2.5);
+function gateDamage(d,e){
+ if(B.state!=='run')return;
+ if(B.arrD==='d_gold')d*=1-dv('d_gold',S.arr.d_gold.lv);
+ if(B.beasts.some(b=>b.k==='xuanwu'))d*=.85;
+ if(B.arrD==='d_mirror'&&e&&!e.dead)hit(e,arrDps('d_mirror')*dv('d_mirror',S.arr.d_mirror.lv),{c:'#dff6ff',small:1});
+ B.gateHp-=d;B.gateHit=.2;shake(2.5);
  if(B.gateHp<=0){B.gateHp=0;stageLose()}
 }
 function stageWin(){
  const s=S.stage,first=s>S.best,boss=s%10===0;
- const coin=Math.round(5*Math.pow(1.088,s-1)*(boss?4:1));
- const gem=first?(boss?60:10):(boss?6:2);const stone=first?(boss?20:4):(boss?5:1);const pill=boss?(first?3:1):0;
+ const coin=Math.round(5*Math.pow(1.088,s-1)*(boss?4:1)*TR('coin'));
+ const tens=Math.floor(s/10);const gem=first?(boss?60:10):(boss?20:5);const stone=first?(boss?20+5*tens:4+2*tens):(boss?8+2*tens:2+tens);const pill=boss?(first?3:1):0;
  S.coin+=coin;S.gem+=gem;S.stone+=stone;S.pill+=pill;
  if(first)S.best=s;
  S.stage=s+1;
@@ -505,8 +588,14 @@ function stageLose(){
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
  const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 function doUlt(h){
- const d=CH[h.id],dmg=heroAtk(h.id)*7;shake(10);B.hitstop=.08;
+ const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult');shake(10);B.hitstop=.08;
  const alive=()=>B.enemies.filter(e=>!e.dead&&e.x<VW+40);
+ if(ULTFX[h.id]){const a=alive().sort((x,y)=>x.x-y.x);const pre=ULTFX[h.id];
+  if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
+  else if(h.id==='archer'){const xs=a.length?[a[0].x,a[Math.floor(a.length/2)].x,a[a.length-1].x]:[L.front+300];[...new Set(xs.map(x=>Math.round(x/150)))].forEach((q,i)=>ultFx(pre,q*150,G-150,.9,i*.12))}
+  else {const c=a.length?a[Math.min(a.length-1,1)]:null;ultFx(pre,c?c.x:L.front+320,G-150,1.15)}}
+ if(d.ult==='freeze')alive().forEach(e=>sprFx(d.fk==='ice'?'fx_ice':'fx_stun',e.x,e.y-e.ay*.5,1));
+ if(d.ult==='heal')sprFx('fx_heal',L.gx,G-110,2);
  addFx({k:'shock',x:h.x,y:h.y,life:.5,c:d.c});
  if(d.ult==='sweep'){addFx({k:'sweep',x:h.x+40,y:G-110,life:1.1,c:d.c,hitSet:new Set(),dmg,upd:(f,dt)=>{f.x+=dt*1500;alive().forEach(e=>{if(!f.hitSet.has(e)&&e.x<f.x){f.hitSet.add(e);hit(e,dmg,{c:d.c,kb:30,big:1})}})}})}
  else if(d.ult==='rain'){const n=18;for(let i=0;i<n;i++){const a=alive();const tx=a.length?a[i%a.length].x+(Math.random()-.5)*40:L.front+150+Math.random()*(VW-L.front-200);
@@ -519,6 +608,8 @@ function doUlt(h){
 }
 /* ---------- 特效 ---------- */
 function addFx(f){if(B.fx.length>140)return;B.fx.push(f)}
+let sprN=0;function sprFx(pre,x,y,sc){if(!pre||!MAN[pre+'_0'])return;let n=0;for(const f of B.fx)if(f.k==='spr')n++;if(n>26)return;addFx({k:'spr',pre,n:4,x,y,sc:sc||1,life:.34})}
+function ultFx(pre,x,y,sc,delay){addFx({k:'ult',pre,x,y,sc:sc||1,delay:delay||0,life:1+(delay||0)})}
 function shake(a){B.shake=Math.max(B.shake,a)}
 function dmgText(x,y,v,big){if(B.txt.length>14)B.txt.shift();B.txt.push({x,y,v:fmt(Math.max(1,v)),t:0,big})}
 function coinText(e){B.txt.push({x:e.x,y:e.y-e.ay-24,v:'+'+fmt(e.coin),t:0,coin:1})}
@@ -547,6 +638,8 @@ function draw(real){
   ctx.save();ctx.globalAlpha=.85;{const f=L.arrR*2/(MAN['g_'+a.k][0]/2);drawSprite('g_'+a.k,a.x,G+4,{sx:f,sy:f*.85})}ctx.restore();
   ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,20,a.x,G+4,L.arrR*1.1);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,L.arrR*1.15,L.arrR*.3,0,0,Math.PI*2);ctx.fill();
   for(let i=0;i<8;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-L.arrR*.85+i*L.arrR*.24+Math.sin(i*7)*10,G-ph*110,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
+ // 防禦陣（樓閣下）
+ if(B.arrD){const c=ARR[B.arrD].c;ctx.save();ctx.globalAlpha=.8;{const f=L.dR*2/(MAN['g_'+B.arrD][0]/2);drawSprite('g_'+B.arrD,L.dX,G+4,{sx:f,sy:f*.7})}ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.3+.1*Math.sin(B.time*3);const gr=ctx.createRadialGradient(L.dX,G,10,L.dX,G,L.dR);gr.addColorStop(0,`rgba(${c},.8)`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(L.dX,G+4,L.dR,L.dR*.25,0,0,Math.PI*2);ctx.fill();ctx.restore()}
  // 定身符陣地面
  if(PS.slow>0){ctx.save();ctx.globalAlpha=.32+.08*Math.sin(B.time*3);ctx.fillStyle='#ffe86a';ctx.beginPath();ctx.ellipse(L.front+225,G+6,225,22,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.9;for(let i=0;i<6;i++){const x=L.front+30+i*75,y=G-8-Math.abs(Math.sin(B.time*2+i))*10;ctx.fillStyle='#ffe86a';ctx.fillRect(x-6,y-14,12,20);ctx.fillStyle='#d0302a';ctx.fillRect(x-2,y-11,4,14)}ctx.restore()}
  // 樓閣
@@ -572,9 +665,9 @@ function draw(real){
  // 塔
  for(const t of B.turrets){const tier=tierOf(S.tur[t.k].lv);const p=t.anim>0?t.anim/.25:0;shadow(t.x,G+2,34);drawSprite(`t_${t.k}_${tier}`,t.x,G,{sx:1+.05*p,sy:1-.06*p,dx:-4*p})}
  // 神獸
- if(B.beast){const b=B.beast;const p=b.anim>0?b.anim/.45:0;let o={sy:1+Math.sin(B.time*3)*.015};
-  if(p>0){const q=p>.6?(1-p)/.4:p/.6;o={dx:30*q,rot:.12*q,sy:1-.06*q,sx:1+.05*q}}
-  shadow(b.x,G+2,50);drawSprite('b_'+b.k,b.x,G,o)}
+ for(const b of B.beasts){const fly=BEAST[b.k].fly;const p=b.anim>0?b.anim/.45:0;let o={sy:1+Math.sin(B.time*3+b.x)*.015,dy:fly?Math.sin(B.time*2.5+b.x)*8:0};
+  if(p>0){const q=p>.6?(1-p)/.4:p/.6;o={dx:(fly?14:30)*q,rot:.12*q,sy:1-.06*q,sx:1+.05*q,dy:o.dy}}
+  shadow(b.x,G+2,fly?36:50,fly?.12:.22);drawSprite('b_'+b.k,b.x,G,o)}
  // 敵人
  const es=B.enemies.slice().sort((a,b)=>(a.fly-b.fly)||(a.y-b.y));
  for(const e of es){let key=e.key,o={},alpha=1;
@@ -614,7 +707,9 @@ function draw(real){
 function star(x,y,r){ctx.beginPath();for(let i=0;i<10;i++){const rr=i%2?r*.45:r,a=i/10*Math.PI*2-Math.PI/2;ctx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}ctx.closePath();ctx.fill()}
 function swoosh(x,y,c,a,r){ctx.save();ctx.translate(x,y);ctx.strokeStyle=c;ctx.lineCap='round';for(let k=0;k<3;k++){ctx.lineWidth=12-k*4;ctx.globalAlpha=Math.max(0,a)*(.9-k*.25);ctx.beginPath();ctx.arc(0,0,r-k*5,-1.9,.55);ctx.stroke()}ctx.restore()}
 function glow(x,y,r,c,a=1){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=a;const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.restore()}
-function drawProj(p){const a=p.ang||0;ctx.save();ctx.translate(p.x,p.y);
+function drawProj(p){const a=p.ang||0;
+ if(p.spr&&MAN[p.spr]){glow(p.x,p.y,22,p.c,.45);const round=p.spr==='p_pill'||p.spr==='p_bullet'||p.spr==='p_bun'||p.spr==='p_firebomb';drawSprite(p.spr,p.x,p.y,{rot:round?B.time*8:a});return}
+ ctx.save();ctx.translate(p.x,p.y);
  switch(p.kind){
   case 'arrow':case 'bolt':case 'harpoon':ctx.rotate(a);ctx.strokeStyle=p.kind==='bolt'?'#8a5a2a':'#f4f0e0';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-26,0);ctx.lineTo(8,0);ctx.stroke();ctx.fillStyle=p.c;ctx.beginPath();ctx.moveTo(14,0);ctx.lineTo(4,-5);ctx.lineTo(4,5);ctx.fill();ctx.fillStyle=p.c;ctx.globalAlpha=.6;ctx.fillRect(-28,-3,6,6);ctx.restore();glow(p.x,p.y,18,p.c,.5);return;
   case 'slash':ctx.rotate(a);ctx.strokeStyle=p.c;ctx.lineCap='round';ctx.lineWidth=6;ctx.beginPath();ctx.arc(-6,0,20,-1.2,1.2);ctx.stroke();ctx.globalAlpha=.5;ctx.lineWidth=3;ctx.beginPath();ctx.arc(-16,0,18,-1.1,1.1);ctx.stroke();ctx.restore();glow(p.x,p.y,26,p.c,.5);return;
@@ -626,6 +721,8 @@ function drawProj(p){const a=p.ang||0;ctx.save();ctx.translate(p.x,p.y);
  }
  ctx.restore()}
 function drawFx(f){const p=Math.min(1,f.t/f.life);
+ if(f.k==='spr'){const i=Math.min(f.n-1,Math.floor(p*f.n));glow(f.x,f.y,40*f.sc,'rgba(255,255,255,.9)',.35*(1-p));ctx.save();ctx.globalAlpha=i===f.n-1?.7:1;drawSprite(f.pre+'_'+i,f.x,f.y,{sx:f.sc,sy:f.sc});ctx.restore();return}
+ if(f.k==='ult'){if(f.t<f.delay)return;const q=Math.min(1,(f.t-f.delay)/(f.life-f.delay));const i=Math.min(5,Math.floor(q*6));glow(f.x,f.y,200*f.sc,f.c||'rgba(255,230,160,1)',.45*(1-q));drawSprite(f.pre+'_'+i,f.x,f.y,{sx:f.sc,sy:f.sc});return}
  switch(f.k){
   case 'spark':glow(f.x,f.y,28*(1-p)+8,f.c,1-p);break;
   case 'muzzle':glow(f.x,f.y,22,f.c,1-p);break;
@@ -638,7 +735,8 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
   case 'sweep':{ctx.save();ctx.translate(f.x,f.y);ctx.strokeStyle=f.c;ctx.lineCap='round';const a=1-Math.max(0,(p-.7)/.3);for(let k=0;k<4;k++){ctx.globalAlpha=a*(.9-k*.2);ctx.lineWidth=30-k*7;ctx.beginPath();ctx.arc(-k*30,0,150-k*8,-1.3,1.3);ctx.stroke()}ctx.restore();glow(f.x,f.y,170,f.c,.5*a);break}
   case 'wave':{const a=1-p;ctx.save();ctx.fillStyle=f.c;ctx.globalAlpha=.7*a;ctx.beginPath();ctx.moveTo(f.x-160,G+6);ctx.quadraticCurveTo(f.x-40,G-110,f.x,G-20);ctx.lineTo(f.x+10,G+6);ctx.fill();ctx.restore();glow(f.x-40,G-30,120,f.c,.6*a);for(let i=0;i<5;i++){ctx.fillStyle=`rgba(150,120,80,${a})`;ctx.fillRect(f.x-30-i*26,G-20-((i*37+Math.floor(f.t*20))%40),8,8)}break}
   case 'rainp':{if(f.t<f.delay)break;const q=Math.min(1,(f.t-f.delay)/(f.life-f.delay));const x=f.x+(f.tx-f.x)*q,y=f.y+(f.ty-f.y)*q;const ang=Math.atan2(f.ty-f.y,f.tx-f.x);
-   if(f.rk==='arrow'||f.rk==='harpoon'){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-40,0);ctx.lineTo(10,0);ctx.stroke();ctx.fillStyle=f.c;ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(4,-7);ctx.lineTo(4,7);ctx.fill();ctx.restore();glow(x,y,30,f.c,.7)}
+   if(RAINSPR[f.rk]&&MAN[RAINSPR[f.rk]]){glow(x,y,34,f.c,.6);drawSprite(RAINSPR[f.rk],x,y,{rot:ang,sx:1.6,sy:1.6})}
+   else if(f.rk==='arrow'||f.rk==='harpoon'){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-40,0);ctx.lineTo(10,0);ctx.stroke();ctx.fillStyle=f.c;ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(4,-7);ctx.lineTo(4,7);ctx.fill();ctx.restore();glow(x,y,30,f.c,.7)}
    else if(f.rk==='star'){ctx.fillStyle=f.c;star(x,y,16);glow(x,y,40,f.c,.8)}
    else if(f.rk==='bomb'){ctx.fillStyle='#2a2a30';ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fill();glow(x-8,y-8,14,'#ffb040',1)}
    else{glow(x,y,44,f.c,.95);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();for(let i=1;i<5;i++){ctx.globalAlpha=.5/i;ctx.fillStyle=f.c;ctx.beginPath();ctx.arc(x-Math.cos(ang)*i*16,y-Math.sin(ang)*i*16,12-i*2,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1}
@@ -674,7 +772,7 @@ function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)
  const w=document.createElement('div');w.className='ultw';const a=document.createElement('button');a.className='auto';
  const upd=()=>{const on=!!(S.auto&&S.auto[h.id]);a.textContent=on?'自動':'手動';a.classList.toggle('on',on)};upd();
  a.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();S.auto=S.auto||{};S.auto[h.id]=!S.auto[h.id];upd();persist();toast(`${CH[h.id].n} 大招：${S.auto[h.id]?'自動放':'點了才放'}`)});
- w.appendChild(b);w.appendChild(a);u.appendChild(w);return b})}
+ w.appendChild(b);w.insertAdjacentHTML('beforeend','<i class="ring"></i>');w.appendChild(a);u.appendChild(w);return b})}
 let lastLive=0;
 function updLive(){
  const done=B.killed,tot=B.total||1;$('waveBar').style.width=Math.min(100,done/tot*100)+'%';
@@ -738,55 +836,95 @@ function rollOne(){S.pull++;S.pityR++;S.pityE=(S.pityE||0)+1;S.pityL++;let r;con
  const pool=POOL[r];const id=pool[Math.floor(Math.random()*pool.length)];let isNew=false;
  if(!S.roster[id]){S.roster[id]={lv:1,tier:1,dup:0};isNew=true;if(S.team.length<slots()){S.team.push(id)}}else{const rr=S.roster[id];if(rr.tier>=CH[id].t){if((rr.brk||0)<BRK_MAX)rr.brk=(rr.brk||0)+1;else S.pill+=1}else rr.dup++}
  return{id,isNew}}
-function pull(n){const cost=n*10;if(S.gem<cost){toast('靈石不夠，過關可以拿靈石');return}S.gem-=cost;lastPulls=[];for(let i=0;i<n;i++)lastPulls.push(rollOne());S.firstGacha=false;refreshField();renderGacha();updLive()}
-function renderGacha(){$('shTitle').textContent='召喚弟子';$('shTabs').innerHTML='';
- let h=`<div class="gacha"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>
- <div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說 1／2／3／5 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 20 次）</div><div class="pulls">`;
- lastPulls.forEach((p,i)=>{const d=CH[p.id];h+=`<div class="card ${d.r}" style="animation-delay:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':''}<span class="cn">${d.n}</span></div>`});
+function gpOne(){S.gpull++;const g=GP[Math.floor(Math.random()*GP.length)];let isNew=false,res='';
+ const box=g.type==='tur'?S.tur:S.arr;
+ if(!box[g.k]){box[g.k]={lv:1};isNew=true;
+  if(g.type==='tur'){if(S.turTeam.length<turSlots())S.turTeam.push(g.k)}else if(ARR[g.k].t==='a'){if(!S.arrA)S.arrA=g.k}else if(!S.arrD&&S.gateLv>=5)S.arrD=g.k}
+ else{const o=box[g.k];if(g.type==='arr'&&ARR[g.k].t==='d'){o.lv+=3;res='Lv+3'}else if((o.brk||0)<BRK_MAX){o.brk=(o.brk||0)+1;res='突破+1'}else{const c=Math.round(turCost(o.lv)*3);S.coin+=c;res='銅錢'}}
+ return{...g,isNew,res}}
+let gTab='hero';
+function pull(n){const cost=n*10;if(S.gem<cost){toast('靈石不夠，過關可以拿靈石');return}S.gem-=cost;lastPulls=[];
+ for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():rollOne());if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
+function gpInfo(p){if(p.type==='tur')return{img:SRC['t_'+p.k+'_1'],n:TUR[p.k].n,r:'R'};return{img:SRC['i_'+p.k],n:ARR[p.k].n,r:ARR[p.k].t==='a'?'E':'L'}}
+function renderGacha(){$('shTitle').textContent='召喚';
+ $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法・塔</button>`;
+ $('shTabs').querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{if(gTab!==b.dataset.gt){gTab=b.dataset.gt;lastPulls=[]}renderGacha()});
+ let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
+ if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說 1／2／3／5 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 20 次）</div>`;
+ else{const own=Object.keys(S.tur).length+Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 5 種塔、6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的塔或攻擊陣 → 突破，攻擊 +5%（最多 20 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
+ h+='<div class="pulls">';
+ lastPulls.forEach((p,i)=>{if(p.id){const d=CH[p.id];h+=`<div class="card ${d.r}" style="--d:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':''}<span class="cn">${d.n}</span></div>`}
+  else{const g=gpInfo(p);h+=`<div class="card ${g.r}" style="--d:${i*.08}s"><img src="${g.img}" alt="" style="height:52%;bottom:26%">${p.isNew?'<span class="new">新！</span>':`<span class="new" style="background:#3b7fe0">${p.res}</span>`}<span class="cn">${g.n}</span></div>`}});
  h+='</div></div>';$('shBody').innerHTML=h;$('g1').onclick=()=>pull(1);$('g10').onclick=()=>pull(10)}
 /* 山門 */
-function renderGate(){$('shTitle').textContent='山門';$('shTabs').innerHTML='';
- const lv=S.gateLv,c=gateCost(lv);const nx=SLOT_LV.find(([l])=>l>lv),nt=TUR_SLOT.find(([l])=>l>lv);
- let h=`<div class="gateinfo"><div class="pic"><img src="${SRC[gateKey(false)]}" alt=""></div><div class="info" style="flex:1;min-width:200px"><h3 style="margin:0;font-family:var(--title);font-size:24px">山門 Lv${lv}</h3>
- <div class="stat"><b>城門血量</b><span>${fmt(gateMax(lv))} → ${fmt(gateMax(lv+1))}${PS.hp?`（弟子被動再 +${Math.round(PS.hp*100)}%）`:''}</span><b>樓閣站位</b><span>${slots()} 位${nx?`（Lv${nx[0]} 變 ${nx[1]} 位）`:''}</span><b>塔位</b><span>${turSlots()} 座${nt?`（Lv${nt[0]} 變 ${nt[1]} 座）`:''}</span><b>弟子等級上限</b><span>Lv${lv*3+10}</span></div>
- <div class="row" style="margin-top:8px"><button class="btn gold" id="gUp" ${S.stone<c?'disabled':''}>升級山門 <span class="cost"><span class="ico stone"></span>${fmt(c)}</span></button><span style="font-size:13px;color:#7a5a3a">山門石：每次過關都會拿到，Boss 給比較多</span></div></div></div>
- <h3 style="margin:6px 0 8px;font-family:var(--title)">塔（${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
- for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=Object.entries(GIFTS).find(([,v])=>v.k===k);
-  if(!has){h+=`<div class="item lock"><div class="th"><img src="${SRC['t_'+k+'_1']}" alt="" style="filter:brightness(0) opacity(.35)"></div><div class="tx"><b>${d.n}</b><div>${g?`第 ${g[0]} 關第一次過關送`:'之後的版本開放'}</div></div></div>`;continue}
-  const l=has.lv,cc=turCost(l);const on=S.turTeam.includes(k);
-  h+=`<div class="item"><div class="th"><img src="${SRC['t_'+k+'_'+tierOf(l)]}" alt=""></div><div class="tx"><b>${d.n} Lv${l}</b><div>${d.d}｜攻擊 ${fmt(turAtk(k))}｜Lv10、Lv20 換外型</div></div>
-  <button class="btn green" data-tu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-tt="${k}">${on?'收起':'擺上'}</button></div>`}
- h+=`</div><h3 style="margin:14px 0 8px;font-family:var(--title)">陣法・神獸</h3><div class="list">`;
- for(const k in ARR){const has=S.arr[k],d=ARR[k];const g=Object.entries(GIFTS).find(([,v])=>v.k===k);
-  if(!has){h+=`<div class="item lock"><div class="th"><img src="${SRC['i_'+k]}" alt="" style="filter:grayscale(1) opacity(.4)"></div><div class="tx"><b>${d.n}</b><div>第 ${g[0]} 關第一次過關送</div></div></div>`;continue}
-  const cc=turCost(has.lv);h+=`<div class="item"><div class="th"><img src="${SRC['i_'+k]}" alt=""></div><div class="tx"><b>${d.n} Lv${has.lv}</b><div>${d.d}｜每秒 ${fmt(arrDps(k))}</div></div><button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button></div>`}
- for(const k in BEAST){const has=S.beast[k],d=BEAST[k];const g=Object.entries(GIFTS).find(([,v])=>v.k===k);
-  if(!has){h+=`<div class="item lock"><div class="th"><img src="${SRC['b_'+k]}" alt="" style="filter:brightness(0) opacity(.35)"></div><div class="tx"><b>神獸 ${d.n}</b><div>第 ${g[0]} 關打倒 Boss 送</div></div></div>`;continue}
-  const cc=Math.ceil(turCost(has.lv)*1.4);h+=`<div class="item"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button></div>`}
- h+='</div>';$('shBody').innerHTML=h;
- $('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;const before=slots();refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
- $('shBody').querySelectorAll('[data-tu]').forEach(b=>b.onclick=()=>{const k=b.dataset.tu,cc=turCost(S.tur[k].lv);if(S.coin<cc)return;S.coin-=cc;const t0=tierOf(S.tur[k].lv);S.tur[k].lv++;if(tierOf(S.tur[k].lv)>t0)toast(`${TUR[k].n} 進化了！`);persist();renderGate();updLive()});
- $('shBody').querySelectorAll('[data-tt]').forEach(b=>b.onclick=()=>{const k=b.dataset.tt;if(S.turTeam.includes(k))S.turTeam=S.turTeam.filter(x=>x!==k);else{if(S.turTeam.length>=turSlots()){toast(`塔位只有 ${turSlots()} 座，升級山門可以多擺`);return}S.turTeam.push(k)}refreshField();renderGate()});
- $('shBody').querySelectorAll('[data-au]').forEach(b=>b.onclick=()=>{const k=b.dataset.au,cc=turCost(S.arr[k].lv);if(S.coin<cc)return;S.coin-=cc;S.arr[k].lv++;persist();renderGate();updLive()});
- $('shBody').querySelectorAll('[data-bu]').forEach(b=>b.onclick=()=>{const k=b.dataset.bu,cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)return;S.coin-=cc;S.beast[k].lv++;persist();renderGate();updLive()});
+let gtab='gate';
+const giftAt=k=>{const g=Object.entries(GIFTS).find(([,v])=>v.k===k);return g?g[0]:0};
+function renderGate(){$('shTitle').textContent='山門';
+ const T=[['gate','山門・修煉'],['tur','塔'],['arr','陣法'],['beast','神獸']];
+ $('shTabs').innerHTML=T.map(([k,n])=>`<button class="btn ${gtab===k?'on':''}" data-gk="${k}">${n}</button>`).join('');
+ $('shTabs').querySelectorAll('[data-gk]').forEach(b=>b.onclick=()=>{gtab=b.dataset.gk;renderGate()});
+ const lv=S.gateLv,c=gateCost(lv);const nx=SLOT_LV.find(([l])=>l>lv),nt=TUR_SLOT.find(([l])=>l>lv),nb=BEAST_SLOT.find(([l])=>l>lv);let h='';
+ const lockImg=(src,f)=>`<div class="th"><img src="${src}" alt="" style="filter:${f||'brightness(0) opacity(.35)'}"></div>`;
+ if(gtab==='gate'){
+  h+=`<div class="gateinfo"><div class="pic"><img src="${SRC[gateKey(false)]}" alt=""></div><div class="info" style="flex:1;min-width:200px"><h3 style="margin:0;font-family:var(--title);font-size:24px">山門 Lv${lv}</h3>
+  <div class="stat"><b>城門血量</b><span>${fmt(gateMax(lv))} → ${fmt(gateMax(lv+1))}${PS.hp?`（弟子被動再 +${Math.round(PS.hp*100)}%）`:''}</span><b>樓閣站位</b><span>${slots()} 位${nx?`（Lv${nx[0]} 變 ${nx[1]} 位）`:''}</span><b>塔位</b><span>${turSlots()} 座${nt?`（Lv${nt[0]} 變 ${nt[1]} 座）`:''}</span><b>神獸</b><span>${beastSlots()} 隻${nb?`（Lv${nb[0]} 變 ${nb[1]} 隻）`:''}</span><b>防禦陣</b><span>${lv>=5?'已開放':'Lv5 開放'}</span><b>弟子等級上限</b><span>Lv${lv*5+10}（也要看弟子階級：1 階 20、每升 1 階 +20）</span></div>
+  <div class="row" style="margin-top:8px"><button class="btn gold" id="gUp" ${S.stone<c?'disabled':''}>升級山門 <span class="cost"><span class="ico stone"></span>${fmt(c)}</span></button><span class="hint">山門石：每次過關都會拿到，Boss 給比較多</span></div></div></div>
+  <h3 class="sec">修煉（用銅錢，沒有上限）</h3><div class="list">`;
+  for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
+   h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} +${Math.round(t.per*l*100)}%（下一級 +${Math.round(t.per*(l+1)*100)}%）</div></div>
+   <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button></div>`}
+  h+='</div>'}
+ if(gtab==='tur'){h+=`<h3 class="sec" style="margin-top:0">塔（擺上 ${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
+  for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=giftAt(k);
+   if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
+   const l=has.lv,cc=turCost(l);const on=S.turTeam.includes(k);
+   h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['t_'+k+'_'+tierOf(l)]}" alt=""></div><div class="tx"><b>${d.n} Lv${l}${has.brk?` 突破+${has.brk}`:''}</b><div>${d.d}｜攻擊 ${fmt(turAtk(k))}｜Lv10、Lv20 換外型</div></div>
+   <button class="btn green" data-tu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-tt="${k}">${on?'收起':'擺上'}</button></div>`}
+  h+='</div>'}
+ if(gtab==='arr'){
+  for(const [tt,title,sl] of [['a','攻擊陣（鋪在山門前到神獸，選 1 個）','arrA'],['d','防禦陣（鋪在樓閣下，選 1 個）','arrD']]){
+   h+=`<h3 class="sec" ${tt==='a'?'style="margin-top:0"':''}>${title}${tt==='d'&&lv<5?'　<span class="hint">山門 Lv5 開放</span>':''}</h3><div class="list">`;
+   for(const k in ARR){const d=ARR[k];if(d.t!==tt)continue;const has=S.arr[k];const g=giftAt(k);
+    const desc=tt==='a'?d.d:d.d(has?has.lv:1);
+    if(!has){h+=`<div class="item lock">${lockImg(SRC['i_'+k],'grayscale(1) opacity(.4)')}<div class="tx"><b>${d.n}</b><div>${desc}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
+    const cc=turCost(has.lv),on=S[sl]===k;
+    h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['i_'+k]}" alt=""></div><div class="tx"><b>${d.n} Lv${has.lv}${has.brk?` 突破+${has.brk}`:''}</b><div>${desc}${tt==='a'?`｜每秒 ${fmt(arrDps(k)*(d.m||0)+ (k==='a_thunder'?arrDps(k)*2.6/1.5:0))}`:''}</div></div>
+    <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
+   h+='</div>'}}
+ if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="list">`;
+  for(const k in BEAST){const has=S.beast[k],d=BEAST[k];const g=giftAt(k);
+   if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜第 ${g} 關打倒 Boss 送</div></div></div>`;continue}
+   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
+  h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
+ $('shBody').innerHTML=h;const Q=(sel,f)=>$('shBody').querySelectorAll(sel).forEach(b=>b.onclick=()=>f(b));
+ if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
+ const trn=(k,n)=>{let d=0;while(n-->0&&S.coin>=trainCost(S.train[k]||0)){S.coin-=trainCost(S.train[k]||0);S.train[k]=(S.train[k]||0)+1;d++}if(d){if(k==='hp'){const r=B.gateHp/B.gateMax;B.gateMax=gateMax(S.gateLv)*(1+PS.hp);B.gateHp=B.gateMax*r}persist()}renderGate();updLive()};
+ Q('[data-tr]',b=>trn(b.dataset.tr,1));Q('[data-tr10]',b=>trn(b.dataset.tr10,10));
+ Q('[data-tu]',b=>{const k=b.dataset.tu,cc=turCost(S.tur[k].lv);if(S.coin<cc)return;S.coin-=cc;const t0=tierOf(S.tur[k].lv);S.tur[k].lv++;if(tierOf(S.tur[k].lv)>t0){toast(`${TUR[k].n} 進化了！`);refreshField()}persist();renderGate();updLive()});
+ Q('[data-tt]',b=>{const k=b.dataset.tt;if(S.turTeam.includes(k))S.turTeam=S.turTeam.filter(x=>x!==k);else{if(S.turTeam.length>=turSlots()){toast(`塔位只有 ${turSlots()} 座，升級山門可以多擺`);return}S.turTeam.push(k)}refreshField();renderGate()});
+ Q('[data-au]',b=>{const k=b.dataset.au,cc=turCost(S.arr[k].lv);if(S.coin<cc)return;S.coin-=cc;S.arr[k].lv++;if(k==='d_rock'&&S.arrD===k)refreshField();persist();renderGate();updLive()});
+ Q('[data-as]',b=>{const k=b.dataset.as,sl=b.dataset.sl;S[sl]=S[sl]===k?null:k;refreshField();renderGate()});
+ Q('[data-bu]',b=>{const k=b.dataset.bu,cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)return;S.coin-=cc;S.beast[k].lv++;persist();renderGate();updLive()});
+ Q('[data-bt]',b=>{const k=b.dataset.bt;if(S.beastTeam.includes(k))S.beastTeam=S.beastTeam.filter(x=>x!==k);else{if(S.beastTeam.length>=beastSlots()){toast(`現在只能帶 ${beastSlots()} 隻神獸，升級山門可以多帶`);return}S.beastTeam.push(k)}refreshField();renderGate()});
 }
 /* 獎勵 */
 let giftOpen=false;
 function giveGift(g){let title,img,text;
  if(g.type==='tur'){S.tur[g.k]={lv:1};if(S.turTeam.length<turSlots())S.turTeam.push(g.k);title='獲得新的塔！';img=SRC['t_'+g.k+'_1'];text=`${TUR[g.k].n}：${TUR[g.k].d}。擺在山門前面自動攻擊。`}
- else if(g.type==='arr'){S.arr[g.k]={lv:1};S.arrOn=g.k;title='獲得陣法！';img=SRC['i_'+g.k];text=`${ARR[g.k].n}：${ARR[g.k].d}。`}
- else{S.beast[g.k]={lv:1};S.beastOn=g.k;title='神獸來了！';img=SRC['b_'+g.k];text=`神獸 ${BEAST[g.k].n} 願意守護山門！${BEAST[g.k].d}。`}
+ else if(g.type==='arr'){S.arr[g.k]=S.arr[g.k]||{lv:1};if(ARR[g.k].t==='a'&&!S.arrA)S.arrA=g.k;title='獲得陣法！';img=SRC['i_'+g.k];text=`${ARR[g.k].n}：${ARR[g.k].d}。`}
+ else{S.beast[g.k]={lv:1};if(S.beastTeam.length<beastSlots()&&!S.beastTeam.includes(g.k))S.beastTeam.push(g.k);title='神獸來了！';img=SRC['b_'+g.k];text=`神獸 ${BEAST[g.k].n} 願意守護山門！${BEAST[g.k].d}。`}
  giftOpen=true;$('gfTitle').textContent=title;$('gfImg').src=img;$('gfText').textContent=text;$('gift').classList.add('open');refreshField()}
 $('gfOk').onclick=()=>{$('gift').classList.remove('open');giftOpen=false};
 /* 離線收穫 */
 function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)return;const t=Math.min(dt,12*3600);const s=Math.max(1,S.best);
- const perMin=coinKill(s,1.1)*(5+s*.6)/1.2;const c=Math.round(perMin*t/60*.5);if(c<1)return;S.coin+=c;S.seen=Date.now();
- giftOpen=true;$('gfTitle').textContent='閉關回來了';$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`你不在的 ${t>=3600?Math.floor(t/3600)+' 小時 ':''}${Math.floor(t%3600/60)} 分鐘，弟子們守住山門，賺到 ${fmt(c)} 銅錢！`;$('gift').classList.add('open');persist()}
+ const perMin=coinKill(s,1.1)*(5+s*.6)/1.2;const c=Math.round(perMin*t/60*.5*TR('coin'));if(c<1)return;const gm=Math.min(120,Math.floor(t/3600*10));S.coin+=c;S.gem+=gm;S.seen=Date.now();
+ giftOpen=true;$('gfTitle').textContent='閉關回來了';$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`你不在的 ${t>=3600?Math.floor(t/3600)+' 小時 ':''}${Math.floor(t%3600/60)} 分鐘，弟子們守住山門，賺到 ${fmt(c)} 銅錢${gm?`、${gm} 靈石`:''}！`;$('gift').classList.add('open');persist()}
 /* 啟動 */
 loadAll().then(()=>{
  try{const c=document.createElement('canvas');c.width=4;c.height=4;const g=c.getContext('2d');g.drawImage(IMG.bg_meadow,0,0,1536,3,0,0,1,1);const d=g.getImageData(0,0,1,1).data;SKY=`rgb(${d[0]},${d[1]},${d[2]})`}catch(e){}
+ try{const R=document.documentElement.style,u=k=>`url(${SRC[k]})`;[['--i-coin','u_res_coin'],['--i-gem','u_res_spirit'],['--i-stone','u_res_gatestone'],['--i-pill','u_res_pill'],['--f-N','u_card_common'],['--f-R','u_card_rare'],['--f-E','u_card_epic'],['--f-L','u_card_legend'],['--f-back','u_card_back'],['--altar','u_gacha_altar'],['--ultring','u_ui_ult_frame']].forEach(([a,b])=>{if(SRC[b])R.setProperty(a,u(b))});document.documentElement.classList.add('uiimg')}catch(e){}
  $('loading').style.display='none';resize();buildField();startStage();offline();requestAnimationFrame(t=>{last=t;frame(t)});
- window.__B=B;window.__pick=()=>pick;window.__S=S;window.__fast=sec=>{for(let t=0;t<sec;t+=.05){step(.05);if(giftOpen){$('gift').classList.remove('open');giftOpen=false}}};window.__api={levelUp,pull,heroAtk,lvCost,lvCap,gateCost,turCost,refreshField};
+ window.__B=B;window.__pick=()=>pick;window.__S=S;window.__fast=sec=>{for(let t=0;t<sec;t+=.05){step(.05);if(giftOpen){$('gift').classList.remove('open');giftOpen=false}}};window.__api={levelUp,pull,gpOne,trainCost,beastSlots,setG:t=>{gTab=t},heroAtk,lvCost,lvCap,gateCost,turCost,refreshField};
 });
 </script>
 </body>
