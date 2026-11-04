@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：完成通知
+狀態：待接手（重畫：小鬼、骷髏兵、蘑菇怪、石頭人、紙傘妖第 3 格的攻擊圖）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
@@ -159,3 +159,24 @@ LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in 
 - 狼妖：4 格頭大小差 2% 以內；第 4 格回到站姿，高度差 1%。通過。
 - 紙傘妖：第 4 格高度差 1%，腳長恢復；各格傘和眼睛大小一致。通過。
 - **完成通知：3 張重畫全部收齊，工單 M1 再次完成，可以停止巡查，謝謝。**
+
+### 2026-11-04 10:30（台灣時間）用數字複查全部攻擊圖 → 退回 5 張重畫
+泓指出方向是「大頭小身體」，之前目測通過的有幾張身體變長了。這次每一格都把頭對齊站立圖再量：頭高、身體高（下巴到腳底）各要在站立圖 ±3% 以內，兩腳站寬 ±6% 以內。
+
+| 檔案 | 結果 | 問題 |
+|---|---|---|
+| `imp__attack.png` 小鬼 | 退回 | 頭對齊後身體第 1、2、4 格長 +6%、+8%、+6% |
+| `skeleton__attack.png` 骷髏兵 | 退回 | 4 格身體都長 +4%～+8% |
+| `mushroom__attack.png` 蘑菇怪 | 退回 | 第 4 格身體長 +8% |
+| `golem__attack.png` 石頭人 | 退回 | 第 1、4 格身體短 −5% |
+| `umbrella__attack.png` 紙傘妖 | 退回 | 第 3 格身體長 +11%、整隻寬 +16% |
+
+其他 3 隻（史萊姆、狼妖、蝙蝠）通過，不用動。
+
+重畫時附 `ref/STANDARD__t2__stand.png`（第 1 張）和該怪物的站立圖（第 2 張），指令最前面加：
+
+```
+LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Big head, small body: the body must NOT get longer or taller than in image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
+```
+
+檔名不變，畫好推到 `dot/idle-td-m1` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。

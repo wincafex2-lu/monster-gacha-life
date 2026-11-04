@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M2　Boss 4 隻
 
-狀態：完成通知
+狀態：待接手（重畫：牛魔大王、骷髏將軍、千年樹妖的蓄力和出招）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -84,3 +84,25 @@ Image 2 is this boss's approved design. Draw the SAME boss in the pose below. It
 - 骷髏將軍出招：雙手握劍往右刺出、披風和紫火往後飄，和前兩張一致。通過。
 - 千年樹妖站立、蓄力（樹枝手往後拉）、出招（樹枝往右前甩、張嘴大吼、果子跟著晃）：臉、苔蘚眉毛、紅果子每張一致。通過。
 - **完成通知：工單 M2 Boss 4 隻 12 張全部收齊，工單 M1＋M2 都完成。可以停止巡查，謝謝。**
+
+### 2026-11-04 10:30（台灣時間）用數字複查 → 退回 6 張重畫
+泓指出方向是「大頭小身體」。這次把蓄力、出招的頭對齊站立圖再量（3 張同畫布，頭應該一樣大）：
+
+| 檔案 | 結果 | 問題 |
+|---|---|---|
+| `bullking__windup.png` | 退回 | 頭只有站立的 87%，身體長 +8% |
+| `bullking__strike.png` | 退回 | 頭對齊後身體長 +16% |
+| `bonegeneral__windup.png` | 退回 | 頭只有站立的 86%，身體長 +12% |
+| `bonegeneral__strike.png` | 退回 | 頭 90%，身體長 +7% |
+| `treeelder__windup.png` | 退回 | 臉只有站立的 92%，整隻被拉長 |
+| `treeelder__strike.png` | 退回 | 臉只有站立的 81%，整隻被拉長 |
+
+史萊姆王 3 張、3 隻的站立圖通過，不用動。
+
+重畫時附 `ref/STANDARD__t2__stand.png`（第 1 張）和該 Boss 的站立圖（第 2 張），原本的指令後面再加：
+
+```
+LOCKED PROPORTIONS: the head (face, helmet, horns) must be EXACTLY the same size as in image 2, and the body from chin to feet must be the same length as in image 2. Big head, small body: do NOT make the body taller or longer, do NOT shrink the head. Feet at y=1180 like image 2. Only the pose changes.
+```
+
+檔名不變，推到 `dot/idle-td-m2` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。
