@@ -636,7 +636,15 @@ const SND=(()=>{let ac=null,mg,mus,sfx,on=1,mode=0,nextT=0,step16=0,timer=null,b
    case 'coin':tone(1568,t,.09,'square',.05,sfx);tone(2093,t+.05,.14,'square',.05,sfx);break;
    case 'gate':noise(t,.22,.35,sfx,300,1,'lowpass');tone(80,t,.25,'sine',.35,sfx,{to:45});break;
    case 'bosshit':noise(t,.5,.6,sfx,200,1,'lowpass');tone(55,t,.6,'sine',.6,sfx,{to:30});break;
-   case 'ult':tone(220,t,.5,'sawtooth',.12,sfx,{to:880,a:.02});noise(t+.05,.6,.3,sfx,1200,.7);tone(110,t+.35,.6,'sine',.5,sfx,{to:40});[0,4,7,12].forEach((n,j)=>tone(fr(n+24),t+.08*j,.4,'triangle',.12,sfx));break;
+   case 'ult':{// 蓄力上升 → 亮的和弦＋鈸聲＋閃亮琶音
+    const n=ac.createBufferSource();n.buffer=noiseBuf;const f=ac.createBiquadFilter();f.type='bandpass';f.Q.value=2;f.frequency.setValueAtTime(600,t);f.frequency.exponentialRampToValueAtTime(9000,t+.32);
+    const g=ac.createGain();g.gain.setValueAtTime(.05,t);g.gain.linearRampToValueAtTime(.4,t+.3);g.gain.exponentialRampToValueAtTime(.001,t+.4);n.connect(f);f.connect(g);g.connect(sfx);n.start(t);n.stop(t+.45);
+    tone(330,t,.34,'sawtooth',.08,sfx,{to:1320,a:.02});
+    const T=t+.32,lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(5000,T);lp.frequency.exponentialRampToValueAtTime(900,T+1.1);lp.connect(sfx);
+    [12,19,24,28].forEach(k=>{tone(fr(k),T,1.2,'sawtooth',.09,lp,{a:.004,det:-8});tone(fr(k),T,1.2,'sawtooth',.09,lp,{a:.004,det:8})});
+    tone(fr(36),T,.9,'triangle',.12,sfx);
+    noise(T,1.3,.32,sfx,6500,.6,'highpass');noise(T,.25,.25,sfx,2500,.8);
+    [0,2,4,7,9,12,14,16].forEach((k,j)=>tone(fr(k+36),T+.05+j*.035,.35,'square',.035,sfx));break}
    case 'win':[0,4,7,12,16].forEach((n,j)=>tone(fr(n+12),t+j*.09,.5,'triangle',.22,sfx));tone(fr(24),t+.45,.9,'sine',.12,sfx);break;
    case 'lose':[12,9,7,4,0].forEach((n,j)=>tone(fr(n),t+j*.16,.6,'triangle',.22,sfx));break;
    case 'bossin':tone(73,t,1.2,'sawtooth',.18,sfx,{a:.1});tone(77.8,t,1.2,'sawtooth',.14,sfx,{a:.1});for(let j=0;j<4;j++)tone(60,t+j*.28,.25,'sine',.5,sfx,{to:35});break;
