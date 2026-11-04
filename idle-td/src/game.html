@@ -243,7 +243,11 @@ const PASSIVE={
  dragon:{n:'龍騎守護',d:t=>`山門血量 +${20+8*t}%、近戰・坦克攻擊 +${15+5*t}%`,k:'hp',v:t=>(20+8*t)/100,k2:'front',v2:t=>(15+5*t)/100,sp:'普攻 25% 機會把怪物震暈 1 秒'},
  mecha:{n:'鋼鐵城牆',d:t=>`山門血量 +${20+8*t}%、山門受到的傷害 -${8+3*t}%`,k:'hp',v:t=>(20+8*t)/100,k2:'dr',v2:t=>(8+3*t)/100,sp:'每打 4 下發一次雷射，打一整排（80%）'},
  general:{n:'將軍令',d:t=>`近戰、坦克弟子攻擊 +${15+5*t}%`,k:'front',v:t=>(15+5*t)/100},
- elf:{n:'森林祝福',d:t=>`遠程、法術弟子攻擊 +${15+5*t}%`,k:'back',v:t=>(15+5*t)/100}
+ elf:{n:'森林祝福',d:t=>`遠程、法術弟子攻擊 +${15+5*t}%`,k:'back',v:t=>(15+5*t)/100},
+ slingkid:{n:'頑童眼力',d:t=>`全隊爆擊率 +${3+2*t}%`,k:'crit',v:t=>(3+2*t)/100},
+ drummer:{n:'行軍鼓',d:t=>`全隊攻擊速度 +${8+4*t}%`,k:'spd',v:t=>(8+4*t)/100},
+ tanuki:{n:'煙霧彈',d:t=>`全場怪物走路變慢 ${5+3*t}%`,k:'mslow',v:t=>(5+3*t)/100},
+ moonrabbit:{n:'月光結界',d:t=>`山門受到的傷害 -${6+3*t}%、全場怪物走路變慢 ${5+3*t}%`,k:'dr',v:t=>(6+3*t)/100,k2:'mslow',v2:t=>(5+3*t)/100,sp:'大招會讓山門張開月光護盾 4 秒（不受傷）'}
 };
 // 滿階極意：每隻角色滿階（傳說 5 階、其他 3 階）後上陣，解鎖自己獨特的團隊效果
 const MAXFX={
@@ -267,7 +271,11 @@ const MAXFX={
  yukionna:{s:'全隊',n:'永凍之息',d:'緩速中的怪物被打時，8% 機會凍住 2 秒'},
  catsamurai:{s:'全隊',n:'居合斬殺',d:'全隊對血量低於 30% 的怪物，傷害 ×2'},
  grandma:{s:'全隊',n:'滿漢全席',d:'全隊大招充能 +25%；任何人放大招時山門回血 5%'},
- shark:{s:'限遠程弟子',n:'嗅血狂鯊',d:'遠程弟子打血量低於 50% 的怪物，傷害 +40%'}
+ shark:{s:'限遠程弟子',n:'嗅血狂鯊',d:'遠程弟子打血量低於 50% 的怪物，傷害 +40%'},
+ slingkid:{s:'自身',n:'打水漂',d:'彈弓石子打中後，會再彈到旁邊 2 隻怪（各 50%）'},
+ drummer:{s:'全隊',n:'激昂鼓點',d:'任何弟子放大招後，全隊攻擊速度再 +30%（6 秒）'},
+ tanuki:{s:'自身',n:'影分身',d:'普攻 30% 機會分身，多丟 2 支手裡劍打別的怪（各 100%）'},
+ moonrabbit:{s:'全隊',n:'月華滿盈',d:'每 25 秒自動張開月光護盾 3 秒（山門不受傷）；護盾期間全隊傷害 +40%'}
 };
 // 傳說 3 階覺醒：改變普攻打法
 const AWAKE={fox:{n:'狐火分身',d:'普攻會多射 2 團狐火，打另外 2 隻怪（各 60%）'},dragon:{n:'龍息',d:'普攻會噴出龍息，打中目標身後 350 距離內所有怪（40%）並緩速 40%'},archer:{n:'連珠箭',d:'攻擊速度 ×2'},mecha:{n:'核心超頻',d:'自己大招充能速度 ×1.6，大招傷害 ×1.5'},alchemist:{n:'丹藥精煉',d:'被動「九轉仙丹」效果 ×2'}};
@@ -300,7 +308,11 @@ const CH={
  yukionna:{n:'雪女',r:'E',t:3,role:'magic',c:'#bdf4ff',ult:'freeze',fk:'ice',un:'暴風雪'},
  catsamurai:{n:'貓武士',r:'E',t:3,role:'melee',c:'#ffe0a0',ult:'sweep',un:'貓爪居合斬'},
  grandma:{n:'廚師阿嬤',r:'N',t:3,role:'support',c:'#ffb07a',ult:'heal',un:'滿漢全席'},
- shark:{n:'鯊魚潛水兵',r:'R',t:3,role:'ranged',c:'#6ae0ff',ult:'rain',rk:'harpoon',un:'三叉戟雨'}
+ shark:{n:'鯊魚潛水兵',r:'R',t:3,role:'ranged',c:'#6ae0ff',ult:'rain',rk:'harpoon',un:'三叉戟雨'},
+ slingkid:{n:'彈弓頑童',r:'N',t:3,role:'ranged',c:'#e0b070',ult:'rain',rk:'bomb',un:'漫天石雨'},
+ drummer:{n:'擊鼓小樂師',r:'N',t:3,role:'support',c:'#ff7a5a',ult:'slam',un:'戰鼓震天'},
+ tanuki:{n:'狸貓忍者',r:'R',t:3,role:'ranged',c:'#d0a878',ult:'sweep',un:'手裡劍旋風'},
+ moonrabbit:{n:'月兔仙子',r:'E',t:3,role:'support',c:'#e6dcff',ult:'freeze',fk:'ice',un:'月華護界'}
 };
 const POOL={N:[],R:[],E:[],L:[]};for(const k in CH){if(CH[k].r!=='S')POOL[CH[k].r].push(k)}
 const MON={
@@ -450,7 +462,7 @@ const lvCap=id=>S.gateLv*5+10;// 等級上限只看山門；階級改成直接�
 const slots=()=>{let n=2;for(const[l,c]of SLOT_LV)if(S.gateLv>=l)n=c;return n};
 const turSlots=()=>{let n=0;for(const[l,c]of TUR_SLOT)if(S.gateLv>=l)n=c;return n};
 const tierOf=lv=>lv>=20?3:lv>=10?2:1;
-const spdBonus=()=>PS.spd+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv('d_taiji',S.arr.d_taiji.lv):0);
+const spdBonus=()=>PS.spd+(B.drumT>0?.3:0)+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv('d_taiji',S.arr.d_taiji.lv):0);
 const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus())*(id==='archer'&&PS.aw&&PS.aw.archer?2:1);
 // 升階攻擊加成：每階 ×2，升到滿階再 ×1.5（傳說 5 階 = 24 倍、三階角色滿階 = 6 倍）
 const tierMul=(id,t)=>Math.pow(2,t-1)*(t>=CH[id].t?1.5:1);
@@ -564,7 +576,7 @@ function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
- B.time+=dt;if(B.focusT>0)B.focusT-=dt;DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
+ B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
   if(B.spawnQ.length){B.spawnT+=dt;if(B.spawnT>=B.spawnQ[0].delay){B.spawnT=0;spawn(B.spawnQ.shift())}}
@@ -663,6 +675,7 @@ function heroFire(h){
  const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id)*NA*(h.id==='archer'?2.5:1),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
  {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?4:h.id==='archer'?2.5:2;p.crit=1}}
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=4){h.n4=0;DSRC='h:mecha';const dd=p.dmg*.8;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500)hit(e,dd,{c:d.c})})}}
+ if(h.id==='tanuki'&&PS.mx&&PS.mx.tanuki&&Math.random()<.3){const os=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);for(let i=0;i<2&&os.length;i++){const o=os.splice(Math.floor(Math.random()*os.length),1)[0];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,sp:'',sy:p.sy-20-15*i})}}
  if(PS.aw&&PS.aw[h.id]){const aw=h.id,others=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);
   if(aw==='fox'){const n=2,m=.6;for(let i=0;i<n&&others.length;i++){const o=others[Math.floor(Math.random()*others.length)];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:p.dmg*m,crit:0,sp:aw==='fox'?'fox':'',sx:p.sx,sy:p.sy-(aw==='mecha'?30+20*i:0)})}}
   if(aw==='dragon'){B.enemies.forEach(e=>{if(!e.dead&&e!==tg&&e.x>tg.x-40&&e.x<tg.x+350)hit(e,p.dmg*.4,{c:'#ff8a3d',slow:.4})});addFx({k:'laser',x:tg.x-40,y:tg.y-tg.ay*.5,life:.25,c:'#ff8a3d',w:390})}}
@@ -695,6 +708,7 @@ function projHit(p){
  if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target;hit(e,e.hp+1,{c:'#c08aff',big:1,src:'fb:zijin'});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
   else if(PS.bind&&Math.random()<PS.bind){p.target.stun=Math.max(p.target.stun,1)}}
  if(p.sp==='fox')B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<(p.aoe||90)){e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,p.dmg*.35)}});
+ if(p.sp==='slingkid'&&p.from&&M.slingkid&&p.target){const T=p.target;B.enemies.filter(e=>!e.dead&&e!==T&&Math.abs(e.x-T.x)<350).sort((a,b)=>Math.abs(a.x-T.x)-Math.abs(b.x-T.x)).slice(0,2).forEach(o=>{hit(o,p.dmg*.5,{c:'#e0b070'});addFx({k:'spark',x:o.x,y:o.y-o.ay*.45,life:.2,c:'#e0b070'})})}
  if(p.sp==='archer'&&p.from&&M.archer&&p.target&&!p.target.dead&&Math.random()<.2){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-T.x)<260)hit(e,p.dmg*8,{c:'#bfe6ff',big:1,crit:1})});sprFx('fx_thunder',T.x,T.y-T.ay*.5,2);addFx({k:'ring',x:T.x,y:T.y-T.ay*.5,life:.4,c:'#bfe6ff',r:260});shake(4)}
  if(p.sp==='archer'&&p.target){B.enemies.filter(e=>!e.dead&&e!==p.target&&e.x>p.target.x).sort((a,b)=>a.x-b.x).slice(0,2).forEach(e=>{hit(e,p.dmg*.6,{c:p.c});if(p.hx)sprFx(p.hx,e.x,e.y-e.ay*.45,.6)})}
  if(p.sp==='dragon'&&p.target&&!p.target.dead&&Math.random()<.25){p.target.stun=Math.max(p.target.stun,1);sprFx('fx_stun',p.target.x,p.target.y-p.target.ay-10,.7)}if(p.hx)sprFx(p.hx,p.tx,p.ty,p.aoe?1.3:p.tw?1.25:.8);
@@ -705,7 +719,7 @@ function projHit(p){
 let DSRC='etc';
 function hit(e,amt,o={}){
  if(e.dead)return;const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
- const M=PS.mx||{};if(M.fox&&e.burn>0)amt*=2;if(M.dragon&&e.stun>0)amt*=2;if(M.elf&&(e.slow>0||e.stun>0))amt*=1.3;if(M.catsamurai&&e.hp<e.max*.3)amt*=2;if(M.mummy&&B.gateHp<B.gateMax*.3)amt*=1.5;
+ const M=PS.mx||{};if(M.fox&&e.burn>0)amt*=2;if(M.moonrabbit&&B.shield>0)amt*=1.4;if(M.dragon&&e.stun>0)amt*=2;if(M.elf&&(e.slow>0||e.stun>0))amt*=1.3;if(M.catsamurai&&e.hp<e.max*.3)amt*=2;if(M.mummy&&B.gateHp<B.gateMax*.3)amt*=1.5;
  if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg){const src=o.src||DSRC;B.dmg[src]=(B.dmg[src]||0)+Math.min(hp0,Math.max(0,amt))}
  if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
@@ -865,7 +879,7 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
 }
 /* ---------- 大招 ---------- */
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
- SND.play('ult',h.id);if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
+ SND.play('ult',h.id);if(PS.mx&&PS.mx.drummer)B.drumT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 function doUlt(h){
  DSRC='u:'+h.id;if(h.id==='dragon'&&PS.mx&&PS.mx.dragon)B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,3)}); const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1)*(h.id==='mecha'&&PS.aw&&PS.aw.mecha?1.5:1);shake(10);B.hitstop=.08;
  const alive=()=>B.enemies.filter(e=>!e.dead&&e.x<VW+40);
@@ -873,6 +887,7 @@ function doUlt(h){
   if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
   else if(h.id==='archer'){const xs=a.length?[a[0].x,a[Math.floor(a.length/2)].x,a[a.length-1].x]:[L.front+300];[...new Set(xs.map(x=>Math.round(x/150)))].forEach((q,i)=>ultFx(pre,q*150,G-150,.9,i*.12))}
   else {const c=a.length?a[Math.min(a.length-1,1)]:null;ultFx(pre,c?c.x:L.front+320,G-150,1.15)}}
+ if(h.id==='moonrabbit')B.shield=Math.max(B.shield,4);
  if(d.ult==='freeze')alive().forEach(e=>sprFx(d.fk==='ice'?'fx_ice':'fx_stun',e.x,e.y-e.ay*.5,1));
  if(d.ult==='heal')sprFx('fx_heal',L.gx,G-110,2);
  addFx({k:'shock',x:h.x,y:h.y,life:.5,c:d.c});
