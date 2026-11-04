@@ -548,6 +548,8 @@ function draw(real){
  if(PS.slow>0){ctx.save();ctx.globalAlpha=.32+.08*Math.sin(B.time*3);ctx.fillStyle='#ffe86a';ctx.beginPath();ctx.ellipse(L.front+225,G+6,225,22,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.9;for(let i=0;i<6;i++){const x=L.front+30+i*75,y=G-8-Math.abs(Math.sin(B.time*2+i))*10;ctx.fillStyle='#ffe86a';ctx.fillRect(x-6,y-14,12,20);ctx.fillStyle='#d0302a';ctx.fillRect(x-2,y-11,4,14)}ctx.restore()}
  // 樓閣
  const tm=MAN[L.tk];ctx.drawImage(IMG[L.tk],L.tx,G-tm[1]/2,tm[0]/2,tm[1]/2);
+ // 換站位提示
+ if(pick>=0){L.spots.forEach(([x,y],i)=>{const me=i===pick;ctx.save();ctx.globalAlpha=me?.35:.18+.1*Math.sin(B.time*6);ctx.fillStyle=me?'#ffd86a':'#ffffff';ctx.fillRect(x-42,y-150,84,150);ctx.globalAlpha=me?1:.8;ctx.strokeStyle=me?'#ffb020':'#ffffff';ctx.lineWidth=7;ctx.setLineDash([14,8]);ctx.strokeRect(x-42,y-150,84,150);ctx.setLineDash([]);if(!me){ctx.fillStyle='#fff';ctx.font='900 30px sans-serif';ctx.textAlign='center';ctx.fillText('⇄',x,y-160)}ctx.restore()})}
  // 英雄
  for(const h of B.heroes){const o={};const A=h.anim;
   if(A&&A.type==='atk'){const t=A.t;if(t<.2){const p=ease(t/.2);o.rot=-.06*p;o.sy=1+.04*p;o.sx=1-.02*p;o.dx=-3*p}else if(t<.28){o.rot=.09;o.sy=.94;o.sx=1.05;o.dx=6}else{const q=1-ease((t-.28)/.22);o.rot=.09*q;o.sy=1-.06*q;o.sx=1+.05*q;o.dx=6*q}}
@@ -646,6 +648,15 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
   case 'drain':{const q=ease(p);const x=f.x+(f.tx-f.x)*q,y=f.y+(f.ty-f.y)*q-Math.sin(q*Math.PI)*80;glow(x,y,20,f.c,1-p*.5);break}
  }}
 
+/* ---------- 換站位：點弟子，再點另一個站位 ---------- */
+let pick=-1;
+cv.addEventListener('pointerdown',ev=>{const r=cv.getBoundingClientRect();const wx=(ev.clientX-r.left)/SC,wy=(ev.clientY-r.top)/SC+TOPY;
+ const i=(L.spots||[]).findIndex(([x,y])=>Math.abs(wx-x)<60&&wy>y-160&&wy<y+20);
+ if(i<0){if(pick>=0){pick=-1}return}
+ if(pick<0){if(i<B.heroes.length){pick=i;toast('再點一個站位，兩個人交換位置')}return}
+ if(i===pick){pick=-1;return}
+ const t=S.team;if(i<t.length){[t[pick],t[i]]=[t[i],t[pick]]}else{t.push(t.splice(pick,1)[0])}
+ pick=-1;refreshField();toast('換好位置了')});
 /* ---------- 介面 ---------- */
 const $=id=>document.getElementById(id);
 let ultBtns=[];
@@ -702,7 +713,7 @@ function renderHero(){
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
  <button class="btn gold" id="dTier" ${canTier?'':'disabled'}>升階</button>
  <button class="btn blue" id="dTeam">${inTeam?'下陣':'上陣'}</button></div>
- <div style="font-size:13px;color:#7a5a3a">${tierTxt}　上陣 ${S.team.length}/${slots()}</div></div></div>
+ <div style="font-size:13px;color:#7a5a3a">${tierTxt}　上陣 ${S.team.length}/${slots()}<br>換站位：關掉這頁，在戰場上點一個弟子，再點另一個站位</div></div></div>
  <h3 style="margin:14px 0 8px;font-family:var(--title)">全部弟子（${own.length}/${ids.length}）</h3><div class="grid">`;
  for(const i of own){const rr=S.roster[i],dd=CH[i];const up=rr.tier<dd.t&&(i==='disciple'?S.pill>=rr.tier*3:rr.dup>=DUPE_NEED[rr.tier+1]);
   h+=`<button class="card ${dd.r} ${S.team.includes(i)?'inteam':''}" data-id="${i}" style="${i===sel?'outline:3px solid #ff9a1e':''}"><img src="${charImg(i)}" alt=""><span class="lv">Lv${rr.lv}</span><span class="tier">${'★'.repeat(rr.tier)}</span>${up?'<span class="up">可升階</span>':''}<span class="cn">${dd.n}</span></button>`}
@@ -772,7 +783,7 @@ function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)ret
 loadAll().then(()=>{
  try{const c=document.createElement('canvas');c.width=4;c.height=4;const g=c.getContext('2d');g.drawImage(IMG.bg_meadow,0,0,1536,3,0,0,1,1);const d=g.getImageData(0,0,1,1).data;SKY=`rgb(${d[0]},${d[1]},${d[2]})`}catch(e){}
  $('loading').style.display='none';resize();buildField();startStage();offline();requestAnimationFrame(t=>{last=t;frame(t)});
- window.__B=B;window.__S=S;window.__fast=sec=>{for(let t=0;t<sec;t+=.05){step(.05);if(giftOpen){$('gift').classList.remove('open');giftOpen=false}}};window.__api={levelUp,pull,heroAtk,lvCost,lvCap,gateCost,turCost,refreshField};
+ window.__B=B;window.__pick=()=>pick;window.__S=S;window.__fast=sec=>{for(let t=0;t<sec;t+=.05){step(.05);if(giftOpen){$('gift').classList.remove('open');giftOpen=false}}};window.__api={levelUp,pull,heroAtk,lvCost,lvCap,gateCost,turCost,refreshField};
 });
 </script>
 </body>
