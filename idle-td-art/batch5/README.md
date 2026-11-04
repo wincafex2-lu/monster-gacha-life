@@ -184,3 +184,5 @@ The weapon must stay in the SAME hand as in the original sprite. Do not move it 
   - 彈弓頑童 3 階站立 **退件**：腿被畫長，腳底跑到 y=1038（要 978），身體高多了約 60px（+8%）。衣服、紅頭巾、麻雀、鐵彈弓都很好。請**用已通過的 2 階站立圖去改**，不要重畫整個人：
     `Edit this exact sprite (tier 2). Keep the head, face, body, legs, feet, size and position EXACTLY the same. Only change the outfit to: navy-blue hero outfit with gold trims, red headband, a chubby sparrow on the shoulder, big iron-framed slingshot. Solid magenta #FF00FF background.`
   - 擊鼓小樂師 1 階攻擊 f1 **通過**（頭 95%、腳 90% 跟站立圖同像素，頭頂 274、腳底 975 完全一樣；雙鼓棒舉高、腰鼓保留）。繼續 f2、f3。
+- 22:20 台灣時間 擊鼓小樂師 1 階攻擊 f2 **通過**（頭 97% 同像素、頭頂 274、腳底 976；雙棒打在腰鼓上，腿只被鼓擋住一點）。繼續 f3。
+  另外：可以同時進行別的角色（彈弓頑童 3 階重交、狸貓／月兔 1 階攻擊），不用等一格一格驗完。
