@@ -116,7 +116,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/frost__t1__attack.png` | 2172×724 | 4 | 寒冰燈塔 1 階攻擊四格：晶體後縮、升高變亮、向右推與復位，燈座不動。 |
 | `images/talisman__t2__stand.png` | 1254×1254 | 1 | 符咒塔 2 階：紅漆金箍柱、六張黃符、青銅墨盂與朝右毛筆。 |
 | `images/talisman__t3__stand.png` | 1254×1254 | 1 | 符咒塔 3 階：金黑漆柱、盤柱玉龍、兩排黃紫符紙與懸浮毛筆。 |
-| `images/talisman__t1__attack.png` | 2172×724 | 4 | 符咒塔 1 階攻擊四格：三張黃符後揚、抬起、向右展扇與回落；紙根維持連接。 |
 | `images/talisman__t2__attack.png` | 2172×724 | 4 | 符咒塔 2 階攻擊四格：六張黃符後揚、抬起、右展、回落；已修正初稿符紙缺張。 |
 | `images/talisman__t3__attack.png` | 2172×724 | 4 | 符咒塔 3 階攻擊四格：兩排黃紫符紙共八張，後揚、抬起、右展與回落；毛筆與流蘇起伏。 |
 | `images/furnace__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：爐身、三足與底座固定，只動爐蓋與炮口；第 4 格關蓋回站立。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/frost__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：大水晶球保持四格同尺寸，只做左移、上浮、右推、回位；雪花移動，第 4 格回到站立。 |
 | `images/crossbow__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：依站立重新生成固定木架、塔腳與平台；只動弩弦、弩身和旗子。 |
 | `images/bell__t3__attack.png` | 2172×724 | 4 | 10:20 返工修正版：降低偏高塔身、保留底座與塔寬；魚槌後擺、撞鐘、回彈及復位，固定亭架。 |
+| `images/talisman__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：加寬偏窄木柱，底座、總高與桌面固定；符紙四格維持不同飄動。 |
 
 原檔 SHA-256：
 
@@ -149,7 +149,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `frost__t1__attack.png`：`9cad659cccd92dd1e1c4497c2a842356f2e8c043c633f761c0e80fd875428161`
 - `talisman__t2__stand.png`：`d6b50b25a8e41c9daf5f601d97959f8937a7d276f835b9d052437fa9bfc69f20`
 - `talisman__t3__stand.png`：`e92044a870344eec44bf536c0af002e9c29aa96f8c9b9e244b0cdd5ae2df8342`
-- `talisman__t1__attack.png`：`576ccac0df753056e7d531c252d91cdc21491e7f38ca0e6ab4a6d0b88af48bd9`
 - `talisman__t2__attack.png`：`3e819d5920fab3d44ae707d5c801c2be48d615bb9b912b15068ae16380953a89`
 - `talisman__t3__attack.png`：`0a585c1d00ce61b2523bb5fc2adcb56b1a5ab396b6b02e970298adabbd91db6f`
 - `furnace__t1__attack.png`：`d5c2b44fa5d3a8c4fc2852cf410b7fb3692249ecd5b4fc28dc3e0853ce76a84d`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `frost__t3__attack.png`：`27e8bf6df22fccf028f0f81ef60b5ffe468cd369d539a7f7789b8e8dc666076e`
 - `crossbow__t1__attack.png`：`024bbc87eae142d8fbc1ad77c71d9ef4e79ad26b072e72a111e8c8c94517b3ba`
 - `bell__t3__attack.png`：`e09dcd3416cc53e72dae7a7a7bbc71a27c1317289ed2788c79d964c8893cb50f`
+- `talisman__t1__attack.png`：`95f7b239443d9f6a779237a45569e25efb189d1ea8670f17ba3bf892de1e2f8a`
 
 ## 意見與待辦
 
