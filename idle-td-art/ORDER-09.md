@@ -161,11 +161,15 @@ Redraw image B frame by frame using the tier N design from image A.
 
 ### 新規則（2026-11-04 08:45 台灣時間，泓 要求，本單起全部適用）
 
-**1. 攻擊圖鎖比例。** 攻擊圖每一格的頭大小、頭身比都要跟同一階的站立圖一模一樣，身體、腿不可以拉長，人也不可以整個變大。（泓 確認：頭大小差不多，主要是身體被拉長。）Claude 驗收時會把站立圖跟攻擊圖第 1 格對齊臉來量身體長度，差超過 3% 就退件。升階攻擊指令最後加這兩行：
+**1. 攻擊圖鎖比例。** 攻擊圖每一格的頭大小、頭身比都要跟同一階的站立圖一模一樣，身體、腿不可以拉長，人也不可以整個變大。（泓 確認：頭大小差不多，主要是身體被拉長。）Claude 驗收時分開量兩個數字，不看整個人的高度：
+- **頭高**：頭頂（不含帽子、髮飾往上翹的部分）到下巴。
+- **身體高**：下巴到腳底。
+
+攻擊圖每一格的頭高、身體高都要跟同一階站立圖一樣，兩個數字任何一個差超過 3% 就退件（彎腰、蹲下的格子量伸直的部位，例如腿長）。升階攻擊指令最後加這兩行：
 
 ```
 - Every frame must have EXACTLY the same head size and the same body length as image A (the standing sprite). Do not stretch the torso or legs, do not make the character bigger.
-- The head is usually fine; the problem is the BODY getting longer. Keep the torso length and leg length exactly as in image A (head : body ratio must stay the same). Compare frame 1 with image A side by side before finishing.
+- The head is usually fine; the problem is the BODY getting longer. Keep BOTH the head height (top of head to chin) and the body height (chin to soles) exactly as in image A; the head : body ratio must stay the same. Compare frame 1 with image A side by side before finishing.
 ```
 
 1 階攻擊指令也加同樣兩行（image A ＝ 1 階站立圖，請一起附上）。
