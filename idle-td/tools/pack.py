@@ -11,8 +11,8 @@ os.makedirs(OUT, exist_ok=True)
 X2 = 2
 S = 130 / 705  # 角色／怪物／塔／神獸共用的像素比例
 
-# 原圖有多畫的部分要先裁掉（青龍 stand 原圖畫了兩隻，只用左邊那隻）
-CROP = {'qinglong__stand.png': (0, 0, 0.5, 1)}
+# 原圖有多畫的部分要先裁掉（青龍、朱雀 stand 原圖畫了兩隻，只用左邊那隻）
+CROP = {'qinglong__stand.png': (0, 0, 0.5, 1), 'zhuque__stand.png': (0, 0, 0.5, 1)}
 
 def load(n):
     im = Image.open(os.path.join(SRC, n)).convert('RGB')
@@ -128,6 +128,7 @@ for c in ('baihu', 'qinglong', 'zhuque', 'xuanwu'):
     if n in files:
         fly = c in ('qinglong', 'zhuque')
         sprite(f'b_{c}', n, sc, 978 if fly else ground_y_of(n))
+        if fly: MAN[f'b_{c}'][2] = round(MAN[f'b_{c}'][0] / 2, 1)  # 飛的沒有腳，錨點放身體正中間
 
 # 怪物（原圖朝右，遊戲裡朝左走 → 鏡像）
 for m in ('slime', 'mushroom', 'imp', 'skeleton', 'wolf', 'golem', 'bat', 'umbrella'):
