@@ -67,7 +67,7 @@ Keep the same base position, ground line and general shape so it clearly reads a
 ```
 Image 2 is this tower's approved design. Draw a 4-frame attack animation strip of the SAME tower, frames side by side in ONE image with clear empty space between frames, with the same frame spacing and ground line as image 3 (image 3 is ONLY a layout reference).
 <攻擊 4 格那一格的英文>
-The tower must look EXACTLY like image 2 in every frame: same colors, size and details. Its base never moves. Do not draw projectiles, fire, lightning, smoke or effects; code adds them.
+The tower must look EXACTLY like image 2 in every frame: same colors, size and details. Its base never moves. LOCKED PROPORTIONS: tower height, tower width and base width match image 2 within 3% in every frame; frame 4 looks almost exactly like image 2. Do not draw projectiles, fire, lightning, smoke or effects; code adds them.
 ```
 
 升階攻擊指令（附圖 A＝該階站立，圖 B＝1 階攻擊）：
@@ -76,6 +76,11 @@ The tower must look EXACTLY like image 2 in every frame: same colors, size and d
 Image A is tier <N> of this tower. Image B is the attack strip of the SAME tower at tier 1.
 Redraw image B frame by frame using the tier <N> design from image A: EXACTLY the same motion, 4 frames, same order, spacing and ground line as image B. Every frame must look exactly like image A. Moving parts must move. Solid magenta #FF00FF background, no effects.
 ```
+
+## 比例鎖（2026-11-04 泓定）
+
+- 升階站立：底座寬度和高度不變（只能往上、往外加東西）。
+- 攻擊圖每一格都量：塔身高度、塔身寬度、底座寬度，跟同階站立圖差超過 **3%** 就退件。**第 4 格要跟站立圖幾乎一模一樣**。
 
 ## 驗收重點
 

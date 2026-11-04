@@ -1,6 +1,6 @@
 # 放置塔防第二批點陣圖：工單 B1　神獸 4 隻
 
-狀態：完成通知（2026-11-04 04:10 TW，Claude）
+狀態：返工中（2026-11-04 09:20 TW：白虎、玄武、青龍攻擊圖重畫，見「意見與待辦」最下面）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」**第二批美術（神獸、塔、陣法）**的交接處，負責驗收的是 Claude 討論串「繪製塔防塔、陣法與神獸」。
@@ -82,6 +82,7 @@ Image 2 is this beast's approved design. Draw a 4-frame attack animation strip o
 <攻擊 4 格那一格的英文>
 The beast must look EXACTLY like image 2 in every frame: same colors, same size, same details. Moving parts (tail, bells, whiskers, wings, tail feathers, snake) must visibly move with the action; they must NOT look identical across frames.
 Feet on the same ground line in all frames (the flying ones keep flying). Do not draw fire, wind, slashes, impact effects or projectiles; code adds them.
+LOCKED PROPORTIONS: in every frame the head height, body length, body height, leg length and the distance between the feet must match image 2 (within 3%). Accessories (collar, bells, pearl) keep the same size as image 2. Frame 4 must look almost exactly like image 2: same pose, same stance width, same size.
 ```
 
 GPT 畫歪時可以回它：
@@ -90,6 +91,14 @@ GPT 畫歪時可以回它：
 - 大小不對：`Make the beast about <N>% of the girl's height in image 1, feet on her ground line.`
 - 攻擊格裡長相變了：`Every frame must match image 2 exactly in colors, size and details.`
 - 畫了火焰或光：`Remove all fire, glow and effects. Only the beast on flat magenta.`
+
+
+## 比例鎖（2026-11-04 泓定，攻擊圖一律照這個驗收）
+
+- 攻擊圖每一格都量（不是只看第 1 格），跟站立圖比：**頭高、身體長／高、站立時兩腳（四腳）的寬度**，任何一個差超過 **3%** 就退件。
+- 頭高＝頭頂（不含角、冠毛、耳朵尖）到下巴。身體量沒彎的部位（腿長、龜殼長寬、軀幹長）。
+- **第 4 格（回到待機）要跟站立圖幾乎一模一樣**：同樣的站姿、同樣的腳距、同樣大小。
+- 配件大小也要一樣（鈴鐺、玉環、珍珠不能變大）。
 
 ## 驗收重點
 
@@ -109,3 +118,8 @@ GPT 畫歪時可以回它：
 - 2026-11-04 03:55 TW　**`qinglong__stand.png`、`qinglong__attack.png` 通過。** 長相和配色每格一致，身體 S 形、鬍鬚、尾巴每格都有變化，珍珠一直握著；前衝那格可以再拉長一點，但程式會補衝刺感，不用重畫。繼續畫朱雀。
 - 2026-11-04 04:10 TW　**朱雀、玄武站立＋攻擊通過。** 朱雀翅膀每格位置不同、尾羽有飄；玄武的蛇每格姿勢不同、跺腳那格有抬腳。玄武站立稍微偏左，程式會置中，不用改。
 - **完成通知：B1 神獸 8 張全部通過。** 請接 `ORDER-B2.md`（塔），從 `origin/claude/project-thread-giiil5` 開 `dot/idle-td-b2`。B2 一樣：大小差一點、腳底差幾 px、置中、背景色差都不用修，程式處理。
+- 2026-11-04 09:20 TW　**返工（照上面「比例鎖」重量的結果）：白虎、玄武、青龍攻擊圖退件，朱雀通過。** 對照圖：站立圖縮成同樣頭高後，和 4 格並排比。
+  - `baihu__attack.png`：頭一樣大，但身體變長變矮、四腳距離寬了約 20～25%，玉環鈴鐺大了約 30%；第 4 格是趴低的姿勢，不是站立姿勢。重畫：每格身體長度、腿長、鈴鐺大小照站立圖，第 4 格＝站立圖。
+  - `xuanwu__attack.png`：龜殼比站立圖大一圈、整隻變得又高又短（寬高比差約 17%）。重畫：龜殼大小、腳長、身體長度照站立圖，只有抬腳和蛇在動，第 4 格＝站立圖。
+  - `qinglong__attack.png`：珍珠和握珠的爪子大了約 5～10%，第 4 格的 S 形比站立圖窄很多。重畫：珍珠大小照站立圖，第 4 格＝站立圖（2 格待機的第 1 格）。
+  - 做法：用「攻擊指令」重畫（指令已加比例鎖那段），附圖 2 一定要放已通過的站立圖。畫好推 `dot/idle-td-b1`，**這 3 張先做，做完再繼續 B2 的塔**。
