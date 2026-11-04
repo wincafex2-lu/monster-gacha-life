@@ -213,11 +213,11 @@ const VERSION='0.1';
 const RAR={S:{n:'起始',mul:1.0},N:{n:'普通',mul:1.0},R:{n:'稀有',mul:1.3},E:{n:'史詩',mul:1.8},L:{n:'傳說',mul:3.0}};
 // range：從弟子站的位置往右能打多遠（世界座標）
 const ROLE={
- melee:{n:'近戰',atk:9,rate:1.15,proj:'slash',range:560,reach:700,rd:'近',d:'只打靠近山門的怪，傷害最高'},
+ melee:{n:'近戰',atk:9,rate:1.15,proj:'slash',range:560,reach:600,rd:'近',d:'只打靠近山門的怪，傷害最高'},
  ranged:{n:'遠程',atk:4,rate:1.5,proj:'arrow',range:99999,reach:99999,rd:'全場',d:'整個畫面都打得到，一次打一隻'},
- magic:{n:'法術',atk:7.5,rate:0.7,proj:'orb',aoe:90,range:1000,reach:1250,rd:'中',d:'中距離，打中會炸到旁邊一群'},
- tank:{n:'坦克',atk:6,rate:0.85,proj:'spear',knock:28,range:600,reach:750,rd:'近',d:'近距離，把怪物撞退'},
- support:{n:'輔助',atk:2.2,rate:0.8,proj:'pill',range:900,reach:1100,rd:'中',d:'自己打得很弱，靠被動技能幫全隊'}
+ magic:{n:'法術',atk:7.5,rate:0.7,proj:'orb',aoe:90,range:1000,reach:950,rd:'中',d:'中距離，打中會炸到旁邊一群'},
+ tank:{n:'坦克',atk:6,rate:0.85,proj:'spear',knock:28,range:600,reach:650,rd:'近',d:'近距離，把怪物撞退'},
+ support:{n:'輔助',atk:2.2,rate:0.8,proj:'pill',range:900,reach:850,rd:'中',d:'自己打得很弱，靠被動技能幫全隊'}
 };
 // 被動技能（上陣就有效，每升 1 階變強）
 const PASSIVE={
