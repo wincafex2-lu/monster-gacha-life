@@ -1,32 +1,7 @@
 # 放置塔防怪物點陣圖：工單 M2　Boss 4 隻
 
-狀態：待驗收
+狀態：進行中：ChatGPT 怪物美術 2026-11-04 04:08 UTC（11:40 站立圖逐格改）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
-
-## 交付紀錄
-
-- 4 隻 Boss × 站立／蓄力／出招，共 12 張單張 PNG，已按工單順序逐張推送至 `dot/idle-td-m2`。
-- 沿用 M1 的獨立怪物畫圖對話；每次以 `ref/STANDARD__t2__stand.png` 作第一張參考，蓄力、出招另附該 Boss 站立圖。所有交付都是畫圖工具原始 PNG 的逐位元複本，未經程式繪圖、裁切、縮放、移位或改色。
-- 12 張均為 1254×1254，已核對檔名、原始檔 SHA-256 與前景邊界；沒有前景碰到畫布邊緣。史萊姆王蓄力左右留白為 83px／75px，符合各至少 40px 的意見。
-- 骷髏將軍出招在推送前已重新生成，改善第一版身體偏小、腳底偏高問題；最終底部 y≈1195。千年樹妖三張底部 y≈1177／1181／1177。
-- 已讀來源工單最新 03:49（台灣時間）意見：史萊姆王、牛魔大王各 3 張通過；骷髏將軍站立、蓄力通過。骷髏將軍出招與千年樹妖 3 張已交付，等後續驗收；收到「完成通知」即停。
-
-### 原始 PNG 雜湊
-
-| 檔名（`images/`） | SHA-256 |
-|---|---|
-| `slimeking__stand.png` | `34c21d710617830749e474316b1943839f1dd47a1665c692aefb6c65afd2f52b` |
-| `slimeking__windup.png` | `f1bae3a6cfdffeca29c25cdedbef73e6eab53c860b1c30b510dfb52be3a39550` |
-| `slimeking__strike.png` | `3fd329c0a75c87154d5c9287b6142fbf60f2b20ae9f12311f378cc8acd565a55` |
-| `bullking__stand.png` | `408b6f520a91e2ee62dbdf903edc480ca988353905fe6f493d4fbac20804d30d` |
-| `bullking__windup.png` | `224f3efd9b647674a24514d88bd8de108f704b79e891c126ea4961ded27902eb` |
-| `bullking__strike.png` | `dfb1ed76cc20125e167bb8588c9fad3bc52bfc21d93321e37027a43d92e446a6` |
-| `bonegeneral__stand.png` | `7d1365ba27fbe26cc45c695b338d836afcfd285f7629c168bb434b52afcb3bd2` |
-| `bonegeneral__windup.png` | `801e3303f125115825177cb66232a047759336b28096371cfabd2cccf06b0c2d` |
-| `bonegeneral__strike.png` | `6f83cb49b5ed1aa8d1a48668215c7ab98f8f395c785286dfa5bd684303871da9` |
-| `treeelder__stand.png` | `0f3bba4a7777b406e61e85d8ccda3efa8c6942139dd75406ffc7592f82877f42` |
-| `treeelder__windup.png` | `f4b5e78f9a55955bdff6bfa994b32354997f4dc50fde22708ee13b93c02ad5f8` |
-| `treeelder__strike.png` | `8b40ada4861b135cdb5b8ba81478b0d848d0ccebe067568d9c51989e10e801eb` |
 
 ## 固定流程
 
@@ -104,3 +79,49 @@ Image 2 is this boss's approved design. Draw the SAME boss in the pose below. It
 - 牛魔大王出招：斧頭砍到右前方地上、身體前傾、腰帶往後甩，和前兩張一致。牛魔大王 3 張全過。
 - 骷髏將軍站立（高 1189px，比標準稍高但畫布內沒被切）、蓄力（大劍扛到肩後、披風往後飄、紫火頭飾）：盔甲、紫眼火、劍上紫寶石一致。通過。
 - 提醒：紫色披風和洋紅背景很接近，Claude 去背時會小心處理，不用改色。繼續畫骷髏將軍出招，然後千年樹妖。
+
+### 2026-11-04 03:57（台灣時間）骷髏將軍出招、千年樹妖 3 張通過 → **完成通知**
+- 骷髏將軍出招：雙手握劍往右刺出、披風和紫火往後飄，和前兩張一致。通過。
+- 千年樹妖站立、蓄力（樹枝手往後拉）、出招（樹枝往右前甩、張嘴大吼、果子跟著晃）：臉、苔蘚眉毛、紅果子每張一致。通過。
+- **完成通知：工單 M2 Boss 4 隻 12 張全部收齊，工單 M1＋M2 都完成。可以停止巡查，謝謝。**
+
+### 2026-11-04 10:30（台灣時間）用數字複查 → 退回 6 張重畫
+泓指出方向是「大頭小身體」。這次把蓄力、出招的頭對齊站立圖再量（3 張同畫布，頭應該一樣大）：
+
+| 檔案 | 結果 | 問題 |
+|---|---|---|
+| `bullking__windup.png` | 退回 | 頭只有站立的 87%，身體長 +8% |
+| `bullking__strike.png` | 退回 | 頭對齊後身體長 +16% |
+| `bonegeneral__windup.png` | 退回 | 頭只有站立的 86%，身體長 +12% |
+| `bonegeneral__strike.png` | 退回 | 頭 90%，身體長 +7% |
+| `treeelder__windup.png` | 退回 | 臉只有站立的 92%，整隻被拉長 |
+| `treeelder__strike.png` | 退回 | 臉只有站立的 81%，整隻被拉長 |
+
+史萊姆王 3 張、3 隻的站立圖通過，不用動。
+
+重畫時附 `ref/STANDARD__t2__stand.png`（第 1 張）和該 Boss 的站立圖（第 2 張），原本的指令後面再加：
+
+```
+LOCKED PROPORTIONS: the head (face, helmet, horns) must be EXACTLY the same size as in image 2, and the body from chin to feet must be the same length as in image 2. Big head, small body: do NOT make the body taller or longer, do NOT shrink the head. Feet at y=1180 like image 2. Only the pose changes.
+```
+
+檔名不變，推到 `dot/idle-td-m2` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。
+
+### 2026-11-04 11:40（台灣時間）改用「站立圖逐格改」（泓 核准，取代 10:30 的重畫方法）
+重畫時 GPT 會把頭縮小、身體拉長。改成拿站立圖直接改：
+
+- 牛魔大王、骷髏將軍、千年樹妖的 `__windup.png`、`__strike.png` 重做，檔名不變，覆蓋舊檔推 `dot/idle-td-m2`。
+- 每張只附 **1 張圖：該 Boss 已通過的站立圖**，用下面指令。前傾、蹲低、震動、刀光由程式加，**圖裡頭、身體、腿、腳都不要動**。
+- 史萊姆王 3 張已通過，不用重做。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, armor, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon to this pose: <動作>. Moving accessories (cape, sash, flames, leaves, fruits) may swing a little.
+Do not make the body or legs longer, do not shrink the head, do not move the feet, do not resize anything. Same 1254x1254 canvas, same magenta #FF00FF background.
+```
+
+| Boss | windup `<動作>` | strike `<動作>` |
+|---|---|---|
+| bullking 牛魔大王 | both hands raise the giant battle axe high over the head | the axe swung down in front (right side), axe head near the ground |
+| bonegeneral 骷髏將軍 | the greatsword pulled back over the shoulder, cape billowing | the greatsword swung forward in a wide slash to the right, cape flying back |
+| treeelder 千年樹妖 | both branch arms pulled back behind the trunk | both branch arms whipping forward to the right, mouth open shouting |
