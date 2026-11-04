@@ -381,7 +381,7 @@ setInterval(persist,5000);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else offline()});
 
 /* ---------- 數值 ---------- */
-const hpBase=s=>14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.025,s-100):1);
+const hpBase=s=>14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.008,s-100):1);
 const dmgBase=s=>2.6*Math.pow(1.065,s-1);
 const coinKill=(s,m)=>Math.max(1,Math.round(1.6*Math.pow(1.088,s-1)*m));
 const lvCost=lv=>Math.ceil(6*Math.pow(1.12,lv-1));
