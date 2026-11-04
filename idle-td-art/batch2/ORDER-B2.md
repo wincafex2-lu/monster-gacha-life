@@ -9,7 +9,8 @@
    網頁版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-giiil5/idle-td-art/batch2/ORDER-B2.md
 2. 從 `origin/claude/project-thread-giiil5` 開分支 **`dot/idle-td-b2`**，狀態改「進行中：<誰> <時間>」馬上推。之後只推 `dot/idle-td-b2`。
 3. 用畫神獸的同一個 ChatGPT 對話畫，一張畫好就推，放 `idle-td-art/batch2/images/`，檔名照「待辦」。
-4. **每種塔先只交 1 階站立，等 Claude 在「意見與待辦」寫通過才畫該塔其他張。** 等的時候可以先畫下一種塔的 1 階站立。每 5 分鐘 fetch 一次看意見。
+4. **不用停下來等驗收**：照待辦順序一張接一張畫、畫好就推。Claude 每張都會看，有問題寫在「意見與待辦」，每推一張就 fetch 一次看意見，有意見先改。
+   大小差一點、底座差幾 px、沒置中、背景洋紅有色差都**不用修**，程式處理。
 5. 全部交完狀態改「待驗收」；看到「完成通知」就接 `ORDER-B3.md`。
 
 ## 鎖死規則（不准改）
@@ -86,14 +87,15 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 
 - 全部圖片在本第二批專用 ChatGPT 工作對話使用 ImageGen 製作，每次均以標準圖為第一張參考。
 - 提交生成原始 PNG；不裁切、不縮放、不替換背景，不用程式繪圖。程式僅讀取尺寸與校驗檔案；各次原圖保留在工作環境。
-- 每種塔的 1 階站立先交驗收；收到該塔通過意見後才製作其他階與攻擊。等待期間依序交下一種塔的 1 階站立。
+- 依 2026-11-04 04:25 TW 最新流程，不用停等驗收；每張推送後 fetch 意見，有意見先改。寒冰塔升階晶體需明顯變大、變藍。
 
 | 檔案 | 實際畫布 | 格數 | 交付說明 |
 |---|---|---|---|
-| `images/crossbow__t1__stand.png` | 1254×1254 | 1 | 弩箭塔 1 階首張，待造型驗收；木塔、石底座、繩結、朝右弩具與紅旗。 |
-| `images/furnace__t1__stand.png` | 1254×1254 | 1 | 丹爐炮塔 1 階首張，待造型驗收；鐵爐、三短腳、石底座、帶鈕爐蓋與朝右短炮口。 |
-| `images/bell__t1__stand.png` | 1254×1254 | 1 | 雷音鐘塔 1 階首張，待造型驗收；木架、石底座、銅鐘與雙繩吊木槌。 |
-| `images/frost__t1__stand.png` | 1254×1254 | 1 | 寒冰燈塔 1 階首張，待造型驗收；樸素石燈與朝右淡藍晶片，無光暈或冰霧。 |
+| `images/crossbow__t1__stand.png` | 1254×1254 | 1 | 弩箭塔 1 階首張已於 2026-11-04 04:25 TW 通過；木塔、石底座、繩結、朝右弩具與紅旗。 |
+| `images/furnace__t1__stand.png` | 1254×1254 | 1 | 丹爐炮塔 1 階首張已於 2026-11-04 04:25 TW 通過；鐵爐、三短腳、石底座、帶鈕爐蓋與朝右短炮口。 |
+| `images/bell__t1__stand.png` | 1254×1254 | 1 | 雷音鐘塔 1 階首張已於 2026-11-04 04:25 TW 通過；木架、石底座、銅鐘與雙繩吊木槌。 |
+| `images/frost__t1__stand.png` | 1254×1254 | 1 | 寒冰燈塔 1 階首張已於 2026-11-04 04:25 TW 通過；樸素石燈與朝右淡藍晶片，無光暈或冰霧。 |
+| `images/talisman__t1__stand.png` | 1254×1254 | 1 | 符咒塔 1 階首張；木柱、石座、紅繩黃符與頂部筆硯。使用已保留原檔重傳，未重畫。 |
 
 原檔 SHA-256：
 
@@ -101,7 +103,12 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t1__stand.png`：`f8d5149cbdd8328d910d40ed43a0130f868fa1d138d2c2d24949c8f5e49c6042`
 - `bell__t1__stand.png`：`8c9581b21bc6a7f04fa8f9181aadca94761caaf078af48b29afc65fa17638107`
 - `frost__t1__stand.png`：`5dedc88bb006cdc965aeb154b0c6db00d174d6dc1cb1615c9b44bef838eb8f86`
+- `talisman__t1__stand.png`：`cd23a8ceb3c7914b4839364ea0242207bd96c0140b554d1c05e5a22babfe14c3`
 
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+
+- 2026-11-04 04:25 TW　**弩箭塔、丹爐炮塔、雷音鐘塔、寒冰燈塔 1 階站立全部通過。** 畫風和標準圖一致，大小剛好，1 階樸素的感覺對。
+  - 寒冰燈塔：升到 2、3 階時晶體要明顯變大、變藍，讓人一看就知道是冰塔。
+  - 工單第 4 步已改成**不用停下來等驗收**：符咒塔 1 階之後，直接照待辦一路畫（各塔 2、3 階站立 → 1 階攻擊 → 2、3 階攻擊），畫好就推。
