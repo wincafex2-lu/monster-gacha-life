@@ -556,7 +556,7 @@ let last=performance.now(),acc=0;
 function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  let dt=real*B.speed;
  if(B.hitstop>0){B.hitstop-=real;dt*=.08}
- const n=B.speed>1?2:1;for(let i=0;i<n;i++)step(dt/n);
+ const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
  B.time+=dt;DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
@@ -1084,7 +1084,7 @@ function canUpgradeAny(){return S.team.some(id=>S.roster[id]&&S.roster[id].lv<lv
 function turUpgradable(){return Object.keys(S.tur).some(k=>S.coin>=turCost(S.tur[k].lv)*3)}
 function banner(t,boss){const b=$('banner');b.textContent=t;b.classList.toggle('boss',!!boss);b.classList.remove('show');void b.offsetWidth;b.classList.add('show')}
 let toastT;function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),2600)}
-$('spdBtn').onclick=()=>{B.speed=B.speed===1?2:1;$('spdBtn').textContent=B.speed+'×'};
+$('spdBtn').onclick=()=>{B.speed=B.speed>=3?1:B.speed+1;$('spdBtn').textContent=B.speed+'×'};
 /* 面板 */
 let panel=null,tab=null,sel=null;
 function openPanel(p,t){panel=p;tab=t||null;$('sheet').classList.add('open');render()}
