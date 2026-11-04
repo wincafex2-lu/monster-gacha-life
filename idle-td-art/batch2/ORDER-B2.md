@@ -105,6 +105,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/furnace__t3__stand.png` | 1254×1254 | 1 | 丹爐炮塔 3 階：金色八卦爐、紅玉寶石、朝右龍口炮嘴、微浮爐蓋。 |
 | `images/furnace__t1__attack.png` | 2172×724 | 4 | 丹爐炮塔 1 階攻擊四格：爐體膨脹、壓低、拉長後復位，爐蓋每格起落，底座固定。 |
 | `images/furnace__t2__attack.png` | 2172×724 | 4 | 丹爐炮塔 2 階攻擊四格：青銅爐、鉚釘、環耳與煙囪，沿用 1 階擠壓與爐蓋動作。 |
+| `images/furnace__t3__attack.png` | 2172×724 | 4 | 丹爐炮塔 3 階攻擊四格：金色八卦爐、紅玉與龍口炮嘴，爐體擠壓、爐蓋起落。 |
 
 原檔 SHA-256：
 
@@ -122,6 +123,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t3__stand.png`：`df186ad507579341121b437695ed75fc48eb59ec2d980169994577354251a868`
 - `furnace__t1__attack.png`：`116be5bebf179e2fa46cf1d68a57493f519d041e73150e0196adf8e61510f9bd`
 - `furnace__t2__attack.png`：`5780f7272a73fc3eb23f582cdeb48bfd652282f2281525425e1b0f5b6b065f70`
+- `furnace__t3__attack.png`：`1fea1bc1e23619f46c28dd592deac9ad91bbdc2461f0c0cf4da1d27416f44dbb`
 
 ## 意見與待辦
 
