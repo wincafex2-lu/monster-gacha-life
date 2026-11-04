@@ -1,27 +1,11 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：待驗收
+狀態：進行中：ChatGPT 怪物美術 2026-11-04 04:08 UTC（11:40 站立圖逐格改）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
 角色美術是另一組工單（分支 `claude/project-thread-74yvlw`），和這裡無關，兩邊各畫各的。
 不要改動 `idle-td-art/monsters/` 以外的檔案。
-
-## 09:05 修訂交付紀錄
-
-- 已依 2026-11-04 09:05 意見重畫並逐張覆蓋 `golem__attack.png`（`f06f0e3`）、`wolf__attack.png`（`abadcd8`）、`umbrella__attack.png`（`b6e432d`）。其餘已通過圖不變。
-- 3 張皆為畫圖工具原始 PNG 的逐位元複本，2172×724，四格各 543px 寬；每格前景都留在自己的格內，無碰邊裁切。未以程式繪圖、縮放、裁切、拼接或改色。
-- 每次附標準圖、對應站立圖與攻擊排版，並加入工單的 LOCKED PROPORTIONS；第 4 格改回站立參考姿勢。逐格核對頭部、未彎曲身體部位及腳距，彎曲／旋轉的動作不拿整體外框直接當肢體長度。
-- 石頭怪第 4 格寬高比 1.319（站立 1.356，差約 2.7%）；來源 09:16 已重量通過，包含各格頭身及回待機站寬。
-- 狼妖四格耳尖至嘴內紅色區底緣的像素距離為 238／233／235／235px（用作頭部尺寸的穩定檢查點，非下巴精確分割）；第 4 格已回站姿，腳掌外緣跨度 229px。以同一比例比較站立圖，頭部檢查點、嘴底至腳底與待機腳距均接近原比例。彎曲的第 1～3 格另核對腿段及軀幹，不以蹲／跳造成的整體高度差判定縮小。
-- 紙傘妖第 4 格總高 477px，對應站立圖 597px 的 0.8 倍；木屐外緣約 119px，對應站立約 145px 的同一比例差約 2.7%。各格仍只有一腿；傘面旋轉、跳躍與舌頭動作保留，回待機腿長已恢復。
-- 目前只把來源已寫通過的石頭怪列為通過；狼妖與紙傘妖等待 Claude 依 09:05 的頭高／身高／站寬 3% 規則逐格重量。03:04 舊完成通知不適用本輪修訂。
-
-| 原檔（`images/`） | 原始 PNG SHA-256 |
-|---|---|
-| `golem__attack.png` | `8bfc66fc9d881f3817f956e13c70415d85618b6e3c36faaa06255f540e13cdcb` |
-| `wolf__attack.png` | `e89c096b475fc98e3902ac1c729541a97342b32d50e3c65b14732529df6d610a` |
-| `umbrella__attack.png` | `20a6b145c10cba47f39e190911a575a307081524ff00ef9631f1c34c5dfd706d` |
 
 ## 固定流程（接手的人照做）
 
@@ -170,3 +154,52 @@ LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in 
 ### 2026-11-04 09:16（台灣時間）石頭怪攻擊重畫版通過
 - 第 4 格和站立圖比：高度差 0%、站寬差 1%，臉對得上。第 1～3 格頭和身體大小一致（差 3% 左右以內）。通過。
 - 繼續狼妖、紙傘妖。
+
+### 2026-11-04 09:24（台灣時間）狼妖、紙傘妖攻擊重畫版通過 → **完成通知**
+- 狼妖：4 格頭大小差 2% 以內；第 4 格回到站姿，高度差 1%。通過。
+- 紙傘妖：第 4 格高度差 1%，腳長恢復；各格傘和眼睛大小一致。通過。
+- **完成通知：3 張重畫全部收齊，工單 M1 再次完成，可以停止巡查，謝謝。**
+
+### 2026-11-04 10:30（台灣時間）用數字複查全部攻擊圖 → 退回 5 張重畫
+泓指出方向是「大頭小身體」，之前目測通過的有幾張身體變長了。這次每一格都把頭對齊站立圖再量：頭高、身體高（下巴到腳底）各要在站立圖 ±3% 以內，兩腳站寬 ±6% 以內。
+
+| 檔案 | 結果 | 問題 |
+|---|---|---|
+| `imp__attack.png` 小鬼 | 退回 | 頭對齊後身體第 1、2、4 格長 +6%、+8%、+6% |
+| `skeleton__attack.png` 骷髏兵 | 退回 | 4 格身體都長 +4%～+8% |
+| `mushroom__attack.png` 蘑菇怪 | 退回 | 第 4 格身體長 +8% |
+| `golem__attack.png` 石頭人 | 退回 | 第 1、4 格身體短 −5% |
+| `umbrella__attack.png` 紙傘妖 | 退回 | 第 3 格身體長 +11%、整隻寬 +16% |
+
+其他 3 隻（史萊姆、狼妖、蝙蝠）通過，不用動。
+
+重畫時附 `ref/STANDARD__t2__stand.png`（第 1 張）和該怪物的站立圖（第 2 張），指令最前面加：
+
+```
+LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Big head, small body: the body must NOT get longer or taller than in image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
+```
+
+檔名不變，畫好推到 `dot/idle-td-m1` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。
+
+### 2026-11-04 11:40（台灣時間）改用「站立圖逐格改」（泓 核准，取代 10:30 的重畫方法）
+一次畫 4 格長條時 GPT 會把身體畫長。角色那邊改成拿站立圖一格一格改，比例誤差 0.4% 以內，泓同意，怪物也照做。
+
+- 退回的 5 隻（小鬼、骷髏兵、蘑菇妖、石頭怪、紙傘妖）**不再畫長條**，改交 3 張單格，畫布和站立圖一樣 1254×1254：`<代號>__attack_f1.png`、`_f2.png`、`_f3.png`。第 4 格不用畫（程式用站立圖）。舊的 `<代號>__attack.png` 留著不用刪。
+- 每張只附 **1 張圖：該怪物的站立圖**，用下面指令，`<動作>` 照下表。身體前傾、壓扁、跳、踏步、震動、灰塵、刀光都由程式加，**圖裡頭、身體、腿、腳都不要動**。
+- 史萊姆、狼妖、蝙蝠已通過，不用重做。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon (or the attacking part named below) to this pose: <動作>. Moving accessories (cap, tail, sash, tongue) may swing a little.
+Do not make the body or legs longer, do not move the feet, do not resize anything. Same 1254x1254 canvas, same magenta #FF00FF background.
+```
+
+| 怪物 | f1 `<動作>` | f2 `<動作>` | f3 `<動作>` |
+|---|---|---|---|
+| imp 小鬼 | both hands raise the spiked club high behind the head | the club swung forward in front of the chest | the club pointing down to the ground in front (right side) |
+| skeleton 骷髏兵 | shield raised in front, sword arm pulled back | sword arm halfway forward, sword pointing right | sword arm fully extended to the right in a stab, sash swings back |
+| mushroom 蘑菇妖 | the tiny arms grab the cap brim and pull the cap down a little (cap same size) | the cap tilted up and back (cap same size) | the cap tilted forward to the right like a hat-swat (cap same size) |
+| golem 石頭怪 | both stone fists raised high over the head | both fists halfway down in front | both fists down at ground level in front (right side) |
+| umbrella 紙傘妖 | the umbrella canopy tilted back a little (same size) | the tongue starts to stretch forward | the long tongue lashing straight forward to the right |
+
+畫好每張推 `dot/idle-td-m1`，Claude 量完寫意見。
