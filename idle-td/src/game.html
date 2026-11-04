@@ -582,8 +582,8 @@ function step(dt){
    else if(A.type==='ult'){if(!A.fired&&A.t>=.78){A.fired=1;doUlt(h)}if(A.t>1.2)h.anim=null}
   }
   h.cd-=dt;
+  if(h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
   if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+R.reach);if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
-  if(h.charge>=100&&S.auto&&S.auto[h.id]&&!h.anim&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));
   if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0)));
  }
  // 塔
