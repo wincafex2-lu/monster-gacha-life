@@ -1157,7 +1157,7 @@ function renderGate(){$('shTitle').textContent='山門';
    if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
    const l=has.lv,cc=turCost(l);const on=S.turTeam.includes(k);
    h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['t_'+k+'_'+tierOf(l)]}" alt=""></div><div class="tx"><b>${d.n} Lv${l}${has.brk?` 突破+${has.brk}`:''}</b><div>${d.d}｜攻擊 ${fmt(turAtk(k))}｜Lv10 換外型並一次打 2 隻、Lv20 打 3 隻</div></div>
-   <button class="btn green" data-tu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-tt="${k}">${on?'收起':'擺上'}</button></div>`}
+   <button class="btn green" data-tu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tu99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-tt="${k}">${on?'收起':'擺上'}</button></div>`}
   h+='</div>'}
  if(gtab==='arr'){
   for(const [tt,title,sl] of [['a','攻擊陣（鋪在山門前到神獸，選 1 個）','arrA'],['d','防禦陣（鋪在樓閣下，選 1 個）','arrD']]){
@@ -1167,12 +1167,12 @@ function renderGate(){$('shTitle').textContent='山門';
     if(!has){h+=`<div class="item lock">${lockImg(SRC['i_'+k],'grayscale(1) opacity(.4)')}<div class="tx"><b>${d.n}</b><div>${desc}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
     const cc=turCost(has.lv),on=S[sl]===k;
     h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['i_'+k]}" alt=""></div><div class="tx"><b>${d.n} Lv${has.lv}${has.brk?` 突破+${has.brk}`:''}</b><div>${desc}${tt==='a'?`｜每秒 ${fmt(arrDps(k)*(d.m||0)+ (k==='a_thunder'?arrDps(k)*2.6/1.5:0))}`:''}</div></div>
-    <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
+    <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-au99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
    h+='</div>'}}
  if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="list">`;
   for(const k in BEAST){const has=S.beast[k],d=BEAST[k];const g=giftAt(k);
    if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜第 ${g} 關打倒 Boss 送</div></div></div>`;continue}
-   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">Lv${(i+1)*50} 解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}${bFxN(k)>=4?`（效果 ${bFxLv(k)} 級，下一級 Lv${200+50*bFxLv(k)}）`:''}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
+   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">Lv${(i+1)*50} 解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}${bFxN(k)>=4?`（效果 ${bFxLv(k)} 級，下一級 Lv${200+50*bFxLv(k)}）`:''}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-bu99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
   h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星，最多 5 星，每星效果 +25%。已收集 ${own.length}/12。</div><div class="list">`;
@@ -1187,11 +1187,14 @@ function renderGate(){$('shTitle').textContent='山門';
  if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
  const trn=(k,n)=>{let d=0;while(n-->0&&S.coin>=trainCost(S.train[k]||0)){S.coin-=trainCost(S.train[k]||0);S.train[k]=(S.train[k]||0)+1;d++}if(d){if(k==='hp'){const r=B.gateHp/B.gateMax;B.gateMax=gateMax(S.gateLv)*(1+PS.hp);B.gateHp=B.gateMax*r}persist()}renderGate();updLive()};
  Q('[data-tr]',b=>trn(b.dataset.tr,1));Q('[data-tr10]',b=>trn(b.dataset.tr10,10));
- Q('[data-tu]',b=>{const k=b.dataset.tu,cc=turCost(S.tur[k].lv);if(S.coin<cc)return;S.coin-=cc;const t0=tierOf(S.tur[k].lv);S.tur[k].lv++;if(tierOf(S.tur[k].lv)>t0){toast(`${TUR[k].n} 進化了！`);refreshField()}persist();renderGate();updLive()});
+ const upTur=(k,n)=>{const t0=tierOf(S.tur[k].lv);let c=0;while(c<n){const cc=turCost(S.tur[k].lv);if(S.coin<cc)break;S.coin-=cc;S.tur[k].lv++;c++}if(!c)return;if(tierOf(S.tur[k].lv)>t0){toast(`${TUR[k].n} 進化了！`);refreshField()}else if(n>1)toast(`${TUR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
+ Q('[data-tu]',b=>upTur(b.dataset.tu,1));Q('[data-tu99]',b=>upTur(b.dataset.tu99,99));
  Q('[data-tt]',b=>{const k=b.dataset.tt;if(S.turTeam.includes(k))S.turTeam=S.turTeam.filter(x=>x!==k);else{if(S.turTeam.length>=turSlots()){toast(`塔位只有 ${turSlots()} 座，升級山門可以多擺`);return}S.turTeam.push(k)}refreshField();renderGate()});
- Q('[data-au]',b=>{const k=b.dataset.au,cc=turCost(S.arr[k].lv);if(S.coin<cc)return;S.coin-=cc;S.arr[k].lv++;if(k==='d_rock'&&S.arrD===k)refreshField();persist();renderGate();updLive()});
+ const upArr=(k,n)=>{let c=0;while(c<n){const cc=turCost(S.arr[k].lv);if(S.coin<cc)break;S.coin-=cc;S.arr[k].lv++;c++}if(!c)return;if(k==='d_rock'&&S.arrD===k)refreshField();if(n>1)toast(`${ARR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
+ Q('[data-au]',b=>upArr(b.dataset.au,1));Q('[data-au99]',b=>upArr(b.dataset.au99,99));
  Q('[data-as]',b=>{const k=b.dataset.as,sl=b.dataset.sl;S[sl]=S[sl]===k?null:k;refreshField();renderGate()});
- Q('[data-bu]',b=>{const k=b.dataset.bu,cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)return;S.coin-=cc;S.beast[k].lv++;persist();renderGate();updLive()});
+ const upBeast=(k,n)=>{const f0=bFxN(k);let c=0;while(c<n){const cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)break;S.coin-=cc;S.beast[k].lv++;c++}if(!c)return;if(bFxN(k)>f0)toast(`${BEAST[k].n} 學會新效果：${BFX[k][bFxN(k)-1].t}`);else if(n>1)toast(`${BEAST[k].n} 升了 ${c} 級`);calcPassives();persist();renderGate();updLive()};
+ Q('[data-bu]',b=>upBeast(b.dataset.bu,1));Q('[data-bu99]',b=>upBeast(b.dataset.bu99,99));
  Q('[data-bt]',b=>{const k=b.dataset.bt;if(S.beastTeam.includes(k))S.beastTeam=S.beastTeam.filter(x=>x!==k);else{if(S.beastTeam.length>=beastSlots()){toast(`現在只能帶 ${beastSlots()} 隻神獸，升級山門可以多帶`);return}S.beastTeam.push(k)}refreshField();renderGate()});
 }
 /* 獎勵 */
