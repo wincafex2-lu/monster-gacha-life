@@ -337,7 +337,8 @@ S.train=Object.assign({atk:0,hp:0,coin:0,ult:0},S.train||{});S.arr=S.arr||{};S.b
 if(S.arrA===undefined){S.arrA=S.arrOn||null;S.arrD=null}
 if(!S.beastTeam){S.beastTeam=S.beastOn?[S.beastOn]:[]}
 S.gpull=S.gpull||0;
-function persist(){S.seen=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}}
+let wiped=false;
+function persist(){if(wiped)return;S.seen=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}}
 setInterval(persist,5000);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else offline()});
 
@@ -882,7 +883,7 @@ function renderGate(){$('shTitle').textContent='山門';
   for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
    h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} +${Math.round(t.per*l*100)}%（下一級 +${Math.round(t.per*(l+1)*100)}%）</div></div>
    <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button></div>`}
-  h+='</div>'}
+  h+=`</div><h3 class="sec">設定</h3><div class="row"><button class="btn" id="gReset" style="background:linear-gradient(#e2523a,#a8281a);color:#fff">清除存檔，從頭開始</button><span class="hint" id="gResetTip">所有弟子、關卡、資源都會消失，不能復原</span></div>`}
  if(gtab==='tur'){h+=`<h3 class="sec" style="margin-top:0">塔（擺上 ${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
   for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=giftAt(k);
    if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
@@ -906,6 +907,8 @@ function renderGate(){$('shTitle').textContent='山門';
    const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  $('shBody').innerHTML=h;const Q=(sel,f)=>$('shBody').querySelectorAll(sel).forEach(b=>b.onclick=()=>f(b));
+ if($('gReset')){let armed=0;$('gReset').onclick=()=>{if(!armed){armed=1;$('gReset').textContent='真的要清除？再按一次';$('gResetTip').textContent='3 秒內再按一次就會清除';setTimeout(()=>{armed=0;if($('gReset')){$('gReset').textContent='清除存檔，從頭開始';$('gResetTip').textContent='所有弟子、關卡、資源都會消失，不能復原'}},3000);return}
+  wiped=true;try{localStorage.removeItem(SKEY)}catch(e){}location.reload()}}
  if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
  const trn=(k,n)=>{let d=0;while(n-->0&&S.coin>=trainCost(S.train[k]||0)){S.coin-=trainCost(S.train[k]||0);S.train[k]=(S.train[k]||0)+1;d++}if(d){if(k==='hp'){const r=B.gateHp/B.gateMax;B.gateMax=gateMax(S.gateLv)*(1+PS.hp);B.gateHp=B.gateMax*r}persist()}renderGate();updLive()};
  Q('[data-tr]',b=>trn(b.dataset.tr,1));Q('[data-tr10]',b=>trn(b.dataset.tr10,10));
