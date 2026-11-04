@@ -178,3 +178,9 @@ The weapon must stay in the SAME hand as in the original sprite. Do not move it 
 - 22:02 台灣時間：
   - 狸貓忍者 3 階站立 **通過**（黑紫忍者服、頭頂綠葉、背後巨大風魔手裡劍；身形、腳底跟 1 階一樣）。狸貓三階站立全收，下一步 1 階攻擊 f1～f3。
   - 月兔仙子 2 階站立 **通過**（藍紫裙銀邊、月牙髮飾、藥囊、玉杵；身形、臉、腳底跟 1 階完全一樣）。繼續 3 階站立。
+- 22:15 台灣時間：
+  - 月兔仙子 3 階站立 **通過**（白金星月仙裙、飄帶披帛、浮空玉兔燈籠、月牙銀杵；身形、腳底跟 1 階一樣）。月兔三階站立全收，下一步 1 階攻擊 f1～f3。
+  - 彈弓頑童 2 階站立 **通過**（橘黃短褂藍腰帶、竹籃彈藥袋、紅布彈弓；身高 704、腳底 979）。
+  - 彈弓頑童 3 階站立 **退件**：腿被畫長，腳底跑到 y=1038（要 978），身體高多了約 60px（+8%）。衣服、紅頭巾、麻雀、鐵彈弓都很好。請**用已通過的 2 階站立圖去改**，不要重畫整個人：
+    `Edit this exact sprite (tier 2). Keep the head, face, body, legs, feet, size and position EXACTLY the same. Only change the outfit to: navy-blue hero outfit with gold trims, red headband, a chubby sparrow on the shoulder, big iron-framed slingshot. Solid magenta #FF00FF background.`
+  - 擊鼓小樂師 1 階攻擊 f1 **通過**（頭 95%、腳 90% 跟站立圖同像素，頭頂 274、腳底 975 完全一樣；雙鼓棒舉高、腰鼓保留）。繼續 f2、f3。
