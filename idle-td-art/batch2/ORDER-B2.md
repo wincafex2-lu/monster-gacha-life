@@ -114,6 +114,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/frost__t2__stand.png` | 1254×1254 | 1 | 寒冰燈塔 2 階：白石銀霜紋、屋簷冰柱，依意見把晶體顯著放大並加深藍色。 |
 | `images/frost__t3__stand.png` | 1254×1254 | 1 | 寒冰燈塔 3 階：大型深藍懸浮晶球、銀色塔頂、冰晶立柱與底座尖晶、三枚浮雪晶。 |
 | `images/frost__t1__attack.png` | 2172×724 | 4 | 寒冰燈塔 1 階攻擊四格：晶體後縮、升高變亮、向右推與復位，燈座不動。 |
+| `images/frost__t2__attack.png` | 2172×724 | 4 | 寒冰燈塔 2 階攻擊四格：大型藍晶體依序後縮、上升、右推、復位，簷下冰柱擺動。 |
 
 原檔 SHA-256：
 
@@ -140,6 +141,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `frost__t2__stand.png`：`c3fe63374ec323955fb38c2c3dc30efce17f39bff1c0a3a7d88c39d5ab8d6992`
 - `frost__t3__stand.png`：`348c981ebe13266de7a0d3b480add7c01d3cd011070032ed2fc522fb1ca73e83`
 - `frost__t1__attack.png`：`9cad659cccd92dd1e1c4497c2a842356f2e8c043c633f761c0e80fd875428161`
+- `frost__t2__attack.png`：`59804c87bd3f7cd02d3b4ba78550237cfb248d2db3f49c5580ee77f21d40d1a2`
 
 ## 意見與待辦
 
