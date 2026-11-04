@@ -162,3 +162,6 @@ The weapon must stay in the SAME hand as in the original sprite. Do not move it 
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+- 21:35 台灣時間 1 階站立：
+  - 擊鼓小樂師 **通過**（身高 701px，標準 704，−0.4%；腳底 y=975；沖天辮、腰鼓、兩支鼓棒、大圓眼＋大喊嘴都對）。可以畫 `drummer__t2__stand.png`、`drummer__t3__stand.png`，臉保持這張。
+  - 彈弓頑童 **退件（只因為大小）**：身高 798px，比標準 704 大 13%，腳底 y=1072（要 ≈978），整個人畫大了。臉（一眼瞇、吐舌頭）、衣服、彈弓都很好，**請把同一張圖等比例縮到身高約 704px、腳底放回 y≈978、左右置中**，其他不要改。也可以附這張重新叫 GPT：`Keep this exact character design, but scale it down so it matches image 1 exactly: total height about 704 px, feet at y=978, centered. Do not redesign.`
