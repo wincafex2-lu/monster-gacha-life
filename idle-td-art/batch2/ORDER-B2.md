@@ -102,6 +102,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/crossbow__t2__attack.png` | 2172×724 | 4 | 2 階雙弩沿用 1 階動作與四格配置；雙弩後座、弩弦與旗幟擺動，底座固定。 |
 | `images/crossbow__t3__attack.png` | 2172×724 | 4 | 3 階三聯金弩沿用攻擊節奏；弩具、旗幟與兩枚金羽逐格變化，無空中投射物。 |
 | `images/furnace__t2__stand.png` | 1254×1254 | 1 | 丹爐炮塔 2 階：青銅爐體、銅鉚釘與把手、加寬炮口、後方煙囪。 |
+| `images/furnace__t3__stand.png` | 1254×1254 | 1 | 丹爐炮塔 3 階：金色八卦爐、紅玉寶石、朝右龍口炮嘴、微浮爐蓋。 |
 
 原檔 SHA-256：
 
@@ -116,6 +117,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `crossbow__t2__attack.png`：`aa6f623406398c60b0f5b3567fdc45cfec570506acb3ea54a618b6a036875189`
 - `crossbow__t3__attack.png`：`2b25d12eccc02864864061856ae375fba9c78b1f5555a0ebecaf1b5ee6bcb7fb`
 - `furnace__t2__stand.png`：`781f15cbfc6efc76796b2c149109255b5ae95f5ad1888a0e9d963bd8a5a9466e`
+- `furnace__t3__stand.png`：`df186ad507579341121b437695ed75fc48eb59ec2d980169994577354251a868`
 
 ## 意見與待辦
 
