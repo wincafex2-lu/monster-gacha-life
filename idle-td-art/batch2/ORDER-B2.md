@@ -111,3 +111,4 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
   - `talisman__t1__attack.png`：4 格的柱身（離地 35%）都比站立圖窄 7%。
   - 這 3 張照比例鎖重畫：塔身每格跟站立圖一樣大，只有會動的部位動。建議做法：拿站立圖本身當底，一格一格只改會動的部位。
   - 目前要重畫的：`frost__t3__attack.png`（之前就退）＋上面 3 張。
+- 2026-11-04 10:30 TW　`frost__t3__attack.png` 重畫版：水晶球已經對了，但**底座兩邊的冰晶**每格都比站立圖寬約 15%（離地 15% 量），上半的雪花也偏。冰晶是不動的部位，要跟站立圖一模一樣。再重畫一次：拿站立圖當底，只動水晶球和飄的雪花。
