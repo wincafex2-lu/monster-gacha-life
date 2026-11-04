@@ -436,6 +436,8 @@ const lvCap=id=>S.gateLv*5+10;// 等級上限只看山門；階級改成直接�
 const slots=()=>{let n=2;for(const[l,c]of SLOT_LV)if(S.gateLv>=l)n=c;return n};
 const turSlots=()=>{let n=0;for(const[l,c]of TUR_SLOT)if(S.gateLv>=l)n=c;return n};
 const tierOf=lv=>lv>=20?3:lv>=10?2:1;
+const spdBonus=()=>PS.spd+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv('d_taiji',S.arr.d_taiji.lv):0);
+const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus());
 function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*Math.pow(1.5,r.tier-1)*(B.buff>0?1.3:1)*(1+PS.atk+side)*(1+.03*(r.brk||0))*TR('atk')}
 function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)*(1+.05*(S.tur[k].brk||0))*TR('atk')}
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*(arrPaired(k)?1.5:1)}
@@ -560,7 +562,7 @@ function step(dt){
    else if(A.type==='ult'){if(!A.fired&&A.t>=.78){A.fired=1;doUlt(h)}if(A.t>1.2)h.anim=null}
   }
   h.cd-=dt;
-  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+R.reach);if(tg){h.cd=1/(R.rate*(1+PS.spd+(B.arrD==='d_taiji'?dv('d_taiji',S.arr.d_taiji.lv):0)));h.anim={type:'atk',t:0,target:tg}}}
+  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+R.reach);if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
   if(h.charge>=100&&S.auto&&S.auto[h.id]&&!h.anim&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));
   if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0)));
  }
@@ -1084,7 +1086,7 @@ function renderHero(){
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${d.r}">${RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${d.n} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t)}</span></h3>
- <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}（升級山門可以再往上）</span><b>攻擊</b><span>${fmt(heroAtk(id))} × 每秒 ${ROLE[d.role].rate}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}：${ROLE[d.role].d}</span><b>大招</b><span>${d.un}</span>${PASSIVE[id]?`<b>被動</b><span>${PASSIVE[id].n}：${PASSIVE[id].d(r.tier)}</span>`:''}${PASSIVE[id]&&PASSIVE[id].sp?`<b>特殊</b><span>${PASSIVE[id].sp}${d.r==='L'?'；傳說大招傷害 ×1.5':''}</span>`:''}${MAXFX[id]?`<b>滿階極意</b><span style="${isMax(id)?'color:#c2410c;font-weight:800':'opacity:.55'}">${MAXFX[id].n}：${MAXFX[id].d}${isMax(id)?'（上陣就有效）':`（${d.t} 階解鎖）`}</span>`:''}</div>
+ <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}（升級山門可以再往上）</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id))}，每秒打 ${(+heroRate(id).toFixed(2))} 下${spdBonus()>0?`（基礎 ${ROLE[d.role].rate}，攻速 +${Math.round(spdBonus()*100)}%）`:''}，每秒傷害約 ${fmt(heroAtk(id)*heroRate(id))}${PS.crit>0?`<br>爆擊率 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}：${ROLE[d.role].d}</span><b>大招</b><span>${d.un}</span>${PASSIVE[id]?`<b>被動</b><span>${PASSIVE[id].n}：${PASSIVE[id].d(r.tier)}</span>`:''}${PASSIVE[id]&&PASSIVE[id].sp?`<b>特殊</b><span>${PASSIVE[id].sp}${d.r==='L'?'；傳說大招傷害 ×1.5':''}</span>`:''}${MAXFX[id]?`<b>滿階極意</b><span style="${isMax(id)?'color:#c2410c;font-weight:800':'opacity:.55'}">${MAXFX[id].n}：${MAXFX[id].d}${isMax(id)?'（上陣就有效）':`（${d.t} 階解鎖）`}</span>`:''}</div>
  <div class="tiers">${Array.from({length:d.t},(_,i)=>`<span class="${i+1>r.tier?'no':''} ${i+1===r.tier?'cur':''}"><img src="${charImg(id,i+1)}" alt=""></span>`).join('')}</div>
  <div class="row"><button class="btn green" id="dUp" ${r.lv>=cap||S.coin<cost?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cost)}</span></button>
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
@@ -1174,7 +1176,7 @@ function renderGate(){$('shTitle').textContent='山門';
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
   h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星，最多 5 星，每星效果 +25%。已收集 ${own.length}/12。</div><div class="list">`;
-  for(const k in FB){const d=FB[k],has=S.fb[k];const ic=`<div class="th" style="display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#fff,${d.c});font-family:var(--title);font-size:30px;color:#3a2008;${has?'':'filter:grayscale(1) opacity(.45)'}">${d.g}</div>`;
+  for(const k in FB){const d=FB[k],has=S.fb[k];const ic=SRC['i_fb_'+k]?`<div class="th" style="background:radial-gradient(circle at 50% 45%,#fff8e6,${d.c}55);${has?'':'filter:grayscale(1) opacity(.45)'}"><img src="${SRC['i_fb_'+k]}" alt="" style="object-fit:contain;padding:4px"></div>`:`<div class="th" style="display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#fff,${d.c});font-family:var(--title);font-size:30px;color:#3a2008;${has?'':'filter:grayscale(1) opacity(.45)'}">${d.g}</div>`;
    if(!has){h+=`<div class="item lock">${ic}<div class="tx"><b>${d.n}</b><div>${d.t(d.v)}｜還沒拿到</div></div></div>`;continue}
    const on=S.fbOn.includes(k);h+=`<div class="item ${on?'on':''}">${ic}<div class="tx"><b>${d.n} ${'★'.repeat(has.star)}<span style="opacity:.3">${'★'.repeat(5-has.star)}</span></b><div>${d.t(fbV(k))}</div></div><button class="btn blue" data-fb="${k}">${on?'卸下':'裝備'}</button></div>`}
   h+='</div>'}
