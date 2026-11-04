@@ -398,9 +398,9 @@ const arrPaired=a=>Object.keys(PAIR).some(k=>PAIR[k]===a&&paired(k));
 const BEAST_SLOT=[[1,1],[15,2],[30,3],[45,4]];
 const beastSlots=()=>{let n=0;for(const[l,c]of BEAST_SLOT)if(S.gateLv>=l)n=c;return n};
 // 修煉：用銅錢升，沒有上限
-const TRAIN={atk:{n:'全隊攻擊',per:.05,d:'弟子、塔、陣法、神獸攻擊'},hp:{n:'山門血量',per:.06,d:'山門最大血量'},coin:{n:'銅錢收入',per:.04,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.08,d:'全部大招的傷害'}};
+const TRAIN={atk:{n:'全隊攻擊',per:.02,d:'弟子、塔、陣法、神獸攻擊'},hp:{n:'山門血量',per:.03,d:'山門最大血量'},coin:{n:'銅錢收入',per:.02,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.02,d:'全部大招的傷害'}};
 const trainCost=lv=>Math.ceil(40*Math.pow(1.15,lv));
-const TR=k=>1+TRAIN[k].per*((S.train&&S.train[k])||0);
+const TR=k=>Math.pow(1+TRAIN[k].per,(S.train&&S.train[k])||0);// 修煉改成每級連乘（後期銅錢多，才有明顯提升）
 // 第三批美術：投射物、打擊特效、傳說大招
 const PSPR={archer:'p_arrow',fox:'p_ofuda',alchemist:'p_pill',pharaoh:'p_scarab',elf:'p_seed',kitsune:'p_foxfire',pirate:'p_bullet',jiangshi:'p_talisman',witch:'p_starbolt',yukionna:'p_iceshard',grandma:'p_bun',shark:'p_harpoon',
  crossbow:'p_bolt',frost:'p_iceshard',furnace:'p_firebomb',talisman:'p_talisman'};
@@ -729,7 +729,7 @@ function gateDamage(d,e){
 function stageWin(){
  const s=S.stage,first=s>S.best,boss=s%10===0;
  const coin=Math.round(5*Math.pow(1.088,s-1)*(boss?4:1)*TR('coin'));
- const tens=Math.floor(s/10);const gem=first?(boss?60+tens*2:10+Math.floor(tens/2)):(boss?20+tens:5+Math.floor(tens/2));const stone=first?(boss?20+5*tens:4+2*tens):(boss?8+2*tens:2+tens);const pill=boss?(first?3:1):0;
+ const tens=Math.floor(s/10);const gem=first?(boss?60+tens*2:10+Math.floor(tens/2)):(boss?20+tens:5+Math.floor(tens/2));const stM=s>100?Math.pow(1.012,s-100):1;const stone=Math.round((first?(boss?20+5*tens:4+2*tens):(boss?8+2*tens:2+tens))*stM);const pill=boss?(first?3:1):0;
  const demon=s%100===0;let fbMsg='';
  if(demon){const gm2=first?300:60,st2=stone*2,pl2=first?10:3;S.gem+=gm2;S.stone+=st2;S.pill+=pl2}
  S.coin+=coin;S.gem+=gem;S.stone+=stone;S.pill+=pill;
@@ -1199,11 +1199,11 @@ function renderGate(){$('shTitle').textContent='山門';
  if(gtab==='gate'){
   h+=`<div class="gateinfo"><div class="pic"><img src="${SRC[gateKey(false)]}" alt=""></div><div class="info" style="flex:1;min-width:200px"><h3 style="margin:0;font-family:var(--title);font-size:24px">山門 Lv${lv}</h3>
   <div class="stat"><b>城門血量</b><span>${fmt(gateMax(lv))} → ${fmt(gateMax(lv+1))}${PS.hp?`（弟子被動再 +${Math.round(PS.hp*100)}%）`:''}</span><b>樓閣站位</b><span>${slots()} 位${nx?`（Lv${nx[0]} 變 ${nx[1]} 位）`:''}</span><b>塔位</b><span>${turSlots()} 座${nt?`（Lv${nt[0]} 變 ${nt[1]} 座）`:''}</span><b>神獸</b><span>${beastSlots()} 隻${nb?`（Lv${nb[0]} 變 ${nb[1]} 隻）`:''}</span><b>防禦陣</b><span>${lv>=5?'已開放':'Lv5 開放'}</span><b>弟子等級上限</b><span>Lv${lv*5+10}（所有弟子一樣）</span></div>
-  <div class="row" style="margin-top:8px"><button class="btn gold" id="gUp" ${S.stone<c?'disabled':''}>升級山門 <span class="cost"><span class="ico stone"></span>${fmt(c)}</span></button><span class="hint">山門石：每次過關都會拿到，Boss 給比較多</span></div></div></div>
+  <div class="row" style="margin-top:8px"><button class="btn gold" id="gUp" ${S.stone<c?'disabled':''}>升級山門 <span class="cost"><span class="ico stone"></span>${fmt(c)}</span></button><button class="btn gold" id="gUpAll" ${S.stone<c?'disabled':''}>連升</button><span class="hint">山門石：每次過關都會拿到，Boss 給比較多</span></div></div></div>
   <h3 class="sec">修煉（用銅錢，沒有上限）</h3><div class="list">`;
   for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
-   h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} +${Math.round(t.per*l*100)}%（下一級 +${Math.round(t.per*(l+1)*100)}%）</div></div>
-   <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button></div>`}
+   h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} ×${TR(k)<1e4?TR(k).toFixed(2):fmt(TR(k))}（每級再 ×${1+t.per}，連乘）</div></div>
+   <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button><button class="btn green" data-trmax="${k}" ${S.coin<cc?'disabled':''}>全部</button></div>`}
   h+=`</div><h3 class="sec">設定</h3><div class="row"><button class="btn" id="gReset" style="background:linear-gradient(#e2523a,#a8281a);color:#fff">清除存檔，從頭開始</button><span class="hint" id="gResetTip">所有弟子、關卡、資源都會消失，不能復原</span></div>`}
  if(gtab==='tur'){h+=`<h3 class="sec" style="margin-top:0">塔（擺上 ${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
   for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=giftAt(k);
@@ -1237,9 +1237,9 @@ function renderGate(){$('shTitle').textContent='山門';
  Q('[data-fb]',b=>{const k=b.dataset.fb;if(S.fbOn.includes(k))S.fbOn=S.fbOn.filter(x=>x!==k);else{if(S.fbOn.length>=fbSlots()){toast(`法寶只能裝 ${fbSlots()} 件，升級山門可以多裝`);return}S.fbOn.push(k)}refreshField();renderGate()});
  if($('gReset')){let armed=0;$('gReset').onclick=()=>{if(!armed){armed=1;$('gReset').textContent='真的要清除？再按一次';$('gResetTip').textContent='3 秒內再按一次就會清除';setTimeout(()=>{armed=0;if($('gReset')){$('gReset').textContent='清除存檔，從頭開始';$('gResetTip').textContent='所有弟子、關卡、資源都會消失，不能復原'}},3000);return}
   wiped=true;try{localStorage.removeItem(SKEY)}catch(e){}location.reload()}}
- if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
+ if($('gUpAll'))$('gUpAll').onclick=()=>{let n=0;while(S.stone>=gateCost(S.gateLv)){S.stone-=gateCost(S.gateLv);S.gateLv++;n++}if(!n)return;refreshField();B.gateHp=B.gateMax;toast(`山門連升 ${n} 級，到 Lv${S.gateLv}！`);renderGate();updHud()};if($('gUp'))$('gUp').onclick=()=>{if(S.stone<c)return;S.stone-=c;S.gateLv++;refreshField();B.gateHp=B.gateMax;toast(`山門升到 Lv${S.gateLv}！`);renderGate();updHud()};
  const trn=(k,n)=>{let d=0;while(n-->0&&S.coin>=trainCost(S.train[k]||0)){S.coin-=trainCost(S.train[k]||0);S.train[k]=(S.train[k]||0)+1;d++}if(d){if(k==='hp'){const r=B.gateHp/B.gateMax;B.gateMax=gateMax(S.gateLv)*(1+PS.hp);B.gateHp=B.gateMax*r}persist()}renderGate();updLive()};
- Q('[data-tr]',b=>trn(b.dataset.tr,1));Q('[data-tr10]',b=>trn(b.dataset.tr10,10));
+ Q('[data-tr]',b=>trn(b.dataset.tr,1));Q('[data-tr10]',b=>trn(b.dataset.tr10,10));Q('[data-trmax]',b=>trn(b.dataset.trmax,1e5));
  const upTur=(k,n)=>{const t0=tierOf(S.tur[k].lv);let c=0;while(c<n){const cc=turCost(S.tur[k].lv);if(S.coin<cc)break;S.coin-=cc;S.tur[k].lv++;c++}if(!c)return;if(tierOf(S.tur[k].lv)>t0){toast(`${TUR[k].n} 進化了！`);refreshField()}else if(n>1)toast(`${TUR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
  Q('[data-tu]',b=>upTur(b.dataset.tu,1));Q('[data-tu99]',b=>upTur(b.dataset.tu99,99));
  Q('[data-tt]',b=>{const k=b.dataset.tt;if(S.turTeam.includes(k))S.turTeam=S.turTeam.filter(x=>x!==k);else{if(S.turTeam.length>=turSlots()){toast(`塔位只有 ${turSlots()} 座，升級山門可以多擺`);return}S.turTeam.push(k)}refreshField();renderGate()});
