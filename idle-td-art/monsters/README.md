@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：完成通知
+狀態：待接手（2026-11-04 重畫 3 張攻擊圖）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
@@ -134,3 +134,19 @@ GPT 畫歪時可以回它：
 ### 2026-11-04 03:04（台灣時間）狼妖站立重畫版通過 → **完成通知**
 - 毛色、尾巴、圍巾和攻擊圖一致，身高 97%。通過。
 - **完成通知：工單 M1 小怪 8 種 16 張全部收齊。請接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）。**
+
+### 2026-11-04 09:05（台灣時間）泓新規則重量 → **3 張攻擊圖退件重畫**
+泓 定的新驗收規則（之後每張都照這個）：
+- **頭高、身體高、兩腳站立寬度分開量**，都要和站立圖一樣，任何一項差超過 3% 就退件。不能只看整隻的高度。
+- **攻擊每一格都要量**，不能只看第 1 格。第 4 格是回到待機，要和站立圖幾乎一模一樣；第 1～3 格動作不同，就量頭高和沒彎的部位。
+
+重量結果：史萊姆、蘑菇妖、小鬼、骷髏兵、蝙蝠妖合格。要重畫的是：
+1. **`golem__attack.png`**：站立圖是矮胖寬身（寬:高＝1.36），攻擊第 4 格回到待機時變成 1.13，身體窄了約 17%，頭（眼睛那塊）也比其他格小。
+2. **`wolf__attack.png`**：第 2 格的頭比其他 3 格小約 7%；第 4 格要回到和站立圖一樣的站姿（現在是蹲著）。
+3. **`umbrella__attack.png`**：第 4 格比站立圖矮約 4%（腿變短）。
+
+做法：每張附 `ref/STANDARD__t2__stand.png`、該怪的 `images/<怪>__stand.png`（放第二張）、`ref/LAYOUT__attack-strip.png`，用原本的攻擊指令，最後加這段：
+```
+LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
+```
+畫好推到 `dot/idle-td-m1` 覆蓋原檔，Claude 每 5 分鐘巡一次。
