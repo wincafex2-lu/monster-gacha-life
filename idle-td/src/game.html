@@ -320,7 +320,7 @@ function giveFb(src){const ks=Object.keys(FB),k=ks[Math.floor(Math.random()*ks.l
  if(!S.fb[k]){S.fb[k]={star:1};if(S.fbOn.length<fbSlots())S.fbOn.push(k);txt='新的法寶！'}else if(S.fb[k].star<5){S.fb[k].star++;txt=`升到 ${S.fb[k].star} 星！`}else{const c=Math.round(coinKill(Math.max(1,S.best),1)*40);S.coin+=c;txt=`已經滿星，換成 ${fmt(c)} 銅錢`}
  return{k,txt}}
 // 魔頭（每 100 關）：正式圖還沒畫，先用 Boss 圖放大＋染色
-const DEMON=[{k:'bullking',n:'混世魔王',c:'#ff2030'},{k:'bonegeneral',n:'九幽冥帝',c:'#8a3aff'},{k:'treeelder',n:'萬年魔樹',c:'#1a8a3a'}];
+const DEMON=[{k:'bullking',a:'hunshi',n:'混世魔王',c:'#ff2030'},{k:'bonegeneral',a:'jiuyou',n:'九幽冥帝',c:'#8a3aff'},{k:'treeelder',a:'moshu',n:'萬年魔樹',c:'#1a8a3a'}];
 function tinted(key,c){const tk=key+'@'+c;if(IMG[tk]||!IMG[key])return tk;const im=IMG[key],m=MAN[key];const cv=document.createElement('canvas');cv.width=m[0];cv.height=m[1];const g=cv.getContext('2d');
  g.drawImage(im,0,0,m[0],m[1]);g.globalCompositeOperation='source-atop';g.fillStyle=c;g.globalAlpha=.42;g.fillRect(0,0,m[0],m[1]);g.globalAlpha=.22;g.fillStyle='#000';g.fillRect(0,0,m[0],m[1]);
  IMG[tk]=cv;MAN[tk]=m;return tk}
@@ -385,7 +385,7 @@ const SLOT_LV=[[1,2],[3,3],[10,4],[18,5],[26,6],[35,7],[45,8]];
 const TUR_SLOT=[[1,1],[6,2],[14,3]];
 const TIER_CAP=[0,20,40,60,80,100];
 // 升到下一階要幾隻重複（普通最常抽到，所以要最多）
-const DUPE={N:{2:6,3:15},R:{2:3,3:8},E:{2:2,3:5},L:{2:1,3:2,4:3,5:5}};
+const DUPE={N:{2:6,3:15},R:{2:3,3:8},E:{2:2,3:5},L:{2:1,3:1,4:1,5:1}};
 const dupeNeed=(id,t)=>(DUPE[CH[id].r]||{})[t];
 const BRK_MAX=20;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 20
 
@@ -498,7 +498,7 @@ function spawn(q){
  }
  if(q.k==='DEMON'){const n=s/100,d=DEMON[(n-1)%DEMON.length],cyc=Math.floor((n-1)/DEMON.length);
   const e=mkEnemy(d.k,true);e.demon=1;e.sc=1.5;e.hp*=3.5;e.max=e.hp;e.dmg*=1.6;e.coin*=3;e.c=d.c;
-  e.key=tinted(e.key,d.c);e.frames=e.frames.map(f=>tinted(f,d.c));e.w*=1.5;e.h*=1.5;e.ax*=1.5;e.ay*=1.5;e.n='魔頭 '+d.n+(cyc?` ${'ⅡⅢⅣⅤ'[Math.min(3,cyc-1)]}`:'');B.boss=e;
+  if(MAN['d_'+d.a]){e.sc=0;e.key='d_'+d.a;e.frames=['d_'+d.a+'_windup','d_'+d.a+'_strike'];const mm=MAN[e.key];e.w=mm[0]/2;e.h=mm[1]/2;e.ax=mm[2]/2;e.ay=mm[3]/2}else{e.key=tinted(e.key,d.c);e.frames=e.frames.map(f=>tinted(f,d.c));e.w*=1.5;e.h*=1.5;e.ax*=1.5;e.ay*=1.5}e.n='魔頭 '+d.n+(cyc?` ${'ⅡⅢⅣⅤ'[Math.min(3,cyc-1)]}`:'');B.boss=e;
   document.getElementById('bossName').textContent=e.n;document.getElementById('bossBar').style.display='block';SND.play('bossin');SND.play('L_dragon');SND.setBoss(true);
   shake(16);B.hitstop=.2;return}
  const e=mkEnemy(q.k,false);
