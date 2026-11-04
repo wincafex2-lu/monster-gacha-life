@@ -556,7 +556,7 @@ function step(dt){
   if(e.dead){e.dead+=dt;continue}
   e.t+=dt;e.flash=Math.max(0,e.flash-dt);
   if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slow=0}
-  if(e.kb>0){const k=Math.min(e.kb,dt*260);e.x+=k;e.kb-=k}
+  if(e.kb>0){const lim=VW-90-e.w*.3;if(e.x>=lim)e.kb=0;else{const k=Math.min(e.kb,dt*260,lim-e.x);e.x+=k;e.kb-=k}}
   if(e.stun>0){e.stun-=dt;continue}
   if(e.state==='walk'){const v=e.spd*(1-e.slow)*(1-PS.mslow)*(PS.slow&&e.x<L.front+450?1-PS.slow:1);e.x-=v*dt;
    if(e.x-e.w*.3<=e.stop){e.state='atk';e.at=0}}
@@ -620,7 +620,7 @@ function projHit(p){
 }
 function hit(e,amt,o={}){
  if(e.dead)return;if(e.boss&&PS.boss)amt*=1+PS.boss;e.hp-=amt;e.flash=.08;
- if(o.kb&&!e.boss)e.kb+=o.kb;
+ if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big,o.crit);
