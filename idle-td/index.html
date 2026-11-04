@@ -51,7 +51,7 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .bottom>*{pointer-events:auto}
 .ults{display:flex;gap:8px;flex-wrap:wrap}
 .ult{position:relative;width:66px;height:66px;border-radius:14px;border:3px solid #2a170a;background:#3a2414;overflow:hidden;padding:0;cursor:pointer;box-shadow:0 3px 0 #2a170a}
-.ult img{position:absolute;left:50%;top:3%;height:205%;width:auto;image-rendering:auto;pointer-events:none}
+.ult .pt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .ult .fill{position:absolute;left:0;right:0;bottom:0;background:rgba(20,10,4,.62);pointer-events:none}
 .ult .nm{position:absolute;left:0;right:0;bottom:0;font-size:11px;font-weight:800;text-align:center;background:rgba(0,0,0,.55);line-height:16px;pointer-events:none}
 .ult.ready{border-color:#ffd86a;animation:pulse 1s infinite alternate}
@@ -625,7 +625,13 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
 /* ---------- 介面 ---------- */
 const $=id=>document.getElementById(id);
 let ultBtns=[];
-function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)=>{const b=document.createElement('button');b.className='ult';const mk=`c_${h.id}_${S.roster[h.id].tier}`,mm=MAN[mk];b.innerHTML=`<img src="${charImg(h.id)}" alt="${CH[h.id].n}" style="transform:translateX(-${(mm[2]/mm[0]*100).toFixed(1)}%)"><div class="fill"></div>`;b.title=CH[h.id].n;
+function portrait(mk){const m=MAN[mk],im=IMG[mk],c=document.createElement('canvas');c.width=c.height=132;c.className='pt';
+ const base=MAN['c_'+mk.split('_')[1]+'_1']||m;const bh=base[1];const top=Math.max(0,m[3]-base[3]);
+ const sz=bh*.38,sy=top+bh*.19;let cx=m[2];
+ try{const t=document.createElement('canvas');t.width=m[0];t.height=Math.ceil(bh*.4);const g=t.getContext('2d');g.drawImage(im,0,-top-bh*.15);const d=g.getImageData(0,0,t.width,t.height).data;let sx=0,n=0;for(let y=0;y<t.height;y+=3)for(let x=0;x<t.width;x+=2){if(d[(y*t.width+x)*4+3]>128){sx+=x;n++}}if(n)cx=sx/n}catch(e){}
+ const x0=Math.max(-sz*.1,Math.min(m[0]-sz*.9,cx-sz/2+sz*.16));
+ const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(im,x0,sy,sz,sz,0,0,132,132);return c}
+function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)=>{const b=document.createElement('button');b.className='ult';const mk=`c_${h.id}_${S.roster[h.id].tier}`;b.title=CH[h.id].n;b.appendChild(portrait(mk));b.insertAdjacentHTML('beforeend','<div class="fill"></div>');
  b.style.borderColor='';b.addEventListener('pointerdown',ev=>{ev.preventDefault();castUlt(i)});u.appendChild(b);return b})}
 let lastLive=0;
 function updLive(){
