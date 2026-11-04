@@ -108,6 +108,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/furnace__t3__attack.png` | 2172×724 | 4 | 丹爐炮塔 3 階攻擊四格：金色八卦爐、紅玉與龍口炮嘴，爐體擠壓、爐蓋起落。 |
 | `images/bell__t2__stand.png` | 1254×1254 | 1 | 雷音鐘塔 2 階：紅漆曲簷鐘亭、雕雲紋青銅鐘、魚形木槌。 |
 | `images/bell__t3__stand.png` | 1254×1254 | 1 | 雷音鐘塔 3 階：紫金鐘樓、雷雲紋金鐘、雙鼓與三枚浮雲飾件。 |
+| `images/bell__t1__attack.png` | 2172×724 | 4 | 雷音鐘塔 1 階攻擊四格：木槌後擺、敲鐘、鐘身右擺、回擺；鐘架與底座固定。 |
 
 原檔 SHA-256：
 
@@ -128,6 +129,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t3__attack.png`：`1fea1bc1e23619f46c28dd592deac9ad91bbdc2461f0c0cf4da1d27416f44dbb`
 - `bell__t2__stand.png`：`2a3be635c6d519583d30175a87678bfd4fcf153d0381a4049b85c586093e01ea`
 - `bell__t3__stand.png`：`105f8b94be9cf7f084b91bc69212e23db8b898d0e2eadb51dbde364412474484`
+- `bell__t1__attack.png`：`b119c457773efc2e91250ca0a3bc62de69c31de5b3cb320948023f084b620ce2`
 
 ## 意見與待辦
 
