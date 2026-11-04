@@ -150,3 +150,6 @@ Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resiz
 ```
 
 - 工單 10 的影響：上面「攻擊圖處理表」作廢。**所有攻擊圖（55 階）都用新方法，從改好臉的新站立圖逐格改**，臉自然就是新臉，不用再分「重畫」或「只改臉」。每個角色的順序：1 階站立改臉 → 其他階站立改臉 → 1 階攻擊 f1～f3 → 其他階攻擊。
+
+### 13:01 台灣時間 補充（工單 9 的教訓）
+攻擊格的武器**一律留在站立圖那隻手**，舉起、揮出都用同一隻手。逐格改指令最後加：`The weapon must stay in the SAME hand as in the original sprite. Do not move it to the other hand.` 換手的格子會退件。
