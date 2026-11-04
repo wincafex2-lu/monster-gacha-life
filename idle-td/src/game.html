@@ -76,14 +76,14 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .farm.on{background:#2a7a3a;border-color:#9be07a}.farm.go{background:#b8400e;border-color:#ffb06a;animation:pulse2 1.2s infinite alternate}
 .dps{position:absolute;right:max(10px,env(safe-area-inset-right));top:calc(max(8px,env(safe-area-inset-top)) + 54px);width:210px;background:rgba(30,18,8,.62);border:1px solid rgba(255,216,106,.35);border-radius:10px;padding:6px 8px 7px;color:#fff4dc;font-size:12px;pointer-events:auto;cursor:pointer;display:block;z-index:3}
 .dps.min .r,.dps.min .e{display:none}.dps.min{width:auto}
-@media (max-height:520px){.dps{width:170px;font-size:10px;padding:4px 6px}.dps .r{height:14px;line-height:14px;margin-top:1px}.tipk{cursor:pointer;text-decoration:underline dotted}.tipk i{font-style:normal;font-size:.8em;opacity:.6;margin-left:4px}
-.dps .dm{display:flex;gap:3px;margin:0 0 3px}.dps .dm b{flex:1;text-align:center;font-size:11px;padding:2px 0;border-radius:5px;background:rgba(0,0,0,.35);color:#e8d8b8;font-weight:700}.dps .dm b.on{background:#ffd86a;color:#3a2008}
-.dps h4{font-size:11px}}
 .dps h4{margin:0 0 4px;font-size:12px;font-weight:700;color:#ffd86a;display:flex;justify-content:space-between}
 .dps .r{position:relative;height:17px;line-height:17px;margin-top:2px;border-radius:4px;overflow:hidden;background:rgba(0,0,0,.25)}
 .dps .r i{position:absolute;left:0;top:0;bottom:0;opacity:.55}
 .dps .r span{position:relative;padding:0 5px;white-space:nowrap;text-shadow:0 1px 0 #000}
 .dps .r b{position:absolute;right:5px;top:0;font-weight:700;text-shadow:0 1px 0 #000}
+.tipk{cursor:pointer;text-decoration:underline dotted}.tipk i{font-style:normal;font-size:.8em;opacity:.6;margin-left:4px}
+.dps .dm{display:flex;gap:3px;margin:0 0 3px}.dps .dm b{flex:1;text-align:center;font-size:11px;padding:2px 0;border-radius:5px;background:rgba(0,0,0,.35);color:#e8d8b8;font-weight:700}.dps .dm b.on{background:#ffd86a;color:#3a2008}
+@media (max-height:520px){.dps{width:170px;font-size:10px;padding:4px 6px}.dps .r{height:14px;line-height:14px;margin-top:1px}.dps h4{font-size:11px}}
 .bossbar{position:absolute;left:50%;top:calc(max(8px,env(safe-area-inset-top)) + 58px);transform:translateX(-50%);width:min(420px,60vw);display:none;pointer-events:none}
 .bossbar .lbl{font-family:var(--title);text-align:center;font-size:16px;color:#ffd0c8;text-shadow:0 2px 0 #000}
 .bossbar .bar{height:12px;background:rgba(0,0,0,.55);border-radius:6px;overflow:hidden;border:1px solid rgba(255,180,160,.5)}
