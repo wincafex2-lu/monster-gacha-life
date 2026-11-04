@@ -852,7 +852,7 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
  SND.play('ult',h.id);if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+25)});if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 function doUlt(h){
- DSRC='h:'+h.id; const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1);shake(10);B.hitstop=.08;
+ DSRC='u:'+h.id; const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1);shake(10);B.hitstop=.08;
  const alive=()=>B.enemies.filter(e=>!e.dead&&e.x<VW+40);
  if(ULTFX[h.id]){const a=alive().sort((x,y)=>x.x-y.x);const pre=ULTFX[h.id];
   if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
@@ -1051,8 +1051,8 @@ function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)
   w.appendChild(b);w.insertAdjacentHTML('beforeend','<i class="ring"></i>');w.appendChild(a);u.appendChild(w);return b})}
 let bBtns=[];
 let lastLive=0;
-const DPSC={h:'#ffb84a',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',etc:'#aaaaaa'};
-function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
+const DPSC={h:'#ffb84a',u:'#ff6ad0',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',etc:'#aaaaaa'};
+function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
 let dpsOn=true;try{dpsOn=localStorage.getItem('idle-td-dps')!=='0'}catch(e){}
 let dpsLast=0;
 function renderDps(){const el=$('dps');if(!el||!B.dmg)return;const now=performance.now();if(now-dpsLast<500)return;dpsLast=now;el.classList.toggle('min',!dpsOn);
