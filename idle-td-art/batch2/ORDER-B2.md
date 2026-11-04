@@ -99,6 +99,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/crossbow__t2__stand.png` | 1254×1254 | 1 | 弩箭塔 2 階：加高木石結構、青銅箍帶、雙弩與金邊紅旗。 |
 | `images/crossbow__t3__stand.png` | 1254×1254 | 1 | 弩箭塔 3 階：白玉塔身、金瓦龍角、三聯金弩、已裝填玉箭與兩枚浮空金羽。 |
 | `images/crossbow__t1__attack.png` | 2172×724 | 4 | 1 階攻擊：拉弦、釋放後座、抬弩、復位；旗幟與弩弦逐格變化，塔身底座固定。 |
+| `images/crossbow__t2__attack.png` | 2172×724 | 4 | 2 階雙弩沿用 1 階動作與四格配置；雙弩後座、弩弦與旗幟擺動，底座固定。 |
 
 原檔 SHA-256：
 
@@ -110,6 +111,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `crossbow__t2__stand.png`：`54a7d8d42aacdf17f69b29b197495f8400016f9af772275dadb75ea29281d4b7`
 - `crossbow__t3__stand.png`：`5d6ca5f2c572ec6a6f53328b6b1a5db0ed47911f9ea0d59e3fc1ed3affc468c7`
 - `crossbow__t1__attack.png`：`772c89f24d345c660b4e9af63a77d8441a72e0640ae9ac8357aa26dda6bb6fdb`
+- `crossbow__t2__attack.png`：`aa6f623406398c60b0f5b3567fdc45cfec570506acb3ea54a618b6a036875189`
 
 ## 意見與待辦
 
