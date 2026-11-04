@@ -624,7 +624,7 @@ function hit(e,amt,o={}){
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big,o.crit);
- if(e.hp<=0){e.dead=.001;S.coin+=e.coin;SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
+ if(e.hp<=0){e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
   for(let i=0;i<5;i++)addFx({k:'coin',x:e.x,y:e.y-e.ay*.5,vx:(Math.random()-.5)*160,vy:-120-Math.random()*120,life:.6});
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
@@ -642,7 +642,7 @@ function gateDamage(d,e){
 function stageWin(){
  const s=S.stage,first=s>S.best,boss=s%10===0;
  const coin=Math.round(5*Math.pow(1.088,s-1)*(boss?4:1)*TR('coin'));
- const tens=Math.floor(s/10);const gem=first?(boss?60:10):(boss?20:5);const stone=first?(boss?20+5*tens:4+2*tens):(boss?8+2*tens:2+tens);const pill=boss?(first?3:1):0;
+ const tens=Math.floor(s/10);const gem=first?(boss?60+tens*2:10+Math.floor(tens/2)):(boss?20+tens:5+Math.floor(tens/2));const stone=first?(boss?20+5*tens:4+2*tens):(boss?8+2*tens:2+tens);const pill=boss?(first?3:1):0;
  const demon=s%100===0;let fbMsg='';
  if(demon){const gm2=first?300:60,st2=stone*2,pl2=first?10:3;S.gem+=gm2;S.stone+=st2;S.pill+=pl2}
  S.coin+=coin;S.gem+=gem;S.stone+=stone;S.pill+=pill;
