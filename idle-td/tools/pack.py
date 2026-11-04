@@ -11,8 +11,15 @@ os.makedirs(OUT, exist_ok=True)
 X2 = 2
 S = 130 / 705  # 角色／怪物／塔／神獸共用的像素比例
 
+# 原圖有多畫的部分要先裁掉（青龍 stand 原圖畫了兩隻，只用左邊那隻）
+CROP = {'qinglong__stand.png': (0, 0, 0.5, 1)}
+
 def load(n):
-    return np.array(Image.open(os.path.join(SRC, n)).convert('RGB')).astype(np.int16)
+    im = Image.open(os.path.join(SRC, n)).convert('RGB')
+    if n in CROP:
+        x0, y0, x1, y1 = CROP[n]
+        im = im.crop((int(x0 * im.width), int(y0 * im.height), int(x1 * im.width), int(y1 * im.height)))
+    return np.array(im).astype(np.int16)
 
 def dil(m, r=1):
     o = m.copy()
