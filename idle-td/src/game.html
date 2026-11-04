@@ -250,7 +250,7 @@ const MAXFX={
  disciple:{s:'自身＋全隊近戰坦克',n:'清風掃塵',d:'普攻會順便打到後面 2 隻；全隊近戰、坦克攻擊 +20%'},
  fox:{s:'全隊',n:'九尾天狐',d:'燒傷中的怪物受到全隊傷害 ×2；燒傷中的怪物死掉時，火會燒到旁邊的怪'},
  dragon:{s:'全隊',n:'真龍附體',d:'暈眩中的怪物受到全隊傷害 ×2；龍騎放大招時全場怪物暈 3 秒'},
- archer:{s:'自身',n:'星辰箭陣',d:'每 6 秒射出 20 支星箭，打全場隨機怪物，每支是普攻的 3 倍'},
+ archer:{s:'自身',n:'星隕一擊',d:'普攻 20% 機會觸發星隕：目標和周圍（範圍 150）的怪受到這一箭 8 倍傷害，爆擊時也算進去'},
  mecha:{s:'全隊',n:'超載核心',d:'機甲少年放大招時，其他弟子大招充能 +50（幾乎一起再放一次）'},
  alchemist:{s:'全隊',n:'仙丹爐火',d:'全隊攻擊永遠 +30%（仙丹爐火不會熄）；每 20 秒山門回血 10%'},
  pharaoh:{s:'全隊',n:'黃金詛咒',d:'怪物 10% 會變成黃金怪，打死銅錢 ×5'},
@@ -283,7 +283,7 @@ const CH={
  disciple:{n:'掃地弟子',r:'S',t:5,role:'melee',c:'#9fe3ff',ult:'sweep',un:'掃地風暴'},
  fox:{n:'狐仙少女',r:'L',t:5,role:'magic',c:'#ff8a3d',ult:'rain',rk:'fire',un:'狐火流星'},
  dragon:{n:'龍騎小將',r:'L',t:5,role:'tank',c:'#ff5a40',ult:'slam',un:'龍槍震地'},
- archer:{n:'星弓少女',r:'L',t:5,role:'ranged',c:'#9dffb0',ult:'rain',rk:'arrow',un:'星箭雨'},
+ archer:{n:'星弓少女',r:'L',t:5,role:'ranged',c:'#9dffb0',ult:'focus',rk:'arrow',un:'鷹眼星瞳'},
  mecha:{n:'機甲少年',r:'L',t:5,role:'tank',c:'#59c8ff',ult:'laser',un:'能量砲'},
  alchemist:{n:'煉丹童子',r:'L',t:5,role:'support',c:'#ffd84a',ult:'heal',un:'九轉回春丹'},
  pharaoh:{n:'法老王',r:'R',t:3,role:'ranged',c:'#ffd24a',ult:'rain',rk:'sand',un:'黃金沙暴'},
@@ -407,7 +407,7 @@ const PSPR={archer:'p_arrow',fox:'p_ofuda',alchemist:'p_pill',pharaoh:'p_scarab'
 const HX={disciple:'fx_wind',fox:'fx_fire',dragon:'fx_blunt',mecha:'fx_blunt',vampire:'fx_slash',general:'fx_blunt',swordsman:'fx_slash',elf:'fx_wind',kitsune:'fx_fire',panda:'fx_blunt',jiangshi:'fx_stun',witch:'fx_thunder',mummy:'fx_blunt',yukionna:'fx_ice',catsamurai:'fx_slash',
  frost:'fx_ice',furnace:'fx_fire',bell:'fx_stun',crossbow:'fx_blunt'};
 const RAINSPR={arrow:'p_arrow',harpoon:'p_harpoon',star:'p_starbolt',bomb:'p_firebomb',bluefire:'p_foxfire',sand:'p_scarab',fire:'p_ofuda'};
-const ULTFX={dragon:'ult_dragon',archer:'ult_starrain',fox:'ult_ninetail',mecha:'ult_mecha',alchemist:'ult_cauldron'};
+const ULTFX={dragon:'ult_dragon',fox:'ult_ninetail',mecha:'ult_mecha',alchemist:'ult_cauldron'};
 // 首次過關獎勵
 const GIFTS={3:{type:'tur',k:'crossbow'},6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},20:{type:'beast',k:'qinglong'},30:{type:'beast',k:'zhuque'},40:{type:'beast',k:'xuanwu'}};
 const GP=[...Object.keys(TUR).map(k=>({type:'tur',k})),...Object.keys(ARR).map(k=>({type:'arr',k}))];// 陣法・塔召喚池
@@ -564,7 +564,7 @@ function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
- B.time+=dt;DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
+ B.time+=dt;if(B.focusT>0)B.focusT-=dt;DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
   if(B.spawnQ.length){B.spawnT+=dt;if(B.spawnT>=B.spawnQ[0].delay){B.spawnT=0;spawn(B.spawnQ.shift())}}
@@ -584,7 +584,7 @@ function step(dt){
   h.cd-=dt;
   if(h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
   if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+R.reach);if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
-  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0)));
+  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0))*chgMul(h.id));
  }
  // 塔
  for(const t of B.turrets){t.anim=Math.max(0,t.anim-dt);t.cd-=dt;
@@ -592,7 +592,7 @@ function step(dt){
  // 神獸
  if(B.shield>0)B.shield-=dt;
  if(B.state==='run'&&PS.mx){const M=PS.mx;
-  if(M.archer){B.arT=(B.arT||0)+dt;if(B.arT>=6&&alive.length){B.arT=0;const h=B.heroes.find(x=>x.id==='archer');if(h)for(let i=0;i<20;i++){const tg=alive[Math.floor(Math.random()*alive.length)];B.proj.push({x:h.x+18,y:h.y-70,sx:h.x,sy:h.y,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:1300,life:3,dmg:heroAtk('archer')*NA*3,kind:'arrow',c:'#bfe6ff',aoe:0,knock:0,from:h,spr:'p_arrow',hx:'fx_slash'})}}}
+  // 星弓滿階極意改在 projHit：普攻 20% 觸發星隕一擊
   if(M.alchemist){B.buff=Math.max(B.buff||0,.5);B.alT=(B.alT||0)+dt;if(B.alT>=20){B.alT=0;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.1);sprFx('fx_heal',L.gx,G-110,1.6)}}}
  if(B.state==='run'){if(PS.wind){B.windT=(B.windT||0)+dt;if(B.windT>=Math.max(3,9/PS.wind)){B.windT=0;B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&!e.boss)e.kb+=70});sprFx('fx_wind',L.front+260,G-80,2.2)}}
   if(PS.seal){B.sealT=(B.sealT||0)+dt;if(B.sealT>=12){B.sealT=0;DSRC='seal';const avg=B.heroes.reduce((a,h)=>a+heroAtk(h.id),0)/Math.max(1,B.heroes.length);const T=alive;if(T.length){T.forEach(e=>hit(e,avg*3*PS.seal,{c:'#ffb060',big:1}));sprFx('fx_blunt',T[0].x,G-90,2.4);shake(8)}}}}
@@ -655,11 +655,13 @@ function step(dt){
 }
 // 普攻倍率：普攻比大招弱太多（後期大招占 85% 以上），普攻另外 ×NA，大招、神獸不變
 const NA=4;
+// 星弓少女：大招「鷹眼星瞳」是長時間強化普攻（爆擊率 +50%、爆擊傷害 ×2→×3，持續 15 秒），所以充能比別人慢一半
+const chgMul=id=>id==='archer'?.5:1,FOCUS_T=15;
 function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
  const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id)*NA,kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
- if(PS.crit&&Math.random()<PS.crit){p.dmg*=2;p.crit=1}
+ {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?3:2;p.crit=1}}
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=4){h.n4=0;DSRC='h:mecha';const dd=p.dmg*.8;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500)hit(e,dd,{c:d.c})})}}
  if(PS.aw&&PS.aw[h.id]){const aw=h.id,others=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);
   if(aw==='fox'||aw==='mecha'){const n=2,m=aw==='fox'?.6:.4;for(let i=0;i<n&&others.length;i++){const o=others[Math.floor(Math.random()*others.length)];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:p.dmg*m,crit:0,sp:aw==='fox'?'fox':'',sx:p.sx,sy:p.sy-(aw==='mecha'?30+20*i:0)})}}
@@ -668,7 +670,7 @@ function heroFire(h){
  if(R.proj==='pill'||R.proj==='orb'&&false){p.arc=140;p.t=0;p.dur=.55}
  if(R.proj==='slash')p.spd=1100;
  if(R.proj==='orb')p.spd=700;
- B.proj.push(p);h.charge=Math.min(100,h.charge+2.5);
+ B.proj.push(p);h.charge=Math.min(100,h.charge+2.5*chgMul(h.id));
  if(R.proj==='arrow'||R.proj==='spear')addFx({k:'muzzle',x:p.x+10,y:p.y,life:.12,c:d.c});
 }
 function turFire(t,alive){
@@ -693,6 +695,7 @@ function projHit(p){
  if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target;hit(e,e.hp+1,{c:'#c08aff',big:1,src:'fb:zijin'});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
   else if(PS.bind&&Math.random()<PS.bind){p.target.stun=Math.max(p.target.stun,1)}}
  if(p.sp==='fox')B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<(p.aoe||90)){e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,p.dmg*.35)}});
+ if(p.sp==='archer'&&p.from&&M.archer&&p.target&&!p.target.dead&&Math.random()<.2){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-T.x)<150)hit(e,p.dmg*8,{c:'#bfe6ff',big:1,crit:1})});sprFx('fx_thunder',T.x,T.y-T.ay*.5,2);addFx({k:'ring',x:T.x,y:T.y-T.ay*.5,life:.4,c:'#bfe6ff',r:150});shake(4)}
  if(p.sp==='archer'&&p.target){B.enemies.filter(e=>!e.dead&&e!==p.target&&e.x>p.target.x).sort((a,b)=>a.x-b.x).slice(0,2).forEach(e=>{hit(e,p.dmg*.6,{c:p.c});if(p.hx)sprFx(p.hx,e.x,e.y-e.ay*.45,.6)})}
  if(p.sp==='dragon'&&p.target&&!p.target.dead&&Math.random()<.25){p.target.stun=Math.max(p.target.stun,1);sprFx('fx_stun',p.target.x,p.target.y-p.target.ay-10,.7)}if(p.hx)sprFx(p.hx,p.tx,p.ty,p.aoe?1.3:p.tw?1.25:.8);
  if(p.aoe){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<p.aoe&&Math.abs((e.y-e.ay*.45)-p.ty)<p.aoe*1.5)hit(e,p.dmg*dmgMul(p,e),{c:p.c,kb:p.knock})});addFx({k:'boom',x:p.tx,y:p.ty,life:.35,c:p.c,r:p.aoe})}
@@ -879,6 +882,7 @@ function doUlt(h){
  else if(d.ult==='slam'){addFx({k:'wave',x:L.front,y:G,life:1,c:d.c,hitSet:new Set(),upd:(f,dt)=>{f.x+=dt*1300;alive().forEach(e=>{if(!f.hitSet.has(e)&&e.x<f.x&&!e.fly){f.hitSet.add(e);hit(e,dmg,{c:d.c,kb:70,big:1});e.stun=Math.max(e.stun,.8)}})}});alive().filter(e=>e.fly).forEach(e=>hit(e,dmg*.6,{c:d.c,big:1}));shake(16)}
  else if(d.ult==='laser'){addFx({k:'laser',x:h.x+20,y:h.y-70,life:.8,c:d.c,tick:0,upd:(f,dt)=>{f.tick-=dt;if(f.tick<=0){f.tick=.16;alive().forEach(e=>hit(e,dmg/5,{c:f.c,big:1}))}}})}
  else if(d.ult==='heal'){B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.35);B.buff=8;addFx({k:'heal',x:L.gx,y:G,life:1.4});alive().forEach(e=>hit(e,dmg*.4,{c:d.c}));toast('山門回復！全員攻擊 +30%（8 秒）')}
+ else if(d.ult==='focus'){B.focusT=FOCUS_T;addFx({k:'ring',x:h.x,y:h.y-60,life:.6,c:d.c,r:120});toast(`鷹眼星瞳！星弓少女 ${FOCUS_T} 秒內爆擊率 +50%、爆擊傷害 ×3`)}
  else if(d.ult==='freeze'){alive().forEach(e=>{hit(e,dmg*.6,{c:d.c,big:1});e.stun=Math.max(e.stun,3.2)});addFx({k:'frost',life:1.2,c:d.c,fk:d.fk})}
  else if(d.ult==='drain'){let tot=0;alive().forEach(e=>{const a=Math.min(e.hp,dmg*.8);tot+=a;hit(e,dmg*.8,{c:d.c,big:1});addFx({k:'drain',x:e.x,y:e.y-e.ay*.5,tx:L.gx,ty:G-120,life:.6,c:d.c})});B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.15);addFx({k:'moon',life:1.2})}
 }
@@ -926,7 +930,7 @@ function draw(real){
  // 換站位提示
  if(pick>=0){L.spots.forEach(([x,y],i)=>{const me=i===pick;ctx.save();ctx.globalAlpha=me?.35:.18+.1*Math.sin(B.time*6);ctx.fillStyle=me?'#ffd86a':'#ffffff';ctx.fillRect(x-42,y-150,84,150);ctx.globalAlpha=me?1:.8;ctx.strokeStyle=me?'#ffb020':'#ffffff';ctx.lineWidth=7;ctx.setLineDash([14,8]);ctx.strokeRect(x-42,y-150,84,150);ctx.setLineDash([]);if(!me){ctx.fillStyle='#fff';ctx.font='900 30px sans-serif';ctx.textAlign='center';ctx.fillText('⇄',x,y-160)}ctx.restore()})}
  // 英雄
- for(const h of B.heroes){const o={};const A=h.anim;
+ for(const h of B.heroes){const o={};const A=h.anim;if(h.id==='archer'&&B.focusT>0)glow(h.x,h.y-60,80,'rgba(170,255,210,.7)',.55+.25*Math.sin(B.time*8));
   if(A&&A.type==='atk'){const t=A.t;if(t<.2){const p=ease(t/.2);o.rot=-.06*p;o.sy=1+.04*p;o.sx=1-.02*p;o.dx=-3*p}else if(t<.28){o.rot=.09;o.sy=.94;o.sx=1.05;o.dx=6}else{const q=1-ease((t-.28)/.22);o.rot=.09*q;o.sy=1-.06*q;o.sx=1+.05*q;o.dx=6*q}}
   if(A&&A.type==='ult'){const t=A.t;if(t<.3){const p=ease(t/.3);o.sy=1-.08*p;o.sx=1+.06*p}else if(t<.7){const p=(t-.3)/.4,q=Math.sin(p*Math.PI);o.dy=-90*q;o.spin=p*Math.PI*2;o.sy=1+.06*q}else if(t<.78){o.sy=.88;o.sx=1.12}else{const q=1-ease(Math.min(1,(t-.78)/.42));o.sy=1-.12*q;o.sx=1+.12*q}
    ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(h.x,h.y-60,5,h.x,h.y-60,110);gr.addColorStop(0,CH[h.id].c);gr.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=.5;ctx.fillStyle=gr;ctx.fillRect(h.x-120,h.y-180,240,240);ctx.restore()}
@@ -1119,6 +1123,7 @@ function ultDesc(id){const d=CH[id],x=heroAtk(id)*7*TR('ult')*(d.r==='L'?1.5:1),
   laser:`光束持續 0.8 秒，每 0.16 秒打全場一次，每次 ${f(x/5)}${leg}（共約 5 次）`,
   heal:`山門回血 35%，全隊攻擊 +30%（8 秒），並對全場每隻怪造成 ${f(x*.4)}${leg}`,
   freeze:`全場每隻怪受到 ${f(x*.6)}${leg}，並被定住 3.2 秒`,
+  focus:`${FOCUS_T} 秒內星弓少女爆擊率 +50%、爆擊傷害從 2 倍變 3 倍（只強化自己的普攻）。充能速度是別人的一半`,
   drain:`吸取全場每隻怪 ${f(x*.8)} 生命${leg}，山門回血 15%`}[d.ult]||''}
 function renderHero(){
  $('shTitle').textContent='弟子';$('shTabs').innerHTML='';
