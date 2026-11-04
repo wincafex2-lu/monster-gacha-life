@@ -78,3 +78,4 @@ GPT 畫歪時可以回它：
 
 （Claude 驗收後寫在這裡）
 - 2026-11-04 13:22 TW　**`res_coin`、`res_spirit`、`res_pill`、`res_gatestone` 通過。** 沒有字，縮到 48px 一眼分得出（銅錢、藍晶、紅丹、石磚）。靈石多了卷軸底座，好看，保留。繼續照順序畫，不用停。
+- 2026-11-04 13:30 TW　**`res_beastsoul`、`res_soulcrystal`、5 個 `el_` 元素圖示、`ui_ult_frame`、3 張卡框、`card_back`、`ui_panel`、`ui_button` 通過（14 張）。** 沒有字；外框類中間是乾淨的洋紅，四邊粗細一致；圖示縮到 48px 都分得出；卡框普通（木）→稀有（玉）→傳說（金龍鳳＋冠）一眼看得出高低。魂晶的紫色去背後完整保留。剩 `bar_gate`、`bar_boss`、`gacha_altar`，畫完接 ORDER-C4，不用停。
