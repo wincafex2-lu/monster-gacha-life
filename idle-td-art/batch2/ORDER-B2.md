@@ -90,7 +90,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 
 ## 交付紀錄
 
-- 09:35 指定的六張攻擊圖修訂已交齊；10:20 複核另要求修訂弩箭一階、鐘塔三階、符咒一階攻擊。本輪僅處理新增三張，其餘圖片不重複上傳；冰塔三階 20d9a0c 版本待驗收。
+- 09:35 指定的六張攻擊圖修訂已交齊；10:20 複核另要求修訂弩箭一階、鐘塔三階、符咒一階攻擊。本輪處理新增三張；10:30 明確要求冰塔三階再修固定冰晶，另按此新意見處理，其餘圖片不重複上傳。
 - 全部圖片在本第二批專用 ChatGPT 工作對話使用 ImageGen 製作，每次均以標準圖為第一張參考。
 - 提交生成原始 PNG；不裁切、不縮放、不替換背景，不用程式繪圖。程式僅讀取尺寸與校驗檔案；各次原圖保留在工作環境。
 - 依 2026-11-04 04:25 TW 最新流程，不用停等驗收；每張推送後 fetch 意見，有意見先改。寒冰塔升階晶體需明顯變大、變藍。
@@ -111,7 +111,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/bell__t2__stand.png` | 1254×1254 | 1 | 雷音鐘塔 2 階：紅漆曲簷鐘亭、雕雲紋青銅鐘、魚形木槌。 |
 | `images/bell__t3__stand.png` | 1254×1254 | 1 | 雷音鐘塔 3 階：紫金鐘樓、雷雲紋金鐘、雙鼓與三枚浮雲飾件。 |
 | `images/bell__t2__attack.png` | 2172×724 | 4 | 雷音鐘塔 2 階攻擊四格：魚形木槌敲擊與雕紋銅鐘擺動，紅漆鐘亭固定。 |
-| `images/bell__t3__attack.png` | 2172×724 | 4 | 雷音鐘塔 3 階攻擊四格：金鐘與魚形槌擺動，保留紫金鐘樓、雙鼓及浮雲。 |
 | `images/frost__t2__stand.png` | 1254×1254 | 1 | 寒冰燈塔 2 階：白石銀霜紋、屋簷冰柱，依意見把晶體顯著放大並加深藍色。 |
 | `images/frost__t3__stand.png` | 1254×1254 | 1 | 寒冰燈塔 3 階：大型深藍懸浮晶球、銀色塔頂、冰晶立柱與底座尖晶、三枚浮雪晶。 |
 | `images/frost__t1__attack.png` | 2172×724 | 4 | 寒冰燈塔 1 階攻擊四格：晶體後縮、升高變亮、向右推與復位，燈座不動。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/frost__t2__attack.png` | 2172×724 | 4 | 09:35 返工修正版：保留大藍晶體，四格只移位；冰柱擺動、塔身固定，第 4 格回到站立。 |
 | `images/frost__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：大水晶球保持四格同尺寸，只做左移、上浮、右推、回位；雪花移動，第 4 格回到站立。 |
 | `images/crossbow__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：依站立重新生成固定木架、塔腳與平台；只動弩弦、弩身和旗子。 |
+| `images/bell__t3__attack.png` | 2172×724 | 4 | 10:20 返工修正版：降低偏高塔身、保留底座與塔寬；魚槌後擺、撞鐘、回彈及復位，固定亭架。 |
 
 原檔 SHA-256：
 
@@ -144,7 +144,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `bell__t2__stand.png`：`2a3be635c6d519583d30175a87678bfd4fcf153d0381a4049b85c586093e01ea`
 - `bell__t3__stand.png`：`105f8b94be9cf7f084b91bc69212e23db8b898d0e2eadb51dbde364412474484`
 - `bell__t2__attack.png`：`cfdf30b880f32dad590889c2004b1e08fac8919f79e45238d5f34015beffac49`
-- `bell__t3__attack.png`：`898f4b505ef165c2c53510f9380c5a57f855857478e0d3c295b7cb5fc636f36f`
 - `frost__t2__stand.png`：`c3fe63374ec323955fb38c2c3dc30efce17f39bff1c0a3a7d88c39d5ab8d6992`
 - `frost__t3__stand.png`：`348c981ebe13266de7a0d3b480add7c01d3cd011070032ed2fc522fb1ca73e83`
 - `frost__t1__attack.png`：`9cad659cccd92dd1e1c4497c2a842356f2e8c043c633f761c0e80fd875428161`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `frost__t2__attack.png`：`63cfed072f1b986b96f84be9ea42f33d07887d1b121ec1dafb55152d8c359296`
 - `frost__t3__attack.png`：`27e8bf6df22fccf028f0f81ef60b5ffe468cd369d539a7f7789b8e8dc666076e`
 - `crossbow__t1__attack.png`：`024bbc87eae142d8fbc1ad77c71d9ef4e79ad26b072e72a111e8c8c94517b3ba`
+- `bell__t3__attack.png`：`e09dcd3416cc53e72dae7a7a7bbc71a27c1317289ed2788c79d964c8893cb50f`
 
 ## 意見與待辦
 
