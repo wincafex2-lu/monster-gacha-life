@@ -262,7 +262,7 @@ const PS0=()=>({atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,
 let PS=PS0();
 function calcPassives(){PS=PS0();PS.mx={};S.team.slice(0,slots()).forEach(id=>{if(isMax(id))PS.mx[id]=1});
  if(PS.mx.disciple)PS.front+=.2;if(PS.mx.grandma)PS.charge+=.25;if(PS.mx.general)PS.dr+=.04*S.team.slice(0,slots()).filter(id=>['melee','tank'].includes(CH[id].role)).length;(S.fbOn||[]).slice(0,fbSlots()).forEach(k=>{if(S.fb[k])PS[FB[k].k]+=fbV(k)});
- S.team.slice(0,slots()).forEach(id=>{const p=PASSIVE[id];if(p){const t=S.roster[id].tier;PS[p.k]+=p.v(t);if(p.k2)PS[p.k2]+=p.v2(t)}});S.beastTeam.slice(0,beastSlots()).forEach(k=>{if(S.beast[k])PS[BAURA[k].k]+=bAuraV(k)});PS.dr=Math.min(.6,PS.dr);PS.mslow=Math.min(.5,PS.mslow);PS.crit=Math.min(.6,PS.crit)}
+ S.team.slice(0,slots()).forEach(id=>{const p=PASSIVE[id];if(p){const t=S.roster[id].tier;PS[p.k]+=p.v(t);if(p.k2)PS[p.k2]+=p.v2(t)}});S.beastTeam.slice(0,beastSlots()).forEach(k=>{if(S.beast[k]){PS[BAURA[k].k]+=bAuraV(k);for(let i=0;i<bFxN(k);i++)PS[BFX[k][i].k]+=bFxV(k,i)}});PS.dr=Math.min(.6,PS.dr);PS.mslow=Math.min(.5,PS.mslow);PS.crit=Math.min(.6,PS.crit)}
 // ult: sweep 劍氣橫掃 / rain 從天而降 / slam 震地衝擊波 / laser 光砲 / heal 補山門 / freeze 定身 / drain 吸血
 const CH={
  disciple:{n:'掃地弟子',r:'S',t:5,role:'melee',c:'#9fe3ff',ult:'sweep',un:'掃地風暴'},
@@ -360,6 +360,16 @@ const BEAST={
 };
 // 神獸光環（上陣就有效，神獸等級越高越強）、大招、陣法搭配
 const BAURA={baihu:{k:'crit',v:.10,t:'全隊爆擊率'},qinglong:{k:'charge',v:.15,t:'全隊大招充能'},zhuque:{k:'coin',v:.20,t:'打怪銅錢'},xuanwu:{k:'hp',v:.20,t:'山門血量'}};
+// 神獸每 50 級多一個效果（Lv50／100／150／200 共 4 個），超過 200 級後每 50 級全部效果再升一級（每級 +50%）
+const P1=v=>`+${Math.round(v*100)}%`,P2=v=>`+${(v*100).toFixed(1)}%`;
+const BFX={baihu:[{k:'front',v:.15,t:'近戰・坦克傷害',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'bind',v:.03,t:'普攻定身 1 秒機率',f:P1},{k:'boss',v:.15,t:'打 Boss・魔頭傷害',f:P1}],
+ qinglong:[{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'spd',v:.08,t:'全隊攻擊速度',f:P1},{k:'seal',v:.5,t:'每 12 秒天雷打全場（平均攻擊 ×',f:v=>`${(3*v).toFixed(1)}）`},{k:'charge',v:.10,t:'全隊大招充能',f:P1}],
+ zhuque:[{k:'coin',v:.15,t:'打怪銅錢',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'cap',v:.015,t:'普攻直接燒掉小怪機率',f:P2}],
+ xuanwu:[{k:'dr',v:.05,t:'山門受傷減少',f:P1},{k:'regen',v:.005,t:'山門每秒回血',f:P2},{k:'mslow',v:.06,t:'怪物走路變慢',f:P1},{k:'hp',v:.20,t:'山門血量',f:P1}]};
+const bLv=k=>S.beast[k]&&S.beast[k].lv||0;
+const bFxN=k=>Math.min(4,Math.floor(bLv(k)/50));
+const bFxLv=k=>bLv(k)>=250?1+Math.floor((bLv(k)-200)/50):1;
+const bFxV=(k,i)=>BFX[k][i].v*(1+.5*(bFxLv(k)-1));
 const bAuraV=k=>BAURA[k].v*Math.min(2,1+.02*((S.beast[k]&&S.beast[k].lv||1)-1));
 const BULT={baihu:{n:'虎嘯山林',d:'全場地上的怪物被震退、暈 1.5 秒',r:'melee'},qinglong:{n:'青龍雷暴',d:'2 秒內落下 10 道雷',r:'magic'},zhuque:{n:'朱雀火雨',d:'全場怪物受傷並燒傷 5 秒',r:'ranged'},xuanwu:{n:'玄甲護盾',d:'山門 4 秒不受傷，回血 10%',r:'support'}};
 const PAIR={baihu:'a_sword',qinglong:'a_thunder',zhuque:'a_fire',xuanwu:'d_gold'};
@@ -1141,7 +1151,7 @@ function renderGate(){$('shTitle').textContent='山門';
  if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="list">`;
   for(const k in BEAST){const has=S.beast[k],d=BEAST[k];const g=giftAt(k);
    if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜第 ${g} 關打倒 Boss 送</div></div></div>`;continue}
-   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
+   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">Lv${(i+1)*50} 解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}${bFxN(k)>=4?`（效果 ${bFxLv(k)} 級，下一級 Lv${200+50*bFxLv(k)}）`:''}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
   h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星，最多 5 星，每星效果 +25%。已收集 ${own.length}/12。</div><div class="list">`;
