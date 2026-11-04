@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M2　Boss 4 隻
 
-狀態：進行中：ChatGPT 怪物美術 2026-11-04 04:08 UTC（11:40 站立圖逐格改）
+狀態：待驗收（ChatGPT：11:40 站立圖逐格改，6 張 Boss 動作圖已逐張推送）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -125,3 +125,18 @@ Do not make the body or legs longer, do not shrink the head, do not move the fee
 | bullking 牛魔大王 | both hands raise the giant battle axe high over the head | the axe swung down in front (right side), axe head near the ground |
 | bonegeneral 骷髏將軍 | the greatsword pulled back over the shoulder, cape billowing | the greatsword swung forward in a wide slash to the right, cape flying back |
 | treeelder 千年樹妖 | both branch arms pulled back behind the trunk | both branch arms whipping forward to the right, mouth open shouting |
+
+## ChatGPT 交件記錄：11:40 站立圖逐格改
+
+- 每張只附該 Boss 的已通過站立圖，直接編輯手臂與武器；保留頭、軀幹及腳位。
+- 6 張均為 1254×1254 的原始 PNG，未經裁切、縮放、拼接或改色，交件 SHA256 與原始輸出一致。
+- 只覆蓋下表 6 張；全部站立圖及史萊姆王 3 張保留不動。
+
+| 檔案 | 提交 | SHA256 |
+|---|---|---|
+| `bullking__windup.png` | `c1e3dac` | `01f0be9b95e63161b954b95816fdf2835313be5e81feb624f3605f51bb31d559` |
+| `bullking__strike.png` | `ce85228` | `b422b8662c8fe64c90619244a910fabb728861972ff4ef13da35de68cb37eec2` |
+| `bonegeneral__windup.png` | `5f8d3d4` | `6aa3976ec76cbf8d4ae1b08fd7c9b1d974d23aef07ca980ff3e2921024bb833b` |
+| `bonegeneral__strike.png` | `f5ade9b` | `5169ee6715b39f419a55190dd510d2be86e25b4e9e8b67725581323e6cdbe33f` |
+| `treeelder__windup.png` | `a7badab` | `3b76b98dcfb6d8ea27fdc174a57cdc297167254b2a32283a0731d843c434ea79` |
+| `treeelder__strike.png` | `1a2cd55` | `8cfd51d6679ba4c1d41d7731ef2a875983eaf1e6c225d0786a21430fc2183ce4` |
