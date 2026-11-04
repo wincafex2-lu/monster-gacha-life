@@ -270,7 +270,7 @@ const PS0=()=>({atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,
 let PS=PS0();
 function calcPassives(){PS=PS0();PS.mx={};S.team.slice(0,slots()).forEach(id=>{if(isMax(id))PS.mx[id]=1});
  if(PS.mx.disciple)PS.front+=.2;if(PS.mx.grandma)PS.charge+=.25;if(PS.mx.general)PS.dr+=.04*S.team.slice(0,slots()).filter(id=>['melee','tank'].includes(CH[id].role)).length;(S.fbOn||[]).slice(0,fbSlots()).forEach(k=>{if(S.fb[k])PS[FB[k].k]+=fbV(k)});
- S.team.slice(0,slots()).forEach(id=>{const p=PASSIVE[id];if(p){const t=S.roster[id].tier;PS[p.k]+=p.v(t);if(p.k2)PS[p.k2]+=p.v2(t)}});S.beastTeam.slice(0,beastSlots()).forEach(k=>{if(S.beast[k]){PS[BAURA[k].k]+=bAuraV(k);for(let i=0;i<bFxN(k);i++)PS[BFX[k][i].k]+=bFxV(k,i)}});PS.dr=Math.min(.6,PS.dr);PS.mslow=Math.min(.5,PS.mslow);PS.crit=Math.min(.6,PS.crit)}
+ S.team.slice(0,slots()).forEach(id=>{const p=PASSIVE[id];if(p){const t=S.roster[id].tier;PS[p.k]+=p.v(t);if(p.k2)PS[p.k2]+=p.v2(t)}});S.beastTeam.slice(0,beastSlots()).forEach(k=>{if(S.beast[k]){PS[BAURA[k].k]+=bAuraV(k);for(let i=0;i<bFxN(k);i++)PS[BFX[k][i].k]+=bFxV(k,i)}});if(S.arrD&&S.arr[S.arrD]&&DV2[S.arrD])PS[DV2[S.arrD].k]+=dv2(S.arrD,S.arr[S.arrD].lv);PS.dr=Math.min(.6,PS.dr);PS.mslow=Math.min(.5,PS.mslow);PS.crit=Math.min(.6,PS.crit)}
 // ult: sweep 劍氣橫掃 / rain 從天而降 / slam 震地衝擊波 / laser 光砲 / heal 補山門 / freeze 定身 / drain 吸血
 const CH={
  disciple:{n:'掃地弟子',r:'S',t:5,role:'melee',c:'#9fe3ff',ult:'sweep',un:'掃地風暴'},
@@ -348,17 +348,22 @@ const ARR={
  a_frost:{n:'冰封陣',c:[140,225,255],t:'a',m:.7,fx:'fx_ice',d:'怪物變慢 35%，也會受傷'},
  a_poison:{n:'毒霧陣',c:[120,220,80],t:'a',m:.6,fx:'fx_poison',d:'中毒越久越痛'},
  a_wind:{n:'旋風陣',c:[120,240,200],t:'a',m:.6,fx:'fx_wind',d:'把怪物往後吹'},
- d_gold:{n:'金剛陣',c:[255,210,90],t:'d',d:l=>`山門受到的傷害 -${Math.round(dv('d_gold',l)*100)}%`},
- d_lotus:{n:'蓮花陣',c:[255,170,210],t:'d',d:l=>`山門每秒回血 ${(dv('d_lotus',l)*100).toFixed(1)}%`},
+ d_gold:{n:'金剛陣',c:[255,210,90],t:'d',d:l=>`山門受到的傷害 -${Math.round(dv('d_gold',l)*100)}%${dv2Txt('d_gold',l)}`},
+ d_lotus:{n:'蓮花陣',c:[255,170,210],t:'d',d:l=>`山門每秒回血 ${(dv('d_lotus',l)*100).toFixed(1)}%${dv2Txt('d_lotus',l)}`},
  d_rock:{n:'磐石陣',c:[190,170,140],t:'d',d:l=>`山門血量 +${Math.round(dv('d_rock',l)*100)}%`},
  d_mirror:{n:'鏡光陣',c:[200,240,255],t:'d',d:l=>`打山門的怪物被反彈 ${Math.round(dv('d_mirror',l)*100)}% 傷害（以陣法等級算）`},
- d_taiji:{n:'太極陣',c:[240,240,240],t:'d',d:l=>`弟子攻擊速度 +${Math.round(dv('d_taiji',l)*100)}%`},
- d_star:{n:'七星陣',c:[255,240,150],t:'d',d:l=>`大招充能快 ${Math.round(dv('d_star',l)*100)}%`}
+ d_taiji:{n:'太極陣',c:[240,240,240],t:'d',d:l=>`弟子攻擊速度 +${Math.round(dv('d_taiji',l)*100)}%${dv2Txt('d_taiji',l)}`},
+ d_star:{n:'七星陣',c:[255,240,150],t:'d',d:l=>`大招充能快 ${Math.round(dv('d_star',l)*100)}%${dv2Txt('d_star',l)}`}
 };
 // 攻擊陣升級：傷害之外，效果和範圍也會變強
 function AE(k,l){const n=l-1;return{slow:Math.min(.65,.35+.008*n),pois:Math.min(.9,.35+.01*n),kb:Math.min(45,12+.6*n),thun:Math.max(.6,1.5-.02*n),burn:Math.min(5,2+.05*n),sword:Math.min(2.5,1.4*(1+.01*n)),r:1+Math.min(.3,.006*n)}}
 function aDesc(k,l){const a=AE(k,l);return{a_fire:`怪物踩到會燒傷 ${a.burn.toFixed(1)} 秒`,a_thunder:`每 ${a.thun.toFixed(2)} 秒落雷，打陣上全部怪物`,a_sword:`飛劍連斬，傷害倍率 ×${a.sword.toFixed(2)}`,a_frost:`怪物變慢 ${Math.round(a.slow*100)}%，也會受傷`,a_poison:`中毒越久越痛（每秒加深 ${Math.round(a.pois*100)}%）`,a_wind:`把怪物往後吹（力道 ${Math.round(a.kb)}）`}[k]+`｜範圍 ×${a.r.toFixed(2)}`}
-const DV={d_gold:[.2,.01,.6],d_lotus:[.006,.0004,.03],d_rock:[.25,.03,3],d_mirror:[3,.4,99],d_taiji:[.15,.01,.6],d_star:[.2,.01,.6]};
+const DV={d_gold:[.2,.01,.6],d_lotus:[.006,.0004,.03],d_rock:[.25,.03,99],d_mirror:[3,.4,99],d_taiji:[.15,.01,.6],d_star:[.2,.01,.6]};
+// 防禦陣主效果到上限後，多出來的等級改加第二個效果（不設上限）
+const DV2={d_gold:{k:'hp',v:.02,t:'山門血量'},d_lotus:{k:'hp',v:.02,t:'山門血量'},d_taiji:{k:'atk',v:.01,t:'全隊攻擊'},d_star:{k:'atk',v:.01,t:'全隊攻擊'}};
+const dvCapLv=k=>{const[a,b,m]=DV[k];return 1+Math.ceil((m-a)/b-1e-9)};
+const dv2=(k,l)=>DV2[k]?Math.max(0,l-dvCapLv(k))*DV2[k].v:0;
+const dv2Txt=(k,l)=>DV2[k]&&l>=dvCapLv(k)?`（主效果已滿，之後每級 ${DV2[k].t} +${Math.round(DV2[k].v*100)}%：目前 +${Math.round(dv2(k,l)*100)}%）`:DV2[k]?`（Lv${dvCapLv(k)} 滿，之後每級改加 ${DV2[k].t}）`:'';
 function dv(k,l){const[a,b,m]=DV[k];return Math.min(m,a+b*(l-1))}
 const BEAST={
  baihu:{n:'白虎',atk:14,rate:.8,d:'撲咬前方一群怪物'},
@@ -1190,7 +1195,7 @@ function renderGate(){$('shTitle').textContent='山門';
  const upTur=(k,n)=>{const t0=tierOf(S.tur[k].lv);let c=0;while(c<n){const cc=turCost(S.tur[k].lv);if(S.coin<cc)break;S.coin-=cc;S.tur[k].lv++;c++}if(!c)return;if(tierOf(S.tur[k].lv)>t0){toast(`${TUR[k].n} 進化了！`);refreshField()}else if(n>1)toast(`${TUR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
  Q('[data-tu]',b=>upTur(b.dataset.tu,1));Q('[data-tu99]',b=>upTur(b.dataset.tu99,99));
  Q('[data-tt]',b=>{const k=b.dataset.tt;if(S.turTeam.includes(k))S.turTeam=S.turTeam.filter(x=>x!==k);else{if(S.turTeam.length>=turSlots()){toast(`塔位只有 ${turSlots()} 座，升級山門可以多擺`);return}S.turTeam.push(k)}refreshField();renderGate()});
- const upArr=(k,n)=>{let c=0;while(c<n){const cc=turCost(S.arr[k].lv);if(S.coin<cc)break;S.coin-=cc;S.arr[k].lv++;c++}if(!c)return;if(k==='d_rock'&&S.arrD===k)refreshField();if(n>1)toast(`${ARR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
+ const upArr=(k,n)=>{let c=0;while(c<n){const cc=turCost(S.arr[k].lv);if(S.coin<cc)break;S.coin-=cc;S.arr[k].lv++;c++}if(!c)return;if(S.arrD===k)refreshField();if(n>1)toast(`${ARR[k].n} 升了 ${c} 級`);persist();renderGate();updLive()};
  Q('[data-au]',b=>upArr(b.dataset.au,1));Q('[data-au99]',b=>upArr(b.dataset.au99,99));
  Q('[data-as]',b=>{const k=b.dataset.as,sl=b.dataset.sl;S[sl]=S[sl]===k?null:k;refreshField();renderGate()});
  const upBeast=(k,n)=>{const f0=bFxN(k);let c=0;while(c<n){const cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)break;S.coin-=cc;S.beast[k].lv++;c++}if(!c)return;if(bFxN(k)>f0)toast(`${BEAST[k].n} 學會新效果：${BFX[k][bFxN(k)-1].t}`);else if(n>1)toast(`${BEAST[k].n} 升了 ${c} 級`);calcPassives();persist();renderGate();updLive()};
