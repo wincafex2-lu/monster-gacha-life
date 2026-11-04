@@ -412,7 +412,9 @@ const TIER_CAP=[0,20,40,60,80,100];
 // 升到下一階要幾隻重複（普通最常抽到，所以要最多）
 const DUPE={N:{2:6,3:15},R:{2:3,3:8},E:{2:2,3:5},L:{2:1,3:1,4:1,5:1}};
 const dupeNeed=(id,t)=>(DUPE[CH[id].r]||{})[t];
-const BRK_MAX=20;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 20
+const BRK_MAX=50;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 50
+// 傳說碎片：滿階後再抽到重複弟子會給碎片（突破滿了給 2 倍），100 片換一隻自選傳說
+const SHV={N:1,R:2,E:4,L:10},SHARD_COST=100;
 
 /* ---------- 存檔 ---------- */
 const SKEY='idle-td-save-v1';
@@ -1125,8 +1127,10 @@ function rollOne(){S.pull++;S.pityR++;S.pityE=(S.pityE||0)+1;S.pityL++;let r;con
  if(r==='L'){S.pityL=0;S.pityE=0;S.pityR=0}else if(r==='E'){S.pityE=0;S.pityR=0}else if(r==='R')S.pityR=0;
  if(S.firstGacha&&lastPulls.length===0&&r==='N'&&S.pull===1){r='R';S.pityR=0}
  const pool=POOL[r];const id=pool[Math.floor(Math.random()*pool.length)];let isNew=false;
- if(!S.roster[id]){S.roster[id]={lv:1,tier:1,dup:0};isNew=true;if(S.team.length<slots()){S.team.push(id)}}else{const rr=S.roster[id];if(rr.tier>=CH[id].t){if((rr.brk||0)<BRK_MAX)rr.brk=(rr.brk||0)+1;else S.pill+=1}else rr.dup++}
- return{id,isNew}}
+ return grantHero(id)}
+function grantHero(id){let isNew=false,sh=0;
+ if(!S.roster[id]){S.roster[id]={lv:1,tier:1,dup:0};isNew=true;if(S.team.length<slots()){S.team.push(id)}}else{const rr=S.roster[id];if(rr.tier>=CH[id].t){const v=SHV[CH[id].r]||1;if((rr.brk||0)<BRK_MAX){rr.brk=(rr.brk||0)+1;sh=v}else sh=v*2;S.shard=(S.shard||0)+sh}else rr.dup++}
+ return{id,isNew,sh}}
 function gpOne(){S.gpull++;const g=GP[Math.floor(Math.random()*GP.length)];let isNew=false,res='';
  const box=g.type==='tur'?S.tur:S.arr;
  if(!box[g.k]){box[g.k]={lv:1};isNew=true;
@@ -1141,12 +1145,14 @@ function renderGacha(){$('shTitle').textContent='召喚';
  $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法・塔</button>`;
  $('shTabs').querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{if(gTab!==b.dataset.gt){gTab=b.dataset.gt;lastPulls=[]}renderGacha()});
  let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
- if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說 1／2／3／5 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 20 次）</div>`;
- else{const own=Object.keys(S.tur).length+Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 5 種塔、6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的塔或攻擊陣 → 突破，攻擊 +5%（最多 20 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
+ if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 50 次），另外給傳說碎片</div>`;
+ else{const own=Object.keys(S.tur).length+Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 5 種塔、6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的塔或攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
+ if(gTab==='hero'){const sh=S.shard||0;h+=`<div class="rates" style="margin-top:6px"><b>傳說碎片 ${sh}/${SHARD_COST}</b>（滿階後抽到重複：普通 1、稀有 2、史詩 4、傳說 10 片；突破滿了給 2 倍）<br>${POOL.L.map(k=>`<button class="btn ${sh>=SHARD_COST?'gold':''}" data-shard="${k}" ${sh>=SHARD_COST?'':'disabled'} style="margin:3px">換 ${CH[k].n}</button>`).join('')}</div>`}
  h+='<div class="pulls">';
- lastPulls.forEach((p,i)=>{if(p.id){const d=CH[p.id];h+=`<div class="card ${d.r}" style="--d:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':''}<span class="cn">${d.n}</span></div>`}
+ lastPulls.forEach((p,i)=>{if(p.id){const d=CH[p.id];h+=`<div class="card ${d.r}" style="--d:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':p.sh?`<span class="new" style="background:#8a4ad8">+${p.sh} 碎片</span>`:''}<span class="cn">${d.n}</span></div>`}
   else{const g=gpInfo(p);h+=`<div class="card ${g.r}" style="--d:${i*.08}s"><img src="${g.img}" alt="" style="height:52%;bottom:26%">${p.isNew?'<span class="new">新！</span>':`<span class="new" style="background:#3b7fe0">${p.res}</span>`}<span class="cn">${g.n}</span></div>`}});
- h+='</div></div>';$('shBody').innerHTML=h;$('g1').onclick=()=>pull(1);$('g10').onclick=()=>pull(10)}
+ h+='</div></div>';$('shBody').innerHTML=h;$('g1').onclick=()=>pull(1);$('g10').onclick=()=>pull(10);
+ $('shBody').querySelectorAll('[data-shard]').forEach(b=>b.onclick=()=>{if((S.shard||0)<SHARD_COST)return;S.shard-=SHARD_COST;const r=grantHero(b.dataset.shard);lastPulls=[r];SND.play('rare');toast(r.isNew?`${CH[r.id].n} 加入山門！`:`${CH[r.id].n} +1（可以升階）`);refreshField();persist();renderGacha()})}
 /* 山門 */
 let gtab='gate';
 const giftAt=k=>{const g=Object.entries(GIFTS).find(([,v])=>v.k===k);return g?g[0]:0};
