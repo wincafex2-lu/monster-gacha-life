@@ -118,6 +118,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/frost__t3__attack.png` | 2172×724 | 4 | 寒冰燈塔 3 階攻擊四格：大型藍晶球移動、三枚浮雪晶各格位移、冰柱擺動；已加強初稿的浮晶動作。 |
 | `images/talisman__t2__stand.png` | 1254×1254 | 1 | 符咒塔 2 階：紅漆金箍柱、六張黃符、青銅墨盂與朝右毛筆。 |
 | `images/talisman__t3__stand.png` | 1254×1254 | 1 | 符咒塔 3 階：金黑漆柱、盤柱玉龍、兩排黃紫符紙與懸浮毛筆。 |
+| `images/talisman__t1__attack.png` | 2172×724 | 4 | 符咒塔 1 階攻擊四格：三張黃符後揚、抬起、向右展扇與回落；紙根維持連接。 |
 
 原檔 SHA-256：
 
@@ -148,6 +149,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `frost__t3__attack.png`：`8036652cea37d3ac51baa8d6101ec01f52eeaf82b378124b3c148ff93d9f0ae3`
 - `talisman__t2__stand.png`：`d6b50b25a8e41c9daf5f601d97959f8937a7d276f835b9d052437fa9bfc69f20`
 - `talisman__t3__stand.png`：`e92044a870344eec44bf536c0af002e9c29aa96f8c9b9e244b0cdd5ae2df8342`
+- `talisman__t1__attack.png`：`576ccac0df753056e7d531c252d91cdc21491e7f38ca0e6ab4a6d0b88af48bd9`
 
 ## 意見與待辦
 
