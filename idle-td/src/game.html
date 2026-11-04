@@ -1059,11 +1059,11 @@ const DPSC={h:'#ffb84a',u:'#ff6ad0',fb:'#c08aff',b:'#7ad8ff',a:'#c08aff',t:'#8ad
 function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='fb')return '法寶 '+(FB[id]?FB[id].n:id);if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
 let dpsOn=true;try{dpsOn=localStorage.getItem('idle-td-dps')!=='0'}catch(e){}
 let dpsLast=0,dpsMode='sum';try{dpsMode=localStorage.getItem('idle-td-dpsm')||'sum'}catch(e){}
-const DPSM=[['sum','合計'],['n','普攻'],['u','大招'],['all','分開']];
+const DPSM=[['sum','合計'],['n','普攻'],['u','大招'],['o','其他'],['all','分開']];
 function renderDps(){const el=$('dps');if(!el||!B.dmg)return;const now=performance.now();if(now-dpsLast<500)return;dpsLast=now;el.classList.toggle('min',!dpsOn);
  const t=Math.max(1,B.dmgT||0);let src=Object.entries(B.dmg);
  if(dpsMode==='sum'){const m={};src.forEach(([k,v])=>{const kk=k.startsWith('u:')?'h:'+k.slice(2):k;m[kk]=(m[kk]||0)+v});src=Object.entries(m)}
- else if(dpsMode==='n')src=src.filter(([k])=>!k.startsWith('u:'));else if(dpsMode==='u')src=src.filter(([k])=>k.startsWith('u:'));
+ else if(dpsMode==='n')src=src.filter(([k])=>k.startsWith('h:'));else if(dpsMode==='o')src=src.filter(([k])=>!k.startsWith('h:')&&!k.startsWith('u:'));else if(dpsMode==='u')src=src.filter(([k])=>k.startsWith('u:'));
  const rows=src.filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]),tot=rows.reduce((a,r)=>a+r[1],0),top=rows.length?rows[0][1]:1,n=innerHeight<520?6:10;
  let h=`<h4><span data-dt="1">${dpsOn?'▾':'▸'} DPS</span><span>　${fmt(tot/t)}</span></h4>`;if(dpsOn)h+=`<div class="dm">${DPSM.map(([k,n])=>`<b data-dm="${k}" class="${dpsMode===k?'on':''}">${n}</b>`).join('')}</div>`;
  for(const [k,v] of rows.slice(0,n)){const c=DPSC[k.split(':')[0]]||DPSC.etc;h+=`<div class="r"><i style="width:${(v/top*100).toFixed(1)}%;background:${c}"></i><span>${dpsName(k)}</span><b>${fmt(v/t)}　${Math.round(v/tot*100)}%</b></div>`}
