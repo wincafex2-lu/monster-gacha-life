@@ -96,6 +96,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/bell__t1__stand.png` | 1254×1254 | 1 | 雷音鐘塔 1 階首張已於 2026-11-04 04:25 TW 通過；木架、石底座、銅鐘與雙繩吊木槌。 |
 | `images/frost__t1__stand.png` | 1254×1254 | 1 | 寒冰燈塔 1 階首張已於 2026-11-04 04:25 TW 通過；樸素石燈與朝右淡藍晶片，無光暈或冰霧。 |
 | `images/talisman__t1__stand.png` | 1254×1254 | 1 | 符咒塔 1 階首張；木柱、石座、紅繩黃符與頂部筆硯。使用已保留原檔重傳，未重畫。 |
+| `images/crossbow__t2__stand.png` | 1254×1254 | 1 | 弩箭塔 2 階：加高木石結構、青銅箍帶、雙弩與金邊紅旗。 |
 
 原檔 SHA-256：
 
@@ -104,6 +105,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `bell__t1__stand.png`：`8c9581b21bc6a7f04fa8f9181aadca94761caaf078af48b29afc65fa17638107`
 - `frost__t1__stand.png`：`5dedc88bb006cdc965aeb154b0c6db00d174d6dc1cb1615c9b44bef838eb8f86`
 - `talisman__t1__stand.png`：`cd23a8ceb3c7914b4839364ea0242207bd96c0140b554d1c05e5a22babfe14c3`
+- `crossbow__t2__stand.png`：`54a7d8d42aacdf17f69b29b197495f8400016f9af772275dadb75ea29281d4b7`
 
 ## 意見與待辦
 
