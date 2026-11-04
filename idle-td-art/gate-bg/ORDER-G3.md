@@ -66,6 +66,7 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
 |---|---|---|
 | `tower2.png` | 2 | 通過 |
 | `tower3.png` | 3 | 已交圖，待驗收 |
+| `tower4.png` | 2＋2 | 已交圖，待驗收 |
 
 ## 意見與待辦
 
