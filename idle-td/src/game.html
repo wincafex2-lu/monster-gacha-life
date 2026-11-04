@@ -182,7 +182,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
       <div class="chip"><span class="ico coin"></span><span id="coinT">0</span></div>
       <div class="chip"><span class="ico gem"></span><span id="gemT">0</span></div>
       <div class="chip"><span class="ico stone"></span><span id="stoneT">0</span></div>
-      <button class="btn spd" id="spdBtn">1×</button>
+      <button class="btn spd" id="sndBtn">🔊</button><button class="btn spd" id="spdBtn">1×</button>
     </div>
   </div>
   <div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
@@ -425,7 +425,7 @@ function spawn(q){
  if(q.k==='BOSS'){
   const b=BOSS[(Math.floor(s/10)-1)%BOSS.length];const cyc=Math.floor((s/10-1)/BOSS.length);
   const e=mkEnemy(b.k,true);e.n=b.n+(cyc?` ${'ⅡⅢⅣⅤ'[Math.min(3,cyc-1)]}`:'');B.boss=e;
-  document.getElementById('bossName').textContent=e.n;document.getElementById('bossBar').style.display='block';
+  document.getElementById('bossName').textContent=e.n;document.getElementById('bossBar').style.display='block';SND.play('bossin');SND.setBoss(true);
   shake(8);return;
  }
  mkEnemy(q.k,false);
@@ -560,8 +560,9 @@ function hit(e,amt,o={}){
  if(e.dead)return;e.hp-=amt;e.flash=.08;
  if(o.kb&&!e.boss)e.kb+=o.kb;
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
+ if(!o.small)SND.play(o.big?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big);
- if(e.hp<=0){e.dead=.001;S.coin+=e.coin;B.killed++;coinText(e);
+ if(e.hp<=0){e.dead=.001;S.coin+=e.coin;SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
   for(let i=0;i<5;i++)addFx({k:'coin',x:e.x,y:e.y-e.ay*.5,vx:(Math.random()-.5)*160,vy:-120-Math.random()*120,life:.6});
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
@@ -572,7 +573,7 @@ function gateDamage(d,e){
  if(B.beasts.some(b=>b.k==='xuanwu'))d*=.85;
  if(PS.dr)d*=1-PS.dr;
  if(B.arrD==='d_mirror'&&e&&!e.dead)hit(e,arrDps('d_mirror')*dv('d_mirror',S.arr.d_mirror.lv),{c:'#dff6ff',small:1});
- B.gateHp-=d;B.gateHit=.2;shake(2.5);
+ B.gateHp-=d;B.gateHit=.2;SND.play(e&&e.boss?'bosshit':'gate');shake(2.5);
  if(B.gateHp<=0){B.gateHp=0;stageLose()}
 }
 function stageWin(){
@@ -583,20 +584,71 @@ function stageWin(){
  if(first)S.best=s;
  S.stage=s+1;
  toast(`過關！ +${fmt(coin)} 銅錢　+${gem} 靈石　+${stone} 山門石${pill?`　+${pill} 進階丹`:''}`);
- banner('過關！');
+ banner('過關！');SND.play('win');SND.setBoss(false);
  if(first&&GIFTS[s])giveGift(GIFTS[s]);
  persist();updHud();
 }
 function stageLose(){
  B.state='lose';B.stateT=0;const s=S.stage;const back=Math.max(1,Math.floor((s-1)/10)*10+1);
- S.stage=back;banner('山門被打破了…',true);
+ S.stage=back;banner('山門被打破了…',true);SND.play('lose');SND.setBoss(false);
  toast(`退回第 ${back} 關。升級弟子、山門後會更強！`);
  B.enemies.forEach(e=>{if(!e.dead){e.dead=.001}});document.getElementById('bossBar').style.display='none';
  persist();updHud();
 }
+
+/* ---------- 音樂・音效（WebAudio 即時合成，不用音檔） ---------- */
+const SND=(()=>{let ac=null,mg,mus,sfx,on=1,mode=0,nextT=0,step16=0,timer=null,boss=false;const last={};
+ const md=()=>{try{return +(localStorage.getItem('idle-td-snd')||0)}catch(e){return 0}};mode=md();// 0 全開 1 只有音效 2 靜音
+ function init(){if(ac)return;try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}
+  mg=ac.createGain();mg.connect(ac.destination);mus=ac.createGain();sfx=ac.createGain();mus.connect(mg);sfx.connect(mg);apply();
+  const nb=ac.createBuffer(1,ac.sampleRate*.5,ac.sampleRate),d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;noiseBuf=nb;
+  nextT=ac.currentTime+.1;timer=setInterval(sched,60)}
+ let noiseBuf=null;
+ function apply(){if(!ac)return;mus.gain.value=mode===0?.32:0;sfx.gain.value=mode<2?.55:0}
+ function resume(){init();if(ac&&ac.state==='suspended')ac.resume()}
+ ['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,resume,{capture:true}));
+ document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden)ac.suspend();else ac.resume()});
+ function tone(f,t,dur,type,vol,out,opt={}){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);
+  if(opt.to)o.frequency.exponentialRampToValueAtTime(opt.to,t+dur);if(opt.det)o.detune.value=opt.det;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+(opt.a||.005));g.gain.exponentialRampToValueAtTime(.0008,t+dur);
+  o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.05)}
+ function noise(t,dur,vol,out,fq,q,type){const n=ac.createBufferSource();n.buffer=noiseBuf;const f=ac.createBiquadFilter();f.type=type||'bandpass';f.frequency.value=fq;f.Q.value=q||1;
+  const g=ac.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0008,t+dur);n.connect(f);f.connect(g);g.connect(out);n.start(t);n.stop(t+dur+.05)}
+ // 五聲音階（D 宮調），像古箏
+ const ROOT=146.83,PENT=[0,2,4,7,9,12,14,16,19,21,24];const fr=n=>ROOT*Math.pow(2,n/12);
+ const PH=[[0,2,4,7,4,2,4,-1,7,9,7,4,2,4,0,-1],[4,7,9,12,9,7,4,-1,2,4,2,0,2,-1,0,-1],[7,9,12,14,12,9,7,9,4,7,4,2,4,-1,-1,-1],[9,7,4,2,4,7,9,12,9,7,4,2,0,-1,-1,-1]];
+ const BOSSPH=[[0,3,5,7,5,3,0,-1,10,7,5,3,5,-1,0,-1],[12,10,7,5,7,10,12,-1,7,5,3,0,3,-1,0,-1]];
+ const BASS=[0,0,-5,-3];let bar=0;
+ function sched(){if(!ac||mode!==0||ac.state!=='running'){if(ac)nextT=Math.max(nextT,ac.currentTime+.05);return}
+  const bpm=boss?112:84,sp=60/bpm/4;
+  while(nextT<ac.currentTime+.25){const t=nextT,i=step16%16;const ph=boss?BOSSPH[bar%2]:PH[bar%4];const n=ph[i];
+   if(n>=0){const f=fr(n+12);tone(f,t,.9,'triangle',.22,mus,{a:.003});tone(f*2,t,.35,'sine',.06,mus);tone(f,t,.7,'sawtooth',.025,mus,{det:7})}
+   if(i===0||i===8){const b=fr(BASS[bar%4]-12+(boss?-2:0));tone(b,t,1.4,'sine',.3,mus,{a:.02})}
+   if(i%4===0){tone(boss?70:90,t,.25,'sine',boss?.38:.22,mus,{to:40});}
+   if(boss&&i%2===1)noise(t,.05,.06,mus,7000,1,'highpass');
+   if(!boss&&i===12&&bar%2===1)noise(t,.18,.05,mus,5000,2);
+   nextT+=sp;step16++;if(step16%16===0)bar++}}
+ function play(k){if(!ac||mode===2||ac.state!=='running')return;const now=ac.currentTime;const gap={hit:.06,coin:.07,gate:.18,crit:.08}[k]||0;
+  if(gap){if(last[k]&&now-last[k]<gap)return;last[k]=now}const t=now+.005;
+  switch(k){
+   case 'hit':noise(t,.07,.18,sfx,1800+Math.random()*900,1.2);tone(220+Math.random()*60,t,.08,'square',.04,sfx,{to:110});break;
+   case 'crit':noise(t,.12,.3,sfx,2600,1);tone(660,t,.12,'square',.07,sfx,{to:200});break;
+   case 'coin':tone(1568,t,.09,'square',.05,sfx);tone(2093,t+.05,.14,'square',.05,sfx);break;
+   case 'gate':noise(t,.22,.35,sfx,300,1,'lowpass');tone(80,t,.25,'sine',.35,sfx,{to:45});break;
+   case 'bosshit':noise(t,.5,.6,sfx,200,1,'lowpass');tone(55,t,.6,'sine',.6,sfx,{to:30});break;
+   case 'ult':tone(220,t,.5,'sawtooth',.12,sfx,{to:880,a:.02});noise(t+.05,.6,.3,sfx,1200,.7);tone(110,t+.35,.6,'sine',.5,sfx,{to:40});[0,4,7,12].forEach((n,j)=>tone(fr(n+24),t+.08*j,.4,'triangle',.12,sfx));break;
+   case 'win':[0,4,7,12,16].forEach((n,j)=>tone(fr(n+12),t+j*.09,.5,'triangle',.22,sfx));tone(fr(24),t+.45,.9,'sine',.12,sfx);break;
+   case 'lose':[12,9,7,4,0].forEach((n,j)=>tone(fr(n),t+j*.16,.6,'triangle',.22,sfx));break;
+   case 'bossin':tone(73,t,1.2,'sawtooth',.18,sfx,{a:.1});tone(77.8,t,1.2,'sawtooth',.14,sfx,{a:.1});for(let j=0;j<4;j++)tone(60,t+j*.28,.25,'sine',.5,sfx,{to:35});break;
+   case 'gacha':for(let j=0;j<6;j++)tone(fr(PENT[j]+12),t+j*.05,.3,'triangle',.12,sfx);noise(t,.4,.12,sfx,6000,1,'highpass');break;
+   case 'rare':[0,7,12,16,19,24].forEach((n,j)=>tone(fr(n+12),t+j*.07,.8,'triangle',.2,sfx));noise(t+.3,.8,.15,sfx,8000,1,'highpass');break;
+   case 'up':tone(fr(12),t,.12,'triangle',.18,sfx);tone(fr(19),t+.06,.2,'triangle',.18,sfx);break;
+   case 'click':tone(900,t,.05,'square',.04,sfx);break;
+  }}
+ return{play,setBoss:b=>{boss=b},get mode(){return mode},cycle(){mode=(mode+1)%3;try{localStorage.setItem('idle-td-snd',mode)}catch(e){}resume();apply();return mode}}})();
 /* ---------- 大招 ---------- */
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
- const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
+ SND.play('ult');const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 function doUlt(h){
  const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1);shake(10);B.hitstop=.08;
  const alive=()=>B.enemies.filter(e=>!e.dead&&e.x<VW+40);
@@ -803,7 +855,9 @@ $('spdBtn').onclick=()=>{B.speed=B.speed===1?2:1;$('spdBtn').textContent=B.speed
 let panel=null,tab=null,sel=null;
 function openPanel(p,t){panel=p;tab=t||null;$('sheet').classList.add('open');render()}
 function closePanel(){$('sheet').classList.remove('open');panel=null;sel=null}
-$('shX').onclick=closePanel;$('sheet').addEventListener('pointerdown',e=>{if(e.target.id==='sheet')closePanel()});
+$('shX').onclick=closePanel;
+{const sb=$('sndBtn'),L=['🔊','🎵✕','🔇'],T=['音樂＋音效','只有音效','靜音'];sb.textContent=L[SND.mode];sb.onclick=()=>{const m=SND.cycle();sb.textContent=L[m];toast(T[m])}}
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.btn'))SND.play('click')});$('sheet').addEventListener('pointerdown',e=>{if(e.target.id==='sheet')closePanel()});
 $('bHero').onclick=()=>openPanel('hero');$('bGacha').onclick=()=>openPanel('gacha');$('bGate').onclick=()=>openPanel('gate');
 function render(){
  if(panel==='hero')renderHero();else if(panel==='gacha')renderGacha();else if(panel==='gate')renderGate()}
@@ -835,7 +889,7 @@ function renderHero(){
  $('dTier').onclick=()=>{if(!canTier)return;if(id==='disciple')S.pill-=r.tier*3;else r.dup-=need;r.tier++;toast(`${d.n} 升到 ${r.tier} 階！`);refreshField();renderHero()};
  $('dTeam').onclick=()=>{if(inTeam){if(S.team.length<=1){toast('至少要有一位弟子守山門');return}S.team=S.team.filter(x=>x!==id)}else{if(S.team.length>=slots()){toast(`樓閣只站得下 ${slots()} 位，升級山門可以多站`);return}S.team.push(id)}refreshField();renderHero()};
 }
-function levelUp(id,n){const r=S.roster[id];let c=0;while(n-->0&&r.lv<lvCap(id)&&S.coin>=lvCost(r.lv)){S.coin-=lvCost(r.lv);r.lv++;c++}if(c){toast(`${CH[id].n} Lv${r.lv}`);persist()}renderHero();updLive()}
+function levelUp(id,n){const r=S.roster[id];let c=0;while(n-->0&&r.lv<lvCap(id)&&S.coin>=lvCost(r.lv)){S.coin-=lvCost(r.lv);r.lv++;c++}if(c){SND.play('up');toast(`${CH[id].n} Lv${r.lv}`);persist()}renderHero();updLive()}
 function refreshField(){const old=B.heroes.map(h=>[h.id,h.charge]);buildField();B.heroes.forEach(h=>{const o=old.find(x=>x[0]===h.id);if(o)h.charge=o[1]});persist()}
 /* 召喚 */
 let lastPulls=[];
@@ -854,7 +908,7 @@ function gpOne(){S.gpull++;const g=GP[Math.floor(Math.random()*GP.length)];let i
  return{...g,isNew,res}}
 let gTab='hero';
 function pull(n){const cost=n*10;if(S.gem<cost){toast('靈石不夠，過關可以拿靈石');return}S.gem-=cost;lastPulls=[];
- for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():rollOne());if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
+ for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():rollOne());SND.play(lastPulls.some(p=>p.id&&'EL'.includes(CH[p.id].r))?'rare':'gacha');if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
 function gpInfo(p){if(p.type==='tur')return{img:SRC['t_'+p.k+'_1'],n:TUR[p.k].n,r:'R'};return{img:SRC['i_'+p.k],n:ARR[p.k].n,r:ARR[p.k].t==='a'?'E':'L'}}
 function renderGacha(){$('shTitle').textContent='召喚';
  $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法・塔</button>`;
@@ -925,7 +979,7 @@ function giveGift(g){let title,img,text;
  if(g.type==='tur'){S.tur[g.k]={lv:1};if(S.turTeam.length<turSlots())S.turTeam.push(g.k);title='獲得新的塔！';img=SRC['t_'+g.k+'_1'];text=`${TUR[g.k].n}：${TUR[g.k].d}。擺在山門前面自動攻擊。`}
  else if(g.type==='arr'){S.arr[g.k]=S.arr[g.k]||{lv:1};if(ARR[g.k].t==='a'&&!S.arrA)S.arrA=g.k;title='獲得陣法！';img=SRC['i_'+g.k];text=`${ARR[g.k].n}：${ARR[g.k].d}。`}
  else{S.beast[g.k]={lv:1};if(S.beastTeam.length<beastSlots()&&!S.beastTeam.includes(g.k))S.beastTeam.push(g.k);title='神獸來了！';img=SRC['b_'+g.k];text=`神獸 ${BEAST[g.k].n} 願意守護山門！${BEAST[g.k].d}。`}
- giftOpen=true;$('gfTitle').textContent=title;$('gfImg').src=img;$('gfText').textContent=text;$('gift').classList.add('open');refreshField()}
+ giftOpen=true;SND.play('rare');$('gfTitle').textContent=title;$('gfImg').src=img;$('gfText').textContent=text;$('gift').classList.add('open');refreshField()}
 $('gfOk').onclick=()=>{$('gift').classList.remove('open');giftOpen=false};
 /* 離線收穫 */
 function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)return;const t=Math.min(dt,12*3600);const s=Math.max(1,S.best);
