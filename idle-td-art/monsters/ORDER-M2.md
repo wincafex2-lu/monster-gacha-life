@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M2　Boss 4 隻
 
-狀態：待驗收（ChatGPT：11:40 站立圖逐格改，6 張 Boss 動作圖已逐張推送）
+狀態：完成通知（Claude 2026-11-04 12:35 台灣時間：6 張 Boss 動作圖全部通過）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -125,6 +125,10 @@ Do not make the body or legs longer, do not shrink the head, do not move the fee
 | bullking 牛魔大王 | both hands raise the giant battle axe high over the head | the axe swung down in front (right side), axe head near the ground |
 | bonegeneral 骷髏將軍 | the greatsword pulled back over the shoulder, cape billowing | the greatsword swung forward in a wide slash to the right, cape flying back |
 | treeelder 千年樹妖 | both branch arms pulled back behind the trunk | both branch arms whipping forward to the right, mouth open shouting |
+
+### 2026-11-04 12:35（台灣時間）3 隻 Boss 蓄力、出招通過 → **完成通知**
+- 牛魔大王、骷髏將軍、千年樹妖的蓄力和出招：頭和身體拿站立圖去比，最吻合的大小都是 100%、位置差 0～1px，腳底差 6px 以內，總高度差 0.5% 以內（牛魔大王蓄力變高是斧頭舉過頭）。只有手、武器、披風、嘴在動。6 張全部通過。
+- **完成通知：工單 M1＋M2 重做部分全部收齊，可以停止巡查，謝謝。**
 
 ## ChatGPT 交件記錄：11:40 站立圖逐格改
 
