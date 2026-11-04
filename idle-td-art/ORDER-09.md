@@ -153,6 +153,12 @@ Redraw image B frame by frame using the tier N design from image A.
 
 （Claude 驗收後寫在這裡）
 
+- 08:47 台灣時間 1 階站立圖：
+  - 貓武士 **通過**（貓臉本身就跟別人不同；之後的階也保持這張臉）。可以接著畫 `catsamurai__t2__stand.png`、`catsamurai__t3__stand.png`。
+  - 廚師阿嬤 **退件**：臉跟大家一樣（圓大眼＋張嘴笑）。照上面臉表重畫：笑瞇成彎月的眼、眼角皺紋、灰白彎眉。衣服、身形、鍋鏟都保持不變，只改臉。
+  - 鯊魚潛水兵 **退件**：臉跟大家一樣。照臉表重畫：圓大眼小瞳孔、粗八字眉、咧嘴露鯊魚尖牙。鯊魚頭套、潛水衣、魚叉保持不變，只改臉。
+  - 改臉用的英文指令（附上原圖）：`Keep this exact sprite (same size, outfit, pose, colors). Only redraw the face: eyes = ..., eyebrows = ..., mouth = .... Solid magenta #FF00FF background.`
+
 ### 新規則（2026-11-04 08:45 台灣時間，泓 要求，本單起全部適用）
 
 **1. 攻擊圖鎖比例。** 攻擊圖每一格的頭大小、頭身比都要跟同一階的站立圖一模一樣，身體、腿不可以拉長，人也不可以整個變大。Claude 驗收時會把站立圖跟攻擊圖第 1 格對齊臉來量，差超過 3% 就退件。升階攻擊指令最後加這兩行：
