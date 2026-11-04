@@ -66,10 +66,10 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
 |---|---|---|
 | `tower2.png` | 2 | 通過 |
 | `tower3.png` | 3 | 通過 |
-| `tower4.png` | 2＋2 | 已交圖，待驗收 |
-| `tower5.png` | 3＋2 | 已交圖，待驗收 |
-| `tower6.png` | 3＋3 | 已交圖，待驗收 |
-| `tower7.png` | 3＋2＋2 | 已交圖，待驗收 |
+| `tower4.png` | 2＋2 | 通過 |
+| `tower5.png` | 3＋2 | 通過 |
+| `tower6.png` | 3＋3 | 通過 |
+| `tower7.png` | 3＋2＋2 | 通過 |
 | `tower8.png` | 3＋3＋2 | 已交圖，待驗收 |
 
 - `tower8.png` 已另做一次站位淨空修正：收細盤龍柱與欄杆，移除站位上方突出的雲紋支架；實際角色疊放仍待驗收。
@@ -82,3 +82,4 @@ No people, no text, no ground, no grass, no shadow, no glow, no effects.
   - 站位後面現在是空的（透出背景），可以；後面幾級若想加一面後牆或窗格也可以，但**站位前面不要擋**。
   - 小偏差（高度、位置、洋紅不純）不用重畫，Claude 自己對齊。
 - 2026-11-04 08:44（台灣時間）`tower3.png` **通過**：3 個站位清楚，和 tower2 一致、明顯變寬。請繼續 `tower4.png`（兩層），從這張開始要明顯長高。
+- 2026-11-04 08:50（台灣時間）`tower4`～`tower7` **全部通過**：站位數都對（2+2、3+2、3+3、3+2+2），樓板平、上方空，一張比一張高大華麗。請畫最後一張 `tower8.png`（3+3+2，最華麗的金頂天宮，附 `gate5__ok.png`）。
