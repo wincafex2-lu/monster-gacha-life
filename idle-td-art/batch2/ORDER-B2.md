@@ -1,6 +1,6 @@
 # 放置塔防第二批點陣圖：工單 B2　塔 5 種 × 3 階
 
-狀態：進行中：ChatGPT 10:20 新增三張攻擊修訂；冰塔三階 20d9a0c 版待驗收
+狀態：進行中：ChatGPT 10:20 三張攻擊圖比例修訂
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -90,7 +90,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 
 ## 交付紀錄
 
-- 依 2026-11-04 09:35 TW 驗收，24 張已通過；本輪僅修訂丹爐三階、鐘塔一階、冰塔二三階的六張攻擊圖。
+- 09:35 指定的六張攻擊圖修訂已交齊；10:20 複核另要求修訂弩箭一階、鐘塔三階、符咒一階攻擊。本輪僅處理新增三張，其餘圖片不重複上傳；冰塔三階 20d9a0c 版本待驗收。
 - 全部圖片在本第二批專用 ChatGPT 工作對話使用 ImageGen 製作，每次均以標準圖為第一張參考。
 - 提交生成原始 PNG；不裁切、不縮放、不替換背景，不用程式繪圖。程式僅讀取尺寸與校驗檔案；各次原圖保留在工作環境。
 - 依 2026-11-04 04:25 TW 最新流程，不用停等驗收；每張推送後 fetch 意見，有意見先改。寒冰塔升階晶體需明顯變大、變藍。
@@ -104,7 +104,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/talisman__t1__stand.png` | 1254×1254 | 1 | 符咒塔 1 階首張；木柱、石座、紅繩黃符與頂部筆硯。使用已保留原檔重傳，未重畫。 |
 | `images/crossbow__t2__stand.png` | 1254×1254 | 1 | 弩箭塔 2 階：加高木石結構、青銅箍帶、雙弩與金邊紅旗。 |
 | `images/crossbow__t3__stand.png` | 1254×1254 | 1 | 弩箭塔 3 階：白玉塔身、金瓦龍角、三聯金弩、已裝填玉箭與兩枚浮空金羽。 |
-| `images/crossbow__t1__attack.png` | 2172×724 | 4 | 1 階攻擊：拉弦、釋放後座、抬弩、復位；旗幟與弩弦逐格變化，塔身底座固定。 |
 | `images/crossbow__t2__attack.png` | 2172×724 | 4 | 2 階雙弩沿用 1 階動作與四格配置；雙弩後座、弩弦與旗幟擺動，底座固定。 |
 | `images/crossbow__t3__attack.png` | 2172×724 | 4 | 3 階三聯金弩沿用攻擊節奏；弩具、旗幟與兩枚金羽逐格變化，無空中投射物。 |
 | `images/furnace__t2__stand.png` | 1254×1254 | 1 | 丹爐炮塔 2 階：青銅爐體、銅鉚釘與把手、加寬炮口、後方煙囪。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/bell__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：重對木架高寬與底座比例；鐘槌敲擊、鐘身擺動，第 4 格回原站立。 |
 | `images/frost__t2__attack.png` | 2172×724 | 4 | 09:35 返工修正版：保留大藍晶體，四格只移位；冰柱擺動、塔身固定，第 4 格回到站立。 |
 | `images/frost__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：大水晶球保持四格同尺寸，只做左移、上浮、右推、回位；雪花移動，第 4 格回到站立。 |
+| `images/crossbow__t1__attack.png` | 2172×724 | 4 | 10:20 返工修正版：依站立重新生成固定木架、塔腳與平台；只動弩弦、弩身和旗子。 |
 
 原檔 SHA-256：
 
@@ -137,7 +137,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `talisman__t1__stand.png`：`cd23a8ceb3c7914b4839364ea0242207bd96c0140b554d1c05e5a22babfe14c3`
 - `crossbow__t2__stand.png`：`54a7d8d42aacdf17f69b29b197495f8400016f9af772275dadb75ea29281d4b7`
 - `crossbow__t3__stand.png`：`5d6ca5f2c572ec6a6f53328b6b1a5db0ed47911f9ea0d59e3fc1ed3affc468c7`
-- `crossbow__t1__attack.png`：`772c89f24d345c660b4e9af63a77d8441a72e0640ae9ac8357aa26dda6bb6fdb`
 - `crossbow__t2__attack.png`：`aa6f623406398c60b0f5b3567fdc45cfec570506acb3ea54a618b6a036875189`
 - `crossbow__t3__attack.png`：`2b25d12eccc02864864061856ae375fba9c78b1f5555a0ebecaf1b5ee6bcb7fb`
 - `furnace__t2__stand.png`：`781f15cbfc6efc76796b2c149109255b5ae95f5ad1888a0e9d963bd8a5a9466e`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `bell__t1__attack.png`：`d82d8e56bc2600421dce9e52ebc5f0480949a19a86671ae530694a85e3eae07e`
 - `frost__t2__attack.png`：`63cfed072f1b986b96f84be9ea42f33d07887d1b121ec1dafb55152d8c359296`
 - `frost__t3__attack.png`：`27e8bf6df22fccf028f0f81ef60b5ffe468cd369d539a7f7789b8e8dc666076e`
+- `crossbow__t1__attack.png`：`024bbc87eae142d8fbc1ad77c71d9ef4e79ad26b072e72a111e8c8c94517b3ba`
 
 ## 意見與待辦
 
@@ -184,3 +184,4 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
   - `talisman__t1__attack.png`：4 格的柱身（離地 35%）都比站立圖窄 7%。
   - 這 3 張照比例鎖重畫：塔身每格跟站立圖一樣大，只有會動的部位動。建議做法：拿站立圖本身當底，一格一格只改會動的部位。
   - 目前要重畫的：`frost__t3__attack.png`（之前就退）＋上面 3 張。
+- 2026-11-04 10:30 TW　`frost__t3__attack.png` 重畫版：水晶球已經對了，但**底座兩邊的冰晶**每格都比站立圖寬約 15%（離地 15% 量），上半的雪花也偏。冰晶是不動的部位，要跟站立圖一模一樣。再重畫一次：拿站立圖當底，只動水晶球和飄的雪花。
