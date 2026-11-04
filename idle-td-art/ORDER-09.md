@@ -281,3 +281,4 @@ Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resiz
 - 鯊魚潛水兵 1、2、3 階 f1 **退件**：同樣問題，魚叉／三叉戟舉到肩後時換成後面那隻手。
 - 重畫這 5 格：**武器一律留在站立圖那隻手**（前手）。舉起的動作改成前手把武器往後上方舉起（像要往前揮或丟），後手握拳或扶在胸前。
 - 指令加一句：`The weapon must stay in the SAME hand as in the original sprite (the front hand). Do not move it to the other hand.`
+- 13:05 台灣時間 重交：雪女 3 階 f2（冰扇留在原手）、貓武士 1、2 階 f1（前手舉刀）**通過**（身體 ±0.5% 內）。只剩鯊魚潛水兵 1、2、3 階 f1（魚叉留在前手）。

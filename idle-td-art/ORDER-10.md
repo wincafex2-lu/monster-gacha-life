@@ -153,3 +153,4 @@ Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resiz
 
 ### 13:01 台灣時間 補充（工單 9 的教訓）
 攻擊格的武器**一律留在站立圖那隻手**，舉起、揮出都用同一隻手。逐格改指令最後加：`The weapon must stay in the SAME hand as in the original sprite. Do not move it to the other hand.` 換手的格子會退件。
+- 13:05 台灣時間 15 支 1 階站立改臉 **全部通過**：大小、位置、衣服完全沒變（外框差 0～1 px），臉都照臉表而且彼此不同。下一步：各角色其他階站立改臉（附新 1 階當臉參考），然後攻擊逐格改。
