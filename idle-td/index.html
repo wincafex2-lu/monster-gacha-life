@@ -313,7 +313,7 @@ function layout(){
  L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2,G-(th-sy/2)]),gk,gx,gw,front:gx+gw/2};
  L.tur=[L.front+38,L.front+118,L.front+198];
  L.beastX=L.front+(turSlots()>=2?270:200);
- L.arrX=L.front+440;
+ L.arrX=L.front+520;
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
  B.turrets.forEach((t,i)=>t.x=L.tur[i]);
  if(B.beast)B.beast.x=L.beastX;
@@ -406,7 +406,7 @@ function step(dt){
  }
  // 陣法
  if(B.arr&&B.state==='run'){const a=B.arr;a.t+=dt;a.tick+=dt;if(a.tick>=.5){a.tick=0;const dps=arrDps(a.k);
-  B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&Math.abs(e.x-a.x)<110)hit(e,dps*.5,{c:'#ffa04a',small:1})})}}
+  B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&Math.abs(e.x-a.x)<220)hit(e,dps*.5,{c:'#ffa04a',small:1})})}}
  // 敵人
  for(const e of B.enemies){
   if(e.dead){e.dead+=dt;continue}
@@ -537,9 +537,9 @@ function draw(real){
  const bg=IMG.bg_meadow;for(let x=0,i=0;x<VW+10;x+=1536,i++){if(i%2){ctx.save();ctx.translate(x+1536,0);ctx.scale(-1,1);ctx.drawImage(bg,0,0,1536,1024);ctx.restore()}else ctx.drawImage(bg,x,0,1536,1024)}
  // 陣法
  if(B.arr){const a=B.arr,c=ARR[a.k].c;const pul=.75+.25*Math.sin(B.time*4);
-  ctx.save();ctx.globalAlpha=.85;drawSprite('g_'+a.k,a.x,G+4,{});ctx.restore();
-  ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,10,a.x,G+4,130);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,140,40,0,0,Math.PI*2);ctx.fill();
-  for(let i=0;i<4;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-80+i*50+Math.sin(i*7)*10,G-ph*90,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
+  ctx.save();ctx.globalAlpha=.85;drawSprite('g_'+a.k,a.x,G+4,{sx:2,sy:2});ctx.restore();
+  ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,20,a.x,G+4,260);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,280,80,0,0,Math.PI*2);ctx.fill();
+  for(let i=0;i<8;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-180+i*50+Math.sin(i*7)*10,G-ph*110,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
  // 定身符陣地面
  if(PS.slow>0){ctx.save();ctx.globalAlpha=.32+.08*Math.sin(B.time*3);ctx.fillStyle='#ffe86a';ctx.beginPath();ctx.ellipse(L.front+225,G+6,225,22,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.9;for(let i=0;i<6;i++){const x=L.front+30+i*75,y=G-8-Math.abs(Math.sin(B.time*2+i))*10;ctx.fillStyle='#ffe86a';ctx.fillRect(x-6,y-14,12,20);ctx.fillStyle='#d0302a';ctx.fillRect(x-2,y-11,4,14)}ctx.restore()}
  // 樓閣
