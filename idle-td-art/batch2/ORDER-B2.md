@@ -110,6 +110,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/bell__t3__stand.png` | 1254×1254 | 1 | 雷音鐘塔 3 階：紫金鐘樓、雷雲紋金鐘、雙鼓與三枚浮雲飾件。 |
 | `images/bell__t1__attack.png` | 2172×724 | 4 | 雷音鐘塔 1 階攻擊四格：木槌後擺、敲鐘、鐘身右擺、回擺；鐘架與底座固定。 |
 | `images/bell__t2__attack.png` | 2172×724 | 4 | 雷音鐘塔 2 階攻擊四格：魚形木槌敲擊與雕紋銅鐘擺動，紅漆鐘亭固定。 |
+| `images/bell__t3__attack.png` | 2172×724 | 4 | 雷音鐘塔 3 階攻擊四格：金鐘與魚形槌擺動，保留紫金鐘樓、雙鼓及浮雲。 |
 
 原檔 SHA-256：
 
@@ -132,6 +133,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `bell__t3__stand.png`：`105f8b94be9cf7f084b91bc69212e23db8b898d0e2eadb51dbde364412474484`
 - `bell__t1__attack.png`：`b119c457773efc2e91250ca0a3bc62de69c31de5b3cb320948023f084b620ce2`
 - `bell__t2__attack.png`：`cfdf30b880f32dad590889c2004b1e08fac8919f79e45238d5f34015beffac49`
+- `bell__t3__attack.png`：`898f4b505ef165c2c53510f9380c5a57f855857478e0d3c295b7cb5fc636f36f`
 
 ## 意見與待辦
 
