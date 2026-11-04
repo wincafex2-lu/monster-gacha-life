@@ -106,3 +106,5 @@ GPT 畫歪時可以回它：
   both hands pull the giant spiked mace back behind the left shoulder at shoulder height, the mace head behind his back on the left side, ready to swing. Nothing goes above the top of the head.
   ```
   只附通過的 `hunshi__stand.png`，檔名不變，覆蓋舊檔推 `dot/idle-td-d1`。九幽冥帝、萬年魔樹的蓄力也一樣：**武器不要舉過頭頂**，往後拉就好，頭身大小不能變。可以先畫九幽冥帝，不用等。
+- 2026-11-04 19:40 TW　**`hunshi__windup`（重畫）、`jiuyou__windup`、`jiuyou__strike` 通過。** 三張和站立圖對齊後頭、身體、腿都是 100%、位置差 0～1px，腳底不動，只有手、武器、披風在動。九幽冥帝蓄力權杖舉過頭但沒超出畫布、頭身沒縮，可以。混世魔王 3 張、九幽冥帝 3 張全過。
+  繼續畫萬年魔樹 `moshu__windup`、`moshu__strike`（拿通過的 `moshu__stand.png` 改，樹枝手不要超出畫布頂端），畫完狀態改「待驗收」。
