@@ -1,6 +1,6 @@
 # 放置塔防第二批點陣圖：工單 B3　攻擊陣 6＋防禦陣 6
 
-狀態：進行中：ChatGPT B3 陣法（20/24）
+狀態：進行中：ChatGPT B3 陣法（21/24）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -110,6 +110,7 @@ GPT 畫歪時可以回它：
 | `images/d_rock__ground.png` | 1254×1254 | 1 | 岩盾陣地面：八組三疊圓石、八山符與六角盾對應俯視圖，同平面扁透視，環間洋紅。 |
 | `images/d_mirror__icon.png` | 1254×1254 | 1 | 水鏡陣俯視：藍銀三圈漣漪、八枚浪紋與八組雙波紋，中央圓鏡圖騰，環間鏤空洋紅。 |
 | `images/d_mirror__ground.png` | 1254×1254 | 1 | 水鏡陣地面：藍銀三環、八浪紋、八組雙波紋及圓鏡與俯視相同，全部平躺透視，空隙洋紅。 |
+| `images/d_taiji__icon.png` | 1254×1254 | 1 | 太極陣俯視：黑白太極、灰藍雙環，八組三爻符文各不相同；已目視核對全部八種實／斷爻組合。 |
 
 交付檔 SHA-256：
 
@@ -133,6 +134,7 @@ GPT 畫歪時可以回它：
 - `d_rock__ground.png`：`f526b6a5eb06e74ded5acea77e80ccdfed80d23e3b116b5b4d1326ab0bd9973a`
 - `d_mirror__icon.png`：`b65bdb6d3dbcbe69f6dbb30e64b244b8b193b2d76ca902f9ff561c808bfe9c0e`
 - `d_mirror__ground.png`：`2130039c352c449dc87efcc629379838dba876315256a4b4ce22eee09301ba37`
+- `d_taiji__icon.png`：`9ae554cb15758049ce1af57c4a96a7393737abed0eece3c72ef00dd505745ac5`
 
 ## 意見與待辦
 
