@@ -111,7 +111,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/furnace__t3__stand.png` | 1254×1254 | 1 | 丹爐炮塔 3 階：金色八卦爐、紅玉寶石、朝右龍口炮嘴、微浮爐蓋。 |
 | `images/bell__t2__stand.png` | 1254×1254 | 1 | 雷音鐘塔 2 階：紅漆曲簷鐘亭、雕雲紋青銅鐘、魚形木槌。 |
 | `images/bell__t3__stand.png` | 1254×1254 | 1 | 雷音鐘塔 3 階：紫金鐘樓、雷雲紋金鐘、雙鼓與三枚浮雲飾件。 |
-| `images/bell__t1__attack.png` | 2172×724 | 4 | 雷音鐘塔 1 階攻擊四格：木槌後擺、敲鐘、鐘身右擺、回擺；鐘架與底座固定。 |
 | `images/bell__t2__attack.png` | 2172×724 | 4 | 雷音鐘塔 2 階攻擊四格：魚形木槌敲擊與雕紋銅鐘擺動，紅漆鐘亭固定。 |
 | `images/bell__t3__attack.png` | 2172×724 | 4 | 雷音鐘塔 3 階攻擊四格：金鐘與魚形槌擺動，保留紫金鐘樓、雙鼓及浮雲。 |
 | `images/frost__t2__stand.png` | 1254×1254 | 1 | 寒冰燈塔 2 階：白石銀霜紋、屋簷冰柱，依意見把晶體顯著放大並加深藍色。 |
@@ -127,6 +126,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/furnace__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：爐身、三足與底座固定，只動爐蓋與炮口；第 4 格關蓋回站立。 |
 | `images/furnace__t2__attack.png` | 2172×724 | 4 | 09:35 返工修正版：青銅爐身不擠壓、不拉長，只動蓋與炮口；第 4 格關蓋，比例已重新對照站立。 |
 | `images/furnace__t3__attack.png` | 2172×724 | 4 | 09:35 返工修正版：金色爐身固定，只有爐蓋起落與龍口微縮；第 4 格回到站立圖微浮蓋位置。 |
+| `images/bell__t1__attack.png` | 2172×724 | 4 | 09:35 返工修正版：重對木架高寬與底座比例；鐘槌敲擊、鐘身擺動，第 4 格回原站立。 |
 
 原檔 SHA-256：
 
@@ -144,7 +144,6 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t3__stand.png`：`df186ad507579341121b437695ed75fc48eb59ec2d980169994577354251a868`
 - `bell__t2__stand.png`：`2a3be635c6d519583d30175a87678bfd4fcf153d0381a4049b85c586093e01ea`
 - `bell__t3__stand.png`：`105f8b94be9cf7f084b91bc69212e23db8b898d0e2eadb51dbde364412474484`
-- `bell__t1__attack.png`：`b119c457773efc2e91250ca0a3bc62de69c31de5b3cb320948023f084b620ce2`
 - `bell__t2__attack.png`：`cfdf30b880f32dad590889c2004b1e08fac8919f79e45238d5f34015beffac49`
 - `bell__t3__attack.png`：`898f4b505ef165c2c53510f9380c5a57f855857478e0d3c295b7cb5fc636f36f`
 - `frost__t2__stand.png`：`c3fe63374ec323955fb38c2c3dc30efce17f39bff1c0a3a7d88c39d5ab8d6992`
@@ -160,6 +159,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `furnace__t1__attack.png`：`d5c2b44fa5d3a8c4fc2852cf410b7fb3692249ecd5b4fc28dc3e0853ce76a84d`
 - `furnace__t2__attack.png`：`b07f508a27710703821c57f6f54329d6914c35e869678b5435d12a9e692f4509`
 - `furnace__t3__attack.png`：`2f4ea2ec5dad341e75289008a46422ecab203214e04f8400cd5464ba826adbab`
+- `bell__t1__attack.png`：`d82d8e56bc2600421dce9e52ebc5f0480949a19a86671ae530694a85e3eae07e`
 
 ## 意見與待辦
 
@@ -175,3 +175,4 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
     - `bell__t1__attack.png`：整座塔比站立圖矮胖約 4～5%。照站立圖的高寬重畫。
     - `frost__t2__attack.png`、`frost__t3__attack.png`：水晶（2 階）和水晶球（3 階）在攻擊格裡變小，第 4 格跟站立圖不一樣。水晶大小每格照站立圖，只移動位置；第 4 格＝站立。
   - 順序：先畫完 README 的神獸 v2 站立 4 張，再補這 6 張，推 `dot/idle-td-b2`。
+- 2026-11-04 09:50 TW　**`furnace__t1__attack.png`、`furnace__t2__attack.png` 重畫版通過**：爐身每格不變形，只有爐蓋上下，第 4 格＝站立（量到的高度變化只來自爐蓋）。剩 furnace t3、bell t1、frost t2、frost t3。
