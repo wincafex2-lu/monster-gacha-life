@@ -120,6 +120,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 | `images/talisman__t3__stand.png` | 1254×1254 | 1 | 符咒塔 3 階：金黑漆柱、盤柱玉龍、兩排黃紫符紙與懸浮毛筆。 |
 | `images/talisman__t1__attack.png` | 2172×724 | 4 | 符咒塔 1 階攻擊四格：三張黃符後揚、抬起、向右展扇與回落；紙根維持連接。 |
 | `images/talisman__t2__attack.png` | 2172×724 | 4 | 符咒塔 2 階攻擊四格：六張黃符後揚、抬起、右展、回落；已修正初稿符紙缺張。 |
+| `images/talisman__t3__attack.png` | 2172×724 | 4 | 符咒塔 3 階攻擊四格：兩排黃紫符紙共八張，後揚、抬起、右展與回落；毛筆與流蘇起伏。 |
 
 原檔 SHA-256：
 
@@ -152,6 +153,7 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
 - `talisman__t3__stand.png`：`e92044a870344eec44bf536c0af002e9c29aa96f8c9b9e244b0cdd5ae2df8342`
 - `talisman__t1__attack.png`：`576ccac0df753056e7d531c252d91cdc21491e7f38ca0e6ab4a6d0b88af48bd9`
 - `talisman__t2__attack.png`：`3e819d5920fab3d44ae707d5c801c2be48d615bb9b912b15068ae16380953a89`
+- `talisman__t3__attack.png`：`0a585c1d00ce61b2523bb5fc2adcb56b1a5ab396b6b02e970298adabbd91db6f`
 
 ## 意見與待辦
 
