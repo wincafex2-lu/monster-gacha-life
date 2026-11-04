@@ -1,11 +1,13 @@
-# 放置塔防山門與背景：工單 G3　山門重畫成多層樓閣（5 級＋破損版）
+# 放置塔防山門與背景：工單 G3　山門後面的樓閣（弟子站的地方）7 張
 
-狀態：待接手（泓確認後 Claude 會把這行改成「待接手」，在那之前不要接）
+狀態：待接手
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
-## 為什麼重畫
+## 為什麼要畫
 
-戰鬥畫面改成「城樓守城」排法：山門在畫面左邊、很高，**弟子一層一層站在山門的樓台上**往右邊打，塔立在山門前的地上，怪物從右邊走來。舊的 G1 牌坊門上面沒地方站人，所以重畫。
+戰鬥畫面改成「城樓守城」排法（參考 `ref` 外的遊戲截圖，不附）：畫面左邊是一座很高的**樓閣**，**弟子一層一層站在樓閣的樓台上**往右邊打。G1 畫好的牌坊門會**縮小放在樓閣的右下角前面**當大門（怪物打的是它），所以這次**只畫後面的樓閣，不畫大門**。
+
+樓閣只在「能上場的人物變多」時換一張圖，所以照遊戲設計共 **7 張**，每張比前一張**明顯多出站人的地方**。不用畫破損版（破損看前面的大門）。
 
 ## 固定流程
 
@@ -13,60 +15,46 @@
    網頁版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-x7hjrp/idle-td-art/gate-bg/ORDER-G3.md
 2. 從 `origin/claude/project-thread-x7hjrp` 開分支 **`dot/idle-td-g3`**，把「狀態」改成「進行中：<誰> <時間>」馬上推。之後成品和狀態都只推 `dot/idle-td-g3`。
 3. 在畫山門的同一個 ChatGPT 對話繼續畫（畫風才會一致）。檔案放 `idle-td-art/gate-bg/images/`，檔名照「待辦」。
-4. **先只畫第 1 張（一級完好）推上來，等 Claude 寫通過才畫後面。** 之後每張畫好就推，每 5 分鐘 fetch 一次看意見。
+4. **先只畫第 1 張推上來，等 Claude 寫通過才畫後面。** 之後每張畫好就推，每 5 分鐘 fetch 一次看意見。
 5. 全部交完把狀態改「待驗收」；看到「完成通知」就停。
 
 ## 鎖死規則
 
-- 畫風照 `ref/STANDARD__t2__stand.png` 和 G1 已通過的山門（同一個門派的配色：紅柱、綠／金琉璃瓦、白石、金飾）。可以參考 G1 對應等級的完好圖當第二張附圖，保留它的裝飾和配色。
-- 畫布 **1024×1536 直式**，底部在 y≈1500，左右各留 20px 洋紅。背景純洋紅 `#FF00FF`，不畫地面、人物、文字、特效。
-- 角度：**側面**看（像橫向捲軸遊戲裡的城堡），正面朝右，可以帶一點點立體。
-- **樓台是重點**：每一層樓都有一條**平的、看得很清楚的樓板**（前緣是矮欄杆或城垛），樓板上方要空出**夠站一個人的高度**（約一層樓高的 75%），而且是**空的**，不要畫人、不要畫東西擋住；程式會把弟子放在樓板上。
-- 每層樓板寬度要夠並排站 3 個人。最下面一層是城門（大門在右側，怪物會打這裡），城門不站人。
-- 匾額空白不寫字。
+- 畫風照 `ref/STANDARD__t2__stand.png` 和 G1 的山門（同一個門派：紅柱、灰／綠／金琉璃瓦、白石、金飾）。
+- 畫布 **1024×1536 直式**，樓閣底部在 y≈1500，左右各留 20px 洋紅。背景純洋紅 `#FF00FF`，不畫地面、人物、文字、特效、大門。
+- **側面**看（像橫向捲軸遊戲裡的城堡），正面朝右，可以帶一點點立體。
+- **最下面一層是實心的石基或牆**（大門會另外疊在它右下角前面），不要畫門洞。
+- **樓台是重點**：每個站位是一塊**平的、看得很清楚的樓板**（前緣是矮欄杆或城垛，欄杆不高過膝蓋），樓板上方**空著**、夠站一個人（一個站位大約寬 220px、高 300px），不要畫人或擺東西擋住。程式會把弟子放上去。
+- 站位數要剛好照表，**站位之間分得出來**（可以用柱子、窗格、旗子隔開）。
+- 一張比一張高、華麗；最後一張接近畫布頂。
 
-指令開頭貼（附標準圖＋G1 同級完好圖）：
+指令開頭貼（附標準圖＋表格裡的 G1 山門）：
 
 ```
-Redesign this sect gate as a tall side-view defense tower for a side-scrolling 2D castle-defense game, in EXACTLY the same pixel-art style as image 1 (painterly hue-shifted shading, thin colored outlines, soft rich palette, fine small pixels). Keep the colors and ornaments of image 2 (same sect).
-Tall canvas 1024x1536, solid flat magenta #FF00FF background, bottom of the building at y=1500, at least 20 px magenta margin on the left and right.
+Draw the TOWER behind this sect's gate for a side-scrolling 2D castle-defense game, in EXACTLY the same pixel-art style as image 1 (painterly hue-shifted shading, thin colored outlines, soft rich palette, fine small pixels). Use the colors and ornaments of image 2 (the same sect's gate), but do NOT draw a gate or door: the bottom is a solid stone base.
+Tall canvas 1024x1536, solid flat magenta #FF00FF background, bottom of the tower at y=1500, at least 20 px magenta margin left and right.
 Side view, the front faces RIGHT (enemies come from the right).
-The ground floor is a big gate door on the right side. ABOVE it are open balcony floors where defenders will stand: each balcony has a FLAT, clearly visible wooden or stone floor with a low railing or battlements at its front edge, and EMPTY open space above the floor, tall enough for a standing person (leave it empty: no people, no objects). Each balcony is wide enough for 3 people side by side.
-No people, no text, no ground, no grass, no shadow, no glow, no effects. The name plaque is blank.
+Defenders will stand on open balconies. Each standing spot is a FLAT, clearly visible floor (about 220 px wide) with a low railing or battlements at its front edge (below knee height), and EMPTY open space above it about 300 px tall. Leave every spot empty: no people, no objects. Separate the spots with pillars, window frames or banners so each spot is easy to see.
+No people, no text, no ground, no grass, no shadow, no glow, no effects.
 ```
 
-## 山門設計
+## 樓閣設計（照遊戲設計：山門等級開人物格的時候換圖）
 
-| 級 | 檔名開頭 | 樓台層數 | 高度（底到頂） | 外型（英文，接在上面那段後） |
-|---|---|---|---|---|
-| 1 | `keep1` | 1 層 | 約 700px | Level 1, humble: a small wooden gatehouse with a thatched roof, log walls and bamboo fences, ONE open balcony floor above the gate. |
-| 2 | `keep2` | 2 層 | 約 950px | Level 2: a wooden gate tower with red pillars and a gray tile roof with upturned eaves, TWO open balcony floors above the gate, red lanterns. |
-| 3 | `keep3` | 2 層＋屋頂平台 | 約 1150px | Level 3: a stone-and-wood tower, white stone base with stone lions, red lacquered pillars, green glazed tile roofs with golden tips, TWO open balcony floors plus a flat rooftop platform with battlements, blue sect banners. |
-| 4 | `keep4` | 3 層 | 約 1300px | Level 4: a grand tower of white jade and red pillars with golden cloud carvings, blue-green glazed roofs with gold trim, THREE open balcony floors, bronze bells under the eaves, tall banners. |
-| 5 | `keep5` | 3 層＋屋頂平台 | 約 1450px | Level 5, legendary: a heavenly palace tower with shining golden tiled roofs, white jade walls, golden dragons coiling around the front pillars, crystal lotus lamps, THREE open balcony floors plus a flat rooftop platform, rich red-and-gold banners. The most majestic. |
-
-破損版：附這一級已通過的完好圖當第二張，加：
-
-```
-Image 2 is this tower's approved undamaged design. Draw the SAME tower, same size, same position, same angle and colors, but BADLY DAMAGED: cracks, broken roof tiles, chipped corners, torn banners and lanterns, a few broken railing pieces. The balcony floors must stay in the same place and stay flat and empty. No fire, no smoke, no effects.
-```
-
-## 待辦（照順序畫）
-
-| # | 檔名 | 內容 | 附圖 |
-|---|---|---|---|
-| 1 | `keep1__ok.png` | 一級完好（畫完先停，等驗收） | 標準圖＋`gate1__ok.png` |
-| 2 | `keep1__broken.png` | 一級破損 | 標準圖＋`keep1__ok.png` |
-| 3 | `keep2__ok.png`、`keep2__broken.png` | 二級 | 完好：標準圖＋`gate2__ok.png`＋`keep1__ok.png` |
-| 4 | `keep3__ok.png`、`keep3__broken.png` | 三級 | 同上（換成 3 級） |
-| 5 | `keep4__ok.png`、`keep4__broken.png` | 四級 | 同上 |
-| 6 | `keep5__ok.png`、`keep5__broken.png` | 五級 | 同上 |
+| # | 檔名 | 用在山門等級 | 站位（由下往上） | 附圖 2 | 外型（英文，接在上面那段後） |
+|---|---|---|---|---|---|
+| 1 | `tower2.png` | 1～2 級 | 1 層 2 位 | `gate1__ok.png` | Exactly 2 standing spots on ONE balcony floor above the stone base. A small humble wooden watchtower with log walls, thatched roof and bamboo railings. About 800 px tall. |
+| 2 | `tower3.png` | 3～9 級 | 1 層 3 位 | `gate1__ok.png` | Exactly 3 standing spots on ONE wider balcony floor (the tower is clearly wider than before, a new side wing added). Wooden watchtower, thatched roof, bamboo railings, a paper lantern. About 850 px tall. |
+| 3 | `tower4.png` | 10～17 級 | 2 層：2＋2 | `gate2__ok.png` | Exactly 4 standing spots: 2 on the lower balcony, 2 on the upper balcony. A two-storey wooden tower with red pillars, gray tile roofs with upturned eaves, red lanterns. About 1050 px tall. |
+| 4 | `tower5.png` | 18～25 級 | 2 層：3＋2 | `gate3__ok.png` | Exactly 5 standing spots: 3 on the lower balcony, 2 on the upper. Stone-and-wood tower, white stone base, red lacquered pillars, green glazed tile roofs with golden tips, blue sect banners. About 1150 px tall. |
+| 5 | `tower6.png` | 26～34 級 | 2 層：3＋3 | `gate3__ok.png` | Exactly 6 standing spots: 3 on the lower balcony, 3 on the upper (upper floor now as wide as the lower). Same style as before but grander, more carvings and banners. About 1250 px tall. |
+| 6 | `tower7.png` | 35～44 級 | 3 層：3＋2＋2（最上面是屋頂平台） | `gate4__ok.png` | Exactly 7 standing spots: 3 on the lower balcony, 2 on the middle balcony, 2 on a flat rooftop platform with battlements. White jade and red pillars with golden cloud carvings, blue-green glazed roofs with gold trim, bronze bells. About 1350 px tall. |
+| 7 | `tower8.png` | 45～50 級 | 3 層：3＋3＋2（最上面是屋頂平台） | `gate5__ok.png` | Exactly 8 standing spots: 3 on the lower balcony, 3 on the middle balcony, 2 on a flat rooftop platform. Legendary heavenly palace tower: shining golden tiled roofs, white jade walls, golden dragons coiling around the pillars, crystal lotus lamps, red-and-gold banners. The most majestic. About 1450 px tall. |
 
 ## 驗收重點
 
-- 樓板平、清楚、上方空著，每層夠站 3 人；Claude 會把弟子實際放上去看。
-- 五級一級比一級高、層數照表。
-- 破損版樓板位置和完好版一樣。
+- 站位數剛好、樓板平、上方空著；Claude 會把弟子和縮小的大門實際疊上去看。
+- 7 張一張比一張高、站位一眼看得出變多。
+- 和 G1 大門放在一起像同一個門派。
 
 ## 意見與待辦
 
