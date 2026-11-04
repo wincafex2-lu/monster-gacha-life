@@ -226,3 +226,20 @@ Give this character a UNIQUE face, not the default chibi face: eyes = <眼睛>, 
 - 腿和軀幹不能比站立圖長，畫完把每一格跟站立圖並排，從下巴到腳底量一次。
 - 鯊魚：前手握魚叉要像真的握住棍子（4 根手指從同一邊包住、拇指在另一邊），手套形狀跟站立圖一樣。
 - 順序：先重交 5 支 1 階攻擊，通過後再重畫 2、3 階（用新 1 階當圖 B）。
+
+### 10:14 台灣時間 新畫法試做（先用廚師阿嬤 1 階攻擊）
+
+一次畫 4 格時 GPT 會把身體畫長。改成**拿站立圖一格一格改**：
+
+1. 附上 `grandma__t1__stand.png`，用下面指令產生第 1 格；第 2、3 格各再做一次（換動作描述）。第 4 格不用畫（切圖時用站立圖）。
+2. 3 格各存一張：`grandma__t1__attack_f1.png`、`grandma__t1__attack_f2.png`、`grandma__t1__attack_f3.png`（Claude 自己拼成一條）。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, outfit, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the spatula to this pose: <動作>.
+Do not make the body or legs longer, do not move the feet, do not resize anything. Same magenta #FF00FF background.
+```
+
+動作：f1 = raises the spatula up high；f2 = swings the spatula forward, arm extended；f3 = spatula pointing down-forward at the end of the swing, apron ties swinging.
+
+阿嬤這樣做通過的話，其他角色的攻擊圖都改用這個方法。
