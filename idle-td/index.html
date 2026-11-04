@@ -448,10 +448,14 @@ const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus());
 function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*Math.pow(1.5,r.tier-1)*(B.buff>0?1.3:1)*(1+PS.atk+side)*(1+.03*(r.brk||0))*TR('atk')}
 function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)*(1+.05*(S.tur[k].brk||0))*TR('atk')}
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*(arrPaired(k)?1.5:1)}
-function beastAtk(k){return BEAST[k].atk*Math.pow(1.09,S.beast[k].lv-1)*TR('atk')*(paired(k)?1.5:1)}
+// 神獸攻擊跟著隊伍走：上陣弟子的平均攻擊 × 神獸倍率 × 等級加成（每級 +2%），不會因為弟子等級高就被拋在後面
+function teamAvgAtk(){const ids=S.team.slice(0,slots()).filter(i=>S.roster[i]);if(!ids.length)return 1;return ids.reduce((a,i)=>a+heroAtk(i),0)/ids.length}
+function beastAtk(k){return teamAvgAtk()*BEAST[k].atk/10*(1+.02*(S.beast[k].lv-1))*(paired(k)?1.5:1)}
 function towerKey(){const n=slots();return 'tower'+Math.min(8,n)}
 function gateKey(broken){const g=Math.min(5,1+Math.floor((S.gateLv-1)/10));return `gate${g}_${broken?'broken':'ok'}`}
-const fmt=n=>n<1e4?String(Math.floor(n)):n<1e6?(n/1e3).toFixed(n<1e5?1:0)+'K':n<1e9?(n/1e6).toFixed(1)+'M':(n/1e9).toFixed(1)+'B';
+// 大數字：K M B T，之後 aa ab ac…（每 1000 倍換一個），保留 3 位有效數字
+const FMTU=['','K','M','B','T'];for(let i=0;i<26*26;i++)FMTU.push(String.fromCharCode(97+Math.floor(i/26))+String.fromCharCode(97+i%26));
+const fmt=n=>{if(!isFinite(n))return '∞';if(n<1e4)return String(Math.floor(Math.max(0,n)));let e=Math.min(FMTU.length-1,Math.floor(Math.log10(n)/3)),v=n/Math.pow(10,e*3);if(v>=999.5&&e<FMTU.length-1){e++;v/=1000}return (v<10?v.toFixed(2):v<100?v.toFixed(1):v.toFixed(0))+FMTU[e]};
 
 /* ---------- 圖片 ---------- */
 const IMG={};
