@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：待接手（重畫：小鬼、骷髏兵、蘑菇怪、石頭人、紙傘妖第 3 格的攻擊圖）
+狀態：待接手（攻擊圖改用「站立圖逐格改」：小鬼、骷髏兵、蘑菇妖、石頭怪、紙傘妖）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
@@ -180,3 +180,26 @@ LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in 
 ```
 
 檔名不變，畫好推到 `dot/idle-td-m1` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。
+
+### 2026-11-04 11:40（台灣時間）改用「站立圖逐格改」（泓 核准，取代 10:30 的重畫方法）
+一次畫 4 格長條時 GPT 會把身體畫長。角色那邊改成拿站立圖一格一格改，比例誤差 0.4% 以內，泓同意，怪物也照做。
+
+- 退回的 5 隻（小鬼、骷髏兵、蘑菇妖、石頭怪、紙傘妖）**不再畫長條**，改交 3 張單格，畫布和站立圖一樣 1254×1254：`<代號>__attack_f1.png`、`_f2.png`、`_f3.png`。第 4 格不用畫（程式用站立圖）。舊的 `<代號>__attack.png` 留著不用刪。
+- 每張只附 **1 張圖：該怪物的站立圖**，用下面指令，`<動作>` 照下表。身體前傾、壓扁、跳、踏步、震動、灰塵、刀光都由程式加，**圖裡頭、身體、腿、腳都不要動**。
+- 史萊姆、狼妖、蝙蝠已通過，不用重做。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon (or the attacking part named below) to this pose: <動作>. Moving accessories (cap, tail, sash, tongue) may swing a little.
+Do not make the body or legs longer, do not move the feet, do not resize anything. Same 1254x1254 canvas, same magenta #FF00FF background.
+```
+
+| 怪物 | f1 `<動作>` | f2 `<動作>` | f3 `<動作>` |
+|---|---|---|---|
+| imp 小鬼 | both hands raise the spiked club high behind the head | the club swung forward in front of the chest | the club pointing down to the ground in front (right side) |
+| skeleton 骷髏兵 | shield raised in front, sword arm pulled back | sword arm halfway forward, sword pointing right | sword arm fully extended to the right in a stab, sash swings back |
+| mushroom 蘑菇妖 | the tiny arms grab the cap brim and pull the cap down a little (cap same size) | the cap tilted up and back (cap same size) | the cap tilted forward to the right like a hat-swat (cap same size) |
+| golem 石頭怪 | both stone fists raised high over the head | both fists halfway down in front | both fists down at ground level in front (right side) |
+| umbrella 紙傘妖 | the umbrella canopy tilted back a little (same size) | the tongue starts to stretch forward | the long tongue lashing straight forward to the right |
+
+畫好每張推 `dot/idle-td-m1`，Claude 量完寫意見。

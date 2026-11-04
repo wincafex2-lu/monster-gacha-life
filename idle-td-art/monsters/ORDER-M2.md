@@ -1,6 +1,6 @@
 # 放置塔防怪物點陣圖：工單 M2　Boss 4 隻
 
-狀態：待接手（重畫：牛魔大王、骷髏將軍、千年樹妖的蓄力和出招）
+狀態：待接手（蓄力、出招改用「站立圖逐格改」：牛魔大王、骷髏將軍、千年樹妖）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -106,3 +106,22 @@ LOCKED PROPORTIONS: the head (face, helmet, horns) must be EXACTLY the same size
 ```
 
 檔名不變，推到 `dot/idle-td-m2` 覆蓋舊檔。每張推上來 Claude 會量，通過才算。
+
+### 2026-11-04 11:40（台灣時間）改用「站立圖逐格改」（泓 核准，取代 10:30 的重畫方法）
+重畫時 GPT 會把頭縮小、身體拉長。改成拿站立圖直接改：
+
+- 牛魔大王、骷髏將軍、千年樹妖的 `__windup.png`、`__strike.png` 重做，檔名不變，覆蓋舊檔推 `dot/idle-td-m2`。
+- 每張只附 **1 張圖：該 Boss 已通過的站立圖**，用下面指令。前傾、蹲低、震動、刀光由程式加，**圖裡頭、身體、腿、腳都不要動**。
+- 史萊姆王 3 張已通過，不用重做。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, armor, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon to this pose: <動作>. Moving accessories (cape, sash, flames, leaves, fruits) may swing a little.
+Do not make the body or legs longer, do not shrink the head, do not move the feet, do not resize anything. Same 1254x1254 canvas, same magenta #FF00FF background.
+```
+
+| Boss | windup `<動作>` | strike `<動作>` |
+|---|---|---|
+| bullking 牛魔大王 | both hands raise the giant battle axe high over the head | the axe swung down in front (right side), axe head near the ground |
+| bonegeneral 骷髏將軍 | the greatsword pulled back over the shoulder, cape billowing | the greatsword swung forward in a wide slash to the right, cape flying back |
+| treeelder 千年樹妖 | both branch arms pulled back behind the trunk | both branch arms whipping forward to the right, mouth open shouting |
