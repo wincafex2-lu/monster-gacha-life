@@ -150,3 +150,7 @@ GPT 畫歪時可以回它：
 LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
 ```
 畫好推到 `dot/idle-td-m1` 覆蓋原檔，Claude 每 5 分鐘巡一次。
+
+### 2026-11-04 09:16（台灣時間）石頭怪攻擊重畫版通過
+- 第 4 格和站立圖比：高度差 0%、站寬差 1%，臉對得上。第 1～3 格頭和身體大小一致（差 3% 左右以內）。通過。
+- 繼續狼妖、紙傘妖。
