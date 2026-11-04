@@ -103,4 +103,5 @@ Redraw image B frame by frame using the tier <N> design from image A: EXACTLY th
     - `frost__t2__attack.png`、`frost__t3__attack.png`：水晶（2 階）和水晶球（3 階）在攻擊格裡變小，第 4 格跟站立圖不一樣。水晶大小每格照站立圖，只移動位置；第 4 格＝站立。
   - 順序：先畫完 README 的神獸 v2 站立 4 張，再補這 6 張，推 `dot/idle-td-b2`。
 - 2026-11-04 09:50 TW　**`furnace__t1__attack.png`、`furnace__t2__attack.png` 重畫版通過**：爐身每格不變形，只有爐蓋上下，第 4 格＝站立（量到的高度變化只來自爐蓋）。剩 furnace t3、bell t1、frost t2、frost t3。
-- 2026-11-04 10:00 TW　**`furnace__t3__attack.png`、`bell__t1__attack.png` 重畫版通過**（丹爐只有爐蓋在動；鐘塔每格高寬差 2～3
+- 2026-11-04 10:00 TW　**`furnace__t3__attack.png`、`bell__t1__attack.png` 重畫版通過**（丹爐只有爐蓋在動；鐘塔每格高寬差 2～3%）。
+- 2026-11-04 10:12 TW　**`frost__t2__attack.png` 重畫版通過**（水晶每格同大小，高寬差 0～1%，第 4 格＝站立）。剩 frost t3。
