@@ -274,3 +274,10 @@ Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resiz
 
 - 廚師阿嬤 1～3 階、貓武士 1～3 階、鯊魚潛水兵 1～3 階、木乃伊 1～3 階、雪女 1、2 階：**通過**（衣服、配件、武器每格都跟站立一致；鯊魚手套手指正常）。
 - 雪女 3 階：f1、f3 **通過**；**f2 退件**：冰扇從原本那隻手跑到另一隻（伸出去的手）拿，武器不能換手。請重做 `yukionna__t3__attack_f2.png`：冰扇留在站立圖那隻手，另一隻手往前伸施法；冰晶可以飄。
+
+### 13:00 台灣時間 更正：武器換手（泓 指出）
+
+- 貓武士 1、2 階 f1 **退件**：站立圖竹刀／武士刀拿在前面那隻手（畫面右邊），f1 舉刀時換成後面那隻手拿。
+- 鯊魚潛水兵 1、2、3 階 f1 **退件**：同樣問題，魚叉／三叉戟舉到肩後時換成後面那隻手。
+- 重畫這 5 格：**武器一律留在站立圖那隻手**（前手）。舉起的動作改成前手把武器往後上方舉起（像要往前揮或丟），後手握拳或扶在胸前。
+- 指令加一句：`The weapon must stay in the SAME hand as in the original sprite (the front hand). Do not move it to the other hand.`
