@@ -76,7 +76,9 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .farm.on{background:#2a7a3a;border-color:#9be07a}.farm.go{background:#b8400e;border-color:#ffb06a;animation:pulse2 1.2s infinite alternate}
 .dps{position:absolute;right:max(10px,env(safe-area-inset-right));top:calc(max(8px,env(safe-area-inset-top)) + 54px);width:210px;background:rgba(30,18,8,.62);border:1px solid rgba(255,216,106,.35);border-radius:10px;padding:6px 8px 7px;color:#fff4dc;font-size:12px;pointer-events:auto;cursor:pointer;display:block;z-index:3}
 .dps.min .r,.dps.min .e{display:none}.dps.min{width:auto}
-@media (max-height:520px){.dps{width:170px;font-size:10px;padding:4px 6px}.dps .r{height:14px;line-height:14px;margin-top:1px}.dps h4{font-size:11px}}
+@media (max-height:520px){.dps{width:170px;font-size:10px;padding:4px 6px}.dps .r{height:14px;line-height:14px;margin-top:1px}.tipk{cursor:pointer;text-decoration:underline dotted}.tipk i{font-style:normal;font-size:.8em;opacity:.6;margin-left:4px}
+.dps .dm{display:flex;gap:3px;margin:0 0 3px}.dps .dm b{flex:1;text-align:center;font-size:11px;padding:2px 0;border-radius:5px;background:rgba(0,0,0,.35);color:#e8d8b8;font-weight:700}.dps .dm b.on{background:#ffd86a;color:#3a2008}
+.dps h4{font-size:11px}}
 .dps h4{margin:0 0 4px;font-size:12px;font-weight:700;color:#ffd86a;display:flex;justify-content:space-between}
 .dps .r{position:relative;height:17px;line-height:17px;margin-top:2px;border-radius:4px;overflow:hidden;background:rgba(0,0,0,.25)}
 .dps .r i{position:absolute;left:0;top:0;bottom:0;opacity:.55}
@@ -646,10 +648,12 @@ function step(dt){
  B.txt=B.txt.filter(t=>t.t<.8);
  B.shake=Math.max(0,B.shake-dt*30);
 }
+// 普攻倍率：普攻比大招弱太多（後期大招占 85% 以上），普攻另外 ×NA，大招、神獸不變
+const NA=4;
 function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
- const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
+ const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id)*NA,kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
  if(PS.crit&&Math.random()<PS.crit){p.dmg*=2;p.crit=1}
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=4){h.n4=0;DSRC='h:mecha';const dd=p.dmg*.8;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500)hit(e,dd,{c:d.c})})}}
  if(h.id==='alchemist'){B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.004)}
@@ -678,7 +682,7 @@ function projHit(p){
   if(M.disciple&&p.from.id==='disciple')B.enemies.filter(e=>!e.dead&&e!==T&&e.x>T.x&&e.x<T.x+220).slice(0,2).forEach(e=>hit(e,p.dmg,{c:p.c}));
   if(M.kitsune&&r==='magic'){const o=B.enemies.find(e=>!e.dead&&e!==T&&Math.abs(e.x-T.x)<300&&Math.abs(e.x-T.x)>p.aoe);if(o){hit(o,p.dmg*.5,{c:'#5ab8ff'});sprFx('fx_fire',o.x,o.y-o.ay*.5,.7)}}
   if(M.panda&&p.from.id==='panda'){p.from.n3=(p.from.n3||0)+1;if(p.from.n3>=3){p.from.n3=0;T.stun=Math.max(T.stun,1);if(!T.boss)T.kb=Math.min(160,T.kb+60);sprFx('fx_blunt',T.x,T.y-T.ay*.5,1.4);shake(3)}}}
- if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target;hit(e,e.hp+1,{c:'#c08aff',big:1});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
+ if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target;hit(e,e.hp+1,{c:'#c08aff',big:1,src:'fb:zijin'});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
   else if(PS.bind&&Math.random()<PS.bind){p.target.stun=Math.max(p.target.stun,1)}}
  if(p.sp==='fox')B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<(p.aoe||90)){e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,p.dmg*.35)}});
  if(p.sp==='archer'&&p.target){B.enemies.filter(e=>!e.dead&&e!==p.target&&e.x>p.target.x).sort((a,b)=>a.x-b.x).slice(0,2).forEach(e=>{hit(e,p.dmg*.6,{c:p.c});if(p.hx)sprFx(p.hx,e.x,e.y-e.ay*.45,.6)})}
@@ -1051,13 +1055,17 @@ function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)
   w.appendChild(b);w.insertAdjacentHTML('beforeend','<i class="ring"></i>');w.appendChild(a);u.appendChild(w);return b})}
 let bBtns=[];
 let lastLive=0;
-const DPSC={h:'#ffb84a',u:'#ff6ad0',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',etc:'#aaaaaa'};
-function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
+const DPSC={h:'#ffb84a',u:'#ff6ad0',fb:'#c08aff',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',etc:'#aaaaaa'};
+function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='fb')return '法寶 '+(FB[id]?FB[id].n:id);if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
 let dpsOn=true;try{dpsOn=localStorage.getItem('idle-td-dps')!=='0'}catch(e){}
-let dpsLast=0;
+let dpsLast=0,dpsMode='sum';try{dpsMode=localStorage.getItem('idle-td-dpsm')||'sum'}catch(e){}
+const DPSM=[['sum','合計'],['n','普攻'],['u','大招'],['all','分開']];
 function renderDps(){const el=$('dps');if(!el||!B.dmg)return;const now=performance.now();if(now-dpsLast<500)return;dpsLast=now;el.classList.toggle('min',!dpsOn);
- const t=Math.max(1,B.dmgT||0),rows=Object.entries(B.dmg).filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]),tot=rows.reduce((a,r)=>a+r[1],0),top=rows.length?rows[0][1]:1,n=innerHeight<520?6:10;
- let h=`<h4><span>${dpsOn?'▾':'▸'} DPS</span><span>　${fmt(tot/t)}</span></h4>`;
+ const t=Math.max(1,B.dmgT||0);let src=Object.entries(B.dmg);
+ if(dpsMode==='sum'){const m={};src.forEach(([k,v])=>{const kk=k.startsWith('u:')?'h:'+k.slice(2):k;m[kk]=(m[kk]||0)+v});src=Object.entries(m)}
+ else if(dpsMode==='n')src=src.filter(([k])=>!k.startsWith('u:'));else if(dpsMode==='u')src=src.filter(([k])=>k.startsWith('u:'));
+ const rows=src.filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]),tot=rows.reduce((a,r)=>a+r[1],0),top=rows.length?rows[0][1]:1,n=innerHeight<520?6:10;
+ let h=`<h4><span data-dt="1">${dpsOn?'▾':'▸'} DPS</span><span>　${fmt(tot/t)}</span></h4>`;if(dpsOn)h+=`<div class="dm">${DPSM.map(([k,n])=>`<b data-dm="${k}" class="${dpsMode===k?'on':''}">${n}</b>`).join('')}</div>`;
  for(const [k,v] of rows.slice(0,n)){const c=DPSC[k.split(':')[0]]||DPSC.etc;h+=`<div class="r"><i style="width:${(v/top*100).toFixed(1)}%;background:${c}"></i><span>${dpsName(k)}</span><b>${fmt(v/t)}　${Math.round(v/tot*100)}%</b></div>`}
  if(!rows.length)h+='<div class="e" style="opacity:.7">還沒打到怪</div>';el.innerHTML=h}
 function updLive(){
@@ -1083,7 +1091,7 @@ function openPanel(p,t){panel=p;tab=t||null;$('sheet').classList.add('open');ren
 function closePanel(){$('sheet').classList.remove('open');panel=null;sel=null}
 $('shX').onclick=closePanel;
 $('farmBtn').onclick=()=>{if(S.farm){S.farm=0;toast('打完這關就往下一關挑戰！')}else{S.farm=1;S.farmN=0;toast('之後會一直重打這一關')}persist();updFarm()};
-$('dps').onclick=()=>{dpsOn=!dpsOn;try{localStorage.setItem('idle-td-dps',dpsOn?'1':'0')}catch(e){}dpsLast=0;renderDps()};
+$('dps').onclick=ev=>{const m=ev.target.closest('[data-dm]');if(m){dpsMode=m.dataset.dm;try{localStorage.setItem('idle-td-dpsm',dpsMode)}catch(e){}dpsLast=0;renderDps();return}dpsOn=!dpsOn;try{localStorage.setItem('idle-td-dps',dpsOn?'1':'0')}catch(e){}dpsLast=0;renderDps()};
 {const mb=$('musBtn'),sb=$('sfxBtn');const um=()=>{mb.style.opacity=SND.musOn?1:.45;mb.textContent=SND.musOn?'🎵':'🎵✕'},us=()=>{sb.textContent=SND.sfxOn?'🔊':'🔇';sb.style.opacity=SND.sfxOn?1:.45};um();us();
  mb.onclick=()=>{SND.togMus();um();toast(SND.musOn?'音樂：開':'音樂：關')};sb.onclick=()=>{SND.togSfx();us();toast(SND.sfxOn?'音效：開':'音效：關')}}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.btn'))SND.play('click')});$('sheet').addEventListener('pointerdown',e=>{if(e.target.id==='sheet')closePanel()});
@@ -1091,6 +1099,15 @@ $('bHero').onclick=()=>openPanel('hero');$('bGacha').onclick=()=>openPanel('gach
 function render(){
  if(panel==='hero')renderHero();else if(panel==='gacha')renderGacha();else if(panel==='gate')renderGate()}
 function tierStars(t,max){return '★'.repeat(t)+'<span style="opacity:.3">'+'★'.repeat(max-t)+'</span>'}
+// 大招說明（點大招名字才展開，不佔版面）
+function ultDesc(id){const d=CH[id],x=heroAtk(id)*7*TR('ult')*(d.r==='L'?1.5:1),f=fmt;const leg=d.r==='L'?'（含傳說 ×1.5）':'';
+ return {sweep:`一道劍氣從弟子往前掃過全場，每隻怪受到 ${f(x)} 傷害${leg}，並往後推`,
+  rain:`從天上落下 18 道攻擊，每道打中附近一小群（範圍 70），每道 ${f(x/4)}${leg}`,
+  slam:`震波從山門往前推，地上每隻怪 ${f(x)}${leg}、暈 0.8 秒、往後推；飛行怪受 ${f(x*.6)}`,
+  laser:`光束持續 0.8 秒，每 0.16 秒打全場一次，每次 ${f(x/5)}${leg}（共約 5 次）`,
+  heal:`山門回血 35%，全隊攻擊 +30%（8 秒），並對全場每隻怪造成 ${f(x*.4)}${leg}`,
+  freeze:`全場每隻怪受到 ${f(x*.6)}${leg}，並被定住 3.2 秒`,
+  drain:`吸取全場每隻怪 ${f(x*.8)} 生命${leg}，山門回血 15%`}[d.ult]||''}
 function renderHero(){
  $('shTitle').textContent='弟子';$('shTabs').innerHTML='';
  const ids=Object.keys(CH);const own=ids.filter(i=>S.roster[i]),not=ids.filter(i=>!S.roster[i]);
@@ -1101,7 +1118,7 @@ function renderHero(){
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${d.r}">${RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${d.n} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t)}</span></h3>
- <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}（升級山門可以再往上）</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id))}，每秒打 ${(+heroRate(id).toFixed(2))} 下${spdBonus()>0?`（基礎 ${ROLE[d.role].rate}，攻速 +${Math.round(spdBonus()*100)}%）`:''}，每秒傷害約 ${fmt(heroAtk(id)*heroRate(id))}${PS.crit>0?`<br>爆擊率 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}：${ROLE[d.role].d}</span><b>大招</b><span>${d.un}</span>${PASSIVE[id]?`<b>被動</b><span>${PASSIVE[id].n}：${PASSIVE[id].d(r.tier)}</span>`:''}${PASSIVE[id]&&PASSIVE[id].sp?`<b>特殊</b><span>${PASSIVE[id].sp}${d.r==='L'?'；傳說大招傷害 ×1.5':''}</span>`:''}${MAXFX[id]?`<b>滿階極意</b><span style="${isMax(id)?'color:#c2410c;font-weight:800':'opacity:.55'}"><span style="display:inline-block;padding:0 6px;margin-right:4px;border-radius:6px;font-size:.85em;color:#fff;background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}：${MAXFX[id].d}${isMax(id)?'（上陣就有效）':`（${d.t} 階解鎖）`}</span>`:''}</div>
+ <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}（升級山門可以再往上）</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id)*NA)}，每秒打 ${(+heroRate(id).toFixed(2))} 下${spdBonus()>0?`（基礎 ${ROLE[d.role].rate}，攻速 +${Math.round(spdBonus()*100)}%）`:''}，每秒傷害約 ${fmt(heroAtk(id)*NA*heroRate(id))}${PS.crit>0?`<br>爆擊率 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}：${ROLE[d.role].d}</span><b>大招</b><span><span class="tipk" data-tipk="1">${d.un} <i>ⓘ 點我看說明</i></span><span class="tipb" style="display:none"><br>${ultDesc(id)}<br><span style="opacity:.7">打怪會充能，充滿 100 自動或手動放出</span></span></span>${PASSIVE[id]?`<b>被動</b><span>${PASSIVE[id].n}：${PASSIVE[id].d(r.tier)}</span>`:''}${PASSIVE[id]&&PASSIVE[id].sp?`<b>特殊</b><span>${PASSIVE[id].sp}${d.r==='L'?'；傳說大招傷害 ×1.5':''}</span>`:''}${MAXFX[id]?`<b>滿階極意</b><span style="${isMax(id)?'color:#c2410c;font-weight:800':'opacity:.55'}"><span style="display:inline-block;padding:0 6px;margin-right:4px;border-radius:6px;font-size:.85em;color:#fff;background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}：${MAXFX[id].d}${isMax(id)?'（上陣就有效）':`（${d.t} 階解鎖）`}</span>`:''}</div>
  <div class="tiers">${Array.from({length:d.t},(_,i)=>`<span class="${i+1>r.tier?'no':''} ${i+1===r.tier?'cur':''}"><img src="${charImg(id,i+1)}" alt=""></span>`).join('')}</div>
  <div class="row"><button class="btn green" id="dUp" ${r.lv>=cap||S.coin<cost?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cost)}</span></button>
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
@@ -1115,7 +1132,7 @@ function renderHero(){
  h+='</div>';$('shBody').innerHTML=h;
  $('shBody').querySelectorAll('.card[data-id]').forEach(c=>c.onclick=()=>{sel=c.dataset.id;renderHero()});
  $('dUp').onclick=()=>{levelUp(id,1)};$('dUp10').onclick=()=>{levelUp(id,99)};
- $('dTier').onclick=()=>{if(!canTier)return;if(id==='disciple')S.pill-=r.tier*5;else r.dup-=need;r.tier++;toast(`${d.n} 升到 ${r.tier} 階！`);refreshField();renderHero()};
+ document.querySelectorAll('[data-tipk]').forEach(t=>t.onclick=()=>{const b=t.nextElementSibling;const o=b.style.display==='none';b.style.display=o?'inline':'none';t.querySelector('i').textContent=o?'▴ 收起':'ⓘ 點我看說明'});$('dTier').onclick=()=>{if(!canTier)return;if(id==='disciple')S.pill-=r.tier*5;else r.dup-=need;r.tier++;toast(`${d.n} 升到 ${r.tier} 階！`);refreshField();renderHero()};
  $('dTeam').onclick=()=>{if(inTeam){if(S.team.length<=1){toast('至少要有一位弟子守山門');return}S.team=S.team.filter(x=>x!==id)}else{if(S.team.length>=slots()){toast(`樓閣只站得下 ${slots()} 位，升級山門可以多站`);return}S.team.push(id)}refreshField();renderHero()};
 }
 function levelUp(id,n){const r=S.roster[id];let c=0;while(n-->0&&r.lv<lvCap(id)&&S.coin>=lvCost(r.lv)){S.coin-=lvCost(r.lv);r.lv++;c++}if(c){SND.play('up');toast(`${CH[id].n} Lv${r.lv}`);persist()}renderHero();updLive()}
