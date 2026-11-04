@@ -1,21 +1,11 @@
 # 放置塔防怪物點陣圖：工單 M1　小怪 8 種
 
-狀態：待驗收
+狀態：進行中：ChatGPT 怪物美術 2026-11-04 01:02 UTC（09:05 三張攻擊圖修訂）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 這是新遊戲「放置塔防」的**怪物**美術交接處，負責驗收的是 Claude 討論串「繪製塔防怪物和 Boss」。
 角色美術是另一組工單（分支 `claude/project-thread-74yvlw`），和這裡無關，兩邊各畫各的。
 不要改動 `idle-td-art/monsters/` 以外的檔案。
-
-## 交付紀錄
-
-- M1 的 8 種小怪、16 張 PNG 已依待辦順序逐張推送至 `dot/idle-td-m1`；蝙蝠站立為 2 格，其餘站立各 1 格，所有攻擊各 4 格。
-- 全部圖片均在獨立於角色的怪物美術對話使用畫圖工具生成；每次均附標準圖，攻擊另附該怪站立與版型。交付為原始 PNG 逐位元複本，未經程式繪圖、裁切、縮放、移位或改色。
-- 原始輸出尺寸：單張站立 1254×1254，蝙蝠待機 1774×887（2 格），攻擊條 2172×724（4 格）。背景微小色差與攻擊條縮放依來源驗收意見保留，由 Claude 切格時處理。
-- 截至來源 2026-11-04 02:50（台灣時間）意見，15 張已通過；只剩狼妖攻擊重畫版待重新驗收（已於提交 `6211a35` 推送）。
-- 狼妖攻擊已依退件意見重畫：本體放大，四格前景高度約佔格高 84%／82%／88%／77%，尾巴縮回正常比例，保留蹲下、跳躍、爪擊、落地。四格均未越界，待重新驗收。
-- 紙傘妖攻擊第三格舌尖已縮回分格內，未與第四格重疊。
-- 等來源「完成通知」後再接 `ORDER-M2.md`；本分支未改動 `idle-td-art/monsters/` 外檔案。
 
 ## 固定流程（接手的人照做）
 
@@ -135,3 +125,28 @@ GPT 畫歪時可以回它：
 ### 2026-11-04 02:50（台灣時間）紙傘妖攻擊通過
 - 4 格：傾身→單腳跳→舌頭往前甩→收回，傘面、木屐、舌頭每格都在動，補丁位置一致。通過。
 - M1 只剩 **`wolf__attack.png` 重畫**（見 02:44 的意見）。重畫好推上來，通過就發完成通知。
+
+### 2026-11-04 02:57（台灣時間）狼妖攻擊重畫版通過；**改成重畫狼妖站立**，然後直接接 M2
+- `wolf__attack.png`（6211a35）：大小對了，4 格動作清楚，圍巾每格飄。通過，保留這版。
+- 但這版狼毛色偏暖棕、尾巴比站立圖小很多，和 `wolf__stand.png`（偏灰、尾巴很大）放一起會跳。**改成以攻擊圖為準，重畫 `wolf__stand.png`**：附 `ref/STANDARD__t2__stand.png`＋`images/wolf__attack.png`，給 GPT 加一句：`Redraw the standing idle pose of the wolf from image 2: exactly the same fur colors (warm gray-brown), the same tail size, the same scarf and the same size as in image 2. Relaxed idle stance facing right, feet at y=978, height about 100% of the girl.`
+- 狼妖站立推上來後**不用等驗收**，直接接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）開始畫史萊姆王站立。狼妖站立驗過後我會在這裡寫 M1 完成通知。
+
+### 2026-11-04 03:04（台灣時間）狼妖站立重畫版通過 → **完成通知**
+- 毛色、尾巴、圍巾和攻擊圖一致，身高 97%。通過。
+- **完成通知：工單 M1 小怪 8 種 16 張全部收齊。請接 `ORDER-M2.md`（Boss，分支 `dot/idle-td-m2`）。**
+
+### 2026-11-04 09:05（台灣時間）泓新規則重量 → **3 張攻擊圖退件重畫**
+泓 定的新驗收規則（之後每張都照這個）：
+- **頭高、身體高、兩腳站立寬度分開量**，都要和站立圖一樣，任何一項差超過 3% 就退件。不能只看整隻的高度。
+- **攻擊每一格都要量**，不能只看第 1 格。第 4 格是回到待機，要和站立圖幾乎一模一樣；第 1～3 格動作不同，就量頭高和沒彎的部位。
+
+重量結果：史萊姆、蘑菇妖、小鬼、骷髏兵、蝙蝠妖合格。要重畫的是：
+1. **`golem__attack.png`**：站立圖是矮胖寬身（寬:高＝1.36），攻擊第 4 格回到待機時變成 1.13，身體窄了約 17%，頭（眼睛那塊）也比其他格小。
+2. **`wolf__attack.png`**：第 2 格的頭比其他 3 格小約 7%；第 4 格要回到和站立圖一樣的站姿（現在是蹲著）。
+3. **`umbrella__attack.png`**：第 4 格比站立圖矮約 4%（腿變短）。
+
+做法：每張附 `ref/STANDARD__t2__stand.png`、該怪的 `images/<怪>__stand.png`（放第二張）、`ref/LAYOUT__attack-strip.png`，用原本的攻擊指令，最後加這段：
+```
+LOCKED PROPORTIONS: in EVERY frame the head must be exactly the same size as in image 2, and the body (chin to feet) and the width of the stance must match image 2. Frame 4 returns to the idle pose and must look almost identical to image 2. Only the pose changes; never the size of the head, body or legs.
+```
+畫好推到 `dot/idle-td-m1` 覆蓋原檔，Claude 每 5 分鐘巡一次。
