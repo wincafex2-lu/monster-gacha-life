@@ -203,3 +203,7 @@ Do not make the body or legs longer, do not move the feet, do not resize anythin
 | umbrella 紙傘妖 | the umbrella canopy tilted back a little (same size) | the tongue starts to stretch forward | the long tongue lashing straight forward to the right |
 
 畫好每張推 `dot/idle-td-m1`，Claude 量完寫意見。
+
+### 2026-11-04 12:15（台灣時間）小鬼 f1～f3 通過
+- 3 格腳底位置不變（差 0～3px），身體高度差 0.3% 以內，頭、腰布、腳和站立圖一樣，只有手和棍子在動。f3 棍子立在腳邊所以腳那一帶變寬，是棍子不是腳，沒問題。通過。
+- 繼續照表畫骷髏兵、蘑菇妖、石頭怪、紙傘妖，不用等驗收。
