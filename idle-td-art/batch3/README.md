@@ -92,3 +92,4 @@ GPT 畫歪時可以回它：
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+- 2026-11-04 13:00 TW　**`p_arrow`、`p_ofuda`、`p_talisman`、`p_pill`、`p_scarab`、`p_foxfire`、`p_bullet`、`p_starbolt`、`p_iceshard` 9 張通過。** 畫風、描邊跟標準圖一致，都朝右、沒有光暈或拖尾，去背乾淨。每張都比表格長度大約 1.7～2 倍，但 9 張大小比例彼此一致，程式統一縮小，**不用重畫**；後面 5 張照同樣的畫法就好。繼續畫 `p_bun`、`p_harpoon`、`p_seed`、`p_bolt`、`p_firebomb`，不用停。
