@@ -885,6 +885,7 @@ function coinText(e){B.txt.push({x:e.x,y:e.y-e.ay-24,v:'+'+fmt(e.coin),t:0,coin:
 /* ---------- 繪圖 ---------- */
 let SKY='#7fd0f2';const SKYS={};const BGS=['bg_meadow','bg_bamboo','bg_nightwood'];const curBg=()=>BGS[Math.floor((Math.max(1,S.stage)-1)/50)%3];
 function img(k){return IMG[k]}
+function heroScale(){if(L._hsSp===L.spots)return L._hs;let d=999;const sp=L.spots||[];for(const a of sp)for(const b of sp)if(a!==b&&Math.abs(a[1]-b[1])<20)d=Math.min(d,Math.abs(a[0]-b[0]));L._hsSp=sp;L._hs=Math.max(.8,Math.min(1,d/110));return L._hs}
 // 每個站位能用的寬度：同一層最近的鄰居距離 ×1.12（最多 112）
 function spotW(x,y){let d=999;for(const [sx,sy] of (L.spots||[]))if(Math.abs(sy-y)<20&&Math.abs(sx-x)>1)d=Math.min(d,Math.abs(sx-x));return Math.min(112,d*1.12)}
 function drawSprite(k,x,y,o={}){const m=MAN[k],im=IMG[k];if(!m||!im)return;const w=m[0]/2,h=m[1]/2,ax=m[2]/2,ay=m[3]/2;
@@ -927,7 +928,7 @@ function draw(real){
    const ph=(B.time*.7+h.x*.01)%1;ctx.save();ctx.globalAlpha=(1-ph)*.8;ctx.fillStyle=c;for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(h.x-24+i*24,h.y-10-ph*70-i*8,3,0,Math.PI*2);ctx.fill()}ctx.restore()}
   let hk=`c_${h.id}_${S.roster[h.id].tier}`;
   if(A){const t=A.t;const f=A.type==='atk'?(t<.2?1:t<.3?2:t<.42?3:0):(t<.3?1:t<.7?2:t<.95?3:0);if(f&&MAN[hk+'_a'+f])hk+='_a'+f}
-  {const sm=MAN[`c_${h.id}_${S.roster[h.id].tier}`];if(sm){const lim=spotW(h.x,h.y),k=Math.max(.6,Math.min(1,lim/(sm[0]/2),120/(sm[1]/2)));if(k<1){o.sx=(o.sx||1)*k;o.sy=(o.sy||1)*k}}}// 高階圖比較寬（翅膀、坐騎），縮到不壓到隔壁站位
+  {const k=heroScale();if(k<1){o.sx=(o.sx||1)*k;o.sy=(o.sy||1)*k}}// 所有弟子同一個比例（臉一樣大），依樓閣最擠那層的站位間距決定
 drawSprite(hk,h.x,h.y,o);
   if(A&&A.type==='atk'&&CH[h.id].role==='melee'&&A.t>.18&&A.t<.36){swoosh(h.x+40,h.y-70,CH[h.id].c,1-(A.t-.18)/.18,70)}
  }
