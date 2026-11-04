@@ -54,6 +54,9 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ult .pt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .ult .fill{position:absolute;left:0;right:0;bottom:0;background:rgba(20,10,4,.62);pointer-events:none}
 .ult .nm{position:absolute;left:0;right:0;bottom:0;font-size:11px;font-weight:800;text-align:center;background:rgba(0,0,0,.55);line-height:16px;pointer-events:none}
+.ultw{display:flex;flex-direction:column;align-items:center;gap:3px}
+.auto{font:inherit;font-size:12px;font-weight:900;min-width:52px;height:24px;padding:0 6px;border-radius:12px;border:2px solid #2a170a;background:#5a3a22;color:#e8d8c0;cursor:pointer}
+.auto.on{background:linear-gradient(#7fe07a,#33a04a);color:#0f2a10}
 .ult.ready{border-color:#ffd86a;animation:pulse 1s infinite alternate}
 .ult.ready::after{content:"大招";position:absolute;top:2px;right:2px;font-size:11px;font-weight:900;color:#3a2008;background:#ffd86a;border-radius:6px;padding:0 4px}
 @keyframes pulse{from{box-shadow:0 0 0 0 rgba(255,216,106,.9),0 3px 0 #2a170a}to{box-shadow:0 0 14px 4px rgba(255,216,106,.9),0 3px 0 #2a170a}}
@@ -313,7 +316,7 @@ function layout(){
  L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2,G-(th-sy/2)]),gk,gx,gw,front:gx+gw/2};
  L.tur=[L.front+38,L.front+118,L.front+198];
  L.beastX=L.front+(turSlots()>=2?270:200);
- L.arrX=L.front+520;
+ L.arr0=L.front-30;L.arr1=L.beastX+90;L.arrX=(L.arr0+L.arr1)/2;L.arrR=(L.arr1-L.arr0)/2;
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
  B.turrets.forEach((t,i)=>t.x=L.tur[i]);
  if(B.beast)B.beast.x=L.beastX;
@@ -392,6 +395,7 @@ function step(dt){
   }
   h.cd-=dt;
   if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x-h.x<=R.range);if(tg){h.cd=1/R.rate;h.anim={type:'atk',t:0,target:tg}}}
+  if(h.charge>=100&&S.auto&&S.auto[h.id]&&!h.anim&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));
   if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge));
  }
  // 塔
@@ -406,7 +410,7 @@ function step(dt){
  }
  // 陣法
  if(B.arr&&B.state==='run'){const a=B.arr;a.t+=dt;a.tick+=dt;if(a.tick>=.5){a.tick=0;const dps=arrDps(a.k);
-  B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&Math.abs(e.x-a.x)<220)hit(e,dps*.5,{c:'#ffa04a',small:1})})}}
+  B.enemies.forEach(e=>{if(!e.dead&&!e.fly&&Math.abs(e.x-a.x)<L.arrR)hit(e,dps*.5,{c:'#ffa04a',small:1})})}}
  // 敵人
  for(const e of B.enemies){
   if(e.dead){e.dead+=dt;continue}
@@ -537,9 +541,9 @@ function draw(real){
  const bg=IMG.bg_meadow;for(let x=0,i=0;x<VW+10;x+=1536,i++){if(i%2){ctx.save();ctx.translate(x+1536,0);ctx.scale(-1,1);ctx.drawImage(bg,0,0,1536,1024);ctx.restore()}else ctx.drawImage(bg,x,0,1536,1024)}
  // 陣法
  if(B.arr){const a=B.arr,c=ARR[a.k].c;const pul=.75+.25*Math.sin(B.time*4);
-  ctx.save();ctx.globalAlpha=.85;drawSprite('g_'+a.k,a.x,G+4,{sx:2,sy:2});ctx.restore();
-  ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,20,a.x,G+4,260);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,280,80,0,0,Math.PI*2);ctx.fill();
-  for(let i=0;i<8;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-180+i*50+Math.sin(i*7)*10,G-ph*110,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
+  ctx.save();ctx.globalAlpha=.85;{const f=L.arrR*2/(MAN['g_'+a.k][0]/2);drawSprite('g_'+a.k,a.x,G+4,{sx:f,sy:f*.85})}ctx.restore();
+  ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,20,a.x,G+4,L.arrR*1.1);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,L.arrR*1.15,L.arrR*.3,0,0,Math.PI*2);ctx.fill();
+  for(let i=0;i<8;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-L.arrR*.85+i*L.arrR*.24+Math.sin(i*7)*10,G-ph*110,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
  // 定身符陣地面
  if(PS.slow>0){ctx.save();ctx.globalAlpha=.32+.08*Math.sin(B.time*3);ctx.fillStyle='#ffe86a';ctx.beginPath();ctx.ellipse(L.front+225,G+6,225,22,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.9;for(let i=0;i<6;i++){const x=L.front+30+i*75,y=G-8-Math.abs(Math.sin(B.time*2+i))*10;ctx.fillStyle='#ffe86a';ctx.fillRect(x-6,y-14,12,20);ctx.fillStyle='#d0302a';ctx.fillRect(x-2,y-11,4,14)}ctx.restore()}
  // 樓閣
@@ -652,7 +656,11 @@ function portrait(mk){const m=MAN[mk],im=IMG[mk],c=document.createElement('canva
  const x0=Math.max(-sz*.1,Math.min(m[0]-sz*.9,cx-sz/2+sz*.16));
  const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(im,x0,sy,sz,sz,0,0,132,132);return c}
 function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)=>{const b=document.createElement('button');b.className='ult';const mk=`c_${h.id}_${S.roster[h.id].tier}`;b.title=CH[h.id].n;b.appendChild(portrait(mk));b.insertAdjacentHTML('beforeend','<div class="fill"></div>');
- b.style.borderColor='';b.addEventListener('pointerdown',ev=>{ev.preventDefault();castUlt(i)});u.appendChild(b);return b})}
+ b.style.borderColor='';b.addEventListener('pointerdown',ev=>{ev.preventDefault();castUlt(i)});
+ const w=document.createElement('div');w.className='ultw';const a=document.createElement('button');a.className='auto';
+ const upd=()=>{const on=!!(S.auto&&S.auto[h.id]);a.textContent=on?'自動':'手動';a.classList.toggle('on',on)};upd();
+ a.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();S.auto=S.auto||{};S.auto[h.id]=!S.auto[h.id];upd();persist();toast(`${CH[h.id].n} 大招：${S.auto[h.id]?'自動放':'點了才放'}`)});
+ w.appendChild(b);w.appendChild(a);u.appendChild(w);return b})}
 let lastLive=0;
 function updLive(){
  const done=B.killed,tot=B.total||1;$('waveBar').style.width=Math.min(100,done/tot*100)+'%';
