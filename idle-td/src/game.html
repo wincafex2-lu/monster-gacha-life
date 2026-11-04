@@ -932,7 +932,12 @@ function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)ret
 loadAll().then(()=>{
  try{const c=document.createElement('canvas');c.width=4;c.height=4;const g=c.getContext('2d');g.drawImage(IMG.bg_meadow,0,0,1536,3,0,0,1,1);const d=g.getImageData(0,0,1,1).data;SKY=`rgb(${d[0]},${d[1]},${d[2]})`}catch(e){}
  try{const R=document.documentElement.style,u=k=>`url(${SRC[k]})`;[['--i-coin','u_res_coin'],['--i-gem','u_res_spirit'],['--i-stone','u_res_gatestone'],['--i-pill','u_res_pill'],['--f-N','u_card_common'],['--f-R','u_card_rare'],['--f-E','u_card_epic'],['--f-L','u_card_legend'],['--f-back','u_card_back'],['--altar','u_gacha_altar'],['--ultring','u_ui_ult_frame']].forEach(([a,b])=>{if(SRC[b])R.setProperty(a,u(b))});document.documentElement.classList.add('uiimg')}catch(e){}
- $('loading').style.display='none';resize();buildField();startStage();offline();requestAnimationFrame(t=>{last=t;frame(t)});
+ $('loading').style.display='none';resize();buildField();startStage();
+ {const got=[];for(const st in GIFTS){if(S.best>=+st){const g=GIFTS[st];const box=g.type==='tur'?S.tur:g.type==='arr'?S.arr:S.beast;if(!box[g.k]){box[g.k]={lv:1};
+   if(g.type==='tur'&&S.turTeam.length<turSlots())S.turTeam.push(g.k);if(g.type==='arr'&&ARR[g.k].t==='a'&&!S.arrA)S.arrA=g.k;if(g.type==='beast'&&S.beastTeam.length<beastSlots())S.beastTeam.push(g.k);
+   got.push(g.type==='tur'?TUR[g.k].n:g.type==='arr'?ARR[g.k].n:'神獸'+BEAST[g.k].n)}}}
+  if(got.length){refreshField();giftOpen=true;$('gfTitle').textContent='補發過關獎勵';$('gfImg').src=SRC['b_'+(S.beastTeam[0]||'baihu')];$('gfText').textContent=`你之前已經過的關卡，獎勵補給你：${got.join('、')}。到「山門」裡可以設定上陣。`;$('gift').classList.add('open')}}
+ if(!giftOpen)offline();requestAnimationFrame(t=>{last=t;frame(t)});
  window.__B=B;window.__pick=()=>pick;window.__S=S;window.__fast=sec=>{for(let t=0;t<sec;t+=.05){step(.05);if(giftOpen){$('gift').classList.remove('open');giftOpen=false}}};window.__api={levelUp,pull,gpOne,trainCost,beastSlots,setG:t=>{gTab=t},heroAtk,lvCost,lvCap,gateCost,turCost,refreshField};
 });
 </script>
