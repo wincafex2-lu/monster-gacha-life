@@ -243,3 +243,4 @@ Do not make the body or legs longer, do not move the feet, do not resize anythin
 動作：f1 = raises the spatula up high；f2 = swings the spatula forward, arm extended；f3 = spatula pointing down-forward at the end of the swing, apron ties swinging.
 
 阿嬤這樣做通過的話，其他角色的攻擊圖都改用這個方法。
+- 10:16 台灣時間 雪女 2、3 階攻擊收到，但 1 階攻擊已經退件（身體 +6～8%），2、3 階要等新 1 階通過後一起重畫。工單 9 狀態維持「進行中」，請先做上面阿嬤的新畫法試做。
