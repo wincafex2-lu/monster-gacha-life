@@ -128,3 +128,25 @@ Claude 用「臉對齊後量身體長度」量出來的結果，差超過 3% 的
 - **站寬、肩寬、鞋寬、前腳：放寬到 6%**（鞋子只有幾十個像素，3% 只差一兩個像素，GPT 控制不到，量測誤差也有約 2%）。
 - **第 4 格（回到待機）**：Claude 切圖時直接換成站立圖本身，不用畫到完全一樣；但第 4 格仍要畫，當作動作收尾的參考。
 - **畫好就先上傳**，由 Claude 量完決定通過或退件，不要自己卡著不交。
+
+### 11:33 台灣時間 攻擊圖一律改用「站立圖逐格改」（泓 核准）
+
+阿嬤試做比例誤差 0.4% 以內，泓 看過程式加的動作示範後同意。**從現在起所有攻擊圖都用這個方法，不再一次畫 4 格的長條。**
+
+- 每階攻擊交 3 張單格：`<代號>__t<階>__attack_f1.png`、`_f2.png`、`_f3.png`。第 4 格不用畫（用站立圖）。身體前傾、壓扁、踏步、刀光、震動都由程式加，**圖裡身體、腿、腳都不要動**。
+- **1 階**：附 1 階站立圖，用下面指令，`<動作>` 照該角色原本攻擊指令的 Frame 1～3 描述。
+- **2 階以上**：附圖 A＝該階站立圖、圖 B＝已通過的 1 階同一格，用第二段指令。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, outfit, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon to this pose: <動作>. Moving accessories (cape, tail, ribbons, wings) may swing a little.
+Do not make the body or legs longer, do not move the feet, do not resize anything. Same magenta #FF00FF background.
+```
+
+```
+Edit image A (tier N sprite). Keep its head, face, body, legs, feet, outfit, size and position EXACTLY the same.
+ONLY change the arms and the weapon so the pose matches image B (same character at tier 1). Use the tier N weapon from image A.
+Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resize anything. Same magenta #FF00FF background.
+```
+
+- 工單 10 的影響：上面「攻擊圖處理表」作廢。**所有攻擊圖（55 階）都用新方法，從改好臉的新站立圖逐格改**，臉自然就是新臉，不用再分「重畫」或「只改臉」。每個角色的順序：1 階站立改臉 → 其他階站立改臉 → 1 階攻擊 f1～f3 → 其他階攻擊。

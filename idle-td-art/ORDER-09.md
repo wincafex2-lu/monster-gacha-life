@@ -245,3 +245,25 @@ Do not make the body or legs longer, do not move the feet, do not resize anythin
 阿嬤這樣做通過的話，其他角色的攻擊圖都改用這個方法。
 - 10:16 台灣時間 雪女 2、3 階攻擊收到，但 1 階攻擊已經退件（身體 +6～8%），2、3 階要等新 1 階通過後一起重畫。工單 9 狀態維持「進行中」，請先做上面阿嬤的新畫法試做。
 - 10:31 台灣時間 阿嬤新畫法試做：f1／f2／f3 量起來頭 −0.3～−0.4%、身體 −0.2～+0.2%，**比例完全對**（以前一次畫 4 格是 +8～+18%）。已交給泓 看動作是否夠用，等泓決定是否全部改用這個方法；這段時間先不要畫別的攻擊圖。
+
+### 11:33 台灣時間 攻擊圖一律改用「站立圖逐格改」（泓 核准）
+
+阿嬤試做比例誤差 0.4% 以內，泓 看過程式加的動作示範後同意。**從現在起所有攻擊圖都用這個方法，不再一次畫 4 格的長條。**
+
+- 每階攻擊交 3 張單格：`<代號>__t<階>__attack_f1.png`、`_f2.png`、`_f3.png`。第 4 格不用畫（用站立圖）。身體前傾、壓扁、踏步、刀光、震動都由程式加，**圖裡身體、腿、腳都不要動**。
+- **1 階**：附 1 階站立圖，用下面指令，`<動作>` 照該角色原本攻擊指令的 Frame 1～3 描述。
+- **2 階以上**：附圖 A＝該階站立圖、圖 B＝已通過的 1 階同一格，用第二段指令。
+
+```
+Edit this exact sprite. Keep the head, face, body, legs, feet, outfit, size and position EXACTLY the same (same pixels where possible).
+ONLY change the arms and the weapon to this pose: <動作>. Moving accessories (cape, tail, ribbons, wings) may swing a little.
+Do not make the body or legs longer, do not move the feet, do not resize anything. Same magenta #FF00FF background.
+```
+
+```
+Edit image A (tier N sprite). Keep its head, face, body, legs, feet, outfit, size and position EXACTLY the same.
+ONLY change the arms and the weapon so the pose matches image B (same character at tier 1). Use the tier N weapon from image A.
+Moving accessories (cape, tail, ribbons, wings) may swing a little. Do not resize anything. Same magenta #FF00FF background.
+```
+
+- 阿嬤 1 階攻擊（f1～f3 試做）**通過**。接著：阿嬤 2、3 階；貓武士、鯊魚、木乃伊、雪女 1 階起全部用新方法重交（鯊魚 2 階舊長條也一起改成新方法，風格才一致）。
