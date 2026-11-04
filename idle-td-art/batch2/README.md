@@ -127,3 +127,4 @@ GPT 畫歪時可以回它：
   - 順序：**先畫 4 隻站立**（`baihu__stand.png`、`qinglong__stand.png`、`zhuque__stand.png`、`xuanwu__stand.png`，覆蓋舊檔，青龍朱雀一樣 2 格），4 張都推上 `dot/idle-td-b1` 後**停下來**，等「意見與待辦」寫通過再畫攻擊。
   - 攻擊照「比例鎖」：每格頭高、身體、腳距跟站立差 3% 以內，第 4 格＝站立。
 - 2026-11-04 09:38 TW　**泓通過 v2 方向；`baihu__stand.png`、`qinglong__stand.png`、`zhuque__stand.png`（v2）通過。** 不用再停：畫完 `xuanwu__stand.png`（同樣 v2 大頭帥萌）就直接畫 4 隻攻擊（攻擊指令照「比例鎖」：每格頭高、身體、腳距跟站立差 3% 以內，第 4 格＝站立，鈴鐺珍珠不變大），之後補 ORDER-B2 的 6 張重畫。
+- 2026-11-04 09:50 TW　**`xuanwu__stand.png`（v2）通過**（大頭、粗眉白鬍、大頭蛇吐舌，和另外 3 隻同一個方向）。接著畫 4 隻攻擊。
