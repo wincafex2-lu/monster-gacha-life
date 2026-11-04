@@ -1,6 +1,6 @@
 # 放置塔防第二批點陣圖：工單 B3　攻擊陣 6＋防禦陣 6
 
-狀態：進行中：ChatGPT B3 陣法（16/24）
+狀態：進行中：ChatGPT B3 陣法（17/24）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 ## 固定流程
@@ -106,6 +106,7 @@ GPT 畫歪時可以回它：
 | `images/d_gold__ground.png` | 1254×1254 | 1 | 金鐘陣地面：同款雙金環、十六方釘、八組圓瓣及寺鐘圖騰全部平躺透視，空隙保持洋紅。 |
 | `images/d_lotus__icon.png` | 1254×1254 | 1 | 回春陣俯視：粉紅蓮花與金色花心、八片圓荷葉、八組三圓點內環，空隙洋紅。 |
 | `images/d_lotus__ground.png` | 1254×1254 | 1 | 回春陣地面：八片圓荷葉、八組三圓點與中心粉蓮全部同平面透視，圈內乾淨洋紅。 |
+| `images/d_rock__icon.png` | 1254×1254 | 1 | 岩盾陣俯視：琥珀雙環、八組三疊圓石、八枚山形符文，中央六角山盾，環間鏤空洋紅。 |
 
 交付檔 SHA-256：
 
@@ -125,6 +126,7 @@ GPT 畫歪時可以回它：
 - `d_gold__ground.png`：`92ec95b5af9e12717bbbfb21bd1e41abb57be6a7b137c4fc21fbe25da60a3fd9`
 - `d_lotus__icon.png`：`2628cb409881fbeb8a3fe898037be68c23e29ea153b8a8aab62c3ac9c54d4f46`
 - `d_lotus__ground.png`：`e111afdb803c1e220b7b455e8e41da56310c9505d430aa1d174285488bbac9ee`
+- `d_rock__icon.png`：`ae8245af2a789f9f9a27cfe005f6cffcb100c7e1d3c03f475ed0f495330c42b4`
 
 ## 意見與待辦
 
