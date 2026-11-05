@@ -942,7 +942,7 @@ function doUlt(h){
    const delay=i*.05;addFx({k:'rainp',x:tx+180,y:TOPY-40,tx,ty:G-30,life:.45+delay,delay,c:d.c,rk:d.rk,dmg:dmg/4,upd:(f)=>{if(!f.hitDone&&f.t>=f.life-.02){f.hitDone=1;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-f.tx)<70)hit(e,f.dmg,{c:f.c,kb:6,big:1})});addFx({k:'boom',x:f.tx,y:f.ty,life:.35,c:f.c,r:70})}}})}}
  else if(d.ult==='slam'){addFx({k:'wave',x:L.front,y:G,life:1,c:d.c,hitSet:new Set(),upd:(f,dt)=>{f.x+=dt*1300;alive().forEach(e=>{if(!f.hitSet.has(e)&&e.x<f.x&&!e.fly){f.hitSet.add(e);hit(e,dmg,{c:d.c,kb:70,big:1});e.stun=Math.max(e.stun,.8)}})}});alive().filter(e=>e.fly).forEach(e=>hit(e,dmg*.6,{c:d.c,big:1}));shake(16)}
  else if(d.ult==='laser'){addFx({k:'laser',x:h.x+20,y:h.y-70,life:.8,c:d.c,tick:0,upd:(f,dt)=>{f.tick-=dt;if(f.tick<=0){f.tick=.16;alive().forEach(e=>hit(e,dmg/5,{c:f.c,big:1}))}}})}
- else if(d.ult==='heal'){B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.35);B.buff=8;addFx({k:'heal',x:L.gx,y:G,life:1.4});alive().forEach(e=>hit(e,dmg*.4,{c:d.c}));toast('山門回復！全員攻擊 +30%（8 秒）')}
+ else if(d.ult==='heal'){B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.35);B.buff=8;addFx({k:'heal',x:L.gx,y:G,life:1.4});alive().forEach(e=>hit(e,dmg*.4,{c:d.c}));toast(PS.mx&&PS.mx.alchemist?'山門回復 35%！（仙丹爐火常駐中，攻擊加成本來就一直有）':'山門回復！全員攻擊 +30%（8 秒）')}
  else if(d.ult==='focus'){B.focusT=FOCUS_T;addFx({k:'ring',x:h.x,y:h.y-60,life:.6,c:d.c,r:120});toast(`鷹眼星瞳！星弓少女 ${FOCUS_T} 秒內爆擊率 +50%、爆擊傷害 ×4`)}
  else if(d.ult==='freeze'){alive().forEach(e=>{hit(e,dmg*.6,{c:d.c,big:1});e.stun=Math.max(e.stun,3.2)});addFx({k:'frost',life:1.2,c:d.c,fk:d.fk})}
  else if(d.ult==='drain'){let tot=0;alive().forEach(e=>{const a=Math.min(e.hp,dmg*.8);tot+=a;hit(e,dmg*.8,{c:d.c,big:1});addFx({k:'drain',x:e.x,y:e.y-e.ay*.5,tx:L.gx,ty:G-120,life:.6,c:d.c})});B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.15);addFx({k:'moon',life:1.2})}
@@ -1166,7 +1166,7 @@ function updLive(){
 }
 // 全隊 BUFF 列：有時間的顯示剩幾秒，常駐的不顯示秒數
 let buffLast='';function renderBuffs(){const L2=[],sec=t=>`｜${Math.ceil(t)} 秒`;const M=PS.mx||{};
- if(B.buff>0){const v=PS.r10&&PS.r10.alchemist?100:30;L2.push([M.alchemist?'仙丹爐火':'攻擊加成',`攻擊 +${v}%`+(M.alchemist?'':sec(B.buff)),'#ffd84a'])}
+ if(B.buff>0){const v=cbOn('alchemist')?300:PS.r10&&PS.r10.alchemist?100:30;L2.push([M.alchemist?'仙丹爐火':'攻擊加成',`攻擊 +${v}%`+(M.alchemist?'':sec(B.buff)),'#ffd84a'])}
  if(B.focusT>0)L2.push(['鷹眼星瞳',(cbOn('archer')?'全隊':'星弓')+'爆擊 +50%、爆傷 ×4'+sec(B.focusT),'#9dffb0']);
  if(B.ovT>0)L2.push(['超載核心','大招傷害 ×2'+sec(B.ovT),'#59c8ff']);
  if(B.mechT>0)L2.push(['天機全開','全隊傷害 ×1.5'+sec(B.mechT),'#59c8ff']);
