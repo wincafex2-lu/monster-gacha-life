@@ -50,3 +50,4 @@ N2 出現「完成通知」後，接同資料夾 `ORDER-N3.md`（五傳說神話
 - 10:50 台灣時間 小猴王 5 階站立 **退件（只因為大小）**：整個人被放大了約 30%（腳底跑到 y=1011，臉和身體都比 1～4 階大）。設計很好（白金毛、金冠鳳翎、金甲紅袍、雙層披風、大雲、華麗金棍），**請用已通過的 4 階站立圖去改**，不要重畫整個人：
   `Edit this exact sprite (tier 4). Keep the head, face, body, legs, feet, size and position EXACTLY the same. Do not make anything bigger. Only change: fur turns golden-white, golden armor and red robe, a golden crown with two very long pheasant tail feathers, a bigger cloud curling behind the body, double-layer gold-and-red cape, ornate golden staff with red ends. Accessories go outside the body. Solid magenta #FF00FF background.`
   量法：頭頂（不含冠和羽毛）、下巴、腳底 y=979 要跟 4 階一樣。
+- 10:57 台灣時間 小猴王 5 階站立（從 4 階改）**通過**（腳底 979，臉、身體跟 4 階一樣大；白金毛、金冠鳳翎、金甲紅袍、雙層披風、大雲、華麗金棍；冠和羽毛往上加高是配件，OK）。5 階站立全收，下一步 1 階攻擊 f1～f3（附 1 階站立）。
