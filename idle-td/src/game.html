@@ -621,7 +621,7 @@ function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
- B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;for(const k of UTK)if(B[k]>0)B[k]-=dt;if(B.state==='run')ultTick(dt);if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700*ZM});shake(5)}}}if(cbOn('mecha')&&B.state==='run'){B.cbM=(B.cbM||0)+dt;if(B.cbM>=8){B.cbM=0;const ds=DSRC;DSRC='cb:mecha';const a=teamAvgAtk()*NA*30,es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);es.forEach(e=>{hit(e,a,{c:'#ffcf6a',big:1});e.melt=6;sprFx('fx_blunt',e.x,e.y-e.ay*.5,1.2)});DSRC=ds;if(es.length){addFx({k:'ring',x:VW*.6,y:G-40,life:.5,c:'#ffcf6a',r:600*ZM});B.txt.push({x:VW*.6,y:G-300,v:'天機艦砲！',t:0,big:1,crit:1});shake(8)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';SWC=0;if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
+ B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;for(const k of UTK)if(B[k]>0)B[k]-=dt;for(const h of B.heroes)if(h.ucd>0)h.ucd-=dt;if(B.state==='run')ultTick(dt);if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700*ZM});shake(5)}}}if(cbOn('mecha')&&B.state==='run'){B.cbM=(B.cbM||0)+dt;if(B.cbM>=8){B.cbM=0;const ds=DSRC;DSRC='cb:mecha';const a=teamAvgAtk()*NA*30,es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);es.forEach(e=>{hit(e,a,{c:'#ffcf6a',big:1});e.melt=6;sprFx('fx_blunt',e.x,e.y-e.ay*.5,1.2)});DSRC=ds;if(es.length){addFx({k:'ring',x:VW*.6,y:G-40,life:.5,c:'#ffcf6a',r:600*ZM});B.txt.push({x:VW*.6,y:G-300,v:'天機艦砲！',t:0,big:1,crit:1});shake(8)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';SWC=0;if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
   // 場上的怪都打光了，下一隻（群）不用等，0.25 秒後就出來（秒殺時推關比較快）
@@ -941,7 +941,8 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
  else if(b.k==='xuanwu'){B.shield=4;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.1);sprFx('fx_heal',L.gx,G-110,2)}
 }
 /* ---------- 大招 ---------- */
-function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run')return;h.charge=0;h.anim={type:'ult',t:0};
+const ULT_CD=8;// 每人大招最短間隔（秒），避免互相充能變成一直放大招
+function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run'||h.ucd>0||(h.id==='archer'&&B.focusT>1))return;h.charge=0;h.ucd=ULT_CD;h.anim={type:'ult',t:0};
  SND.play('ult',h.id);if(PS.mx&&PS.mx.drummer)B.drumT=6;if(PS.my&&PS.my.mecha&&h.id==='mecha')B.mechT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.ovT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.r10&&PS.r10.mecha&&h.id==='mecha')h.charge=50;if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 // 大招射程（從山門前算起）：雷射打整排，其他只打射程內
 const ULT_R={sweep:900,slam:750,rain:1100,freeze:1000,heal:600,drain:900,laser:99999,focus:0};
@@ -1217,7 +1218,7 @@ function updLive(){
  $('gateBar').style.width=(B.gateHp/B.gateMax*100)+'%';$('gateHpT').textContent=`${fmt(B.gateHp)}/${fmt(B.gateMax)}`;
  $('gateBox').classList.toggle('low',B.gateHp<B.gateMax*.35);
  if(B.boss&&!B.boss.dead)$('bossHp').style.width=Math.max(0,B.boss.hp/B.boss.max*100)+'%';
- B.heroes.forEach((h,i)=>{const b=ultBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100)});
+ B.heroes.forEach((h,i)=>{const b=ultBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100&&!(h.ucd>0)&&!(h.id==='archer'&&B.focusT>1))});
  B.beasts.forEach((h,i)=>{const b=bBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100)});
  const now=performance.now();if(now-lastLive>400){lastLive=now;$('coinT').textContent=fmt(S.coin);$('gemT').textContent=fmt(S.gem);$('stoneT').textContent=fmt(S.stone);
   $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv))}
