@@ -601,7 +601,7 @@ function mkEnemy(k,boss){
  const s=S.stage;const m=boss?{hp:26,spd:26,dmg:4,coin:20,fly:0}:MON[k];
  const hp=hpBase(s)*m.hp;
  const key=boss?'k_'+k:(k==='bat'?'m_bat_0':'m_'+k);
- const e={k,boss,key,x:VW+60+Math.random()*30,y:G+(m.fly?-150-Math.random()*30:(Math.random()*14-7)),hp,max:hp,spd:m.spd*1.35*(0.92+Math.random()*.16),dmg:dmgBase(s)*m.dmg,coin:Math.round(coinKill(s,m.coin)*(1+PS.coin)*TR('coin')),
+ const e={k,boss,key,x:VW+60+Math.random()*30,y:G+(m.fly?(ZM>1?-200-Math.random()*340:-150-Math.random()*30):(Math.random()*14-7)),hp,max:hp,spd:m.spd*1.35*(0.92+Math.random()*.16),dmg:dmgBase(s)*m.dmg,coin:Math.round(coinKill(s,m.coin)*(1+PS.coin)*TR('coin')),
   fly:!!m.fly,hop:!!m.hop,state:'walk',t:Math.random()*6,at:0,flash:0,stun:0,slow:0,slowT:0,burn:0,dead:0,stop:L.front+6+Math.random()*46+(boss?40:0),kb:0};
  const mm=MAN[key];e.w=mm[0]/2;e.h=mm[1]/2;e.ax=mm[2]/2;e.ay=mm[3]/2;
  e.frames=boss?['k_'+k+'_windup','k_'+k+'_strike']:[1,2,3].map(i=>'m_'+k+'_a'+i).filter(f=>MAN[f]);
@@ -696,7 +696,7 @@ function step(dt){
  // 投射物
  for(const p of B.proj){p.life-=dt;
   if(p.target&&!p.target.dead){p.tx=p.target.x-(p.target.fly?0:0);p.ty=p.target.y-p.target.ay*.45}
-  if(p.arc){p.t+=dt;const k=Math.min(1,p.t/p.dur);p.x=p.sx+(p.tx-p.sx)*k;p.y=p.sy+(p.ty-p.sy)*k-Math.sin(k*Math.PI)*p.arc;if(k>=1)projHit(p)}
+  if(p.arc){p.t+=dt;const k=Math.min(1,p.t/p.dur),ox=p.x,oy=p.y;p.x=p.sx+(p.tx-p.sx)*k;p.y=p.sy+(p.ty-p.sy)*k-Math.sin(k*Math.PI)*p.arc;if(p.x!==ox||p.y!==oy)p.ang=Math.atan2(p.y-oy,p.x-ox);if(k>=1)projHit(p)}
   else{const dx=p.tx-p.x,dy=p.ty-p.y,d=Math.hypot(dx,dy),sp=p.spd*dt;
    p.ang=Math.atan2(dy,dx);if(d<=sp+6)projHit(p);else{p.x+=dx/d*sp;p.y+=dy/d*sp}}
  }
@@ -728,6 +728,7 @@ function heroFire(h){
  if(R.proj==='pill'||R.proj==='orb'&&false){p.arc=140;p.t=0;p.dur=.55}
  if(R.proj==='slash')p.spd=1100;
  if(R.proj==='orb')p.spd=700;
+ if(ZM>1&&!p.arc&&R.proj!=='slash'){const dd=Math.abs(p.tx-p.sx);p.arc=Math.min(560,140+dd*.32);p.t=0;p.dur=Math.max(.4,dd/(p.spd||1000)*1.2)}// 縮小模式：遠程普攻拋高從畫面中間飛過去
  B.proj.push(p);h.charge=Math.min(100,h.charge+2.5*chgMul(h.id));
  if(R.proj==='arrow'||R.proj==='spear')addFx({k:'muzzle',x:p.x+10,y:p.y,life:.12,c:d.c});
 }
