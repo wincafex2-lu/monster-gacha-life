@@ -544,7 +544,7 @@ function layout(){
  // 神獸兩排：會飛的（朱雀、青龍）在上排，地上的（白虎、玄武）在下排
  {let gi=0,fi=0;L.bpos=S.beastTeam.slice(0,beastSlots()).map(k=>BEAST[k]&&BEAST[k].fly?{x:b0+40+140*fi++,y:G-150}:{x:b0+140*gi++,y:G});}
  L.beastX=Math.max(b0,...L.bpos.map(p=>p.x));
- L.arr0=L.front-30;L.arr1=L.beastX+90;L.dX=(L.tx+L.front)/2;L.dR=(L.front-L.tx)/2+10;L.arrR=(L.arr1-L.arr0)/2;L.arrX=Math.max(L.arr0+L.arrR,(L.arr1+VW-60)/2);// 攻擊陣法放戰場正中間
+ L.arr0=L.front-30;L.arr1=L.beastX+90;L.dX=(L.tx+L.front)/2;L.dR=(L.front-L.tx)/2+10;L.arrR=Math.max(260,(VW-60-L.front)*.25);L.arrX=(L.front+VW-60)/2;// 攻擊陣法：放在山門前到畫面右邊的正中間，半徑是這段的 1/4（最少 260）
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
  B.turrets.forEach((t,i)=>t.x=L.tur[i]);
  B.beasts.forEach((b,i)=>{const q=L.bpos[i]||{x:L.beastXs[i],y:G};b.x=q.x;b.y=q.y});
