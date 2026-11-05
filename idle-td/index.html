@@ -55,6 +55,8 @@ body.ufold .ults{display:none}
 @media (max-height:600px){.ult{width:46px!important;height:46px!important}.auto{min-width:40px;height:19px;font-size:11px}.ults{gap:5px}}
 .ult{position:relative;width:66px;height:66px;border-radius:14px;border:3px solid #2a170a;background:#3a2414;overflow:hidden;padding:0;cursor:pointer;box-shadow:0 3px 0 #2a170a}
 .ult .pt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ult .cdt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;text-shadow:0 0 4px #000,0 2px 3px #000;pointer-events:none;z-index:2}
+.ult .cdt:not(:empty){background:rgba(0,0,0,.35)}
 .ult .fill{position:absolute;left:0;right:0;bottom:0;background:rgba(20,10,4,.62);pointer-events:none}
 .ult .nm{position:absolute;left:0;right:0;bottom:0;font-size:11px;font-weight:800;text-align:center;background:rgba(0,0,0,.55);line-height:16px;pointer-events:none}
 .ultw{display:flex;flex-direction:column;align-items:center;gap:3px}
@@ -1187,7 +1189,7 @@ function portrait(mk){const m=MAN[mk],im=IMG[mk],c=document.createElement('canva
  try{const t=document.createElement('canvas');t.width=m[0];t.height=Math.ceil(bh*.4);const g=t.getContext('2d');g.drawImage(im,0,-top-bh*.15);const d=g.getImageData(0,0,t.width,t.height).data;let sx=0,n=0;for(let y=0;y<t.height;y+=3)for(let x=0;x<t.width;x+=2){if(d[(y*t.width+x)*4+3]>128){sx+=x;n++}}if(n)cx=sx/n}catch(e){}
  const x0=Math.max(-sz*.1,Math.min(m[0]-sz*.9,cx-sz/2+sz*.16));
  const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(im,x0,sy,sz,sz,0,0,132,132);return c}
-function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)=>{const b=document.createElement('button');b.className='ult';const mk=myKey(h.id);b.title=CH[h.id].n;b.appendChild(portrait(mk));b.insertAdjacentHTML('beforeend','<div class="fill"></div>');
+function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)=>{const b=document.createElement('button');b.className='ult';const mk=myKey(h.id);b.title=CH[h.id].n;b.appendChild(portrait(mk));b.insertAdjacentHTML('beforeend','<div class="fill"></div><div class="cdt"></div>');
  b.style.borderColor='';b.addEventListener('pointerdown',ev=>{ev.preventDefault();castUlt(i)});
  const w=document.createElement('div');w.className='ultw';const a=document.createElement('button');a.className='auto';
  const upd=()=>{const on=!!(S.auto&&S.auto[h.id]);a.textContent=on?'自動':'手動';a.classList.toggle('on',on)};upd();
@@ -1218,7 +1220,7 @@ function updLive(){
  $('gateBar').style.width=(B.gateHp/B.gateMax*100)+'%';$('gateHpT').textContent=`${fmt(B.gateHp)}/${fmt(B.gateMax)}`;
  $('gateBox').classList.toggle('low',B.gateHp<B.gateMax*.35);
  if(B.boss&&!B.boss.dead)$('bossHp').style.width=Math.max(0,B.boss.hp/B.boss.max*100)+'%';
- B.heroes.forEach((h,i)=>{const b=ultBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100&&!(h.ucd>0)&&!(h.id==='archer'&&B.focusT>1))});
+ B.heroes.forEach((h,i)=>{const b=ultBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';{const c=b.querySelector('.cdt'),t=h.ucd>0?String(Math.ceil(h.ucd)):(h.id==='archer'&&B.focusT>1?'瞳':'');if(c&&c.textContent!==t)c.textContent=t}b.classList.toggle('ready',h.charge>=100&&!(h.ucd>0)&&!(h.id==='archer'&&B.focusT>1))});
  B.beasts.forEach((h,i)=>{const b=bBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100)});
  const now=performance.now();if(now-lastLive>400){lastLive=now;$('coinT').textContent=fmt(S.coin);$('gemT').textContent=fmt(S.gem);$('stoneT').textContent=fmt(S.stone);
   $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv))}
@@ -1299,7 +1301,7 @@ function renderHero(){
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${isMy(id)?'M':d.r}">${isMy(id)?'神話':RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${chName(id)}${isMy(id)&&MYN[id]?`<span style="font-size:14px;opacity:.6">（${d.n}）</span>`:''} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t,r.rs)}</span></h3>
- <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1))}・每秒 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1)*heroRate(id))}${PS.crit>0?`・爆擊 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}</span>${SK('大招',d.un,ultDesc(id)+(ULTX[id]?'；<b style="color:#c2410c">'+ULTX[id]+'</b>':'')+({laser:'；射程：整排',focus:''}[d.ult]??`；射程：山門前 ${ULT_R[d.ult]}`),1)}${PASSIVE[id]?SK('被動',PASSIVE[id].n,PASSIVE[id].d(r.tier),1):''}${PASSIVE[id]&&PASSIVE[id].sp?SK('特殊','普攻特性',PASSIVE[id].sp+(d.r==='L'?'；傳說大招傷害 ×1.5':''),1):''}${AWAKE[id]?SK('覺醒',AWAKE[id].n,AWAKE[id].d,isAw(id),'3 階解鎖','#c2410c'):''}${MAXFX[id]?SK('極意',`<span class="fxs" style="background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}`,MAXFX[id].d,isMax(id),`${d.t} 階解鎖`,'#c2410c'):''}${R10FX[id]?SK('10 星',R10FX[id].n,R10FX[id].d,isR10(id),'紅星 5 顆解鎖','#e0241a'):''}${MYFX[id]?SK('神話',MYFX[id].n,MYFX[id].d,isMy(id),'神話進化解鎖','#c2185b'):''}${cbLine(id)}</div>
+ <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1))}・每秒 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1)*heroRate(id))}${PS.crit>0?`・爆擊 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}</span>${SK('大招',d.un,ultDesc(id)+`；放完要等 ${ULT_CD} 秒才能再放`+(ULTX[id]?'；<b style="color:#c2410c">'+ULTX[id]+'</b>':'')+({laser:'；射程：整排',focus:''}[d.ult]??`；射程：山門前 ${ULT_R[d.ult]}`),1)}${PASSIVE[id]?SK('被動',PASSIVE[id].n,PASSIVE[id].d(r.tier),1):''}${PASSIVE[id]&&PASSIVE[id].sp?SK('特殊','普攻特性',PASSIVE[id].sp+(d.r==='L'?'；傳說大招傷害 ×1.5':''),1):''}${AWAKE[id]?SK('覺醒',AWAKE[id].n,AWAKE[id].d,isAw(id),'3 階解鎖','#c2410c'):''}${MAXFX[id]?SK('極意',`<span class="fxs" style="background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}`,MAXFX[id].d,isMax(id),`${d.t} 階解鎖`,'#c2410c'):''}${R10FX[id]?SK('10 星',R10FX[id].n,R10FX[id].d,isR10(id),'紅星 5 顆解鎖','#e0241a'):''}${MYFX[id]?SK('神話',MYFX[id].n,MYFX[id].d,isMy(id),'神話進化解鎖','#c2185b'):''}${cbLine(id)}</div>
  <div class="tiers">${Array.from({length:d.t},(_,i)=>`<span class="${i+1>r.tier?'no':''} ${i+1===r.tier?'cur':''}"><img src="${charImg(id,i+1)}" alt=""></span>`).join('')}</div>
  <div class="row"><button class="btn green" id="dUp" ${r.lv>=cap||S.coin<cost?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cost)}</span></button>
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
