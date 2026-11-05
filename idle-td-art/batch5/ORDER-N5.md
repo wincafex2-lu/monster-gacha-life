@@ -18,6 +18,7 @@
 - 側 3/4 朝右、輕鬆站，武器在**前手**（畫面右邊的手）。配件加在身體外面，冠、羽、光環往上加高可以。
 - 背景純洋紅 `#FF00FF`。不畫光暈、閃光、火焰噴出去、冰霧（程式加）；實體的火輪、冰龍、光環可以畫，但畫成實色。
 - 臉照臉表，三人一眼分得出來，每階同一張臉。
+- **身體比例（泓 01:12 特別交代）**：頭的大小跟標準一樣（下巴 y≈690），下巴到腳底**不能超過 288px**（腳底 y=978）。**哪吒是小孩**：身體再短一點，下巴到腳底約 260px（跟小猴王一樣），整個人比楊戩、敖丙矮一截；不要畫成少年或大人的長腿。
 
 ## 指令
 
@@ -56,7 +57,7 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 
 | 階 | 外型 | 英文（貼給 GPT） |
 |---|---|---|
-| 1 | 小孩、兩個圓髮髻綁紅繩、白色短衫粉色蓮花邊、紅色長綾（混天綾）鬆鬆繞在肩上往後飄、光腳；前手拿一個金色手鐲大小的圈 | small kid with two round hair buns tied with red cords, white short shirt with pink lotus-petal trims, a long red silk sash loosely around the shoulders floating behind, bare feet; holds a golden ring (bracelet-sized hoop) in the front hand |
+| 1 | 小孩（矮、短手短腳，比楊戩矮一截）、兩個圓髮髻綁紅繩、白色短衫粉色蓮花邊、紅色長綾（混天綾）鬆鬆繞在肩上往後飄、光腳；前手拿一個金色手鐲大小的圈 | small young child (short chubby limbs, clearly shorter than an adult chibi; body from chin to feet only as tall as the head) with two round hair buns tied with red cords, white short shirt with pink lotus-petal trims, a long red silk sash loosely around the shoulders floating behind, bare feet; holds a golden ring (bracelet-sized hoop) in the front hand |
 | 2 | 粉白蓮花肚兜＋金腰帶；紅綾變長繞兩圈；圈變大（臉的大小）；額頭一點紅 | pink-and-white lotus vest with a gold belt, the red sash longer and wrapped twice, ring bigger (face-sized), a small red dot on the forehead |
 | 3 | 蓮瓣短裙；腳踝兩側各一個小金輪（輪子在腳旁邊，腳還是踩地上）；背後斜揹一支紅纓長槍 | lotus-petal short skirt; a small golden wheel beside each ankle (wheels next to the feet, feet still on the ground); a red-tasseled spear slung diagonally on the back |
 | 4 | 紅金戰衣、蓮花護肩；腳旁的輪子變大、輪緣畫成實色火焰形狀；槍尖變火焰形 | red-and-gold battle outfit with lotus shoulder guards; the ankle wheels bigger with solid flame-shaped rims; spear tip shaped like a flame |
