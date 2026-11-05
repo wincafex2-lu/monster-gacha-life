@@ -294,7 +294,7 @@ const MYN={fox:'天狐神姬',dragon:'龍神將',archer:'月神星弓',mecha:'�
 const MYFX={fox:{n:'狐火燎原',d:'燒傷中的怪物死掉會爆炸，周圍的怪受到牠最大血量 20% 的傷害（會連鎖）'},dragon:{n:'神龍擺尾',d:'每 8 秒，全場怪物暈 1.5 秒'},archer:{n:'月華連星',d:'爆擊時再多 30% 機會觸發星隕一擊'},mecha:{n:'天機全開',d:'神機天將放大招後 6 秒，全隊所有傷害 ×1.5（多出來的傷害算進神機天將）'},alchemist:{n:'九轉金丹',d:'全隊所有傷害再 ×1.5（多出來的傷害算進丹仙真人）'},monkey:{n:'七十二變',d:'毫毛分身變成 6 隻，每隻 100% 傷害'}};
 const MY_COST=1000,isMy=id=>!!(S.roster[id]&&S.roster[id].my),myKey=id=>`c_${id}_${isMy(id)&&SRC[`c_${id}_6`]?6:S.roster[id].tier}`;
 const R10FX={fox:{n:'天狐焚天',d:'燒傷傷害 ×3'},dragon:{n:'龍王降臨',d:'普攻暈眩機率 25% → 50%，暈 2 秒'},archer:{n:'星河倒懸',d:'星隕一擊觸發機率 20% → 40%'},mecha:{n:'無限核心',d:'放完大招，自己馬上回 50 充能'},alchemist:{n:'金丹大成',d:'仙丹爐火的全隊攻擊 +30% 變成 +100%'},monkey:{n:'大鬧天宮',d:'齊天大聖改成每 3 下就砸一次'}};
-const PS0=()=>({atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
+const PS0=()=>({fbatk:0,atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
 let PS=PS0();
 function calcPassives(){PS=PS0();PS.mx={};PS.aw={};PS.r10={};PS.my={};S.team.slice(0,slots()).forEach(id=>{if(isMax(id))PS.mx[id]=1;if(isAw(id))PS.aw[id]=1;if(isR10(id))PS.r10[id]=1;if(isMy(id))PS.my[id]=1});
  if(PS.mx.disciple)PS.front+=.2;if(PS.mx.grandma)PS.charge+=.25;if(PS.mx.general)PS.dr+=.04*S.team.slice(0,slots()).filter(id=>['melee','tank'].includes(CH[id].role)).length;(S.fbOn||[]).slice(0,fbSlots()).forEach(k=>{if(S.fb[k])PS[FB[k].k]+=fbV(k)});
@@ -341,7 +341,7 @@ const MON={
 };
 // 法寶：3 個共用欄位（山門 Lv1／10／20 開），重複拿到升星（最多 5 星，每星 +25%）
 const FB={
- qiankun:{n:'乾坤圈',g:'圈',c:'#ffb02e',k:'atk',v:.15,t:v=>`全隊攻擊 +${Math.round(v*100)}%`},
+ qiankun:{n:'乾坤圈',g:'圈',c:'#ffb02e',k:'fbatk',v:.15,t:v=>`全隊攻擊 ×${(1+v).toFixed(2)}（獨立乘，不跟被動擠）`},
  huntian:{n:'混天綾',g:'綾',c:'#ff4a6a',k:'mslow',v:.12,t:v=>`全部怪物走路變慢 ${Math.round(v*100)}%`},
  zhaoyao:{n:'照妖鏡',g:'鏡',c:'#7ad8ff',k:'boss',v:.3,t:v=>`打 Boss 和魔頭傷害 +${Math.round(v*100)}%`},
  dinghai:{n:'定海神針',g:'針',c:'#e0b84a',k:'hp',v:.25,t:v=>`山門血量 +${Math.round(v*100)}%`},
@@ -485,7 +485,7 @@ const spdBonus=()=>PS.spd+(B.drumT>0?.3:0)+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv
 const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus())*(id==='archer'&&PS.aw&&PS.aw.archer?2:1);
 // 升階攻擊加成：每階 ×2，升到滿階再 ×1.5（傳說 5 階 = 24 倍、三階角色滿階 = 6 倍）
 const tierMul=(id,t)=>Math.pow(2,t-1)*(t>=CH[id].t?1.5:1);
-function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*tierMul(id,r.tier)*(B.buff>0?(PS.r10&&PS.r10.alchemist?2:1.3):1)*Math.pow(1.5,rsOf(id))*(isMy(id)?4:1)*(id==='dragon'||id==='mecha'?1.5:1)*(1+PS.atk+side)*(1+.03*(r.brk||0))*TR('atk')*XYA()}
+function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*tierMul(id,r.tier)*(B.buff>0?(PS.r10&&PS.r10.alchemist?2:1.3):1)*Math.pow(1.5,rsOf(id))*(isMy(id)?4:1)*(id==='dragon'||id==='mecha'?1.5:1)*(1+PS.atk+side)*(1+(PS.fbatk||0))*(1+.03*(r.brk||0))*TR('atk')*XYA()}
 function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)*(1+.05*(S.tur[k].brk||0))*TR('atk')*XYA()}
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*XYA()*(arrPaired(k)?1.5:1)}
 // 神獸攻擊跟著隊伍走：上陣弟子的平均攻擊 × 神獸倍率 × 等級加成（每級 +2%），不會因為弟子等級高就被拋在後面
@@ -1184,7 +1184,7 @@ function render(){
 // 隊伍總加成：把上陣弟子被動、神獸、陣法、法寶、修煉、仙元全部加總
 var tstatOpen=false,hSort='rar',hRole='all';try{hSort=localStorage.getItem('idle-td-hsort')||'rar'}catch(e){}
 const RK=i=>(isMy(i)?6:{L:5,E:4,R:3,N:2,S:1}[CH[i].r])+(S.roster[i]?(S.roster[i].tier+rsOf(i))/20:0);function teamStats(){const P=v=>Math.round(v*100)+'%',X=v=>'×'+(v<100?v.toFixed(2):fmt(v)),R=[];const add=(n,v,t)=>{if(v)R.push([n,t])};
- add('全隊攻擊',PS.atk,'+'+P(PS.atk));add('近戰・坦克攻擊',PS.front,'+'+P(PS.front));add('遠程・法術攻擊',PS.back,'+'+P(PS.back));
+ add('全隊攻擊',PS.atk,'+'+P(PS.atk));add('乾坤圈（獨立乘）',PS.fbatk,'×'+(1+PS.fbatk).toFixed(2));add('近戰・坦克攻擊',PS.front,'+'+P(PS.front));add('遠程・法術攻擊',PS.back,'+'+P(PS.back));
  add('爆擊率',PS.crit,P(PS.crit)+'（上限 60%）');add('攻擊速度',spdBonus(),'+'+P(spdBonus()));add('大招充能',PS.charge,'+'+P(PS.charge));
  add('打 Boss 傷害',PS.boss,'+'+P(PS.boss));add('山門血量',PS.hp,'+'+P(PS.hp));add('山門受傷',PS.dr,'-'+P(PS.dr)+'（上限 60%）');
  add('山門每秒回血',PS.regen,(PS.regen*100).toFixed(2)+'%');add('全場怪物變慢',PS.mslow,P(PS.mslow)+'（上限 50%）');add('山門前怪物變慢',PS.slow,P(PS.slow));
