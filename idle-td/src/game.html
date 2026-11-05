@@ -139,6 +139,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
 .card.locked{filter:grayscale(1) brightness(.55);cursor:default}
 .card.inteam::before{content:"上陣";position:absolute;left:4px;bottom:24px;z-index:1;font-size:11px;font-weight:900;background:#33a04a;color:#fff;border-radius:6px;padding:0 5px}
 .card .up{position:absolute;right:4px;bottom:24px;z-index:1;font-size:11px;font-weight:900;background:#ff4a3a;color:#fff;border-radius:6px;padding:0 5px}
+.hlay{display:flex;gap:14px;align-items:stretch}.hleft{flex:0 0 38%;max-height:calc(100dvh - 150px);overflow-y:auto;padding-right:4px}.hright{flex:1;min-width:0;max-height:calc(100dvh - 150px);overflow-y:auto}.hlay .detail .pic{flex-basis:150px;height:170px}.hlay .grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}@media (max-width:760px){.hlay{flex-direction:column}.hleft{flex:none;max-height:34dvh}.hright{max-height:none}}
 .detail{display:flex;gap:14px;flex-wrap:wrap}
 .detail .pic{flex:0 0 220px;height:240px;border-radius:14px;background:radial-gradient(circle at 50% 70%,#fff,#e9dcc0);position:relative;border:3px solid var(--n)}
 .detail .pic{overflow:hidden}.detail .pic img{position:absolute;left:50%;bottom:10px;height:90%;max-width:100%;object-fit:contain;object-position:50% 100%;transform:translateX(-50%)}
@@ -292,7 +293,7 @@ const RS_MAX=5,rsCost=n=>150+100*n,rsOf=id=>(S.roster[id]&&S.roster[id].rs)||0,i
 // 神話進化：10 星（紅星 5 顆）後用 1000 傳說碎片進化，攻擊 ×4、大招 ×1.5；有 t6 圖就換圖，沒有先用 5 階圖加金光
 const MYN={fox:'天狐神姬',dragon:'龍神將',archer:'月神星弓',mecha:'神機天將',alchemist:'丹仙真人',monkey:'齊天神猴'},chName=id=>isMy(id)&&MYN[id]?MYN[id]:CH[id].n;
 // 神話極意：進化成神話後多一個效果，照各自流派再往上強化
-const MYFX={fox:{n:'狐火燎原',d:'燒傷中的怪物死掉會爆炸，周圍的怪受到牠最大血量 20% 的傷害（會連鎖；全隊增傷只吃 1/4）'},dragon:{n:'神龍擺尾',d:'每 8 秒，全場怪物暈 1.5 秒'},archer:{n:'月華連星',d:'爆擊時再多 30% 機會觸發星隕一擊'},mecha:{n:'天機全開',d:'神機天將放大招後 6 秒，全隊所有傷害 ×1.5（多出來的傷害算進神機天將）'},alchemist:{n:'九轉金丹',d:'全隊所有傷害再 ×1.5（多出來的傷害算進丹仙真人）'},monkey:{n:'七十二變',d:'毫毛分身變成 6 隻，每隻 100% 傷害'}};
+const MYFX={fox:{n:'狐火燎原',d:'燒傷中的怪物死掉會爆炸，周圍的怪受到牠最大血量 20% 的傷害（會連鎖；全隊增傷只吃 1/4；炸王最多天狐普攻 ×30）'},dragon:{n:'神龍擺尾',d:'每 8 秒，全場怪物暈 1.5 秒'},archer:{n:'月華連星',d:'爆擊時再多 30% 機會觸發星隕一擊'},mecha:{n:'天機全開',d:'神機天將放大招後 6 秒，全隊所有傷害 ×1.5（多出來的傷害算進神機天將）'},alchemist:{n:'九轉金丹',d:'全隊所有傷害再 ×1.5（多出來的傷害算進丹仙真人）'},monkey:{n:'七十二變',d:'毫毛分身變成 6 隻，每隻 100% 傷害'}};
 const MY_COST=1000,isMy=id=>!!(S.roster[id]&&S.roster[id].my),myKey=id=>`c_${id}_${isMy(id)&&SRC[`c_${id}_6`]?6:S.roster[id].tier}`;
 const R10FX={fox:{n:'天狐焚天',d:'燒傷傷害 ×3'},dragon:{n:'龍王降臨',d:'普攻暈眩機率 25% → 50%，暈 2 秒'},archer:{n:'星河倒懸',d:'星隕一擊觸發機率 20% → 40%'},mecha:{n:'無限核心',d:'放完大招，自己馬上回 50 充能'},alchemist:{n:'金丹大成',d:'仙丹爐火的全隊攻擊 +30% 變成 +100%'},monkey:{n:'大鬧天宮',d:'齊天大聖改成每 3 下就砸一次'}};
 const PS0=()=>({fbatk:0,atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
@@ -432,7 +433,10 @@ const TR=k=>1+TRAIN[k].per*((S.train&&S.train[k])||0);
 // 拿到仙元（永久）：每點 全隊攻擊 +5%、銅錢和山門石 +2%
 const ASC_MIN=200,XY_ATK=.05,XY_RES=.02;
 const xyGain=b=>b<ASC_MIN?0:Math.floor(Math.pow(b/50,2.5));
-const XYA=()=>1+XY_ATK*(S.xy||0),XYR=()=>1+XY_RES*(S.xy||0);
+const XYA0=()=>1+XY_ATK*(S.xy||0),XYA=()=>XYA0()*RLM(),XYR=()=>1+XY_RES*(S.xy||0);
+// 境界：每飛升一次升一境界，全隊攻擊 ×20、弟子等級上限 +50（2026-11-05 泓）
+const REALM=['凡人','練氣','築基','金丹','元嬰','化神','煉虛','合體','大乘','渡劫','真仙'],RLM_MUL=20,RLM_LV=50;
+const RLM=()=>Math.pow(RLM_MUL,S.asc||0),realmName=n=>n<REALM.length?REALM[n]:'真仙 '+(n-REALM.length+2)+' 重';
 // 第三批美術：投射物、打擊特效、傳說大招
 const PSPR={archer:'p_arrow',fox:'p_ofuda',alchemist:'p_pill',pharaoh:'p_scarab',elf:'p_seed',kitsune:'p_foxfire',pirate:'p_bullet',jiangshi:'p_talisman',witch:'p_starbolt',yukionna:'p_iceshard',grandma:'p_bun',shark:'p_harpoon',
  crossbow:'p_bolt',frost:'p_iceshard',furnace:'p_firebomb',talisman:'p_talisman'};
@@ -471,14 +475,14 @@ setInterval(persist,5000);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else offline()});
 
 /* ---------- 數值 ---------- */
-const hpBase=s=>14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.008,s-100):1);
+const hpBase=s=>s>500?hpBase(500)*Math.pow(1.08,s-500):14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.008,s-100):1);// 500 關後怪血每關 ×1.08
 const dmgBase=s=>2.6*Math.pow(1.065,s-1);
 const coinKill=(s,m)=>Math.max(1,Math.round(1.6*Math.pow(1.088,s-1)*m));
 const lvCost=lv=>Math.ceil(6*Math.pow(1.12,lv-1));
 const gateCost=lv=>Math.ceil(20*Math.pow(1.08,lv-1));
 const gateMax=lv=>Math.round(150*Math.pow(1.2,lv-1)*TR('hp')*(1+(S.arrD==='d_rock'&&S.arr.d_rock?dv('d_rock',S.arr.d_rock.lv):0)));
 const turCost=lv=>Math.ceil(14*Math.pow(1.13,lv-1));
-const lvCap=id=>S.gateLv*5+10;// 等級上限只看山門；階級改成直接加攻擊（每階 ×1.5）
+const lvCap=id=>S.gateLv*5+10+RLM_LV*(S.asc||0);// 等級上限只看山門；階級改成直接加攻擊（每階 ×1.5）
 const slots=()=>{let n=2;for(const[l,c]of SLOT_LV)if(S.gateLv>=l)n=c;return n};
 const turSlots=()=>0;// 塔已移除
 const tierOf=lv=>lv>=20?3:lv>=10?2:1;
@@ -748,7 +752,7 @@ function projHit(p){
  else if(p.target&&!p.target.dead){hit(p.target,p.dmg*dmgMul(p,p.target),{c:p.crit?'#ff4a3a':p.c,kb:p.knock,slow:p.slow,big:p.crit,crit:p.crit,na:1});addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c})}
  else addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c});
 }
-let DSRC='etc',SWC=0;// SWC：現在這一下是不是從爆擊的普攻帶出來的
+let DSRC='etc',SWC=0;const FOX_BOSS=30;// 狐火燎原炸到王：最多天狐普攻 ×30（王要靠隊伍成長打）// SWC：現在這一下是不是從爆擊的普攻帶出來的
 function hit(e,amt,o={}){
  if(e.dead)return;
  // 劍意連斬：大招打中有爆擊率的機會追加一刀（這下 ×3）；弟子普攻爆擊時，這一下帶出來的技能傷害（星隕、穿透、雷射、大棍…）也追加一刀（×1.5）。普攻本體另外算，燒傷每跳、陣法、神獸、法寶不算。DPS 算給出手的人
@@ -761,7 +765,7 @@ function hit(e,amt,o={}){
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big,o.crit);
- if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,bd,{c:'#ff8a3d',src:'hpboom',q:.25})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
+ if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x,bcap=heroAtk('fox')*NA*FOX_BOSS;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,o.boss?Math.min(bd,bcap):bd,{c:'#ff8a3d',src:'hpboom',q:.25})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
   for(let i=0;i<5;i++)addFx({k:'coin',x:e.x,y:e.y-e.ay*.5,vx:(Math.random()-.5)*160,vy:-120-Math.random()*120,life:.6});
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
@@ -1195,7 +1199,7 @@ function teamStats(){const P=v=>Math.round(v*100)+'%',X=v=>'×'+(v<100?v.toFixed
  add('打 Boss 傷害',PS.boss,'+'+P(PS.boss));add('山門血量',PS.hp,'+'+P(PS.hp));add('山門受傷',PS.dr,'-'+P(PS.dr)+'（上限 60%）');
  add('山門每秒回血',PS.regen,(PS.regen*100).toFixed(2)+'%');add('全場怪物變慢',PS.mslow,P(PS.mslow)+'（上限 50%）');add('山門前怪物變慢',PS.slow,P(PS.slow));
  add('銅錢',PS.coin,'+'+P(PS.coin));add('直接收服小怪',PS.cap,P(PS.cap));add('普攻定身',PS.bind,P(PS.bind));
- const M=[['修煉 全隊攻擊',TR('atk')],['修煉 大招傷害',TR('ult')],['修煉 銅錢',TR('coin')],['仙元 全隊攻擊',XYA()],['仙元 銅錢・山門石',XYR()]].filter(a=>a[1]>1);
+ const M=[['修煉 全隊攻擊',TR('atk')],['修煉 大招傷害',TR('ult')],['修煉 銅錢',TR('coin')],['仙元 全隊攻擊',XYA0()],['境界 '+realmName(S.asc||0),RLM()],['仙元 銅錢・山門石',XYR()]].filter(a=>a[1]>1);
  const fx=[...Object.keys(PS.aw||{}).map(id=>AWAKE[id]&&`${chName(id)}・${AWAKE[id].n}`),...Object.keys(PS.mx||{}).map(id=>MAXFX[id]&&`${chName(id)}・${MAXFX[id].n}`),...Object.keys(PS.r10||{}).map(id=>R10FX[id]&&`${chName(id)}・${R10FX[id].n}`),...Object.keys(PS.my||{}).map(id=>MYFX[id]&&`${chName(id)}・${MYFX[id].n}`)].filter(Boolean);
  return `<details class="tstat" ${tstatOpen?'open':''} ontoggle="tstatOpen=this.open" style="margin:12px 0 4px;background:#fff7e6;border:2px solid #e0c890;border-radius:12px;padding:6px 12px"><summary style="cursor:pointer;font-weight:800;color:#7a4a20">隊伍總加成（點開看）</summary>
   <div class="stat" style="margin-top:6px">${R.map(([n,t])=>`<b>${n}</b><span>${t}</span>`).join('')||'<b>被動</b><span>目前沒有</span>'}${M.map(([n,v])=>`<b>${n}</b><span>${X(v)}</span>`).join('')}${fx.length?`<b>生效中的特效</b><span>${fx.join('、')}</span>`:''}</div>
@@ -1232,15 +1236,15 @@ function renderHero(){
  ${d.r==='L'&&r.tier>=d.t?`<button class="btn gold" id="dRs" style="background:linear-gradient(#ff5a4a,#c0201a);color:#fff" ${rsOf(id)<RS_MAX&&(S.shard||0)>=rsCost(rsOf(id))?'':'disabled'}>${rsOf(id)<RS_MAX?`升紅星 <span class="cost">碎片 ${rsCost(rsOf(id))}</span>`:'紅星已滿'}</button>`:''}${d.r==='L'&&isR10(id)&&!isMy(id)?`<button class="btn" id="dMy" style="background:linear-gradient(90deg,#ff3a6a,#ffb02a,#7a5cff);color:#fff" ${(S.shard||0)>=MY_COST?'':'disabled'}>神話進化 <span class="cost">碎片 ${MY_COST}</span></button>`:''}
  <button class="btn blue" id="dTeam">${inTeam?'下陣':'上陣'}</button></div>
  <div style="font-size:13px;color:#7a5a3a">${tierTxt}${tierUp}${d.r==='L'&&r.tier>=d.t?`<br>紅星 ${rsOf(id)}/${RS_MAX}（每顆 ×1.5，碎片 ${S.shard||0}）${isMy(id)?'':isR10(id)?'・可以神話進化（攻擊 ×4、大招 ×1.5）':''}`:''}・上陣 ${S.team.length}/${slots()}</div></div></div>
- ${teamStats()}
- <h3 style="margin:14px 0 8px;font-family:var(--title)">全部弟子（${ids.filter(i=>S.roster[i]).length}/${ids.length}）</h3>
+ ${teamStats()}`;let hl=`
+ <h3 style="margin:0 0 8px;font-family:var(--title)">全部弟子（${ids.filter(i=>S.roster[i]).length}/${ids.length}）</h3>
  <div class="row" style="gap:4px;margin-bottom:6px;flex-wrap:wrap">排序：${[['rar','稀有度'],['atk','攻擊'],['lv','等級']].map(([k,n])=>`<button class="btn ${hSort===k?'gold':''}" data-hs="${k}" style="padding:2px 10px;font-size:13px">${n}</button>`).join('')}
  <span style="margin-left:10px">職業：</span>${[['all','全部'],...Object.keys(ROLE).map(k=>[k,ROLE[k].n])].map(([k,n])=>`<button class="btn ${hRole===k?'blue':''}" data-hr="${k}" style="padding:2px 10px;font-size:13px">${n}</button>`).join('')}</div>
  <div style="font-size:12px;opacity:.65;margin-bottom:4px">上陣中的弟子固定排在最前面</div><div class="grid">`;
  for(const i of own){const rr=S.roster[i],dd=CH[i];const up=rr.tier<dd.t&&(i==='disciple'?S.pill>=rr.tier*5:rr.dup>=dupeNeed(i,rr.tier+1));
-  h+=`<button class="card ${dd.r} ${S.team.includes(i)?'inteam':''}" data-id="${i}" style="${i===sel?'outline:3px solid #ff9a1e':''}"><img src="${charImg(i)}" alt=""><span class="lv">Lv${rr.lv}</span><span class="tier">${'★'.repeat(rr.tier)}${rr.rs?`<i style="color:#ff3a2a;font-style:normal">${'★'.repeat(rr.rs)}</i>`:''}${rr.brk?`+${rr.brk}`:''}</span>${up?'<span class="up">可升階</span>':''}<span class="cn">${chName(i)}</span></button>`}
- for(const i of not){const dd=CH[i];h+=`<div class="card ${dd.r} locked"><img src="${charImg(i,1)}" alt=""><span class="cn">？？？</span></div>`}
- h+='</div>';$('shBody').innerHTML=h;
+  hl+=`<button class="card ${dd.r} ${S.team.includes(i)?'inteam':''}" data-id="${i}" style="${i===sel?'outline:3px solid #ff9a1e':''}"><img src="${charImg(i)}" alt=""><span class="lv">Lv${rr.lv}</span><span class="tier">${'★'.repeat(rr.tier)}${rr.rs?`<i style="color:#ff3a2a;font-style:normal">${'★'.repeat(rr.rs)}</i>`:''}${rr.brk?`+${rr.brk}`:''}</span>${up?'<span class="up">可升階</span>':''}<span class="cn">${chName(i)}</span></button>`}
+ for(const i of not){const dd=CH[i];hl+=`<div class="card ${dd.r} locked"><img src="${charImg(i,1)}" alt=""><span class="cn">？？？</span></div>`}
+ hl+='</div>';const ol=document.querySelector('#shBody .hleft'),st=ol?ol.scrollTop:0,orr=document.querySelector('#shBody .hright'),st2=orr&&orr.dataset.id===sel?orr.scrollTop:0;$('shBody').innerHTML=`<div class="hlay"><div class="hleft">${hl}</div><div class="hright" data-id="${sel}">${h}</div></div>`;{const nl=document.querySelector('#shBody .hleft');if(nl)nl.scrollTop=st;const nr=document.querySelector('#shBody .hright');if(nr)nr.scrollTop=st2}
  $('shBody').querySelectorAll('.card[data-id]').forEach(c=>c.onclick=()=>{sel=c.dataset.id;renderHero()});
  $('shBody').querySelectorAll('[data-hs]').forEach(b=>b.onclick=()=>{hSort=b.dataset.hs;try{localStorage.setItem('idle-td-hsort',hSort)}catch(e){}renderHero()});$('shBody').querySelectorAll('[data-hr]').forEach(b=>b.onclick=()=>{hRole=b.dataset.hr;renderHero()});
  $('dUp').onclick=()=>{levelUp(id,1)};$('dUp10').onclick=()=>{levelUp(id,99)};
@@ -1299,7 +1303,7 @@ function renderGate(){$('shTitle').textContent='山門';
   for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
    h+=`<div class="item"><div class="th" style="display:grid;place-items:center;font-family:var(--title);font-size:28px;color:#7a4a20">${t.n[0]}</div><div class="tx"><b>${t.n} Lv${l}</b><div>${t.d} +${Math.round(t.per*l*100)}%（下一級 +${Math.round(t.per*(l+1)*100)}%）</div></div>
    <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button><button class="btn green" data-trmax="${k}" ${S.coin<cc?'disabled':''}>全部</button></div>`}
-  {const best=S.best||0,g=xyGain(best),ok=best>=ASC_MIN;h+=`</div><h3 class="sec">飛升</h3><div class="item" style="display:block"><div class="tx"><b>仙元 ${S.xy||0}${S.asc?`（已飛升 ${S.asc} 次）`:''}</b><div>永久：全隊攻擊 ×${XYA().toFixed(2)}、銅錢和山門石 ×${XYR().toFixed(2)}（每點仙元 攻擊 +${XY_ATK*100}%、資源 +${XY_RES*100}%）</div>
+  {const best=S.best||0,g=xyGain(best),ok=best>=ASC_MIN;h+=`</div><h3 class="sec">飛升</h3><div class="item" style="display:block"><div class="tx"><b>境界「${realmName(S.asc||0)}」・仙元 ${S.xy||0}${S.asc?`（已飛升 ${S.asc} 次）`:''}</b><div>永久：境界攻擊 ×${fmt(RLM())}、等級上限 +${RLM_LV*(S.asc||0)}；仙元攻擊 ×${XYA0().toFixed(2)}、銅錢和山門石 ×${XYR().toFixed(2)}</div><div style="opacity:.75;font-size:.9em">每次飛升：境界升一級（攻擊再 ×${RLM_MUL}、等級上限 +${RLM_LV}），前一半關卡直接算過關</div>
    <div style="margin-top:4px">${ok?`現在飛升可以拿到 <b style="color:#c2410c">${g} 仙元</b>（最高第 ${best} 關，打越遠拿越多）`:`打到第 ${ASC_MIN} 關就能飛升（現在最高第 ${best} 關）`}</div>
    <div style="opacity:.75;font-size:.9em;margin-top:2px">重來：關卡、山門等級、弟子等級、銅錢、山門石、修煉、陣法神獸等級<br>保留：所有弟子和階級、突破、法寶、靈石、進階丹、陣法神獸</div></div>
    <div class="row" style="margin-top:6px"><button class="btn gold" id="gAsc" ${ok?'':'disabled'}>飛升</button><span class="hint" id="gAscTip"></span></div></div>`}
@@ -1359,11 +1363,14 @@ function giveGift(g){let title,img,text;
  giftOpen=true;SND.play('rare');$('gfTitle').textContent=title;$('gfImg').src=img;$('gfText').textContent=text;$('gift').classList.add('open');refreshField()}
 $('gfOk').onclick=()=>{$('gift').classList.remove('open');giftOpen=false};
 /* 離線收穫 */
-function ascend(){const g=xyGain(S.best||0);if(!g)return;S.xy=(S.xy||0)+g;S.asc=(S.asc||0)+1;
+function ascend(){const g=xyGain(S.best||0);if(!g)return;const b0=S.best||0;S.xy=(S.xy||0)+g;S.asc=(S.asc||0)+1;
  S.stage=1;S.best=0;S.farm=0;S.farmN=0;S.gateLv=1;S.coin=0;S.stone=0;S.train={atk:0,hp:0,coin:0,ult:0};
+ // 快速起跑：前一半的關卡直接算過關，拿到那些關卡打怪和過關的銅錢、山門石
+ const sk=Math.floor(b0/2);let fc=0,fs=0;for(let st=1;st<=sk;st++){const bs=st%10===0,tens=Math.floor(st/10);fc+=(5*Math.pow(1.088,st-1)*(bs?4:1)+30*coinKill(st,1))*XYR();fs+=(bs?20+5*tens:4+2*tens)*XYR()}
+ S.coin=Math.round(fc);S.stone=Math.round(fs);S.best=sk;S.stage=sk+1;
  for(const id in S.roster)S.roster[id].lv=1;for(const k in S.tur)S.tur[k].lv=1;for(const k in S.arr)S.arr[k].lv=1;for(const k in S.beast)S.beast[k].lv=1;
  persist();closePanel();if(typeof updFarm==='function')updFarm();refreshField();startStage();
- giftOpen=true;$('gfTitle').textContent=`飛升成功！（第 ${S.asc} 次）`;$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`拿到 ${g} 仙元，現在共 ${S.xy}。全隊攻擊永久 ×${XYA().toFixed(2)}、銅錢和山門石 ×${XYR().toFixed(2)}，從第 1 關重新出發！`;$('gift').classList.add('open');SND.play('rare');updHud()}
+ giftOpen=true;$('gfTitle').textContent=`飛升成功！（第 ${S.asc} 次）`;$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`拿到 ${g} 仙元，現在共 ${S.xy}（攻擊 ×${XYA0().toFixed(2)}）、銅錢和山門石 ×${XYR().toFixed(2)}，境界升到「${realmName(S.asc)}」：攻擊再 ×${RLM_MUL}、等級上限 +${RLM_LV}。前 ${S.best} 關直接算過關，拿到 ${fmt(S.coin)} 銅錢、${fmt(S.stone)} 山門石，從第 ${S.stage} 關出發！`;$('gift').classList.add('open');SND.play('rare');updHud()}
 // 離線收益：照最近實際刷關速度（最近一小時內、中間沒有斷超過 10 分鐘的過關紀錄）給 50%，最多算 12 小时；沒紀錄就用舊的保底
 function farmRate(){const w=S.wlog||[];let i=w.length-1;while(i>0&&w[i][0]-w[i-1][0]<600e3)i--;const seg=w.slice(i);if(seg.length<3)return null;const span=(seg[seg.length-1][0]-seg[0][0])/1000;if(span<60)return null;let c=0,g=0,st=0;for(let k=1;k<seg.length;k++){c+=seg[k][1];g+=seg[k][2];st+=seg[k][3]}return{c:c/span,g:g/span,s:st/span,wph:(seg.length-1)/span*3600}}
 function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)return;const t=Math.min(dt,12*3600);const s=Math.max(1,S.best);
