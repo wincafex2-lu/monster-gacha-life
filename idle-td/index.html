@@ -249,11 +249,11 @@ const ROLE={
 const PASSIVE={
  alchemist:{n:'九轉仙丹',d:t=>`全隊攻擊 +${20+8*t}%、山門每秒回血 ${(0.3+0.15*t).toFixed(2)}%`,k:'atk',v:t=>(20+8*t)/100,k2:'regen',v2:t=>(0.3+0.15*t)/100,sp:'普攻會順便補山門 0.4% 血'},
  fox:{n:'九尾靈氣',d:t=>`全隊爆擊率 +${10+4*t}%（爆擊 2 倍傷害）、遠程・法術攻擊 +${10+4*t}%`,k:'crit',v:t=>(10+4*t)/100,k2:'back',v2:t=>(10+4*t)/100,sp:'普攻爆炸會留下狐火，持續燒傷'},
- archer:{n:'星辰之眼',d:t=>`遠程・法術攻擊 +${20+6*t}%、全隊大招充能快 ${10+4*t}%`,k:'back',v:t=>(20+6*t)/100,k2:'charge',v2:t=>(10+4*t)/100,sp:'箭會穿透，後面 2 隻也打到（60%）'},
+ archer:{n:'星辰之眼',d:t=>`遠程・法術攻擊 +${20+6*t}%、全隊大招充能快 ${10+4*t}%（冷卻最多降一半）`,k:'back',v:t=>(20+6*t)/100,k2:'charge',v2:t=>(10+4*t)/100,sp:'箭會穿透，後面 2 隻也打到（60%）'},
  grandma:{n:'熱騰騰便當',d:t=>`山門每秒回血 ${(0.6+0.3*t).toFixed(1)}%`,k:'regen',v:t=>(0.6+0.3*t)/100},
  jiangshi:{n:'定身符陣',d:t=>`山門前的怪物走路變慢 ${20+5*t}%`,k:'slow',v:t=>(20+5*t)/100},
  pharaoh:{n:'黃金之力',d:t=>`打怪銅錢 +${15+10*t}%`,k:'coin',v:t=>(15+10*t)/100},
- witch:{n:'星星魔力',d:t=>`全隊大招充能快 ${15+5*t}%`,k:'charge',v:t=>(15+5*t)/100},
+ witch:{n:'星星魔力',d:t=>`全隊大招充能快 ${15+5*t}%（冷卻最多降一半）`,k:'charge',v:t=>(15+5*t)/100},
  dragon:{n:'龍騎守護',d:t=>`山門血量 +${20+8*t}%、近戰・坦克攻擊 +${15+5*t}%`,k:'hp',v:t=>(20+8*t)/100,k2:'front',v2:t=>(15+5*t)/100,sp:'長槍射程中等；普攻 25% 機會把怪物震暈 1 秒；坦克傳說攻擊 ×1.5'},
  mecha:{n:'鋼鐵城牆',d:t=>`山門血量 +${20+8*t}%、山門受到的傷害 -${8+3*t}%`,k:'hp',v:t=>(20+8*t)/100,k2:'dr',v2:t=>(8+3*t)/100,sp:'砲管射程中等；每打 3 下發一次雷射，打一整排（120%）；坦克傳說攻擊 ×1.5'},
  general:{n:'將軍令',d:t=>`近戰、坦克弟子攻擊 +${15+5*t}%`,k:'front',v:t=>(15+5*t)/100},
@@ -285,7 +285,7 @@ const MAXFX={
  mummy:{s:'全隊',n:'千年怨念',d:'山門血量低於 30% 時，全隊攻擊 +50%'},
  yukionna:{s:'全隊',n:'永凍之息',d:'緩速中的怪物被打時，8% 機會凍住 2 秒'},
  catsamurai:{s:'全隊',n:'居合斬殺',d:'全隊對血量低於 30% 的怪物，傷害 ×2'},
- grandma:{s:'全隊',n:'滿漢全席',d:'全隊大招充能 +25%；任何人放大招時山門回血 5%'},
+ grandma:{s:'全隊',n:'滿漢全席',d:'全隊大招充能 +25%（冷卻最多降一半）；任何人放大招時山門回血 5%'},
  shark:{s:'限遠程弟子',n:'嗅血狂鯊',d:'遠程弟子打血量低於 50% 的怪物，傷害 +40%'},
  monkey:{s:'自身',n:'齊天大聖',d:'每打 6 下，金箍棒變巨大砸下，全場怪物受到這一下 10 倍傷害，並且破甲 4 秒：受到全隊傷害 ×1.5'},
  slingkid:{s:'自身',n:'打水漂',d:'彈弓石子打中後，會再彈到旁邊 2 隻怪（各 50%）'},
@@ -366,7 +366,7 @@ const FB={
  kunxian:{n:'捆仙繩',g:'繩',c:'#ffe08a',k:'bind',v:.08,t:v=>`弟子普攻 ${Math.round(v*100)}% 機會把怪物綁住 1 秒`},
  taiji:{n:'太極圖',g:'極',c:'#f0f0f0',k:'dr',v:.12,t:v=>`山門受到的傷害 -${Math.round(v*100)}%`},
  fantian:{n:'番天印',g:'印',c:'#d08a4a',k:'seal',v:1,t:v=>`每 12 秒砸下大印，打全場（全隊平均攻擊 ×${(3*v).toFixed(1)}）`},
- liuli:{n:'七寶琉璃燈',g:'燈',c:'#ffe86a',k:'charge',v:.2,t:v=>`全隊大招充能快 ${Math.round(v*100)}%`}
+ liuli:{n:'七寶琉璃燈',g:'燈',c:'#ffe86a',k:'charge',v:.2,t:v=>`全隊大招充能快 ${Math.round(v*100)}%（冷卻最多降一半）`}
 };
 const FB_SLOT=[[1,1],[10,2],[20,3]];
 const fbSlots=()=>{let n=0;for(const[l,c]of FB_SLOT)if(S.gateLv>=l)n=c;return n};
@@ -400,7 +400,7 @@ const ARR={
  d_rock:{n:'磐石陣',c:[190,170,140],t:'d',d:l=>`山門血量 +${Math.round(dv('d_rock',l)*100)}%`},
  d_mirror:{n:'鏡光陣',c:[200,240,255],t:'d',d:l=>`打山門的怪物被反彈 ${Math.round(dv('d_mirror',l)*100)}% 傷害（以陣法等級算）`},
  d_taiji:{n:'太極陣',c:[240,240,240],t:'d',d:l=>`弟子攻擊速度 +${Math.round(dv('d_taiji',l)*100)}%${dv2Txt('d_taiji',l)}`},
- d_star:{n:'七星陣',c:[255,240,150],t:'d',d:l=>`大招充能快 ${Math.round(dv('d_star',l)*100)}%${dv2Txt('d_star',l)}`}
+ d_star:{n:'七星陣',c:[255,240,150],t:'d',d:l=>`大招充能快 ${Math.round(dv('d_star',l)*100)}%（冷卻最多降一半）${dv2Txt('d_star',l)}`}
 };
 // 攻擊陣升級：傷害之外，效果和範圍也會變強
 function AE(k,l){const n=l-1;return{slow:Math.min(.65,.35+.008*n),pois:Math.min(.9,.35+.01*n),kb:Math.min(45,12+.6*n),thun:Math.max(.6,1.5-.02*n),burn:Math.min(5,2+.05*n),sword:Math.min(2.5,1.4*(1+.01*n)),r:1+Math.min(.3,.006*n)}}
@@ -644,7 +644,7 @@ function step(dt){
   h.cd-=dt;
   if(h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
   if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+(h.id==='monkey'?99999:h.id==='dragon'||h.id==='mecha'?950:R.reach));if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
-  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/16*(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0))*chgMul(h.id));
+  if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/ucdOf(h.id)*Math.min(2,(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0))*chgMul(h.id)));
  }
  // 塔
  for(const t of B.turrets){t.anim=Math.max(0,t.anim-dt);t.cd-=dt;
@@ -723,7 +723,7 @@ function step(dt){
 // 普攻倍率：普攻比大招弱太多（後期大招占 85% 以上），普攻另外 ×NA，大招、神獸不變
 const NA=4;
 // 星弓少女：大招「鷹眼星瞳」是長時間強化普攻（爆擊率 +50%、爆擊傷害 ×2→×3，持續 15 秒），所以充能比別人慢一半
-const chgMul=id=>id==='archer'?.5:id==='mecha'&&PS.aw&&PS.aw.mecha?1.6:1,FOCUS_T=15;
+const chgMul=id=>id==='mecha'&&PS.aw&&PS.aw.mecha?1.6:1,FOCUS_T=15;
 function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
@@ -943,8 +943,10 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
  else if(b.k==='xuanwu'){B.shield=4;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.1);sprFx('fx_heal',L.gx,G-110,2)}
 }
 /* ---------- 大招 ---------- */
-const ULT_CD=8;// 每人大招最短間隔（秒），避免互相充能變成一直放大招
-function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run'||h.ucd>0||(h.id==='archer'&&B.focusT>1))return;h.charge=0;h.ucd=ULT_CD;h.anim={type:'ult',t:0};
+// 大招冷卻：每招依強度不同（秒）；充能加成、普攻充能、別人送的充能最多只能把冷卻降到一半
+const UCD={fox:20,dragon:18,archer:24,mecha:22,alchemist:20,monkey:18,vampire:16,yukionna:18,catsamurai:16,moonrabbit:22,pharaoh:16,elf:16,kitsune:14,shark:14,tanuki:14,disciple:10,general:18,swordsman:12,panda:12,pirate:12,jiangshi:14,witch:14,mummy:14,grandma:18,slingkid:10,drummer:20};
+const ucdOf=id=>UCD[id]||16,ULT_CD=8;
+function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run'||h.ucd>0||(h.id==='archer'&&B.focusT>1))return;h.charge=0;h.ucd=ucdOf(h.id)/2;h.anim={type:'ult',t:0};
  SND.play('ult',h.id);if(PS.mx&&PS.mx.drummer)B.drumT=6;if(PS.my&&PS.my.mecha&&h.id==='mecha')B.mechT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.ovT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.r10&&PS.r10.mecha&&h.id==='mecha')h.charge=50;if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
 // 大招射程（從山門前算起）：雷射打整排，其他只打射程內
 const ULT_R={sweep:900,slam:750,rain:1100,freeze:1000,heal:600,drain:900,laser:99999,focus:0};
@@ -1267,7 +1269,7 @@ const RK=i=>(isMy(i)?6:{L:5,E:4,R:3,N:2,S:1}[CH[i].r])+(S.roster[i]?(S.roster[i]
 const SK=(lb,nm,ds,on,lock,col)=>`<b>${lb}</b><span style="${on?(col?`color:${col};font-weight:800`:''):'opacity:.55'}"><span class="tipk" data-tipk="1">${nm}${on?'':`（${lock}）`} <i>ⓘ</i></span><span class="tipb" style="display:none"><br>${ds}</span></span>`;
 function teamStats(){const P=v=>Math.round(v*100)+'%',X=v=>'×'+(v<100?v.toFixed(2):fmt(v)),R=[];const add=(n,v,t)=>{if(v)R.push([n,t])};
  add('全隊攻擊',PS.atk,'+'+P(PS.atk));add('乾坤圈（獨立乘）',PS.fbatk,'×'+(1+PS.fbatk).toFixed(2));add('近戰・坦克攻擊',PS.front,'+'+P(PS.front));add('遠程・法術攻擊',PS.back,'+'+P(PS.back));
- add('爆擊率',PS.crit,P(PS.crit)+'（上限 60%）');add('攻擊速度',spdBonus(),'+'+P(spdBonus()));add('大招充能',PS.charge,'+'+P(PS.charge));
+ add('爆擊率',PS.crit,P(PS.crit)+'（上限 60%）');add('攻擊速度',spdBonus(),'+'+P(spdBonus()));add('大招充能',PS.charge,'+'+P(PS.charge)+'（大招冷卻最多降一半）');
  add('打 Boss 傷害',PS.boss,'+'+P(PS.boss));add('山門血量',PS.hp,'+'+P(PS.hp));add('山門受傷',PS.dr,'-'+P(PS.dr)+'（上限 60%）');
  add('山門每秒回血',PS.regen,(PS.regen*100).toFixed(2)+'%');add('全場怪物變慢',PS.mslow,P(PS.mslow)+'（上限 50%）');add('山門前怪物變慢',PS.slow,P(PS.slow));
  add('銅錢',PS.coin,'+'+P(PS.coin));add('直接收服小怪',PS.cap,P(PS.cap));add('普攻定身',PS.bind,P(PS.bind));
@@ -1301,7 +1303,7 @@ function renderHero(){
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${isMy(id)?'M':d.r}">${isMy(id)?'神話':RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${chName(id)}${isMy(id)&&MYN[id]?`<span style="font-size:14px;opacity:.6">（${d.n}）</span>`:''} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t,r.rs)}</span></h3>
- <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1))}・每秒 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1)*heroRate(id))}${PS.crit>0?`・爆擊 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}</span>${SK('大招',d.un,ultDesc(id)+`；放完要等 ${ULT_CD} 秒才能再放`+(ULTX[id]?'；<b style="color:#c2410c">'+ULTX[id]+'</b>':'')+({laser:'；射程：整排',focus:''}[d.ult]??`；射程：山門前 ${ULT_R[d.ult]}`),1)}${PASSIVE[id]?SK('被動',PASSIVE[id].n,PASSIVE[id].d(r.tier),1):''}${PASSIVE[id]&&PASSIVE[id].sp?SK('特殊','普攻特性',PASSIVE[id].sp+(d.r==='L'?'；傳說大招傷害 ×1.5':''),1):''}${AWAKE[id]?SK('覺醒',AWAKE[id].n,AWAKE[id].d,isAw(id),'3 階解鎖','#c2410c'):''}${MAXFX[id]?SK('極意',`<span class="fxs" style="background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}`,MAXFX[id].d,isMax(id),`${d.t} 階解鎖`,'#c2410c'):''}${R10FX[id]?SK('10 星',R10FX[id].n,R10FX[id].d,isR10(id),'紅星 5 顆解鎖','#e0241a'):''}${MYFX[id]?SK('神話',MYFX[id].n,MYFX[id].d,isMy(id),'神話進化解鎖','#c2185b'):''}${cbLine(id)}</div>
+ <div class="stat"><b>等級</b><span>Lv ${r.lv} / ${cap}</span><b>攻擊</b><span>每下 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1))}・每秒 ${fmt(heroAtk(id)*NA*(id==='archer'?2.5:1)*heroRate(id))}${PS.crit>0?`・爆擊 ${Math.round(PS.crit*100)}%`:''}</span><b>類型</b><span>${ROLE[d.role].n}・射程${ROLE[d.role].rd}</span>${SK('大招',d.un,ultDesc(id)+`；冷卻 ${ucdOf(id)} 秒（充能加成最多降一半，最快 ${ucdOf(id)/2} 秒）`+(ULTX[id]?'；<b style="color:#c2410c">'+ULTX[id]+'</b>':'')+({laser:'；射程：整排',focus:''}[d.ult]??`；射程：山門前 ${ULT_R[d.ult]}`),1)}${PASSIVE[id]?SK('被動',PASSIVE[id].n,PASSIVE[id].d(r.tier),1):''}${PASSIVE[id]&&PASSIVE[id].sp?SK('特殊','普攻特性',PASSIVE[id].sp+(d.r==='L'?'；傳說大招傷害 ×1.5':''),1):''}${AWAKE[id]?SK('覺醒',AWAKE[id].n,AWAKE[id].d,isAw(id),'3 階解鎖','#c2410c'):''}${MAXFX[id]?SK('極意',`<span class="fxs" style="background:${MAXFX[id].s==='自身'?'#7a5cc8':MAXFX[id].s==='全隊'?'#2a8a3a':'#c27a10'}">${MAXFX[id].s}</span>${MAXFX[id].n}`,MAXFX[id].d,isMax(id),`${d.t} 階解鎖`,'#c2410c'):''}${R10FX[id]?SK('10 星',R10FX[id].n,R10FX[id].d,isR10(id),'紅星 5 顆解鎖','#e0241a'):''}${MYFX[id]?SK('神話',MYFX[id].n,MYFX[id].d,isMy(id),'神話進化解鎖','#c2185b'):''}${cbLine(id)}</div>
  <div class="tiers">${Array.from({length:d.t},(_,i)=>`<span class="${i+1>r.tier?'no':''} ${i+1===r.tier?'cur':''}"><img src="${charImg(id,i+1)}" alt=""></span>`).join('')}</div>
  <div class="row"><button class="btn green" id="dUp" ${r.lv>=cap||S.coin<cost?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cost)}</span></button>
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
