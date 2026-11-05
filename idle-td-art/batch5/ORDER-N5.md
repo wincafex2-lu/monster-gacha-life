@@ -87,3 +87,6 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+- 01:15 台灣時間 楊戩 1 階站立 **退件（身體太長）**：頭的大小對（下巴 y≈690 跟標準一樣），但**身體和腿長了約 10%**，腳底跑到 y=1008（標準 978）。造型、臉、天眼、三尖刀都很好，**請用這張改，不要重畫**：
+  `Edit this exact sprite. Keep the head, face, hair, outfit and weapon design EXACTLY the same. Make the body and legs SHORTER (about 10% shorter, chibi proportions like the attached standard) so the bottom of the feet is at y=978, about 30 pixels higher than now. Do not change the head size. Solid magenta #FF00FF background.`（附 `ref/STANDARD__t2__stand.png` 當第二張）
+  量法：下巴 y≈690、腳底 y=978，下巴到腳底約 288px（現在 318）。之後 2～6 階都用改好的這張往上改。
