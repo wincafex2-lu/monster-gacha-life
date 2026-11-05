@@ -496,9 +496,12 @@ const FMTU=['','K','M','B','T'];for(let i=0;i<26*26;i++)FMTU.push(String.fromCha
 const fmt=n=>{if(!isFinite(n))return '∞';if(n<1e4)return String(Math.floor(Math.max(0,n)));let e=Math.min(FMTU.length-1,Math.floor(Math.log10(n)/3)),v=n/Math.pow(10,e*3);if(v>=999.5&&e<FMTU.length-1){e++;v/=1000}return (v<10?v.toFixed(2):v<100?v.toFixed(1):v.toFixed(0))+FMTU[e]};
 
 /* ---------- 圖片 ---------- */
-const IMG={};
-function loadAll(){const keys=Object.keys(SRC);let done=0;const bar=document.getElementById('ldbar');
- return Promise.all(keys.map(k=>new Promise(res=>{const i=new Image();i.onload=i.onerror=()=>{done++;bar.style.width=(done/keys.length*100)+'%';res()};i.src=SRC[k];IMG[k]=i})))}
+// 省記憶體：角色圖（c_）和大招圖（ult_）一共 400 多張，解開後要 150MB 以上，只先載上陣弟子的；其他用到時才載（IMG 取不到就自動開始載）
+const IMG0={},IMG=new Proxy(IMG0,{get(t,k){if(k in t||typeof k!=='string'||!SRC[k])return t[k];const i=new Image();i.decoding='async';i.src=SRC[k];t[k]=i;return i}});
+const lazyKey=k=>k.startsWith('c_')||k.startsWith('ult_');
+function teamKeys(){const o=[];for(const id of S.team||[]){if(!S.roster[id])continue;const b=myKey(id);o.push(b,b+'_a1',b+'_a2',b+'_a3');const u=ULTFX[id];if(u)for(const k in SRC)if(k.startsWith(u+'_'))o.push(k)}return o.filter(k=>SRC[k])}
+function loadAll(){const tk=new Set(teamKeys());const keys=Object.keys(SRC).filter(k=>!lazyKey(k)||tk.has(k));let done=0;const bar=document.getElementById('ldbar');
+ return Promise.all(keys.map(k=>new Promise(res=>{const i=new Image();i.onload=i.onerror=()=>{done++;bar.style.width=(done/keys.length*100)+'%';res()};i.src=SRC[k];IMG0[k]=i})))}
 const charImg=(id,t)=>SRC[t?`c_${id}_${t}`:S.roster[id]?myKey(id):`c_${id}_1`];
 
 /* ---------- 畫布 ---------- */
@@ -1102,7 +1105,7 @@ cv.addEventListener('pointerdown',ev=>{const r=cv.getBoundingClientRect();const 
 /* ---------- 介面 ---------- */
 const $=id=>document.getElementById(id);
 let ultBtns=[];
-function portrait(mk){const m=MAN[mk],im=IMG[mk],c=document.createElement('canvas');c.width=c.height=132;c.className='pt';
+function portrait(mk){const m=MAN[mk],im=IMG[mk],c=document.createElement('canvas');c.width=c.height=132;c.className='pt';if(im&&!im.complete){im.addEventListener('load',()=>{const n=portrait(mk);c.getContext('2d').drawImage(n,0,0)},{once:true});return c}
  const base=MAN['c_'+mk.split('_')[1]+'_1']||m;const bh=base[1];const top=Math.max(0,m[3]-base[3]);
  const sz=bh*.38,sy=top+bh*.19;let cx=m[2];
  try{const t=document.createElement('canvas');t.width=m[0];t.height=Math.ceil(bh*.4);const g=t.getContext('2d');g.drawImage(im,0,-top-bh*.15);const d=g.getImageData(0,0,t.width,t.height).data;let sx=0,n=0;for(let y=0;y<t.height;y+=3)for(let x=0;x<t.width;x+=2){if(d[(y*t.width+x)*4+3]>128){sx+=x;n++}}if(n)cx=sx/n}catch(e){}
