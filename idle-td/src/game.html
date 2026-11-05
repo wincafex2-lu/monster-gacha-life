@@ -619,7 +619,7 @@ function mkEnemy(k,boss){
 let last=performance.now(),acc=0;
 function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  let dt=real*B.speed;
- if(B.hitstop>0){B.hitstop-=real;dt*=.08}
+ if(B.hitstop>0){B.hitstop=0}// 打擊停頓也一起關掉，避免像卡頓
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
@@ -1010,7 +1010,8 @@ function ultExtra(h,dmg,al,lim){const id=h.id,src='u:'+id,A=al(),inV=()=>B.enemi
 function addFx(f){if(B.fx.length>140)return;if(f.upd)f.src=DSRC;B.fx.push(f)}
 let sprN=0;function sprFx(pre,x,y,sc){if(!pre||!MAN[pre+'_0'])return;let n=0;for(const f of B.fx)if(f.k==='spr')n++;if(n>26)return;addFx({k:'spr',pre,n:4,x,y,sc:sc||1,life:.34})}
 function ultFx(pre,x,y,sc,delay){addFx({k:'ult',pre,x,y,sc:sc||1,delay:delay||0,life:1+(delay||0)})}
-function shake(a){B.shake=Math.max(B.shake,a)}
+const SHAKE_ON=false;// 泓：技能畫面震動先取消（會讓人以為卡畫面）
+function shake(a){if(SHAKE_ON)B.shake=Math.max(B.shake,a)}
 function dmgText(x,y,v,big,crit){if(B.txt.length>14)B.txt.shift();B.txt.push({x,y,v:(crit?'爆擊 ':'')+fmt(Math.max(1,v)),t:0,big,crit})}
 function coinText(e){B.txt.push({x:e.x,y:e.y-e.ay-24,v:'+'+fmt(e.coin),t:0,coin:1})}
 
@@ -1150,8 +1151,7 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
    const k2=MAN[f.key+'_a2']?f.key+'_a2':f.key;glow(f.x,f.y-60,70,'rgba(255,210,90,.9)',.5*(1-p));ctx.save();ctx.globalAlpha=p<.15?p/.15*.9:p>.7?(1-p)/.3*.9:.9;{const fl=f.fl||1,dy=f.top?(p<.3?-300*(1-p/.3)*(1-p/.3):-Math.sin(Math.min(1,(p-.3)*3)*Math.PI)*14):-Math.sin(Math.min(1,p*2)*Math.PI)*26;drawSprite(p<.35?f.key:k2,f.x,f.y,{sx:.85*fl,sy:.85,dy,rot:f.top&&p<.3?f.rt*fl*3:0})}ctx.restore();break}
   case 'staff':{// 齊天大聖：巨大金箍棒從天上砸下來
    const fall=Math.min(1,p/.28),yb=TOPY-200+(f.y-(TOPY-200))*fall*fall,L=760,W=46;ctx.save();ctx.globalAlpha=p<.75?1:(1-p)/.25;ctx.translate(f.x,yb);
-   glow(0,-L/2,170,'rgba(255,210,80,.55)',.9);ctx.fillStyle='#d9a21a';ctx.fillRect(-W/2,-L,W,L);ctx.fillStyle='#ffe27a';ctx.fillRect(-W/2+8,-L,10,L);
-   ctx.fillStyle='#c0201a';ctx.fillRect(-W/2-6,-L,W+12,70);ctx.fillRect(-W/2-6,-70,W+12,70);ctx.fillStyle='#ffd84a';ctx.fillRect(-W/2-6,-L+70,W+12,10);ctx.fillRect(-W/2-6,-80,W+12,10);ctx.restore();
+   glow(0,-L/2,170,'rgba(255,210,80,.55)',.9);if(MAN.fx_staff){ctx.restore();ctx.save();ctx.globalAlpha=p<.75?1:(1-p)/.25;drawSprite('fx_staff',f.x,yb,{sx:1.6,sy:1.6})}ctx.restore();// 金箍棒：從齊天神猴原圖摳下來的棒頭＋棒身，後段淡出
    if(p>=.28){const q=(p-.28)/.72;ctx.save();ctx.globalAlpha=(1-q)*.9;ctx.strokeStyle='#ffd84a';ctx.lineWidth=14*(1-q)+3;ctx.beginPath();ctx.ellipse(f.x,f.y+20,600*q+60,110*q+14,0,0,Math.PI*2);ctx.stroke();ctx.fillStyle=`rgba(255,230,140,${.35*(1-q)})`;ctx.fillRect(0,TOPY,VW,VH);ctx.restore()}
    break}
   case 'ring':ctx.save();ctx.strokeStyle=f.c;ctx.globalAlpha=1-p;ctx.lineWidth=8*(1-p)+2;ctx.beginPath();ctx.ellipse(f.x,f.y+30,f.r*ease(p),f.r*.3*ease(p),0,0,Math.PI*2);ctx.stroke();ctx.restore();break;
