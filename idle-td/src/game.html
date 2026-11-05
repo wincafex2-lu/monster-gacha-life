@@ -276,7 +276,7 @@ const MAXFX={
  catsamurai:{s:'全隊',n:'居合斬殺',d:'全隊對血量低於 30% 的怪物，傷害 ×2'},
  grandma:{s:'全隊',n:'滿漢全席',d:'全隊大招充能 +25%；任何人放大招時山門回血 5%'},
  shark:{s:'限遠程弟子',n:'嗅血狂鯊',d:'遠程弟子打血量低於 50% 的怪物，傷害 +40%'},
- monkey:{s:'自身',n:'齊天大聖',d:'每打 6 下，金箍棒變巨大砸下，全場怪物受到這一下 6 倍傷害'},
+ monkey:{s:'自身',n:'齊天大聖',d:'每打 6 下，金箍棒變巨大砸下，全場怪物受到這一下 10 倍傷害，並且破甲 4 秒：受到全隊傷害 ×1.5（多出來的算猴王）'},
  slingkid:{s:'自身',n:'打水漂',d:'彈弓石子打中後，會再彈到旁邊 2 隻怪（各 50%）'},
  drummer:{s:'全隊',n:'激昂鼓點',d:'任何弟子放大招後，全隊攻擊速度再 +30%（6 秒）'},
  tanuki:{s:'自身',n:'影分身',d:'普攻 30% 機會分身，多丟 2 支手裡劍打別的怪（各 100%）'},
@@ -667,7 +667,7 @@ function step(dt){
   e.t+=dt;e.flash=Math.max(0,e.flash-dt);
   if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slow=0}
   if(e.kb>0){const lim=VW-90-e.w*.3;if(e.x>=lim)e.kb=0;else{const k=Math.min(e.kb,dt*260,lim-e.x);e.x+=k;e.kb-=k}}
-  if(e.stun>0){e.stun-=dt;continue}
+  if(e.armor>0)e.armor-=dt;if(e.stun>0){e.stun-=dt;continue}
   if(e.state==='walk'){const v=e.spd*(1-e.slow)*(1-PS.mslow)*(PS.slow&&e.x<L.front+450?1-PS.slow:1);e.x-=v*dt;
    if(e.x-e.w*.3<=e.stop){e.state='atk';e.at=0}}
   else{e.at+=dt*(1-e.slow*.5);const cyc=e.boss?2.2:1.3;
@@ -704,7 +704,7 @@ function heroFire(h){
  {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?4:h.id==='archer'?2.5:2;p.crit=1}}
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=3){h.n4=0;DSRC='h:mecha';const dd=p.dmg*1.2;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500)hit(e,dd,{c:d.c})})}}
  if(h.id==='monkey'){const os=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);if(PS.aw&&PS.aw.monkey&&Math.random()<.3)for(let i=0,nm=PS.my&&PS.my.monkey?6:3;i<nm&&os.length;i++){const o=os.splice(Math.floor(Math.random()*os.length),1)[0];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:p.dmg*(PS.my&&PS.my.monkey?1:.8),crit:0,sp:'',sy:p.sy-15*i})}
-  if(PS.mx&&PS.mx.monkey){h.n10=(h.n10||0)+1;if(h.n10>=(PS.r10&&PS.r10.monkey?3:6)){h.n10=0;DSRC='h:monkey';const dd=p.dmg*6;B.enemies.forEach(e=>{if(!e.dead&&e.x<VW+40)hit(e,dd,{c:'#ffc23a',big:1})});addFx({k:'staff',x:Math.min(VW-200,Math.max(500,tg.x)),y:G,life:.9});B.txt.push({x:Math.min(VW-200,Math.max(500,tg.x)),y:G-300,v:'齊天大聖！',t:0,big:1,crit:1});shake(10);B.hitstop=.08}}}
+  if(PS.mx&&PS.mx.monkey){h.n10=(h.n10||0)+1;if(h.n10>=(PS.r10&&PS.r10.monkey?3:6)){h.n10=0;DSRC='h:monkey';const dd=p.dmg*10;B.enemies.forEach(e=>{if(!e.dead&&e.x<VW+40){hit(e,dd,{c:'#ffc23a',big:1});e.armor=4}});addFx({k:'staff',x:Math.min(VW-200,Math.max(500,tg.x)),y:G,life:.9});B.txt.push({x:Math.min(VW-200,Math.max(500,tg.x)),y:G-300,v:'齊天大聖！',t:0,big:1,crit:1});shake(10);B.hitstop=.08}}}
  if(h.id==='tanuki'&&PS.mx&&PS.mx.tanuki&&Math.random()<.3){const os=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);for(let i=0;i<2&&os.length;i++){const o=os.splice(Math.floor(Math.random()*os.length),1)[0];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,sp:'',sy:p.sy-20-15*i})}}
  if(PS.aw&&PS.aw[h.id]){const aw=h.id,others=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);
   if(aw==='fox'){const n=2,m=.6;for(let i=0;i<n&&others.length;i++){const o=others[Math.floor(Math.random()*others.length)];B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:p.dmg*m,crit:0,sp:aw==='fox'?'fox':'',sx:p.sx,sy:p.sy-(aw==='mecha'?30+20*i:0)})}}
@@ -753,7 +753,7 @@ function hit(e,amt,o={}){
  // 劍意連斬：大招打中也有爆擊率的機會追加一刀（大招這下的 3 倍，算給流浪劍士）
  if(PS.mx&&PS.mx.swordsman&&!o.nosw&&String(o.src||DSRC).startsWith('u:')&&Math.random()<Math.min(.95,PS.crit)){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*3,{c:'#ff5a2a',crit:1,big:1,src:'h:swordsman'});return}const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
  // 全隊增傷極意：多出來的傷害算給提供加成的弟子（DPS 表看得出輔助、控場的貢獻）
- const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
+ const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.armor>0)mul('monkey',1.5);if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
  if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));let base=dealt;if(bon.length){const L=bon.reduce((a,b)=>a+b[1],0),ex=dealt*(1-Math.exp(-L));base=dealt-ex;for(const [id,l] of bon){const k='h:'+id;B.dmg[k]=(B.dmg[k]||0)+ex*l/L}}B.dmg[src]=(B.dmg[src]||0)+base}
  if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
@@ -1030,7 +1030,7 @@ drawSprite(hk,h.x,h.y,o);
   if(e.goldm&&!e.dead){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.35+.2*Math.sin(B.time*6+e.x);ctx.fillStyle='#ffd84a';ctx.beginPath();ctx.ellipse(e.x,e.y-e.ay*.5,e.w*.4,e.ay*.55,0,0,Math.PI*2);ctx.fill();ctx.restore()}
   if(e.elite&&!e.dead){ctx.save();ctx.translate(e.x,e.y-e.ay-16);ctx.fillStyle='#ffd84a';ctx.strokeStyle='#6b3d06';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,-13);ctx.lineTo(11,-8);ctx.lineTo(9,6);ctx.lineTo(0,13);ctx.lineTo(-9,6);ctx.lineTo(-11,-8);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore()}
   if(!e.dead&&e.stun>0){ctx.save();ctx.globalAlpha=.8;for(let i=0;i<3;i++){const a=B.time*5+i*2.1;ctx.fillStyle='#fff6a0';star(e.x+Math.cos(a)*22,e.y-e.ay-8+Math.sin(a)*6,5)}ctx.restore()}
-  if(!e.dead){const bd=[];if(e.burn>0)bd.push(['燒','#ff6a2a']);if(e.stun>0)bd.push(['暈','#e0b000']);if(e.slow>0)bd.push(['慢','#3a9ae0']);if(bd.length){ctx.save();ctx.font='bold 19px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const by=e.y-e.ay-(e.boss?36:30);bd.forEach(([t,c],i)=>{const bx=e.x+(i-(bd.length-1)/2)*36;ctx.fillStyle=c;ctx.beginPath();ctx.arc(bx,by,16,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff';ctx.fillText(t,bx,by+1)});ctx.restore()}}
+  if(!e.dead){const bd=[];if(e.burn>0)bd.push(['燒','#ff6a2a']);if(e.stun>0)bd.push(['暈','#e0b000']);if(e.slow>0)bd.push(['慢','#3a9ae0']);if(e.armor>0)bd.push(['破','#c07a10']);if(bd.length){ctx.save();ctx.font='bold 19px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const by=e.y-e.ay-(e.boss?36:30);bd.forEach(([t,c],i)=>{const bx=e.x+(i-(bd.length-1)/2)*36;ctx.fillStyle=c;ctx.beginPath();ctx.arc(bx,by,16,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff';ctx.fillText(t,bx,by+1)});ctx.restore()}}
   if(!e.dead&&e.slow>0){ctx.save();ctx.globalAlpha=.35;ctx.fillStyle='#bdf4ff';ctx.beginPath();ctx.ellipse(e.x,G,e.w*.35,8,0,0,Math.PI*2);ctx.fill();ctx.restore()}
   if(!e.dead&&!e.boss&&e.hp<e.max){const w=Math.max(30,e.w*.5);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(e.x-w/2,e.y-e.ay-10,w,5);ctx.fillStyle='#ff5a3a';ctx.fillRect(e.x-w/2,e.y-e.ay-10,w*Math.max(0,e.hp/e.max),5)}
  }
