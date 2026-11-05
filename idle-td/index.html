@@ -735,7 +735,7 @@ function projHit(p){
   if(M.disciple&&p.from.id==='disciple')B.enemies.filter(e=>!e.dead&&e!==T&&e.x>T.x&&e.x<T.x+220).slice(0,2).forEach(e=>hit(e,p.dmg,{c:p.c}));
   if(M.kitsune&&r==='magic'){const o=B.enemies.find(e=>!e.dead&&e!==T&&Math.abs(e.x-T.x)<300&&Math.abs(e.x-T.x)>p.aoe);if(o){hit(o,p.dmg*.5,{c:'#5ab8ff'});sprFx('fx_fire',o.x,o.y-o.ay*.5,.7)}}
   if(M.panda&&p.from.id==='panda'){p.from.n3=(p.from.n3||0)+1;if(p.from.n3>=3){p.from.n3=0;T.stun=Math.max(T.stun,1);if(!T.boss)T.kb=Math.min(160,T.kb+60);sprFx('fx_blunt',T.x,T.y-T.ay*.5,1.4);shake(3)}}}
- if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target;hit(e,e.hp+1,{c:'#c08aff',big:1,src:'fb:zijin'});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
+ if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target,fc=(S.fbOn||[]).slice(0,fbSlots()).includes('zijin')&&S.fb.zijin?fbV('zijin'):0,zq=Math.random()*PS.cap>=fc;hit(e,e.hp+1,{c:zq?'#ff6a2a':'#c08aff',big:1,src:zq?'b:zhuque':'fb:zijin'});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60})}
   else if(PS.bind&&Math.random()<PS.bind){p.target.stun=Math.max(p.target.stun,1)}}
  if(p.sp==='fox')B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<(p.aoe||90)){e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,p.dmg*.35)}});
  if(p.sp==='monkey'&&p.target){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&e!==T&&e.x>T.x&&e.x<T.x+150)hit(e,p.dmg*.6,{c:'#ffc23a'})})}
