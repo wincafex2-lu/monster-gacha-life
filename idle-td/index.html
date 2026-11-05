@@ -259,7 +259,7 @@ const MAXFX={
  fox:{s:'全隊',n:'九尾天狐',d:'燒傷中的怪物受到全隊傷害 ×2；燒傷中的怪物死掉時，火會燒到旁邊的怪'},
  dragon:{s:'全隊',n:'真龍附體',d:'暈眩中的怪物受到全隊傷害 ×2；龍騎放大招時全場怪物暈 3 秒'},
  archer:{s:'自身',n:'星隕一擊',d:'普攻 20% 機會觸發星隕：目標和周圍（範圍 260）的怪受到這一箭 8 倍傷害，爆擊時也算進去'},
- mecha:{s:'全隊',n:'超載核心',d:'機甲少年放大招時，其他弟子大招充能 +50；之後 6 秒內全隊大招傷害 ×2（多出來的算進機甲）'},
+ mecha:{s:'全隊',n:'超載核心',d:'機甲少年放大招時，其他弟子大招充能 +50；之後 6 秒內全隊大招傷害 ×2'},
  alchemist:{s:'全隊',n:'仙丹爐火',d:'全隊攻擊永遠 +30%（仙丹爐火不會熄）；每 20 秒山門回血 10%'},
  pharaoh:{s:'全隊',n:'黃金詛咒',d:'怪物 10% 會變成黃金怪，打死銅錢 ×5'},
  vampire:{s:'全隊',n:'血之契約',d:'弟子每次普攻打中，山門回血 0.2%'},
@@ -276,7 +276,7 @@ const MAXFX={
  catsamurai:{s:'全隊',n:'居合斬殺',d:'全隊對血量低於 30% 的怪物，傷害 ×2'},
  grandma:{s:'全隊',n:'滿漢全席',d:'全隊大招充能 +25%；任何人放大招時山門回血 5%'},
  shark:{s:'限遠程弟子',n:'嗅血狂鯊',d:'遠程弟子打血量低於 50% 的怪物，傷害 +40%'},
- monkey:{s:'自身',n:'齊天大聖',d:'每打 6 下，金箍棒變巨大砸下，全場怪物受到這一下 10 倍傷害，並且破甲 4 秒：受到全隊傷害 ×1.5（多出來的算猴王）'},
+ monkey:{s:'自身',n:'齊天大聖',d:'每打 6 下，金箍棒變巨大砸下，全場怪物受到這一下 10 倍傷害，並且破甲 4 秒：受到全隊傷害 ×1.5'},
  slingkid:{s:'自身',n:'打水漂',d:'彈弓石子打中後，會再彈到旁邊 2 隻怪（各 50%）'},
  drummer:{s:'全隊',n:'激昂鼓點',d:'任何弟子放大招後，全隊攻擊速度再 +30%（6 秒）'},
  tanuki:{s:'自身',n:'影分身',d:'普攻 30% 機會分身，多丟 2 支手裡劍打別的怪（各 100%）'},
@@ -752,9 +752,9 @@ function hit(e,amt,o={}){
  if(e.dead)return;
  // 劍意連斬：大招打中也有爆擊率的機會追加一刀（大招這下的 3 倍，算給流浪劍士）
  if(PS.mx&&PS.mx.swordsman&&!o.nosw&&String(o.src||DSRC).startsWith('u:')&&Math.random()<Math.min(.95,PS.crit)){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*3,{c:'#ff5a2a',crit:1,big:1,src:'h:swordsman'});return}const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
- // 全隊增傷極意：多出來的傷害算給提供加成的弟子（DPS 表看得出輔助、控場的貢獻）
+ // 全隊增傷極意（DPS 表一律算給打出這一下的人，泓 2026-11-05）
  const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.armor>0)mul('monkey',1.5);if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
- if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));let base=dealt;if(bon.length){const L=bon.reduce((a,b)=>a+b[1],0),ex=dealt*(1-Math.exp(-L));base=dealt-ex;for(const [id,l] of bon){const k='h:'+id;B.dmg[k]=(B.dmg[k]||0)+ex*l/L}}B.dmg[src]=(B.dmg[src]||0)+base}
+ if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));B.dmg[src]=(B.dmg[src]||0)+dealt}
  if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
