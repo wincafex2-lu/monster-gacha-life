@@ -104,3 +104,5 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
   `Image 1 is Nezha (keep his head, face, hair, outfit, red sash and ring EXACTLY). Image 2 is the body-length reference. Redraw image 1 so his body (chin to feet) is as SHORT as image 2's body: a small child with short chubby arms and legs. Keep the head size the same. Bottom of the feet at y=978. Solid magenta #FF00FF background.`
   （圖 2 用 `dot/idle-td-n2` 的 `monkey__t1__stand.png`，它下巴到腳底約 258px。）也可以用程式把脖子以下縮短到 260px 再修像素，看哪個好看。
 - 01:52 台灣時間 楊戩 3 階站立 **通過**（頭、身體、腳跟 2 階同位置同大小；銀白輕甲、深藍披風、小銀冠、藍穗三尖刀）。可以畫 4 階。敖丙 2 階、哪吒 1 階（小孩版）還在等。
+- 02:01 台灣時間 哪吒 1 階站立（第三版，參考小猴王）**通過比例**：下巴到腳底 247px，小孩感對了，臉、雙髻、紅綾、蓮花衣、金圈都好。**只差位置**：腳底在 y=937，要 978。請**用程式把整張圖往下平移 41px**（不要重畫、不要縮放），推成同一個檔名，之後 2～6 階都從移好的這張改。
+- 02:01 台灣時間 敖丙 2 階站立 **通過**（頭、身體、腳跟 1 階同位置同大小；冰藍袍、腰間龍珠、杖頂冰晶）。可以畫 3 階。
