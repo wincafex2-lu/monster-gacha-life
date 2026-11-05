@@ -520,7 +520,7 @@ const charImg=(id,t)=>SRC[t?`c_${id}_${t}`:S.roster[id]?myKey(id):`c_${id}_1`];
 /* ---------- 畫布 ---------- */
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const G=860,MINW=1750,MINH=820;
-let ZM=1;try{ZM=+localStorage.getItem('idle-td-zoom')||1}catch(e){}// 縮小一半試玩：整個戰場鏡頭拉遠 ×2
+let ZM=1;try{ZM=+localStorage.getItem('idle-td-zoom')||1;if(ZM>1)ZM=1.5}catch(e){}// 縮小一半試玩：整個戰場鏡頭拉遠 ×2
 let DPR=1,SC=1,VW=1536,VH=694,TOPY=330,CW=0,CH_=0;
 function resize(){DPR=Math.min(2,window.devicePixelRatio||1);CW=innerWidth;CH_=innerHeight;cv.width=Math.round(CW*DPR);cv.height=Math.round(CH_*DPR);
  SC=Math.min(CW/(MINW*ZM),CH_/(MINH*ZM));VW=CW/SC;VH=CH_/SC;TOPY=1024-VH;layout()}
@@ -1200,7 +1200,7 @@ $('farmBtn').onclick=()=>{if(S.farm){S.farm=0;toast('打完這關就往下一關
 $('dps').onclick=ev=>{const m=ev.target.closest('[data-dm]');if(m){dpsMode=m.dataset.dm;try{localStorage.setItem('idle-td-dpsm',dpsMode)}catch(e){}dpsLast=0;renderDps();return}dpsOn=!dpsOn;try{localStorage.setItem('idle-td-dps',dpsOn?'1':'0')}catch(e){}dpsLast=0;renderDps()};
 {const mb=$('musBtn'),sb=$('sfxBtn');const um=()=>{mb.style.opacity=SND.musOn?1:.45;mb.textContent=SND.musOn?'🎵':'🎵✕'},us=()=>{sb.textContent=SND.sfxOn?'🔊':'🔇';sb.style.opacity=SND.sfxOn?1:.45};um();us();
  {const tb=$('ultTog'),ut=f=>{document.body.classList.toggle('ufold',f);tb.textContent=f?'▲ 頭像':'▼'};let uf=false;try{uf=localStorage.getItem('idle-td-ultfold')==='1'}catch(e){}ut(uf);tb.onclick=()=>{uf=!uf;ut(uf);try{localStorage.setItem('idle-td-ultfold',uf?'1':'0')}catch(e){}}}
- {const zb=$('zmBtn'),uz=()=>{zb.textContent=ZM>1?'🔍½':'🔍';zb.style.opacity=ZM>1?1:.6};uz();zb.onclick=()=>{ZM=ZM>1?1:2;try{localStorage.setItem('idle-td-zoom',ZM)}catch(e){}resize();uz();toast(ZM>1?'畫面縮小一半（鏡頭拉遠）':'畫面大小：正常')}}
+ {const zb=$('zmBtn'),uz=()=>{zb.textContent=ZM>1?'🔍⅔':'🔍';zb.style.opacity=ZM>1?1:.6};uz();zb.onclick=()=>{ZM=ZM>1?1:1.5;try{localStorage.setItem('idle-td-zoom',ZM)}catch(e){}resize();uz();toast(ZM>1?'畫面縮小（鏡頭拉遠，2/3 大小）':'畫面大小：正常')}}
  mb.onclick=()=>{SND.togMus();um();toast(SND.musOn?'音樂：開':'音樂：關')};sb.onclick=()=>{SND.togSfx();us();toast(SND.sfxOn?'音效：開':'音效：關')}}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.btn'))SND.play('click')});$('sheet').addEventListener('pointerdown',e=>{if(e.target.id==='sheet')closePanel()});
 $('bHero').onclick=()=>openPanel('hero');$('bGacha').onclick=()=>openPanel('gacha');$('bGate').onclick=()=>openPanel('gate');
