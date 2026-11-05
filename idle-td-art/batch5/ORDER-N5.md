@@ -1,6 +1,6 @@
 # 放置塔防：工單 N5　三位新傳說 站立圖（1～6 階）
 
-狀態：完成通知
+狀態：進行中（哪吒 3～6 階要改：腳踩風火輪）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 泓 2026-11-06 確認加三位新傳說（進一般傳說池＋開系列池）。這張只畫**站立圖**，共 18 張；攻擊格和特效等這張通過後另開 N6。
@@ -116,3 +116,6 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 - 02:56 台灣時間 敖丙 6 階神話站立 通過（身體不變，腳底 991；六角冰晶環、雙冰龍、銀白龍紋袍）→ 敖丙 6 張全收。哪吒 4 階 通過（腳底位置不變，最低點 994 是風火輪尖角不是腳；紅金蓮花戰甲、風火輪變大帶光芒、火焰槍頭）→ 可以畫 5 階。目前 16/18，剩哪吒 5、6 階。
 - 07:15 台灣時間（11/06）哪吒 5 階 通過（身體、頭不變，腳底同 4 階；頭頂蓮花金冠、紅綾在身後繞成大圓、金圈刻蓮紋、金紅華服）→ 可以畫 6 階神話（最後一張）。目前 17/18。之後直接接 ORDER-N6。
 - 07:58 台灣時間（11/06）哪吒 6 階神話站立 通過（頭、身體、腳底同 5 階；背後巨大實體金蓮花、雙紅綾、白金蓮花神衣、火輪更大）。**N5 完成 18/18**，畫師直接接 ORDER-N6（分支 dot/idle-td-n6）。
+- 08:00 台灣時間（11/06）**泓：風火輪要踩在腳下**。哪吒 3、4、5、6 階要改（原本寫「輪子在腳旁邊」是工單寫錯，不是畫錯）。用已通過的同一階圖直接改，只動輪子和位置：
+  `Edit this exact sprite. Keep the head, face, hair, body, outfit, sash, ring, spear and everything else EXACTLY the same. Move the two wheels so that he STANDS ON them: one wheel directly under each foot, the soles of the feet resting on top of the wheels (wheels seen slightly from the side, flat on the ground). Move the whole character up so the bottom of the wheels is at y=978. Do not resize anything. Solid magenta #FF00FF background.`
+  檔名照舊覆蓋：`nezha__t3__stand.png`～`nezha__t6__stand.png`，推 `dot/idle-td-n5`。3 階先交，通過後 4～6 階照同樣位置改。N6 的哪吒攻擊格等這四張改好再畫（楊戩、敖丙照常進行）。
