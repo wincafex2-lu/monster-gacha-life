@@ -482,6 +482,7 @@ const TIER_CAP=[0,20,40,60,80,100];
 // 升到下一階要幾隻重複（普通最常抽到，所以要最多）
 const DUPE={N:{2:6,3:15},R:{2:3,3:8},E:{2:2,3:5},L:{2:1,3:1,4:1,5:1}};
 const dupeNeed=(id,t)=>(DUPE[CH[id].r]||{})[t];
+const PPD={N:10,R:20,E:40,L:100};// 進階丹當萬用重複角色：缺幾隻就用幾份丹補
 const BRK_MAX=50,BRK_P={N:.03,R:.05,E:.08,L:.15,S:.03},brkP=id=>BRK_P[CH[id].r]||.03;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 50
 // 傳說碎片：滿階後再抽到重複弟子會給碎片（突破滿了給 2 倍），100 片換一隻自選傳說
 const SHV={N:1,R:2,E:4,L:10},SHARD_COST=100;
@@ -1334,8 +1335,8 @@ function renderHero(){
   own=own.filter(i=>hRole==='all'||CH[i].role===hRole).sort((a,b)=>{const ta=tw(a),tb=tw(b);if(ta>=0||tb>=0)return (ta<0?99:ta)-(tb<0?99:tb);return key(b)-key(a)||RK(b)-RK(a)})}
  if(!sel||!S.roster[sel])sel=S.team[0];
  const id=sel,d=CH[id],r=S.roster[id];const cap=lvCap(id);const cost=lvCost(r.lv);const inTeam=S.team.includes(id);
- const need=dupeNeed(id,r.tier+1);const canTier=r.tier<d.t&&(id==='disciple'?S.pill>=r.tier*5:r.dup>=need);
- const tierTxt=r.tier>=d.t?(id==='disciple'?'已滿階':`突破 ${r.brk||0}/${BRK_MAX}（每隻 +${Math.round(brkP(id)*100)}%）`):id==='disciple'?`升階需要 進階丹 ${r.tier*5}（有 ${S.pill}）`:`升階需要 重複角色 ${need}（有 ${r.dup}）`;const tierUp=r.tier<d.t?`｜升階後攻擊 ×${+(tierMul(id,r.tier+1)/tierMul(id,r.tier)).toFixed(1)}${r.tier+1>=d.t?'（含滿階 ×1.5）':''}`:'';
+ const need=dupeNeed(id,r.tier+1);const pNeed=id==='disciple'?r.tier*5:Math.max(0,(need||0)-r.dup)*(PPD[d.r]||10),canTier=r.tier<d.t&&(id==='disciple'?S.pill>=pNeed:r.dup>=need||S.pill>=pNeed);const brkP2=PPD[d.r]||10,canBrk=r.tier>=d.t&&(r.brk||0)<BRK_MAX&&S.pill>=brkP2;
+ const tierTxt=r.tier>=d.t?(id==='disciple'?'已滿階':`突破 ${r.brk||0}/${BRK_MAX}（每隻 +${Math.round(brkP(id)*100)}%）`):id==='disciple'?`升階需要 進階丹 ${r.tier*5}（有 ${S.pill}）`:`升階需要 重複角色 ${need}（有 ${r.dup}）${r.dup<need?`，或用進階丹 ${pNeed} 顆補（有 ${S.pill}）`:''}`;const tierUp=r.tier<d.t?`｜升階後攻擊 ×${+(tierMul(id,r.tier+1)/tierMul(id,r.tier)).toFixed(1)}${r.tier+1>=d.t?'（含滿階 ×1.5）':''}`:'';
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${isMy(id)?'M':d.r}">${isMy(id)?'神話':RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${chName(id)}${isMy(id)&&MYN[id]?`<span style="font-size:14px;opacity:.6">（${d.n}）</span>`:''} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t,r.rs)}</span></h3>
@@ -1343,7 +1344,7 @@ function renderHero(){
  <div class="tiers">${Array.from({length:d.t},(_,i)=>`<span class="${i+1>r.tier?'no':''} ${i+1===r.tier?'cur':''}"><img src="${charImg(id,i+1)}" alt=""></span>`).join('')}</div>
  <div class="row"><button class="btn green" id="dUp" ${r.lv>=cap||S.coin<cost?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cost)}</span></button>
  <button class="btn green" id="dUp10" ${r.lv>=cap||S.coin<cost?'disabled':''}>連升</button>
- <button class="btn gold" id="dTier" ${canTier?'':'disabled'}>升階</button>
+ ${r.tier>=d.t?`<button class="btn gold" id="dBrk" ${canBrk?'':'disabled'}>${(r.brk||0)<BRK_MAX?`突破 <span class="cost"><span class="ico pill"></span>${brkP2}</span>`:'突破已滿'}</button>`:`<button class="btn gold" id="dTier" ${canTier?'':'disabled'}>升階${id!=='disciple'&&r.dup<need?` <span class="cost"><span class="ico pill"></span>${pNeed}</span>`:''}</button>`}
  ${d.r==='L'&&r.tier>=d.t?`<button class="btn gold" id="dRs" style="background:linear-gradient(#ff5a4a,#c0201a);color:#fff" ${rsOf(id)<RS_MAX&&(S.shard||0)>=rsCost(rsOf(id))?'':'disabled'}>${rsOf(id)<RS_MAX?`升紅星 <span class="cost">碎片 ${rsCost(rsOf(id))}</span>`:'紅星已滿'}</button>`:''}${d.r==='L'&&isR10(id)&&!isMy(id)?`<button class="btn" id="dMy" style="background:linear-gradient(90deg,#ff3a6a,#ffb02a,#7a5cff);color:#fff" ${(S.shard||0)>=MY_COST?'':'disabled'}>神話進化 <span class="cost">碎片 ${MY_COST}</span></button>`:''}
  <button class="btn blue" id="dTeam">${inTeam?'下陣':'上陣'}</button></div>
  <div style="font-size:13px;color:#7a5a3a">${tierTxt}${tierUp}${d.r==='L'&&r.tier>=d.t?`<br>紅星 ${rsOf(id)}/${RS_MAX}（每顆 ×1.5，碎片 ${S.shard||0}）${isMy(id)?'':isR10(id)?'・可以神話進化（攻擊 ×4、大招 ×1.5）':''}`:''}・上陣 ${S.team.length}/${slots()}</div></div></div>
@@ -1359,7 +1360,7 @@ function renderHero(){
  $('shBody').querySelectorAll('.card[data-id]').forEach(c=>c.onclick=()=>{sel=c.dataset.id;renderHero()});
  $('shBody').querySelectorAll('[data-hs]').forEach(b=>b.onclick=()=>{hSort=b.dataset.hs;try{localStorage.setItem('idle-td-hsort',hSort)}catch(e){}renderHero()});$('shBody').querySelectorAll('[data-hr]').forEach(b=>b.onclick=()=>{hRole=b.dataset.hr;renderHero()});
  $('dUp').onclick=()=>{levelUp(id,1)};$('dUp10').onclick=()=>{levelUp(id,99)};
- document.querySelectorAll('[data-tipk]').forEach(t=>t.onclick=()=>{const b=t.nextElementSibling;const o=b.style.display==='none';b.style.display=o?'inline':'none';t.querySelector('i').textContent=o?'▴':'ⓘ'});if($('dMy'))$('dMy').onclick=()=>{if(isMy(id)||!isR10(id)||(S.shard||0)<MY_COST)return;S.shard-=MY_COST;r.my=1;SND.play('rare');toast(`${d.n} 進化成神話「${chName(id)}」！攻擊 ×4、大招 ×1.5`);refreshField();renderHero()};if($('dRs'))$('dRs').onclick=()=>{const n=rsOf(id);if(n>=RS_MAX||(S.shard||0)<rsCost(n))return;S.shard-=rsCost(n);r.rs=n+1;SND.play('rare');toast(`${d.n} 紅星 ${r.rs} 顆！攻擊 ×1.5${r.rs>=RS_MAX?'，解鎖 10 星極意！':''}`);refreshField();renderHero()};$('dTier').onclick=()=>{if(!canTier)return;if(id==='disciple')S.pill-=r.tier*5;else r.dup-=need;r.tier++;toast(`${d.n} 升到 ${r.tier} 階！`);refreshField();renderHero()};
+ document.querySelectorAll('[data-tipk]').forEach(t=>t.onclick=()=>{const b=t.nextElementSibling;const o=b.style.display==='none';b.style.display=o?'inline':'none';t.querySelector('i').textContent=o?'▴':'ⓘ'});if($('dMy'))$('dMy').onclick=()=>{if(isMy(id)||!isR10(id)||(S.shard||0)<MY_COST)return;S.shard-=MY_COST;r.my=1;SND.play('rare');toast(`${d.n} 進化成神話「${chName(id)}」！攻擊 ×4、大招 ×1.5`);refreshField();renderHero()};if($('dRs'))$('dRs').onclick=()=>{const n=rsOf(id);if(n>=RS_MAX||(S.shard||0)<rsCost(n))return;S.shard-=rsCost(n);r.rs=n+1;SND.play('rare');toast(`${d.n} 紅星 ${r.rs} 顆！攻擊 ×1.5${r.rs>=RS_MAX?'，解鎖 10 星極意！':''}`);refreshField();renderHero()};if($('dBrk'))$('dBrk').onclick=()=>{if(!canBrk)return;S.pill-=brkP2;r.brk=(r.brk||0)+1;toast(`${d.n} 突破 +${r.brk}（用了 ${brkP2} 顆進階丹）`);refreshField();renderHero()};if($('dTier'))$('dTier').onclick=()=>{if(!canTier)return;if(id==='disciple')S.pill-=pNeed;else if(r.dup>=need)r.dup-=need;else{S.pill-=pNeed;r.dup=0};r.tier++;toast(`${d.n} 升到 ${r.tier} 階！`);refreshField();renderHero()};
  $('dTeam').onclick=()=>{if(inTeam){if(S.team.length<=1){toast('至少要有一位弟子守山門');return}S.team=S.team.filter(x=>x!==id)}else{if(S.team.length>=slots()){toast(`樓閣只站得下 ${slots()} 位，升級山門可以多站`);return}S.team.push(id)}refreshField();renderHero()};
 }
 function levelUp(id,n){const r=S.roster[id];let c=0;while(n-->0&&r.lv<lvCap(id)&&S.coin>=lvCost(r.lv)){S.coin-=lvCost(r.lv);r.lv++;c++}if(c){SND.play('up');toast(`${CH[id].n} Lv${r.lv}`);persist()}renderHero();updLive()}
