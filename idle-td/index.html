@@ -291,7 +291,7 @@ const RS_MAX=5,rsCost=n=>150+100*n,rsOf=id=>(S.roster[id]&&S.roster[id].rs)||0,i
 // 神話進化：10 星（紅星 5 顆）後用 1000 傳說碎片進化，攻擊 ×4、大招 ×1.5；有 t6 圖就換圖，沒有先用 5 階圖加金光
 const MYN={fox:'天狐神姬',dragon:'龍神將',archer:'月神星弓',mecha:'神機天將',alchemist:'丹仙真人',monkey:'齊天神猴'},chName=id=>isMy(id)&&MYN[id]?MYN[id]:CH[id].n;
 // 神話極意：進化成神話後多一個效果，照各自流派再往上強化
-const MYFX={fox:{n:'狐火燎原',d:'燒傷中的怪物死掉會爆炸，周圍的怪受到牠最大血量 20% 的傷害（會連鎖）'},dragon:{n:'神龍擺尾',d:'每 8 秒，全場怪物暈 1.5 秒'},archer:{n:'月華連星',d:'爆擊時再多 30% 機會觸發星隕一擊'},mecha:{n:'天機全開',d:'神機天將放大招後 6 秒，全隊所有傷害 ×1.5（多出來的傷害算進神機天將）'},alchemist:{n:'九轉金丹',d:'全隊所有傷害再 ×1.5（多出來的傷害算進丹仙真人）'},monkey:{n:'七十二變',d:'毫毛分身變成 6 隻，每隻 100% 傷害'}};
+const MYFX={fox:{n:'狐火燎原',d:'燒傷中的怪物死掉會爆炸，周圍的怪受到牠最大血量 20% 的傷害（會連鎖；全隊增傷只吃 1/4）'},dragon:{n:'神龍擺尾',d:'每 8 秒，全場怪物暈 1.5 秒'},archer:{n:'月華連星',d:'爆擊時再多 30% 機會觸發星隕一擊'},mecha:{n:'天機全開',d:'神機天將放大招後 6 秒，全隊所有傷害 ×1.5（多出來的傷害算進神機天將）'},alchemist:{n:'九轉金丹',d:'全隊所有傷害再 ×1.5（多出來的傷害算進丹仙真人）'},monkey:{n:'七十二變',d:'毫毛分身變成 6 隻，每隻 100% 傷害'}};
 const MY_COST=1000,isMy=id=>!!(S.roster[id]&&S.roster[id].my),myKey=id=>`c_${id}_${isMy(id)&&SRC[`c_${id}_6`]?6:S.roster[id].tier}`;
 const R10FX={fox:{n:'天狐焚天',d:'燒傷傷害 ×3'},dragon:{n:'龍王降臨',d:'普攻暈眩機率 25% → 50%，暈 2 秒'},archer:{n:'星河倒懸',d:'星隕一擊觸發機率 20% → 40%'},mecha:{n:'無限核心',d:'放完大招，自己馬上回 50 充能'},alchemist:{n:'金丹大成',d:'仙丹爐火的全隊攻擊 +30% 變成 +100%'},monkey:{n:'大鬧天宮',d:'齊天大聖改成每 3 下就砸一次'}};
 const PS0=()=>({fbatk:0,atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
@@ -751,15 +751,16 @@ let DSRC='etc',SWC=0;// SWC：現在這一下是不是從爆擊的普攻帶出�
 function hit(e,amt,o={}){
  if(e.dead)return;
  // 劍意連斬：大招打中有爆擊率的機會追加一刀（這下 ×3）；弟子普攻爆擊時，這一下帶出來的技能傷害（星隕、穿透、雷射、大棍…）也追加一刀（×1.5）。普攻本體另外算，燒傷每跳、陣法、神獸、法寶不算。DPS 算給出手的人
- if(PS.mx&&PS.mx.swordsman&&!o.nosw&&!o.na){const sr=String(o.src||DSRC);let m=0;if(sr.startsWith('u:')){if(Math.random()<Math.min(.95,PS.crit))m=3}else if(SWC&&sr.startsWith('h:'))m=1.5;if(m){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*m,{c:'#ff5a2a',crit:1,big:1,src:sr,nosw:1});return}}const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
+ if(PS.mx&&PS.mx.swordsman&&!o.nosw&&!o.na){const sr=String(o.src||DSRC);let m=0;if(sr.startsWith('u:')){if(Math.random()<Math.min(.95,PS.crit))m=3}else if(SWC&&sr.startsWith('h:'))m=1.5;if(m){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*m,{c:'#ff5a2a',crit:1,big:1,src:sr,nosw:1});return}}const hp0=Math.max(0,e.hp);const amt0=amt;if(e.boss&&PS.boss)amt*=1+PS.boss;
  // 全隊增傷極意（DPS 表一律算給打出這一下的人，泓 2026-11-05）
  const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.armor>0)mul('monkey',1.5);if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
+ if(o.q){const Mt=amt/amt0;amt=amt0*(1+(Mt-1)*o.q)}// q：只吃增傷的這個比例（狐火燎原 1/4）
  if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg&&!o.nodps){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));B.dmg[src]=(B.dmg[src]||0)+dealt}
  if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big,o.crit);
- if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,bd,{c:'#ff8a3d',src:'hpboom'})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
+ if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,bd,{c:'#ff8a3d',src:'hpboom',q:.25})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
   for(let i=0;i<5;i++)addFx({k:'coin',x:e.x,y:e.y-e.ay*.5,vx:(Math.random()-.5)*160,vy:-120-Math.random()*120,life:.6});
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
