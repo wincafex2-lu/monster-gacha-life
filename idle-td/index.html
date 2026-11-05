@@ -50,6 +50,9 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .bottom{position:absolute;left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;gap:10px;pointer-events:none}
 .bottom>*{pointer-events:auto}
 .ults{display:flex;gap:8px;flex-wrap:wrap}
+.utog{align-self:flex-end;font:inherit;font-size:13px;font-weight:900;min-width:34px;height:34px;padding:0 6px;border-radius:10px;border:2px solid #2a170a;background:#5a3a22cc;color:#ffe8c0;cursor:pointer}
+body.ufold .ults{display:none}
+@media (max-height:600px){.ult{width:46px!important;height:46px!important}.auto{min-width:40px;height:19px;font-size:11px}.ults{gap:5px}}
 .ult{position:relative;width:66px;height:66px;border-radius:14px;border:3px solid #2a170a;background:#3a2414;overflow:hidden;padding:0;cursor:pointer;box-shadow:0 3px 0 #2a170a}
 .ult .pt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .ult .fill{position:absolute;left:0;right:0;bottom:0;background:rgba(20,10,4,.62);pointer-events:none}
@@ -208,7 +211,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
   <div class="ultname" id="ultName"></div>
   <div class="rotate">把手機轉橫的玩比較大喔</div>
   <div class="bottom">
-    <div class="ults" id="ults"></div>
+    <button class="utog" id="ultTog" title="收起／打開頭像">▼</button><div class="ults" id="ults"></div>
     <div class="menu">
       <button class="btn dot" id="bHero">弟子<small>升級</small></button>
       <button class="btn gold dot" id="bGacha">召喚<small>靈石</small></button>
@@ -1190,6 +1193,7 @@ $('shX').onclick=closePanel;
 $('farmBtn').onclick=()=>{if(S.farm){S.farm=0;toast('打完這關就往下一關挑戰！')}else{S.farm=1;S.farmN=0;toast('之後會一直重打這一關')}persist();updFarm()};
 $('dps').onclick=ev=>{const m=ev.target.closest('[data-dm]');if(m){dpsMode=m.dataset.dm;try{localStorage.setItem('idle-td-dpsm',dpsMode)}catch(e){}dpsLast=0;renderDps();return}dpsOn=!dpsOn;try{localStorage.setItem('idle-td-dps',dpsOn?'1':'0')}catch(e){}dpsLast=0;renderDps()};
 {const mb=$('musBtn'),sb=$('sfxBtn');const um=()=>{mb.style.opacity=SND.musOn?1:.45;mb.textContent=SND.musOn?'🎵':'🎵✕'},us=()=>{sb.textContent=SND.sfxOn?'🔊':'🔇';sb.style.opacity=SND.sfxOn?1:.45};um();us();
+ {const tb=$('ultTog'),ut=f=>{document.body.classList.toggle('ufold',f);tb.textContent=f?'▲ 頭像':'▼'};let uf=false;try{uf=localStorage.getItem('idle-td-ultfold')==='1'}catch(e){}ut(uf);tb.onclick=()=>{uf=!uf;ut(uf);try{localStorage.setItem('idle-td-ultfold',uf?'1':'0')}catch(e){}}}
  {const zb=$('zmBtn'),uz=()=>{zb.textContent=ZM>1?'🔍½':'🔍';zb.style.opacity=ZM>1?1:.6};uz();zb.onclick=()=>{ZM=ZM>1?1:2;try{localStorage.setItem('idle-td-zoom',ZM)}catch(e){}resize();uz();toast(ZM>1?'畫面縮小一半（鏡頭拉遠）':'畫面大小：正常')}}
  mb.onclick=()=>{SND.togMus();um();toast(SND.musOn?'音樂：開':'音樂：關')};sb.onclick=()=>{SND.togSfx();us();toast(SND.sfxOn?'音效：開':'音效：關')}}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.btn'))SND.play('click')});$('sheet').addEventListener('pointerdown',e=>{if(e.target.id==='sheet')closePanel()});
