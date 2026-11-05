@@ -487,7 +487,7 @@ setInterval(persist,5000);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else offline()});
 
 /* ---------- 數值 ---------- */
-const hpBase=s=>s>500?hpBase(500)*Math.pow(1.08,s-500):14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.008,s-100):1);// 500 關後怪血每關 ×1.08
+const hpBase=s=>s>500?hpBase(500)*Math.pow(1.11,s-500):14*Math.pow(1.13,s-1)*(s>100?Math.pow(1.008,s-100):1);// 500 關後怪血每關 ×1.11（泓 2026-11-06：×1.08 跟攻擊成長一樣快，後期沒有牆）
 const dmgBase=s=>2.6*Math.pow(1.065,s-1);
 const coinKill=(s,m)=>Math.max(1,Math.round(1.6*Math.pow(1.088,s-1)*m));
 const lvCost=lv=>Math.ceil(6*Math.pow(1.12,lv-1));
