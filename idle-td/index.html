@@ -731,7 +731,7 @@ function projHit(p){
  p.done=1;DSRC=p.src||(p.from&&p.from.id?'h:'+p.from.id:'etc');const M=PS.mx||{};
  if(p.from&&p.target&&!p.target.dead){const T=p.target,r=CH[p.from.id].role;
   if(M.vampire)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.002);
-  if(M.swordsman&&p.crit)hit(T,p.dmg*dmgMul(p,T),{c:'#ff5a2a',crit:1,big:1});
+  if(M.swordsman&&p.crit)hit(T,p.dmg*dmgMul(p,T),{c:'#ff5a2a',crit:1,big:1,src:'h:swordsman'});
   if(M.disciple&&p.from.id==='disciple')B.enemies.filter(e=>!e.dead&&e!==T&&e.x>T.x&&e.x<T.x+220).slice(0,2).forEach(e=>hit(e,p.dmg,{c:p.c}));
   if(M.kitsune&&r==='magic'){const o=B.enemies.find(e=>!e.dead&&e!==T&&Math.abs(e.x-T.x)<300&&Math.abs(e.x-T.x)>p.aoe);if(o){hit(o,p.dmg*.5,{c:'#5ab8ff'});sprFx('fx_fire',o.x,o.y-o.ay*.5,.7)}}
   if(M.panda&&p.from.id==='panda'){p.from.n3=(p.from.n3||0)+1;if(p.from.n3>=3){p.from.n3=0;T.stun=Math.max(T.stun,1);if(!T.boss)T.kb=Math.min(160,T.kb+60);sprFx('fx_blunt',T.x,T.y-T.ay*.5,1.4);shake(3)}}}
