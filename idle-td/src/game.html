@@ -1033,7 +1033,7 @@ function draw(real){if((B.bfT=(B.bfT||0)+1)%10===0)renderBuffs();
  const bg=IMG[curBg()]||IMG.bg_meadow,bw=1536*ZM,bh=1024*ZM,by=G-G*ZM;for(let x=0,i=0;x<VW+10;x+=bw,i++){if(i%2){ctx.save();ctx.translate(x+bw,0);ctx.scale(-1,1);ctx.drawImage(bg,0,by,bw,bh);ctx.restore()}else ctx.drawImage(bg,x,by,bw,bh)}// 縮小模式：背景放大 ×2、地平線對齊，只有人物怪物變小
  // 陣法
  if(B.arr){const a=B.arr,c=ARR[a.k].c;const pul=.75+.25*Math.sin(B.time*4);
-  ctx.save();ctx.globalAlpha=.85;{const f=L.arrR*2/(MAN['g_'+a.k][0]/2);drawSprite('g_'+a.k,a.x,G+4,{sx:f,sy:f*.85})}ctx.restore();
+  ctx.save();ctx.globalAlpha=.85;{const f=L.arrR*2/(MAN['g_'+a.k][0]/2);drawSprite('g_'+a.k,a.x,G+4,{sx:f,sy:f*.36})}ctx.restore();
   ctx.save();ctx.globalCompositeOperation='lighter';const gr=ctx.createRadialGradient(a.x,G+4,20,a.x,G+4,L.arrR*1.1);gr.addColorStop(0,`rgba(${c},${.45*pul})`);gr.addColorStop(1,`rgba(${c},0)`);ctx.fillStyle=gr;ctx.beginPath();ctx.ellipse(a.x,G+4,L.arrR*1.15,L.arrR*.3,0,0,Math.PI*2);ctx.fill();
   for(let i=0;i<8;i++){const ph=(B.time*.8+i/4)%1;ctx.fillStyle=`rgba(${c},${(1-ph)*.7})`;ctx.beginPath();ctx.arc(a.x-L.arrR*.85+i*L.arrR*.24+Math.sin(i*7)*10,G-ph*110,4+3*(1-ph),0,Math.PI*2);ctx.fill()}ctx.restore()}
  // 大招地面效果：狐火地面／沙暴／暴風雪
