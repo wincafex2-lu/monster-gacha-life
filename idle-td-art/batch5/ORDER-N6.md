@@ -1,0 +1,78 @@
+# 放置塔防：工單 N6　三位新傳說 攻擊格＋投射物＋道具＋大招特效
+
+狀態：待接手（工單 N5 出現「完成通知」後再接）
+（狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
+
+楊戩、哪吒、敖丙的站立圖在 N5 已通過（分支 `dot/idle-td-n5` 的 `idle-td-art/batch5/images/<id>__t<N>__stand.png`）。這張畫攻擊格、投射物、哮天犬、道具和大招。
+流程、驗收標準照 `README.md`（工單 N1）；分支 **`dot/idle-td-n6`**（從 `origin/claude/project-thread-7a7c7v` 開），狀態改「進行中：<誰> <時間>」馬上推。檔案放 `idle-td-art/batch5/images/`。**每張畫好直接推，不用再問。**
+網頁版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-7a7c7v/idle-td-art/batch5/ORDER-N6.md
+
+## 很重要：原創
+
+招式點子可以參考神話故事和電影，但**造型、配色、特效的樣子一律原創，不准照抄任何電影或動畫的畫面**。照下面的描述畫。
+
+## A. 攻擊格（54 張）
+
+- 用**已通過的站立圖逐格改**，頭、臉、身體、腿、腳、衣服、大小、位置完全不動，只動手臂和武器（指令照 `README.md`「攻擊圖指令」）。飄帶、披風、紅綾、尾巴可以擺一點。
+- 1 階：附該角色 1 階站立，照下面的動作畫 f1、f2、f3。
+- 2～6 階：附圖 A＝該階站立、圖 B＝已通過的 1 階同一格（6 階用 `ORDER-N3.md` 的 6 階攻擊指令）。
+- 第 4 格不用畫（程式用站立圖）。武器一直在**前手**。
+- 不畫刀光、火焰噴出去、冰霧（程式加）。
+
+| 角色 | f1 | f2 | f3 |
+|---|---|---|---|
+| 楊戩 yangjian | 雙手把三尖刀舉過頭頂（蓄力） | 往前下方斜劈，刀尖到身體前下方 | 收回來往前平刺，刀伸直向右 |
+| 哪吒 nezha | 前手把乾坤圈拉到耳朵後面（準備丟），後手握拳 | 手往前甩出去，手掌張開、**手上沒有圈**（圈由程式飛出去） | 手順勢往下收，後手握拳在腰邊 |
+| 敖丙 aobing | 前手把冰杖舉高，後手掌心朝前 | 冰杖往前指向右邊 | 冰杖往旁邊橫掃，後手張開 |
+
+英文動作（貼進 `<動作>`）：
+- yangjian：f1 `raising the three-pointed blade high above the head with both hands (wind-up)`；f2 `slashing diagonally down and forward, blade tip in front of the body, low`；f3 `thrusting the blade straight forward to the right, arm extended`
+- nezha：f1 `pulling the golden ring back behind the ear, ready to throw; back hand in a fist`；f2 `arm swung forward, hand open and EMPTY (the ring has been thrown, do not draw it)`；f3 `arm following through downward, hand empty; back hand fist at the waist`
+- aobing：f1 `raising the staff high, back hand palm forward`；f2 `pointing the staff straight forward to the right`；f3 `sweeping the staff sideways, back hand open`
+
+檔名：`<id>__t<N>__attack_f1.png`～`_f3.png`，N＝1～6。
+
+## B. 投射物（3 張，1254×1254 洋紅底，**指向右邊**，實色、不發光、不畫拖尾）
+
+| 檔名 | 內容 | 英文 |
+|---|---|---|
+| `p_qiankun.png` | 哪吒的金圈（正面看是圓環），刻蓮紋，掛一小條紅布 | a golden ring seen from the front with lotus carvings and a short red ribbon tied on it, flying to the right |
+| `p_icepearl.png` | 敖丙的冰珠：淡藍冰晶球，表面有龍鱗紋，後面拖三片小冰片 | a pale-blue ice pearl with dragon-scale patterns, three small ice shards trailing behind it, flying to the right |
+| `p_skyeye.png` | 楊戩天眼神光：金白色的眼睛形狀光束（實色），細長往右 | a long thin golden-white beam shaped like an eye (solid colors, no glow), pointing right |
+
+## C. 道具（8 張，1254×1254 洋紅底，**面向右邊**）
+
+哮天犬（原創造型）：銀灰色細長獵犬、深藍項圈掛銀鈴、尖耳、尾巴長，帥氣不兇。大小：站著時身高約楊戩的一半，腳底 y≈978。
+
+| 檔名 | 內容 |
+|---|---|
+| `dog_run_f1.png`～`dog_run_f4.png` | 往右跑的 4 格循環（f1 前腳伸、f2 四腳收、f3 後腳蹬、f4 騰空） |
+| `dog_bite_f1.png`、`dog_bite_f2.png` | f1 張大嘴往前撲、f2 咬住（嘴合上、頭往下甩） |
+| `wheel_firetrail.png` | 風火輪後面拖的一條實色火焰尾巴，橫的，火尾往**左**飄（輪子不用畫） |
+| `ice_dragon.png` | 冰龍虛影：一條很大的淡藍冰龍往右飛，身體半透明感（畫成淺色實色），佔滿畫面寬 |
+
+英文狗：`an original silver-grey slim hunting hound with pointed ears, a long tail and a dark-blue collar with a small silver bell, cool not scary, side view facing right`
+
+## D. 大招特效（4 張，每張 6 格，3×2 排在 1536×1024 上，跟第三批 C4 一樣）
+
+只畫特效，不畫人物（人物由程式擺）。洋紅底、實色卡通上色、不畫發光暈。格子順序左上→右上→左下→右下。
+
+| 檔名 | 招式 | 6 格內容 |
+|---|---|---|
+| `ult_yangjian.png` | 天眼劈山 | 1 額頭金色豎眼張開 → 2 一道金白天眼光柱往前射 → 3 巨大的半透明三尖刀從天上出現 → 4 往下劈 → 5 地面裂成一條大裂縫、石塊飛起 → 6 裂縫收合、碎石落下 |
+| `ult_nezha.png` | 蓮火衝陣 | 1 腳下兩個火輪轉起來 → 2 拖著火尾往前衝 → 3 紅綾變長捲住一片 → 4 乾坤圈變巨大砸下 → 5 地上噴出一根大火柱 → 6 火柱散成蓮花瓣形的火焰 |
+| `ult_aobing.png` | 萬龍冰鱗 | 1 身後冰晶六角環亮起（實色） → 2 冰龍盤起來 → 3 冰龍張口噴出大量冰鱗片 → 4 冰鱗像暴風往前捲 → 5 前方地面結出冰刺 → 6 冰刺碎成冰晶 |
+| `ult_icefire.png` | 冰火合璧（哪吒＋敖丙合擊） | 1 左紅火焰、右藍冰各一團 → 2 兩團往中間轉 → 3 繞成一個紅藍太極圓 → 4 太極圓變大往前推 → 5 爆開成紅藍兩色的花瓣與冰片 → 6 餘燼和冰晶落下 |
+
+## 待辦（順序）
+
+1. 楊戩 1 階攻擊 f1～f3 → 2～6 階攻擊
+2. 哪吒 1 階攻擊 f1～f3 → 2～6 階攻擊
+3. 敖丙 1 階攻擊 f1～f3 → 2～6 階攻擊
+4. 投射物 3 張 → 道具 8 張 → 大招 4 張
+
+共 69 張。每位先交 1 階 f1～f3，Claude 寫通過再畫 2～6 階；等的時候可以先畫下一位的 1 階。
+
+## 意見與待辦
+
+（Claude 驗收後寫在這裡）
