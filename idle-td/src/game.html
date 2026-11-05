@@ -264,7 +264,7 @@ const MAXFX={
  pharaoh:{s:'全隊',n:'黃金詛咒',d:'怪物 10% 會變成黃金怪，打死銅錢 ×5'},
  vampire:{s:'全隊',n:'血之契約',d:'弟子每次普攻打中，山門回血 0.2%'},
  general:{s:'全隊',n:'鐵壁軍令',d:'隊上每有 1 位近戰或坦克，山門受傷 -4%'},
- swordsman:{s:'全隊',n:'劍意連斬',d:'任何弟子普攻爆擊時，再追加一刀（爆擊傷害 ×1.5）；大招和弟子技能（星隕、穿透、雷射、大棍等）打中時，也有爆擊率的機會追加一刀（那下的 3 倍）'},
+ swordsman:{s:'全隊',n:'劍意連斬',d:'任何弟子普攻爆擊時，再追加一刀（爆擊傷害 ×1.5）；大招打中時有爆擊率的機會追加一刀（那下的 3 倍）；普攻爆擊帶出來的技能傷害（星隕、穿透、雷射、大棍等）也會追加一刀（×1.5）'},
  elf:{s:'全隊',n:'森林之歌',d:'緩速或暈眩中的怪物，受到全隊傷害 +30%'},
  kitsune:{s:'限法術弟子',n:'狐火連鎖',d:'法術弟子打中後，火會跳到附近另一隻（50%）'},
  panda:{s:'自身',n:'熊貓連拳',d:'熊貓每打 3 下來一記重拳：暈 1 秒、擊退'},
@@ -602,7 +602,7 @@ function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
- B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700});shake(5)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
+ B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700});shake(5)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';SWC=0;if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
   // 場上的怪都打光了，下一隻（群）不用等，0.25 秒後就出來（秒殺時推關比較快）
@@ -687,7 +687,7 @@ function step(dt){
  }
  B.proj=B.proj.filter(p=>!p.done&&p.life>0);
  // 特效
- for(const f of B.fx){f.t=(f.t||0)+dt;if(f.upd){DSRC=f.src||'etc';f.upd(f,dt)}}DSRC='etc';
+ for(const f of B.fx){f.t=(f.t||0)+dt;if(f.upd){DSRC=f.src||'etc';SWC=0;f.upd(f,dt)}}DSRC='etc';SWC=0;
  B.fx=B.fx.filter(f=>f.t<f.life);
  for(const t of B.txt){t.t+=dt;t.y-=dt*40}
  B.txt=B.txt.filter(t=>t.t<.8);
@@ -701,7 +701,7 @@ function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
  const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3,dmg:heroAtk(h.id)*NA*(h.id==='archer'?2.5:1),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
- {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?4:h.id==='archer'?2.5:2;p.crit=1}}
+ {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?4:h.id==='archer'?2.5:2;p.crit=1}}SWC=p.crit?1:0;
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=3){h.n4=0;DSRC='h:mecha';const dd=p.dmg*1.2;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500)hit(e,dd,{c:d.c})})}}
  if(h.id==='monkey'){const os=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW+40);if(PS.aw&&PS.aw.monkey&&Math.random()<.3)for(let i=0,nm=PS.my&&PS.my.monkey?6:3;i<nm&&os.length;i++){const o=os.splice(Math.floor(Math.random()*os.length),1)[0];{const base=heroAtk('monkey')*NA*(PS.my&&PS.my.monkey?1:.8),cr=Math.random()<Math.min(.95,PS.crit);B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:base*(cr?2:1),crit:cr?1:0,sp:'',sy:p.sy-15*i})}}
   if(PS.mx&&PS.mx.monkey){h.n10=(h.n10||0)+1;if(h.n10>=(PS.r10&&PS.r10.monkey?3:6)){h.n10=0;DSRC='h:monkey';const dd=p.dmg*10;B.enemies.forEach(e=>{if(!e.dead&&e.x<VW+40){hit(e,dd,{c:'#ffc23a',big:1});e.armor=4}});addFx({k:'staff',x:Math.min(VW-200,Math.max(500,tg.x)),y:G,life:.9});B.txt.push({x:Math.min(VW-200,Math.max(500,tg.x)),y:G-300,v:'齊天大聖！',t:0,big:1,crit:1});shake(10);B.hitstop=.08}}}
@@ -728,7 +728,7 @@ function turShot(t,tg,alive){
 // 精英怪有盾：遠程、法術只打得出 40%；遠程打太遠（離弟子 1100 以上）只有 60%
 function dmgMul(p,e){if(!p.from)return 1;const r=CH[p.from.id].role;let m=1;if(e.elite&&!(PS.mx||{}).witch&&(r==='ranged'||r==='magic'))m*=.4;if((PS.mx||{}).shark&&r==='ranged'&&e.hp<e.max*.5)m*=1.4;if(r==='ranged'&&e.x-p.from.x>1100)m*=.6;return m}
 function projHit(p){
- p.done=1;DSRC=p.src||(p.from&&p.from.id?'h:'+p.from.id:'etc');const M=PS.mx||{};
+ p.done=1;DSRC=p.src||(p.from&&p.from.id?'h:'+p.from.id:'etc');SWC=p.crit?1:0;const M=PS.mx||{};
  if(p.from&&p.target&&!p.target.dead){const T=p.target,r=CH[p.from.id].role;
   if(M.vampire)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.002);
   if(M.swordsman&&p.crit)hit(T,p.dmg*1.5*dmgMul(p,T),{c:'#ff5a2a',crit:1,big:1,nosw:1,src:p.src||(p.from?'h:'+p.from.id:DSRC)});
@@ -747,11 +747,11 @@ function projHit(p){
  else if(p.target&&!p.target.dead){hit(p.target,p.dmg*dmgMul(p,p.target),{c:p.crit?'#ff4a3a':p.c,kb:p.knock,slow:p.slow,big:p.crit,crit:p.crit,na:1});addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c})}
  else addFx({k:'spark',x:p.tx,y:p.ty,life:.2,c:p.c});
 }
-let DSRC='etc';
+let DSRC='etc',SWC=0;// SWC：現在這一下是不是從爆擊的普攻帶出來的
 function hit(e,amt,o={}){
  if(e.dead)return;
- // 劍意連斬：大招和弟子技能（星隕、穿透、雷射、大棍…）打中，也有爆擊率的機會追加一刀（這下的 3 倍，DPS 算給出手的人）；普攻本體另外算，燒傷每跳不算
- if(PS.mx&&PS.mx.swordsman&&!o.nosw&&!o.na&&/^[uh]:/.test(String(o.src||DSRC))&&Math.random()<Math.min(.95,PS.crit)){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*3,{c:'#ff5a2a',crit:1,big:1,src:o.src||DSRC,nosw:1});return}const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
+ // 劍意連斬：大招打中有爆擊率的機會追加一刀（這下 ×3）；弟子普攻爆擊時，這一下帶出來的技能傷害（星隕、穿透、雷射、大棍…）也追加一刀（×1.5）。普攻本體另外算，燒傷每跳、陣法、神獸、法寶不算。DPS 算給出手的人
+ if(PS.mx&&PS.mx.swordsman&&!o.nosw&&!o.na){const sr=String(o.src||DSRC);let m=0;if(sr.startsWith('u:')){if(Math.random()<Math.min(.95,PS.crit))m=3}else if(SWC&&sr.startsWith('h:'))m=1.5;if(m){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*m,{c:'#ff5a2a',crit:1,big:1,src:sr,nosw:1});return}}const hp0=Math.max(0,e.hp);if(e.boss&&PS.boss)amt*=1+PS.boss;
  // 全隊增傷極意（DPS 表一律算給打出這一下的人，泓 2026-11-05）
  const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.armor>0)mul('monkey',1.5);if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
  if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg&&!o.nodps){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));B.dmg[src]=(B.dmg[src]||0)+dealt}
