@@ -92,3 +92,9 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 - 01:15 台灣時間 楊戩 1 階站立 **退件（身體太長）**：頭的大小對（下巴 y≈690 跟標準一樣），但**身體和腿長了約 10%**，腳底跑到 y=1008（標準 978）。造型、臉、天眼、三尖刀都很好，**請用這張改，不要重畫**：
   `Edit this exact sprite. Keep the head, face, hair, outfit and weapon design EXACTLY the same. Make the body and legs SHORTER (about 10% shorter, chibi proportions like the attached standard) so the bottom of the feet is at y=978, about 30 pixels higher than now. Do not change the head size. Solid magenta #FF00FF background.`（附 `ref/STANDARD__t2__stand.png` 當第二張）
   量法：下巴 y≈690、腳底 y=978，下巴到腳底約 288px（現在 318）。之後 2～6 階都用改好的這張往上改。
+- 01:22 台灣時間 楊戩 1 階站立（改短版）**通過**（頭頂 270、脖子 y≈690、腳底 971，下巴到腳底 281，總高 701 跟標準 704 一樣；黑馬尾、灰藍布衣、閉著的天眼、木柄三尖刀、臉表都對）。可以畫楊戩 2 階（用這張改）。
+- 01:22 台灣時間 哪吒 1 階站立 **退件（不夠小孩、身體太長）**：這張是在加「小孩比例」規定之前畫的。下巴 y≈690 到腳底 1005 有 315px，腳底也太低。造型和臉很好（雙髻、紅綾、蓮花邊、金圈），**請用這張改**：
+  `Edit this exact sprite. Keep the head, face, hair, outfit and ring design EXACTLY the same. Make him look like a SMALL CHILD: much shorter body, short chubby arms and legs, so the distance from chin to the bottom of the feet is about the same as the head height. Move him so the bottom of the feet is at y=978. Do not change the head size. Solid magenta #FF00FF background.`
+  量法：下巴到腳底約 260px（現在 315），腳底 y=978。
+- 01:22 台灣時間 敖丙 1 階站立 **退件（小改）**：深青綠頭髮、珊瑚龍角、青袍、珊瑚杖、臉都對，但下巴到腳底 298px、腳底 988（要 ≤288、978），而且泓要**更瘦**（這張在加規定前畫的）。**請用這張改**：
+  `Edit this exact sprite. Keep the head, face, hair, horns, outfit and staff EXACTLY the same. Make the body SLIMMER and more graceful: narrower shoulders, thinner waist, slender arms and legs. Make the body slightly shorter so the bottom of the feet is at y=978. Do not change the head size. Solid magenta #FF00FF background.`
