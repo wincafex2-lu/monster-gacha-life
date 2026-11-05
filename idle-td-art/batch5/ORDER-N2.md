@@ -51,3 +51,7 @@ N2 出現「完成通知」後，接同資料夾 `ORDER-N3.md`（五傳說神話
   `Edit this exact sprite (tier 4). Keep the head, face, body, legs, feet, size and position EXACTLY the same. Do not make anything bigger. Only change: fur turns golden-white, golden armor and red robe, a golden crown with two very long pheasant tail feathers, a bigger cloud curling behind the body, double-layer gold-and-red cape, ornate golden staff with red ends. Accessories go outside the body. Solid magenta #FF00FF background.`
   量法：頭頂（不含冠和羽毛）、下巴、腳底 y=979 要跟 4 階一樣。
 - 10:57 台灣時間 小猴王 5 階站立（從 4 階改）**通過**（腳底 979，臉、身體跟 4 階一樣大；白金毛、金冠鳳翎、金甲紅袍、雙層披風、大雲、華麗金棍；冠和羽毛往上加高是配件，OK）。5 階站立全收，下一步 1 階攻擊 f1～f3（附 1 階站立）。
+- 11:14 台灣時間 小猴王 1 階攻擊：
+  - f1、f3 **通過**（頭 95～96% 同像素、頭頂 321、腳底 979；f1 雙手把棍拉到身後、f3 往前刺，棍一直在前手）。
+  - f2 **退件（小問題）**：棍子伸出畫布右邊被切掉（x 到 1253）。請重做 f2，棍子長度跟站立圖一樣、整根留在畫布裡（右端最遠到 x≈1150），其他不變。可以加一句：`The whole staff must stay inside the canvas, same length as in the original sprite.`
+  - f2 改好就可以接 2～5 階攻擊（圖 B 用 1 階同一格）。
