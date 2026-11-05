@@ -429,11 +429,16 @@ const BFX={baihu:[{k:'front',v:.15,t:'近戰・坦克傷害',f:P1},{k:'atk',v:.0
  qinglong:[{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'spd',v:.08,t:'全隊攻擊速度',f:P1},{k:'seal',v:.5,t:'每 12 秒天雷打全場（平均攻擊 ×',f:v=>`${(3*v).toFixed(1)}）`},{k:'charge',v:.10,t:'全隊大招充能',f:P1}],
  zhuque:[{k:'coin',v:.15,t:'打怪銅錢',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'cap',v:.015,t:'普攻直接燒掉小怪機率',f:P2}],
  xuanwu:[{k:'dr',v:.05,t:'山門受傷減少',f:P1},{k:'regen',v:.005,t:'山門每秒回血',f:P2},{k:'mslow',v:.06,t:'怪物走路變慢',f:P1},{k:'hp',v:.20,t:'山門血量',f:P1}]};
-const bLv=k=>S.beast[k]&&S.beast[k].lv||0;
-const bFxN=k=>Math.min(4,Math.floor(bLv(k)/50));
-const bFxLv=k=>bLv(k)>=250?1+Math.floor((bLv(k)-200)/50):1;
+// 神獸改成碎片升星（泓 2026-11-06）：1～10 星，每升一星只加一項：2～5 星先開 4 個加成效果，6～10 星大招各升一級
+// 星數上限 30（泓：反正要慢慢抽、跟人物搶靈石）；第 n 星要的碎片
+const B_MAX=30,B_FXAT=[2,3,4,5],B_BRK=20,B_BRKMAX=0,B_STAR=[0,100,30,40,60,80,100,130,160,200,250].concat(Array.from({length:20},(_,i)=>300+50*i));
+// 神獸召喚分兩個系列池
+const BSER={sishen:{n:'四神獸',ks:['baihu','qinglong','zhuque','xuanwu']},shanhai:{n:'山海經神獸',ks:[]}};
+const bSt=k=>S.beast[k]?S.beast[k].st||1:0;
+const bFxN=k=>B_FXAT.filter(x=>bSt(k)>=x).length;
+const bFxLv=k=>1,bUlv=k=>Math.max(1,bSt(k)-4);
 const bFxV=(k,i)=>BFX[k][i].v*(1+.5*(bFxLv(k)-1));
-const bAuraV=k=>BAURA[k].v*Math.min(2,1+.02*((S.beast[k]&&S.beast[k].lv||1)-1));
+const bAuraV=k=>BAURA[k].v*(1+.25*(Math.max(1,bSt(k))-1));
 const BULT={baihu:{n:'虎嘯山林',d:'全場地上的怪物被震退、暈 1.5 秒',r:'melee'},qinglong:{n:'青龍雷暴',d:'2 秒內落下 10 道雷',r:'magic'},zhuque:{n:'朱雀火雨',d:'全場怪物受傷並燒傷 5 秒',r:'ranged'},xuanwu:{n:'玄甲護盾',d:'山門 4 秒不受傷，回血 10%',r:'support'}};
 const PAIR={baihu:'a_sword',qinglong:'a_thunder',zhuque:'a_fire',xuanwu:'d_gold'};
 const paired=k=>S.beastTeam.includes(k)&&(S.arrA===PAIR[k]||S.arrD===PAIR[k])&&S.beastTeam.indexOf(k)<beastSlots();
@@ -460,7 +465,7 @@ const HX={disciple:'fx_wind',fox:'fx_fire',dragon:'fx_blunt',mecha:'fx_blunt',va
 const RAINSPR={arrow:'p_arrow',harpoon:'p_harpoon',star:'p_starbolt',bomb:'p_firebomb',bluefire:'p_foxfire',sand:'p_scarab',fire:'p_ofuda'};
 const ULTFX={dragon:'ult_dragon',fox:'ult_ninetail',mecha:'ult_mecha',alchemist:'ult_cauldron'};
 // 首次過關獎勵
-const GIFTS={6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},20:{type:'beast',k:'qinglong'},30:{type:'beast',k:'zhuque'},40:{type:'beast',k:'xuanwu'}};
+const GIFTS={6:{type:'arr',k:'a_fire'},};
 const GP=Object.keys(ARR).map(k=>({type:'arr',k}));// 陣法召喚池（塔已移除 2026-11-05）
 const SLOT_LV=[[1,2],[3,3],[10,4],[18,5],[26,6],[35,7],[45,8]];
 const TUR_SLOT=[[1,1],[6,2],[14,3]];
@@ -480,7 +485,7 @@ let S;
 try{S=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){S=null}
 if(!S||S.v!==1)S=fresh();
 // 舊存檔補欄位
-S.train=Object.assign({atk:0,hp:0,coin:0,ult:0},S.train||{});S.arr=S.arr||{};S.beast=S.beast||{};
+S.train=Object.assign({atk:0,hp:0,coin:0,ult:0},S.train||{});S.arr=S.arr||{};S.beast=S.beast||{};for(const k in S.beast){const b=S.beast[k];if(!b.st){b.st=Math.min(B_MAX,1+Math.floor((b.lv||1)/50))}}S.bfr=S.bfr||{};S.bpull=S.bpull||0;
 if(S.arrA===undefined){S.arrA=S.arrOn||null;S.arrD=null}
 if(!S.beastTeam){S.beastTeam=S.beastOn?[S.beastOn]:[]}
 S.gpull=S.gpull||0;S.fb=S.fb||{};S.fbOn=S.fbOn||[];if(!S.turRef){let c=0;for(const k in (S.tur||{}))c+=14*(Math.pow(1.13,(S.tur[k].lv||1)-1)-1)/.13;S.coin+=Math.round(c);S.turRef=1;S.turTeam=[]}// 塔移除：升級花的銅錢退回
@@ -510,7 +515,7 @@ function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*M
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*XYA()*(arrPaired(k)?1.5:1)}
 // 神獸攻擊跟著隊伍走：上陣弟子的平均攻擊 × 神獸倍率 × 等級加成（每級 +2%），不會因為弟子等級高就被拋在後面
 function teamAvgAtk(){const ids=S.team.slice(0,slots()).filter(i=>S.roster[i]);if(!ids.length)return 1;return ids.reduce((a,i)=>a+heroAtk(i),0)/ids.length}
-function beastAtk(k){return teamAvgAtk()*BEAST[k].atk/10*(1+.02*(S.beast[k].lv-1))*(paired(k)?1.5:1)}
+function beastAtk(k){return teamAvgAtk()*BEAST[k].atk/10*(1+.5*(bSt(k)-1))*(1+.05*(S.beast[k].brk||0))*(paired(k)?1.5:1)}
 function towerKey(){const n=slots();return 'tower'+Math.min(8,n)}
 function gateKey(broken){const g=Math.min(5,1+Math.floor((S.gateLv-1)/10));return `gate${g}_${broken?'broken':'ok'}`}
 // 大數字：K M B T，之後 aa ab ac…（每 1000 倍換一個），保留 3 位有效數字
@@ -942,11 +947,11 @@ const ROLE_OF=id=>CH[id].role;
 /* ---------- 神獸大招 ---------- */
 function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')return;DSRC='b:'+b.k;b.charge=0;const u=BULT[b.k];SND.play('ult',u.r);
  const el=document.getElementById('ultName');el.textContent=u.n+'！';el.style.setProperty('--c','#9fe3ff');el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
- const a=beastAtk(b.k),al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);b.anim=.45;shake(10);B.hitstop=.08;
+ const ul=bUlv(b.k),a=beastAtk(b.k)*(1+.5*(ul-1)),al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);b.anim=.45;shake(10);B.hitstop=.08;
  if(b.k==='baihu'){al().forEach(e=>{if(!e.fly){hit(e,a*6,{c:'#ffffff',kb:120,big:1});e.stun=Math.max(e.stun,1.5)}else hit(e,a*3,{c:'#ffffff',big:1})});addFx({k:'ring',x:b.x+60,y:G-40,life:.7,c:'#ffffff',r:900*ZM});ultFx('ult_mecha',b.x+300,G-150,1)}
  else if(b.k==='qinglong'){for(let j=0;j<10;j++)setTimeout(()=>{DSRC='b:qinglong';const T=al();if(!T.length)return;const e=T[Math.floor(Math.random()*T.length)];B.enemies.forEach(o=>{if(!o.dead&&Math.abs(o.x-e.x)<90)hit(o,a*3,{c:'#bfa0ff',big:1})});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.8);shake(4)},j*200)}
  else if(b.k==='zhuque'){al().forEach(e=>{hit(e,a*4,{c:'#ff8a3d',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
- else if(b.k==='xuanwu'){B.shield=4;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.1);sprFx('fx_heal',L.gx,G-110,2)}
+ else if(b.k==='xuanwu'){B.shield=4+.5*(ul-1);B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*(.1+.05*(ul-1)));sprFx('fx_heal',L.gx,G-110,2)}
 }
 /* ---------- 大招 ---------- */
 // 大招冷卻：每招依強度不同（秒）；充能加成、普攻充能、別人送的充能最多只能把冷卻降到一半
@@ -1358,22 +1363,29 @@ function gpOne(){S.gpull++;const g=GP[Math.floor(Math.random()*GP.length)];let i
   if(g.type==='tur'){if(S.turTeam.length<turSlots())S.turTeam.push(g.k)}else if(ARR[g.k].t==='a'){if(!S.arrA)S.arrA=g.k}else if(!S.arrD&&S.gateLv>=5)S.arrD=g.k}
  else{const o=box[g.k];if(g.type==='arr'&&ARR[g.k].t==='d'){o.lv+=3;res='Lv+3'}else if((o.brk||0)<BRK_MAX){o.brk=(o.brk||0)+1;res='突破+1'}else{const c=Math.round(turCost(o.lv)*3);S.coin+=c;res='銅錢'}}
  return{...g,isNew,res}}
+// 神獸召喚：每抽隨機一隻神獸的碎片 1～10 片（少的常出），1% 整隻（已有就換 50 片），每 10 抽保底一次 8 片以上
+function bpOne(){S.bpull=(S.bpull||0)+1;S.bpity=(S.bpity||0)+1;const ks=(BSER[S.bser]||BSER.sishen).ks.filter(x=>BEAST[x]),k=ks[Math.floor(Math.random()*ks.length)];
+ if(Math.random()<.01){if(!S.beast[k]){S.beast[k]={st:1};if(S.beastTeam.length<beastSlots())S.beastTeam.push(k);return{bk:k,whole:1,isNew:1}}S.bfr[k]=(S.bfr[k]||0)+50;return{bk:k,whole:1,n:50}}
+ let n;if(S.bpity>=10){n=8+Math.floor(Math.random()*3)}else{const w=[0,30,20,14,10,8,6,5,3,2,2],t=Math.random()*100;let c=0;n=1;for(let i=1;i<=10;i++){c+=w[i];if(t<c){n=i;break}}}
+ if(n>=8)S.bpity=0;S.bfr[k]=(S.bfr[k]||0)+n;return{bk:k,n}}
 let gTab='hero';
 function pull(n){const cost=n*10;if(S.gem<cost){toast('靈石不夠，過關可以拿靈石');return}S.gem-=cost;lastPulls=[];
- for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():rollOne());SND.play(lastPulls.some(p=>p.id&&'EL'.includes(CH[p.id].r))?'rare':'gacha');if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
+ for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():gTab==='beast'?bpOne():rollOne());SND.play(lastPulls.some(p=>p.id&&'EL'.includes(CH[p.id].r))?'rare':'gacha');if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
 function gpInfo(p){if(p.type==='tur')return{img:SRC['t_'+p.k+'_1'],n:TUR[p.k].n,r:'R'};return{img:SRC['i_'+p.k],n:ARR[p.k].n,r:ARR[p.k].t==='a'?'E':'L'}}
 function renderGacha(){$('shTitle').textContent='召喚';
- $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法</button>`;
+ $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法</button>${S.best>=10||Object.keys(S.beast).length?`<button class="btn ${gTab==='beast'?'on':''}" data-gt="beast">神獸</button>`:''}`;
  $('shTabs').querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{if(gTab!==b.dataset.gt){gTab=b.dataset.gt;lastPulls=[]}renderGacha()});
  let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
  if(gTab==='hero'){const g=S.gser||'all';h+=`<div class="row" style="justify-content:center;gap:6px;margin:6px 0;flex-wrap:wrap">${Object.entries(SERIES).map(([k,v])=>`<button class="btn ${g===k?'blue':''}" data-ser="${k}" style="padding:3px 12px">${v.n}<span style="font-size:11px;opacity:.75;display:block">${v.d}</span></button>`).join('')}</div>`+(g!=='all'?`<div class="rates" style="margin-bottom:6px"><b>${SERIES[g].n}</b>：抽到傳說時，有 ${SER_UP*100}% 一定是 ${serIds(g).map(i=>CH[i].n).join('、')} 其中一位（傳說機率和保底跟一般池一樣）</div>`:'')}
  if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 普通 +3%／稀有 +5%／史詩 +8%／傳說 +15%（最多 50 次），另外給傳說碎片</div>`;
+ else if(gTab==='beast'){const bs=S.bser||'sishen';h+=`<div class="row" style="justify-content:center;gap:6px;margin:6px 0">${Object.entries(BSER).map(([k,v])=>`<button class="btn ${bs===k?'blue':''}" data-bser="${k}" ${v.ks.length?'':'disabled'} style="padding:3px 12px">${v.n}系列${v.ks.length?'':'<span style="font-size:11px;display:block">即將開放</span>'}</button>`).join('')}</div>`;h+=`<div class="rates">每抽隨機一隻神獸的碎片 1～10 片（1 片 30%、2 片 20%……10 片 2%），1% 直接抽到整隻（已經有就換 50 片）｜再 ${10-(S.bpity||0)} 次保底 8 片以上<br>100 片合成神獸；之後用碎片升星（最多 30 星）：2～5 星開加成效果，6 星起每星大招升一級<br>${BSER[bs].ks.map(k=>`${BEAST[k].n} ${S.beast[k]?bSt(k)+'星':'未合成'}・碎片 ${S.bfr[k]||0}`).join('　')}</div>`}
  else{const own=Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
  if(gTab==='hero'){const sh=S.shard||0;h+=`<div class="rates" style="margin-top:6px"><b>傳說碎片 ${sh}/${SHARD_COST}</b>（滿階後抽到重複：普通 1、稀有 2、史詩 4、傳說 10 片；突破滿了給 2 倍。可以換傳說，也可以給滿階傳說升紅星）<br>${POOL.L.map(k=>`<button class="btn ${sh>=SHARD_COST?'gold':''}" data-shard="${k}" ${sh>=SHARD_COST?'':'disabled'} style="margin:3px">換 ${CH[k].n}</button>`).join('')}</div>`}
  h+='<div class="pulls">';
  lastPulls.forEach((p,i)=>{if(p.id){const d=CH[p.id];h+=`<div class="card ${d.r}" style="--d:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':p.sh?`<span class="new" style="background:#8a4ad8">+${p.sh} 碎片</span>`:''}<span class="cn">${d.n}</span></div>`}
+  else if(p.bk){const d=BEAST[p.bk];h+=`<div class="card ${p.whole?'L':'E'}" style="--d:${i*.08}s"><img src="${SRC['b_'+p.bk]}" alt="" style="height:58%;bottom:24%">${p.isNew?'<span class="new">整隻！</span>':`<span class="new" style="background:${p.whole?'#e0a020':'#8a4ad8'}">+${p.n} 片</span>`}<span class="cn">${d.n}</span></div>`}
   else{const g=gpInfo(p);h+=`<div class="card ${g.r}" style="--d:${i*.08}s"><img src="${g.img}" alt="" style="height:52%;bottom:26%">${p.isNew?'<span class="new">新！</span>':`<span class="new" style="background:#3b7fe0">${p.res}</span>`}<span class="cn">${g.n}</span></div>`}});
- h+='</div></div>';$('shBody').innerHTML=h;$('g1').onclick=()=>pull(1);$('shBody').querySelectorAll('[data-ser]').forEach(b=>b.onclick=()=>{S.gser=b.dataset.ser;persist();renderGacha()});$('g10').onclick=()=>pull(10);
+ h+='</div></div>';$('shBody').innerHTML=h;$('g1').onclick=()=>pull(1);$('shBody').querySelectorAll('[data-bser]').forEach(b=>b.onclick=()=>{S.bser=b.dataset.bser;lastPulls=[];persist();renderGacha()});$('shBody').querySelectorAll('[data-ser]').forEach(b=>b.onclick=()=>{S.gser=b.dataset.ser;persist();renderGacha()});$('g10').onclick=()=>pull(10);
  $('shBody').querySelectorAll('[data-shard]').forEach(b=>b.onclick=()=>{if((S.shard||0)<SHARD_COST)return;S.shard-=SHARD_COST;const r=grantHero(b.dataset.shard);lastPulls=[r];SND.play('rare');toast(r.isNew?`${CH[r.id].n} 加入山門！`:`${CH[r.id].n} +1（可以升階）`);refreshField();persist();renderGacha()})}
 /* 山門 */
 let gtab='gate';
@@ -1414,10 +1426,10 @@ function renderGate(){$('shTitle').textContent='山門';
     h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['i_'+k]}" alt=""></div><div class="tx"><b>${d.n} Lv${has.lv}${has.brk?` 突破+${has.brk}`:''}</b><div>${desc}${tt==='a'?`｜每秒 ${fmt(arrDps(k)*(d.m||0)+ (k==='a_thunder'?arrDps(k)*2.6/1.5:0))}`:''}</div></div>
     <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-au99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
    h+='</div>'}}
- if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="list">`;
-  for(const k in BEAST){const has=S.beast[k],d=BEAST[k];const g=giftAt(k);
-   if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜第 ${g} 關打倒 Boss 送</div></div></div>`;continue}
-   const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">Lv${(i+1)*50} 解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}${bFxN(k)>=4?`（效果 ${bFxLv(k)} 級，下一級 Lv${200+50*bFxLv(k)}）`:''}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-bu99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
+ if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="hint" style="margin-bottom:8px">神獸用碎片升星：召喚頁「神獸」分頁用靈石抽碎片。100 片合成。每升一星只加一項：2～5 星先開滿 4 個加成效果，6 星起每升一星大招升一級（每級大招傷害 +50%），最多 30 星；另外每升一星攻擊 +50%、光環 +25%。</div><div class="list">`;
+  for(const k in BEAST){const has=S.beast[k],d=BEAST[k],fr=S.bfr[k]||0;
+   if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜碎片 ${fr}/${B_STAR[1]}</div></div><button class="btn gold" data-bs="${k}" ${fr>=B_STAR[1]?'':'disabled'}>合成</button></div>`;continue}
+   const st=bSt(k),nc=st<B_MAX?B_STAR[st+1]:B_BRK,canUp=st<B_MAX?fr>=nc:(has.brk||0)<B_BRKMAX&&fr>=B_BRK,on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} <span style="color:#ff9a1e">${st<=10?'★'.repeat(Math.min(5,st)):''}</span><span style="color:#ff3a2a">${st<=10?'★'.repeat(Math.max(0,st-5)):`★×${st}`}</span>${has.brk?`+${has.brk}`:''}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}｜碎片 ${fr}${st<B_MAX?`/${nc}`:''}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」Lv${bUlv(k)}：${BULT[k].d}${bUlv(k)>1?`（傷害 ×${1+.5*(bUlv(k)-1)}${k==='xuanwu'?'、護盾更久、回血更多':''}）`:''}${st<6?'<span style="opacity:.55">（6 星起大招升級）</span>':''}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">${B_FXAT[i]} 星解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn gold" data-bs="${k}" ${canUp?'':'disabled'}>${st<B_MAX?`升星 <span class="cost">碎片 ${nc}</span>`:'已滿星'}</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
   h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星：5 星之後變紅星，最多 10 星，效果照星數倍增（10 星是 1 星的 10 倍），10 星再解鎖特效。已收集 ${own.length}/12。</div><div class="list">`;
@@ -1440,7 +1452,7 @@ function renderGate(){$('shTitle').textContent='山門';
  Q('[data-au]',b=>upArr(b.dataset.au,1));Q('[data-au99]',b=>upArr(b.dataset.au99,99));
  Q('[data-as]',b=>{const k=b.dataset.as,sl=b.dataset.sl;S[sl]=S[sl]===k?null:k;refreshField();renderGate()});
  const upBeast=(k,n)=>{const f0=bFxN(k);let c=0;while(c<n){const cc=Math.ceil(turCost(S.beast[k].lv)*1.4);if(S.coin<cc)break;S.coin-=cc;S.beast[k].lv++;c++}if(!c)return;if(bFxN(k)>f0)toast(`${BEAST[k].n} 學會新效果：${BFX[k][bFxN(k)-1].t}`);else if(n>1)toast(`${BEAST[k].n} 升了 ${c} 級`);calcPassives();persist();renderGate();updLive()};
- Q('[data-bu]',b=>upBeast(b.dataset.bu,1));Q('[data-bu99]',b=>upBeast(b.dataset.bu99,99));
+ Q('[data-bs]',b=>{const k=b.dataset.bs,has=S.beast[k],fr=S.bfr[k]||0;if(!has){if(fr<B_STAR[1])return;S.bfr[k]=fr-B_STAR[1];S.beast[k]={st:1};if(S.beastTeam.length<beastSlots())S.beastTeam.push(k);SND.play('rare');toast(`神獸 ${BEAST[k].n} 合成成功！`)}else{const st=bSt(k);if(st<B_MAX){if(fr<B_STAR[st+1])return;S.bfr[k]=fr-B_STAR[st+1];has.st=st+1;SND.play('rare');toast(`${BEAST[k].n} 升到 ${has.st} 星！${B_FXAT.includes(has.st)?`學會新效果：${BFX[k][B_FXAT.indexOf(has.st)].t}`:has.st>=6?`大招升到 Lv${bUlv(k)}`:''}`)}else{if(fr<B_BRK||(has.brk||0)>=B_BRKMAX)return;S.bfr[k]=fr-B_BRK;has.brk=(has.brk||0)+1;toast(`${BEAST[k].n} 突破 +${has.brk}`)}}refreshField();renderGate();updLive()});
  Q('[data-bt]',b=>{const k=b.dataset.bt;if(S.beastTeam.includes(k))S.beastTeam=S.beastTeam.filter(x=>x!==k);else{if(S.beastTeam.length>=beastSlots()){toast(`現在只能帶 ${beastSlots()} 隻神獸，升級山門可以多帶`);return}S.beastTeam.push(k)}refreshField();renderGate()});
 }
 /* 獎勵 */
@@ -1457,7 +1469,7 @@ function ascend(){const g=xyGain(S.best||0);if(!g)return;const b0=S.best||0;S.xy
  // 快速起跑：前一半的關卡直接算過關，拿到那些關卡打怪和過關的銅錢、山門石
  const sk=Math.floor(b0/2);let fc=0,fs=0;for(let st=1;st<=sk;st++){const bs=st%10===0,tens=Math.floor(st/10);fc+=(5*Math.pow(1.088,st-1)*(bs?4:1)+30*coinKill(st,1))*XYR();fs+=(bs?20+5*tens:4+2*tens)*XYR()}
  S.coin=Math.round(fc);S.stone=Math.round(fs);S.best=sk;S.stage=sk+1;
- for(const id in S.roster)S.roster[id].lv=1;for(const k in S.tur)S.tur[k].lv=1;for(const k in S.arr)S.arr[k].lv=1;for(const k in S.beast)S.beast[k].lv=1;
+ for(const id in S.roster)S.roster[id].lv=1;for(const k in S.tur)S.tur[k].lv=1;for(const k in S.arr)S.arr[k].lv=1;
  persist();closePanel();if(typeof updFarm==='function')updFarm();refreshField();startStage();
  giftOpen=true;$('gfTitle').textContent=`飛升成功！（第 ${S.asc} 次）`;$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`拿到 ${g} 仙元，現在共 ${S.xy}（攻擊 ×${XYA0().toFixed(2)}）、銅錢和山門石 ×${XYR().toFixed(2)}，境界升到「${realmName(S.asc)}」：攻擊再 ×${RLM_MUL}、等級上限 +${RLM_LV}。前 ${S.best} 關直接算過關，拿到 ${fmt(S.coin)} 銅錢、${fmt(S.stone)} 山門石，從第 ${S.stage} 關出發！`;$('gift').classList.add('open');SND.play('rare');updHud()}
 // 離線收益：照最近實際刷關速度（最近一小時內、中間沒有斷超過 10 分鐘的過關紀錄）給 50%，最多算 12 小时；沒紀錄就用舊的保底
