@@ -289,7 +289,7 @@ const isMax=id=>S.roster[id]&&S.roster[id].tier>=CH[id].t;
 // 紅星：傳說滿 5 階後，用傳說碎片再升 6～10 星（紅星 1～5），每顆攻擊 ×1.5；10 星解鎖第二個極意
 const RS_MAX=5,rsCost=n=>150+100*n,rsOf=id=>(S.roster[id]&&S.roster[id].rs)||0,isR10=id=>rsOf(id)>=RS_MAX;
 // 神話進化：10 星（紅星 5 顆）後用 1000 傳說碎片進化，攻擊 ×4、大招 ×1.5；有 t6 圖就換圖，沒有先用 5 階圖加金光
-const MYN={fox:'天狐神姬',dragon:'龍神將',archer:'月神星弓',mecha:'神機天將',alchemist:'丹仙真人'},chName=id=>isMy(id)&&MYN[id]?MYN[id]:CH[id].n;
+const MYN={fox:'天狐神姬',dragon:'龍神將',archer:'月神星弓',mecha:'神機天將',alchemist:'丹仙真人',monkey:'齊天神猴'},chName=id=>isMy(id)&&MYN[id]?MYN[id]:CH[id].n;
 const MY_COST=1000,isMy=id=>!!(S.roster[id]&&S.roster[id].my),myKey=id=>`c_${id}_${isMy(id)&&SRC[`c_${id}_6`]?6:S.roster[id].tier}`;
 const R10FX={fox:{n:'天狐焚天',d:'燒傷傷害 ×3'},dragon:{n:'龍王降臨',d:'普攻暈眩機率 25% → 50%，暈 2 秒'},archer:{n:'星河倒懸',d:'星隕一擊觸發機率 20% → 40%'},mecha:{n:'無限核心',d:'放完大招，自己馬上回 50 充能'},alchemist:{n:'金丹大成',d:'仙丹爐火的全隊攻擊 +30% 變成 +100%'},monkey:{n:'大鬧天宮',d:'齊天大聖改成每 3 下就砸一次'}};
 const PS0=()=>({atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
