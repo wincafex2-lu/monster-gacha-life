@@ -98,3 +98,8 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
   量法：下巴到腳底約 260px（現在 315），腳底 y=978。
 - 01:22 台灣時間 敖丙 1 階站立 **退件（小改）**：深青綠頭髮、珊瑚龍角、青袍、珊瑚杖、臉都對，但下巴到腳底 298px、腳底 988（要 ≤288、978），而且泓要**更瘦**（這張在加規定前畫的）。**請用這張改**：
   `Edit this exact sprite. Keep the head, face, hair, horns, outfit and staff EXACTLY the same. Make the body SLIMMER and more graceful: narrower shoulders, thinner waist, slender arms and legs. Make the body slightly shorter so the bottom of the feet is at y=978. Do not change the head size. Solid magenta #FF00FF background.`
+- 01:38 台灣時間 楊戩 2 階站立 **通過**（頭、身體、腳跟 1 階同位置同大小；深藍短袍銀邊、銀護肩、額眼微睜、鐵三尖刀）。可以畫 3 階。
+- 01:38 台灣時間 敖丙 1 階站立（改瘦版）**通過**（脖子 y≈700、腳底 986、下巴到腳底 286；身形變細、深青綠頭髮、珊瑚龍角、青袍魚鱗袖、珊瑚杖、臉表都對）。可以畫 2 階（用這張改）。
+- 01:38 台灣時間 哪吒 1 階站立（重交）**再退件**：還是不夠小孩，下巴到腳底 306px（要約 260）、腳底 996（要 978），只比上一版短 9px。GPT 改不夠的話請**附小猴王 1 階當身體長度參考**重改：
+  `Image 1 is Nezha (keep his head, face, hair, outfit, red sash and ring EXACTLY). Image 2 is the body-length reference. Redraw image 1 so his body (chin to feet) is as SHORT as image 2's body: a small child with short chubby arms and legs. Keep the head size the same. Bottom of the feet at y=978. Solid magenta #FF00FF background.`
+  （圖 2 用 `dot/idle-td-n2` 的 `monkey__t1__stand.png`，它下巴到腳底約 258px。）也可以用程式把脖子以下縮短到 260px 再修像素，看哪個好看。
