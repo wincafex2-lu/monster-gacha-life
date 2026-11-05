@@ -552,6 +552,9 @@ function startStage(){B.shield=0;B.dmg={};B.dmgT=0;
    for(let j=0;j<g;j++){const k=Math.random()<.6?k0:pool[Math.floor(Math.random()*pool.length)];B.spawnQ.push({k,elite:el&&j===0,delay:j===0?(first?.6:2.2+Math.random()*1.2):.12+Math.random()*.18})}
    left-=g;first=false}}
  if(s%100===0){B.spawnQ.push({k:'DEMON',delay:2.6})}else if(s%10===0){B.spawnQ.push({k:'BOSS',delay:2.2})}
+ // 碾壓模式：全隊最弱的一下也能秒殺這關最硬的精英，而且不是 Boss／魔頭關 → 怪一出來就被秒，出怪間隔縮短，推關快很多
+ {const mh=Math.max(...pool.map(k=>MON[k].hp))*hpBase(s)*3,hs=S.team.slice(0,slots()).filter(id=>S.roster[id]);
+  B.crush=s%10!==0&&hs.length&&Math.min(...hs.map(id=>heroAtk(id)*NA))>=mh;if(B.crush)B.spawnQ.forEach(q=>q.delay=.06)}
  B.total=B.spawnQ.length;B.spawnT=0;B.state='run';
  B.heroes.forEach(h=>h.charge=Math.max(h.charge,0));
  banner(s%100===0?`第 ${s} 關　魔頭降臨！`:s%10===0?`第 ${s} 關　Boss 來襲！`:`第 ${s} 關`,s%10===0);
@@ -572,6 +575,7 @@ function spawn(q){
   shake(16);B.hitstop=.2;return}
  const e=mkEnemy(q.k,false);
  if(q.elite&&!e.fly){e.elite=1;e.sc=1.3;e.c='#ffd84a';e.hp*=3;e.max=e.hp;e.dmg*=2;e.coin*=4;e.w*=1.3;e.h*=1.3;e.ax*=1.3;e.ay*=1.3}
+ if(B.crush){e.x=VW*.45+Math.random()*VW*.45;e.crushT=.12+Math.random()*.15}
 }
 function mkEnemy(k,boss){
  const s=S.stage;const m=boss?{hp:26,spd:26,dmg:4,coin:20,fly:0}:MON[k];
@@ -596,9 +600,10 @@ function step(dt){
  B.time+=dt;if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
-  if(B.spawnQ.length){B.spawnT+=dt;if(B.spawnT>=B.spawnQ[0].delay){B.spawnT=0;spawn(B.spawnQ.shift())}}
+  // 場上的怪都打光了，下一隻（群）不用等，0.25 秒後就出來（秒殺時推關比較快）
+  if(B.spawnQ.length){B.spawnT+=dt;const empty=!B.enemies.some(e=>!e.dead);if(B.spawnT>=(empty?Math.min(.25,B.spawnQ[0].delay):B.spawnQ[0].delay)){B.spawnT=0;spawn(B.spawnQ.shift())}}
   else if(!B.enemies.some(e=>!e.dead)){B.state='win';B.stateT=0;stageWin()}
- }else{B.stateT+=dt;if(B.stateT>(B.state==='win'?1.8:2.6)&&!giftOpen){if(B.state==='lose'){}startStage()}}
+ }else{B.stateT+=dt;if(B.stateT>(B.state==='win'?1:2.6)&&!giftOpen){if(B.state==='lose'){}startStage()}}
  // 山門回血（輔助）
  let regen=(PS.regen+(B.arrD==='d_lotus'?dv('d_lotus',S.arr.d_lotus.lv):0))*B.gateMax;
  if(B.state==='run'&&B.gateHp>0)B.gateHp=Math.min(B.gateMax,B.gateHp+regen*dt);
@@ -649,6 +654,7 @@ function step(dt){
     if(Math.random()<.25)sprFx(d.fx,e.x,e.y-e.ay*.4,.8)})}
   if(a.k==='a_thunder'&&a.big>=ae.thun){a.big=0;DSRC='a:'+a.k;const dps=arrDps(a.k);on.forEach(e=>{hit(e,dps*2.6,{c:'#d0b0ff'});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.1)});if(on.length)shake(3)}}
  // 燒傷（朱雀）
+ if(B.crush)for(const e of B.enemies){if(!e.dead&&e.crushT!==undefined){e.crushT-=dt;if(e.crushT<=0){const hs=B.heroes;const h=hs[Math.floor(Math.random()*hs.length)];DSRC=h?'h:'+h.id:'etc';e.crushT=undefined;hit(e,e.hp*1.01,{c:'#ffd86a'});sprFx('fx_slash',e.x,e.y-e.ay*.5,.8)}}}
  for(const e of B.enemies){if(!e.dead&&e.burn>0){e.burn-=dt;e.bt=(e.bt||0)+dt;if(e.bt>=.5){e.bt=0;hit(e,(e.burnD||1)*(PS.r10&&PS.r10.fox?3:1),{c:'#ff8a3d',small:1,src:e.burnS||'burn'})}}}
  // 敵人
  for(const e of B.enemies){
@@ -1137,6 +1143,7 @@ let buffLast='';function renderBuffs(){const L2=[],sec=t=>`｜${Math.ceil(t)} �
  if(B.buff>0){const v=PS.r10&&PS.r10.alchemist?100:30;L2.push([M.alchemist?'仙丹爐火':'攻擊加成',`攻擊 +${v}%`+(M.alchemist?'':sec(B.buff)),'#ffd84a'])}
  if(B.focusT>0)L2.push(['鷹眼星瞳','星弓爆擊 +50%、爆傷 ×4'+sec(B.focusT),'#9dffb0']);
  if(B.drumT>0)L2.push(['激昂鼓點','攻速 +30%'+sec(B.drumT),'#ff7a5a']);
+ if(B.crush&&B.state==='run')L2.push(['碾壓','太強了，怪一出來就秒殺','#ff9a1e']);
  if(B.shield>0)L2.push(['護盾','山門不受傷'+sec(B.shield),'#8fe0ff']);
  if(M.mummy&&B.gateHp<B.gateMax*.3)L2.push(['千年怨念','攻擊 +50%','#f0e2b0']);
  const h=L2.map(([n,d,c])=>`<span style="--bc:${c}"><b>${n}</b> ${d}</span>`).join('');if(h!==buffLast){buffLast=h;$('buffs').innerHTML=h}}
