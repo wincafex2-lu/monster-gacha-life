@@ -1173,6 +1173,18 @@ document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.bt
 $('bHero').onclick=()=>openPanel('hero');$('bGacha').onclick=()=>openPanel('gacha');$('bGate').onclick=()=>openPanel('gate');
 function render(){
  if(panel==='hero')renderHero();else if(panel==='gacha')renderGacha();else if(panel==='gate')renderGate()}
+// 隊伍總加成：把上陣弟子被動、神獸、陣法、法寶、修煉、仙元全部加總
+var tstatOpen=false;function teamStats(){const P=v=>Math.round(v*100)+'%',X=v=>'×'+(v<100?v.toFixed(2):fmt(v)),R=[];const add=(n,v,t)=>{if(v)R.push([n,t])};
+ add('全隊攻擊',PS.atk,'+'+P(PS.atk));add('近戰・坦克攻擊',PS.front,'+'+P(PS.front));add('遠程・法術攻擊',PS.back,'+'+P(PS.back));
+ add('爆擊率',PS.crit,P(PS.crit)+'（上限 60%）');add('攻擊速度',spdBonus(),'+'+P(spdBonus()));add('大招充能',PS.charge,'+'+P(PS.charge));
+ add('打 Boss 傷害',PS.boss,'+'+P(PS.boss));add('山門血量',PS.hp,'+'+P(PS.hp));add('山門受傷',PS.dr,'-'+P(PS.dr)+'（上限 60%）');
+ add('山門每秒回血',PS.regen,(PS.regen*100).toFixed(2)+'%');add('全場怪物變慢',PS.mslow,P(PS.mslow)+'（上限 50%）');add('山門前怪物變慢',PS.slow,P(PS.slow));
+ add('銅錢',PS.coin,'+'+P(PS.coin));add('直接收服小怪',PS.cap,P(PS.cap));add('普攻定身',PS.bind,P(PS.bind));
+ const M=[['修煉 全隊攻擊',TR('atk')],['修煉 大招傷害',TR('ult')],['修煉 銅錢',TR('coin')],['仙元 全隊攻擊',XYA()],['仙元 銅錢・山門石',XYR()]].filter(a=>a[1]>1);
+ const fx=[...Object.keys(PS.aw||{}).map(id=>AWAKE[id]&&`${chName(id)}・${AWAKE[id].n}`),...Object.keys(PS.mx||{}).map(id=>MAXFX[id]&&`${chName(id)}・${MAXFX[id].n}`),...Object.keys(PS.r10||{}).map(id=>R10FX[id]&&`${chName(id)}・${R10FX[id].n}`)].filter(Boolean);
+ return `<details class="tstat" ${tstatOpen?'open':''} ontoggle="tstatOpen=this.open" style="margin:12px 0 4px;background:#fff7e6;border:2px solid #e0c890;border-radius:12px;padding:6px 12px"><summary style="cursor:pointer;font-weight:800;color:#7a4a20">隊伍總加成（點開看）</summary>
+  <div class="stat" style="margin-top:6px">${R.map(([n,t])=>`<b>${n}</b><span>${t}</span>`).join('')||'<b>被動</b><span>目前沒有</span>'}${M.map(([n,v])=>`<b>${n}</b><span>${X(v)}</span>`).join('')}${fx.length?`<b>生效中的特效</b><span>${fx.join('、')}</span>`:''}</div>
+  <div style="font-size:12px;opacity:.65;margin-top:4px">來源：上陣弟子的被動、神獸、防禦陣、法寶、修煉、仙元。戰鬥中的暫時 BUFF 看左上角。</div></details>`}
 function tierStars(t,max,rs){return '★'.repeat(t)+'<span style="opacity:.3">'+'★'.repeat(max-t)+'</span>'+(rs?'<span style="color:#e0241a">'+'★'.repeat(rs)+'</span>':'')}
 // 大招說明（點大招名字才展開，不佔版面）
 function ultDesc(id){const d=CH[id],x=heroAtk(id)*7*TR('ult')*(d.r==='L'?1.5:1),f=fmt;const leg=d.r==='L'?'（含傳說 ×1.5）':'';
@@ -1202,6 +1214,7 @@ function renderHero(){
  ${d.r==='L'&&r.tier>=d.t?`<button class="btn gold" id="dRs" style="background:linear-gradient(#ff5a4a,#c0201a);color:#fff" ${rsOf(id)<RS_MAX&&(S.shard||0)>=rsCost(rsOf(id))?'':'disabled'}>${rsOf(id)<RS_MAX?`升紅星 <span class="cost">碎片 ${rsCost(rsOf(id))}</span>`:'紅星已滿'}</button>`:''}${d.r==='L'&&isR10(id)&&!isMy(id)?`<button class="btn" id="dMy" style="background:linear-gradient(90deg,#ff3a6a,#ffb02a,#7a5cff);color:#fff" ${(S.shard||0)>=MY_COST?'':'disabled'}>神話進化 <span class="cost">碎片 ${MY_COST}</span></button>`:''}
  <button class="btn blue" id="dTeam">${inTeam?'下陣':'上陣'}</button></div>
  <div style="font-size:13px;color:#7a5a3a">${tierTxt}${tierUp}${d.r==='L'&&r.tier>=d.t?`<br>紅星 ${rsOf(id)}/${RS_MAX}（每顆攻擊 ×1.5，用傳說碎片升；現在有 ${S.shard||0} 片）${isMy(id)?'<br><b style="color:#c2410c">已進化成神話：攻擊 ×4、大招 ×1.5</b>':isR10(id)?'<br>可以神話進化：攻擊 ×4、大招 ×1.5':'<br>10 星之後可以神話進化'}`:''}　上陣 ${S.team.length}/${slots()}<br>換站位：關掉這頁，在戰場上點一個弟子，再點另一個站位</div></div></div>
+ ${teamStats()}
  <h3 style="margin:14px 0 8px;font-family:var(--title)">全部弟子（${own.length}/${ids.length}）</h3><div class="grid">`;
  for(const i of own){const rr=S.roster[i],dd=CH[i];const up=rr.tier<dd.t&&(i==='disciple'?S.pill>=rr.tier*5:rr.dup>=dupeNeed(i,rr.tier+1));
   h+=`<button class="card ${dd.r} ${S.team.includes(i)?'inteam':''}" data-id="${i}" style="${i===sel?'outline:3px solid #ff9a1e':''}"><img src="${charImg(i)}" alt=""><span class="lv">Lv${rr.lv}</span><span class="tier">${'★'.repeat(rr.tier)}${rr.rs?`<i style="color:#ff3a2a;font-style:normal">${'★'.repeat(rr.rs)}</i>`:''}${rr.brk?`+${rr.brk}`:''}</span>${up?'<span class="up">可升階</span>':''}<span class="cn">${chName(i)}</span></button>`}
