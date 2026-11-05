@@ -18,6 +18,7 @@
 - 側 3/4 朝右、輕鬆站，武器在**前手**（畫面右邊的手）。配件加在身體外面，冠、羽、光環往上加高可以。
 - 背景純洋紅 `#FF00FF`。不畫光暈、閃光、火焰噴出去、冰霧（程式加）；實體的火輪、冰龍、光環可以畫，但畫成實色。
 - 臉照臉表，三人一眼分得出來，每階同一張臉。
+- **敖丙身體要瘦**（泓 01:13）：肩窄、腰細，比楊戩明顯瘦，身高和頭一樣。
 - **身體比例（泓 01:12 特別交代）**：頭的大小跟標準一樣（下巴 y≈690），下巴到腳底**不能超過 288px**（腳底 y=978）。**哪吒是小孩**：身體再短一點，下巴到腳底約 260px（跟小猴王一樣），整個人比楊戩、敖丙矮一截；不要畫成少年或大人的長腿。
 
 ## 指令
@@ -72,7 +73,7 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 
 | 階 | 外型 | 英文（貼給 GPT） |
 |---|---|---|
-| 1 | 深藍綠長髮綁低馬尾、兩支小小的珊瑚色龍角；青綠長袍銀邊、袖口有魚鱗紋；前手拿一根短短的珊瑚杖 | gentle dragon prince: dark teal long hair in a low ponytail, two small coral-colored dragon horns; teal long robe with silver trims, fish-scale pattern on the cuffs; holds a short coral staff in the front hand |
+| 1 | 身形纖瘦（肩窄、腰細，比楊戩瘦）、深藍綠長髮綁低馬尾、兩支小小的珊瑚色龍角；青綠長袍銀邊、袖口有魚鱗紋；前手拿一根短短的珊瑚杖 | gentle dragon prince with a SLIM slender build (narrow shoulders, thin waist, slimmer than other characters; same height and head size): dark teal long hair in a low ponytail, two small coral-colored dragon horns; teal long robe with silver trims, fish-scale pattern on the cuffs; holds a short coral staff in the front hand |
 | 2 | 袍子變冰藍＋深青；腰間掛一顆龍珠（實色淡藍珠子）；杖頂嵌一顆冰晶 | robe changes to ice-blue and deep teal; a dragon pearl (solid pale blue orb) hangs at the waist; an ice crystal set on top of the staff |
 | 3 | 銀色鱗片肩甲；龍角變長；背後披一條半透明感的淡青披風（畫成實色） | silver scale shoulder armor; longer horns; a pale teal cape behind him (solid color) |
 | 4 | 銀青鱗甲長袍；身後浮一條小冰龍（實體、淡藍色，盤在肩後）；杖變冰晶長杖 | silver-teal scale-armor robe; a small ice dragon (solid, pale blue) coiled behind his shoulder; staff becomes a long ice-crystal staff |
