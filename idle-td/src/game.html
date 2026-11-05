@@ -73,7 +73,10 @@ canvas#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ultname.show{animation:un 1.1s ease-out forwards}
 @keyframes un{0%{opacity:0;letter-spacing:.6em}15%{opacity:1;letter-spacing:.12em}75%{opacity:1}100%{opacity:0}}
 .farm{position:absolute;left:max(10px,env(safe-area-inset-left));top:calc(max(8px,env(safe-area-inset-top)) + 54px);z-index:3;font:700 13px/1.2 inherit;font-family:inherit;color:#fff4dc;background:rgba(40,24,12,.78);border:2px solid rgba(255,216,106,.55);border-radius:10px;padding:5px 10px;cursor:pointer}
-.farm.on{background:#2a7a3a;border-color:#9be07a}.farm.go{background:#b8400e;border-color:#ffb06a;animation:pulse2 1.2s infinite alternate}
+.farm.on{background:#2a7a3a;border-color:#9be07a}
+.buffs{position:absolute;left:max(10px,env(safe-area-inset-left));top:calc(max(8px,env(safe-area-inset-top)) + 88px);z-index:3;display:flex;flex-wrap:wrap;gap:4px;max-width:46vw;pointer-events:none}
+.buffs span{font:700 12px/1.2 inherit;font-family:inherit;color:#fff;background:rgba(40,24,12,.78);border:2px solid var(--bc,#ffd86a);border-radius:10px;padding:2px 7px;white-space:nowrap}
+.buffs span b{color:var(--bc,#ffd86a)}.farm.go{background:#b8400e;border-color:#ffb06a;animation:pulse2 1.2s infinite alternate}
 .dps{position:absolute;right:max(10px,env(safe-area-inset-right));top:calc(max(8px,env(safe-area-inset-top)) + 54px);width:210px;background:rgba(30,18,8,.62);border:1px solid rgba(255,216,106,.35);border-radius:10px;padding:6px 8px 7px;color:#fff4dc;font-size:12px;pointer-events:auto;cursor:pointer;display:block;z-index:3}
 .dps.min .r,.dps.min .e{display:none}.dps.min{width:auto}
 .dps h4{margin:0 0 4px;font-size:12px;font-weight:700;color:#ffd86a;display:flex;justify-content:space-between}
@@ -198,7 +201,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
       <button class="btn spd" id="musBtn">🎵</button><button class="btn spd" id="sfxBtn">🔊</button><button class="btn spd" id="spdBtn">1×</button>
     </div>
   </div>
-  <button class="farm" id="farmBtn"></button><div class="dps" id="dps"></div><div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
+  <button class="farm" id="farmBtn"></button><div class="buffs" id="buffs"></div><div class="dps" id="dps"></div><div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
   <div class="banner" id="banner"></div>
   <div class="ultname" id="ultName"></div>
   <div class="rotate">把手機轉橫的玩比較大喔</div>
@@ -763,6 +766,8 @@ function stageWin(){
  const demon=s%100===0;let fbMsg='';
  if(demon){const gm2=first?300:60,st2=stone*2,pl2=first?10:3;S.gem+=gm2;S.stone+=st2;S.pill+=pl2}
  S.coin+=coin;S.gem+=gem;S.stone+=stone;S.pill+=pill;
+ // 離線收益用：記下這關「刷關」能拿多少（首通加成不算），和過關時間
+ {const rg=boss?20+tens:5+Math.floor(tens/2),rst=Math.round((boss?8+2*tens:2+tens)*XYR());const now=Date.now();S.wlog=(S.wlog||[]).filter(w=>now-w[0]<3600e3).slice(-59);S.wlog.push([now,coin,rg,rst])}
  if(boss&&PS.mx&&PS.mx.pirate)S.gem+=Math.round(gem*.5);
  if(boss){const n=demon?(first?2:1):((first&&Math.random()<.35)||(!first&&Math.random()<.08)?1:0);for(let i=0;i<n;i++){const r=giveFb();fbMsg+=`${FB[r.k].n} ${r.txt}　`}}
  if(fbMsg)setTimeout(()=>toast('法寶：'+fbMsg),1600);
@@ -941,7 +946,7 @@ function drawSprite(k,x,y,o={}){const m=MAN[k],im=IMG[k];if(!m||!im)return;const
  ctx.restore()}
 function shadow(x,y,w,a=.22){ctx.fillStyle=`rgba(40,30,10,${a})`;ctx.beginPath();ctx.ellipse(x,y,w,w*.18,0,0,Math.PI*2);ctx.fill()}
 const ease=x=>1-Math.pow(1-x,3);
-function draw(real){
+function draw(real){if((B.bfT=(B.bfT||0)+1)%10===0)renderBuffs();
  ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle=SKYS[curBg()]||SKY;ctx.fillRect(0,0,cv.width,cv.height);
  const k=SC*DPR;let sx=0,sy=0;if(B.shake>0){sx=(Math.random()-.5)*B.shake;sy=(Math.random()-.5)*B.shake}
  ctx.setTransform(k,0,0,k,sx*k,(-TOPY+sy)*k);
@@ -1010,6 +1015,7 @@ drawSprite(hk,h.x,h.y,o);
   if(e.goldm&&!e.dead){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.35+.2*Math.sin(B.time*6+e.x);ctx.fillStyle='#ffd84a';ctx.beginPath();ctx.ellipse(e.x,e.y-e.ay*.5,e.w*.4,e.ay*.55,0,0,Math.PI*2);ctx.fill();ctx.restore()}
   if(e.elite&&!e.dead){ctx.save();ctx.translate(e.x,e.y-e.ay-16);ctx.fillStyle='#ffd84a';ctx.strokeStyle='#6b3d06';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,-13);ctx.lineTo(11,-8);ctx.lineTo(9,6);ctx.lineTo(0,13);ctx.lineTo(-9,6);ctx.lineTo(-11,-8);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore()}
   if(!e.dead&&e.stun>0){ctx.save();ctx.globalAlpha=.8;for(let i=0;i<3;i++){const a=B.time*5+i*2.1;ctx.fillStyle='#fff6a0';star(e.x+Math.cos(a)*22,e.y-e.ay-8+Math.sin(a)*6,5)}ctx.restore()}
+  if(!e.dead){const bd=[];if(e.burn>0)bd.push(['燒','#ff6a2a']);if(e.stun>0)bd.push(['暈','#e0b000']);if(e.slow>0)bd.push(['慢','#3a9ae0']);if(bd.length){ctx.save();ctx.font='bold 19px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const by=e.y-e.ay-(e.boss?36:30);bd.forEach(([t,c],i)=>{const bx=e.x+(i-(bd.length-1)/2)*36;ctx.fillStyle=c;ctx.beginPath();ctx.arc(bx,by,16,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff';ctx.fillText(t,bx,by+1)});ctx.restore()}}
   if(!e.dead&&e.slow>0){ctx.save();ctx.globalAlpha=.35;ctx.fillStyle='#bdf4ff';ctx.beginPath();ctx.ellipse(e.x,G,e.w*.35,8,0,0,Math.PI*2);ctx.fill();ctx.restore()}
   if(!e.dead&&!e.boss&&e.hp<e.max){const w=Math.max(30,e.w*.5);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(e.x-w/2,e.y-e.ay-10,w,5);ctx.fillStyle='#ff5a3a';ctx.fillRect(e.x-w/2,e.y-e.ay-10,w*Math.max(0,e.hp/e.max),5)}
  }
@@ -1125,6 +1131,14 @@ function updLive(){
  const now=performance.now();if(now-lastLive>400){lastLive=now;$('coinT').textContent=fmt(S.coin);$('gemT').textContent=fmt(S.gem);$('stoneT').textContent=fmt(S.stone);
   $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv)||turUpgradable())}
 }
+// 全隊 BUFF 列：有時間的顯示剩幾秒，常駐的不顯示秒數
+let buffLast='';function renderBuffs(){const L2=[],sec=t=>`｜${Math.ceil(t)} 秒`;const M=PS.mx||{};
+ if(B.buff>0){const v=PS.r10&&PS.r10.alchemist?100:30;L2.push([M.alchemist?'仙丹爐火':'攻擊加成',`攻擊 +${v}%`+(M.alchemist?'':sec(B.buff)),'#ffd84a'])}
+ if(B.focusT>0)L2.push(['鷹眼星瞳','星弓爆擊 +50%、爆傷 ×4'+sec(B.focusT),'#9dffb0']);
+ if(B.drumT>0)L2.push(['激昂鼓點','攻速 +30%'+sec(B.drumT),'#ff7a5a']);
+ if(B.shield>0)L2.push(['護盾','山門不受傷'+sec(B.shield),'#8fe0ff']);
+ if(M.mummy&&B.gateHp<B.gateMax*.3)L2.push(['千年怨念','攻擊 +50%','#f0e2b0']);
+ const h=L2.map(([n,d,c])=>`<span style="--bc:${c}"><b>${n}</b> ${d}</span>`).join('');if(h!==buffLast){buffLast=h;$('buffs').innerHTML=h}}
 function updFarm(){const b=$('farmBtn');if(!b)return;b.className='farm '+(S.farm?'on':'');b.textContent=S.farm?`刷關中（第 ${S.stage} 關）｜按這裡挑戰 ▶`:'一路往前（按這裡改成原地刷）'}
 function updHud(){updFarm();$('stageT').textContent=`第 ${S.stage} 關`;$('gateName').textContent=`山門 Lv${S.gateLv}`;lastLive=0}
 function canUpgradeAny(){return S.team.some(id=>S.roster[id]&&S.roster[id].lv<lvCap(id)&&S.coin>=lvCost(S.roster[id].lv))}
@@ -1301,9 +1315,12 @@ function ascend(){const g=xyGain(S.best||0);if(!g)return;S.xy=(S.xy||0)+g;S.asc=
  for(const id in S.roster)S.roster[id].lv=1;for(const k in S.tur)S.tur[k].lv=1;for(const k in S.arr)S.arr[k].lv=1;for(const k in S.beast)S.beast[k].lv=1;
  persist();closePanel();if(typeof updFarm==='function')updFarm();refreshField();startStage();
  giftOpen=true;$('gfTitle').textContent=`飛升成功！（第 ${S.asc} 次）`;$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`拿到 ${g} 仙元，現在共 ${S.xy}。全隊攻擊永久 ×${XYA().toFixed(2)}、銅錢和山門石 ×${XYR().toFixed(2)}，從第 1 關重新出發！`;$('gift').classList.add('open');SND.play('rare');updHud()}
+// 離線收益：照最近實際刷關速度（最近一小時內、中間沒有斷超過 10 分鐘的過關紀錄）給 50%，最多算 12 小时；沒紀錄就用舊的保底
+function farmRate(){const w=S.wlog||[];let i=w.length-1;while(i>0&&w[i][0]-w[i-1][0]<600e3)i--;const seg=w.slice(i);if(seg.length<3)return null;const span=(seg[seg.length-1][0]-seg[0][0])/1000;if(span<60)return null;let c=0,g=0,st=0;for(let k=1;k<seg.length;k++){c+=seg[k][1];g+=seg[k][2];st+=seg[k][3]}return{c:c/span,g:g/span,s:st/span,wph:(seg.length-1)/span*3600}}
 function offline(){const dt=(Date.now()-(S.seen||Date.now()))/1000;if(dt<120)return;const t=Math.min(dt,12*3600);const s=Math.max(1,S.best);
- const perMin=coinKill(s,1.1)*(5+s*.6)/1.2;const c=Math.round(perMin*t/60*.5*TR('coin')*XYR());if(c<1)return;const gm=Math.min(120,Math.floor(t/3600*10));S.coin+=c;S.gem+=gm;S.seen=Date.now();
- giftOpen=true;$('gfTitle').textContent='閉關回來了';$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`你不在的 ${t>=3600?Math.floor(t/3600)+' 小時 ':''}${Math.floor(t%3600/60)} 分鐘，弟子們守住山門，賺到 ${fmt(c)} 銅錢${gm?`、${gm} 靈石`:''}！`;$('gift').classList.add('open');persist()}
+ const perMin=coinKill(s,1.1)*(5+s*.6)/1.2;const fr=farmRate(),H=.5;let c=Math.round(perMin*t/60*.5*TR('coin')*XYR()),gm=Math.min(120,Math.floor(t/3600*10)),stn=0;
+ if(fr){c=Math.max(c,Math.round(fr.c*t*H));gm=Math.max(gm,Math.round(fr.g*t*H));stn=Math.round(fr.s*t*H)}if(c<1)return;S.coin+=c;S.gem+=gm;S.stone+=stn;S.seen=Date.now();S.wlog=[];
+ giftOpen=true;$('gfTitle').textContent='閉關回來了';$('gfImg').src=charImg(S.team[0]);$('gfText').textContent=`你不在的 ${t>=3600?Math.floor(t/3600)+' 小時 ':''}${Math.floor(t%3600/60)} 分鐘，弟子們守住山門，賺到 ${fmt(c)} 銅錢${gm?`、${gm} 靈石`:''}${stn?`、${fmt(stn)} 山門石`:''}！${fr?`（照你最近每小時過 ${Math.round(fr.wph)} 關的速度，算一半）`:'（還沒有刷關紀錄，先給保底）'}`;$('gift').classList.add('open');persist()}
 /* 啟動 */
 loadAll().then(()=>{
  try{for(const k of BGS){if(!IMG[k])continue;const c=document.createElement('canvas');c.width=4;c.height=4;const g=c.getContext('2d');g.drawImage(IMG[k],0,0,1536,3,0,0,1,1);const d=g.getImageData(0,0,1,1).data;SKYS[k]=`rgb(${d[0]},${d[1]},${d[2]})`}SKY=SKYS.bg_meadow||SKY}catch(e){}
