@@ -1,0 +1,34 @@
+# 放置塔防：工單 N8　上古凶獸 4 隻＋葫蘆圖示 2 張
+
+狀態：待接手
+（狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
+
+**排在 N7（山海經神獸）之後**：N7 出現「完成通知」再接。做法、大小、指令**全部照 `ORDER-N7.md`**，只是角色不同：
+分支 **`dot/idle-td-n8`**（從 `origin/claude/project-thread-7a7c7v` 開），狀態改「進行中：<誰> <時間>」馬上推。檔案放 `idle-td-art/batch5/images/`。**每張畫好直接推，不用再問。**
+網頁版：https://raw.githubusercontent.com/wincafex2-lu/monster-gacha-life/claude/project-thread-7a7c7v/idle-td-art/batch5/ORDER-N8.md
+
+- 風格：四神獸 v2「帥萌大頭」，但要帶「**凶**」的味道（壞笑、尖牙、霸氣），不要恐怖血腥。原創造型。
+- 大小：四神獸 1.2 倍；地上的腳底 y≈1150，窮奇（飛）置中。面向右，洋紅底。
+
+## 凶獸
+
+| id | 名字 | 外型（英文貼給 GPT） | 攻擊 f1 / f2 / f3 | 大招圖 |
+|---|---|---|---|---|
+| taotie | 饕餮（地上） | taotie: a greedy beast with a HUGE wide mouth full of teeth taking up most of its big head, bronze-and-dark-red ancient pattern markings on its body, small curled horns, stubby legs, round belly | f1 opens mouth wide / f2 lunges biting forward / f3 chomps shut, cheeks puffed | 吞天大口：a giant open mouth vortex shape (solid) |
+| qiongqi | 窮奇（飛） | qiongqi: a fierce winged tiger, dark grey-purple fur with black stripes, big feathered bat-like wings, sharp grin with fangs, spiky mane | f1 wings raised, claws up / f2 swoops forward slashing / f3 wings beat down, tail lashing | 凶風：sharp dark wind slashes |
+| taowu | 檮杌（地上） | taowu: a stubborn huge beast with a boar-like tusked face, long shaggy grey-brown hair covering the body, thick legs, heavy stubborn frown | f1 lowers head, digs in / f2 charges forward with tusks / f3 slams forward, hair flying | 蠻撞：a big ground crack with rocks bursting up |
+| hundun | 混沌（地上） | hundun: a round fluffy blob monster with NO face at all (no eyes, no mouth), shaped like a bouncy ball, four short legs, two pairs of small wings on its back, soft gradient of dark purple to deep blue (solid colors) | f1 squashes down / f2 bounces up and forward / f3 lands flat, wings spread | 混沌漩渦：a swirling dark purple vortex (solid shapes) |
+
+## 葫蘆圖示 2 張
+
+畫法照法寶圖示 `ref/ICON__fb_fantian.png`：畫布 1254×1254，洋紅底，物件約占 80% 滿版，置中，略斜 3/4。
+- `gourd__closed.png`：a magic gourd with a closed stopper, gold-and-red with cloud patterns, tied with a red cord
+- `gourd__open.png`：the SAME gourd with the stopper off, a single thin wisp of solid grey-white smoke coming out of the mouth
+
+## 待辦（檔名）
+
+每隻：`<id>__stand.png` → Claude 寫通過 → `<id>__attack_f1.png`～`_f3.png`（`_f4` Claude 用站立圖補）→ `<id>__ult.png`。順序 taotie → qiongqi → taowu → hundun，最後 `gourd__closed.png`、`gourd__open.png`。共 22 張。
+
+## 意見與待辦
+
+（Claude 驗收後寫在這裡）
