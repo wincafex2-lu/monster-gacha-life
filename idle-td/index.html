@@ -759,7 +759,7 @@ function hit(e,amt,o={}){
  if(o.slow){e.slow=Math.max(e.slow,o.slow);e.slowT=2}
  if(!o.small)SND.play(o.crit?'crit':'hit');
  if(!o.small||Math.random()<.35)dmgText(e.x+(Math.random()*20-10),e.y-e.ay-6,amt,o.big,o.crit);
- if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,bd,{c:'#ff8a3d',src:'h:fox'})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
+ if(e.hp<=0){if(PS.my&&PS.my.fox&&e.burn>0&&!e.boom){e.boom=1;const bd=e.max*.2,ex=e.x;addFx({k:'ring',x:ex,y:e.y-20,life:.35,c:'#ff8a3d',r:200});B.enemies.forEach(o=>{if(!o.dead&&o!==e&&o.hp>0&&Math.abs(o.x-ex)<220)hit(o,bd,{c:'#ff8a3d',src:'hpboom'})})}if((PS.mx||{}).fox&&e.burn>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<200){o.burnS=e.burnS;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,e.burnD||0)}});if((PS.mx||{}).jiangshi&&e.stun>0)B.enemies.forEach(o=>{if(!o.dead&&o!==e&&Math.abs(o.x-e.x)<160){o.stun=Math.max(o.stun,1)}});e.dead=.001;S.coin+=e.coin;if(e.elite){S.gem+=2;B.txt.push({x:e.x,y:e.y-e.ay-50,v:'+2 靈石',t:0,coin:1})}SND.play('coin');if(e.boss)SND.setBoss(false);B.killed++;coinText(e);
   for(let i=0;i<5;i++)addFx({k:'coin',x:e.x,y:e.y-e.ay*.5,vx:(Math.random()-.5)*160,vy:-120-Math.random()*120,life:.6});
   if(e.boss){shake(14);B.hitstop=.18;document.getElementById('bossBar').style.display='none';for(let i=0;i<4;i++)addFx({k:'boom',x:e.x+(Math.random()-.5)*e.w*.5,y:e.y-Math.random()*e.ay,life:.5+i*.1,c:'#ffd86a',r:90})}
   updHud()}
@@ -1129,8 +1129,8 @@ function buildUlts(){const u=$('ults');u.innerHTML='';ultBtns=B.heroes.map((h,i)
   w.appendChild(b);w.insertAdjacentHTML('beforeend','<i class="ring"></i>');w.appendChild(a);u.appendChild(w);return b})}
 let bBtns=[];
 let lastLive=0;
-const DPSC={h:'#ffb84a',u:'#ff6ad0',fb:'#c08aff',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',etc:'#aaaaaa'};
-function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='fb')return '法寶 '+(FB[id]?FB[id].n:id);if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',etc:'其他'}[k]||k}
+const DPSC={h:'#ffb84a',u:'#ff6ad0',fb:'#c08aff',b:'#7ad8ff',a:'#c08aff',t:'#8ad86a',seal:'#ffb060',burn:'#ff6a3a',hpboom:'#ff8a3d',etc:'#aaaaaa'};
+function dpsName(k){const [t,id]=k.split(':');if(t==='h')return CH[id]?CH[id].n:id;if(t==='fb')return '法寶 '+(FB[id]?FB[id].n:id);if(t==='u')return (CH[id]?CH[id].n:id)+'・大招';if(t==='b')return '神獸 '+(BEAST[id]?BEAST[id].n:id);if(t==='a')return ARR[id]?ARR[id].n:id;if(t==='t')return TUR[id]?TUR[id].n:id;return {seal:'天雷・大印',burn:'燃燒',hpboom:'狐火燎原（怪物血量 %）',etc:'其他'}[k]||k}
 let dpsOn=true;try{dpsOn=localStorage.getItem('idle-td-dps')!=='0'}catch(e){}
 let dpsLast=0,dpsMode='sum';try{dpsMode=localStorage.getItem('idle-td-dpsm')||'sum'}catch(e){}
 const DPSM=[['sum','合計'],['n','普攻'],['u','大招'],['o','其他'],['all','分開']];
