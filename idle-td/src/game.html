@@ -531,24 +531,26 @@ const B={heroes:[],enemies:[],proj:[],fx:[],txt:[],turrets:[],beasts:[],arr:null
 let L={};// layout
 function layout(){
  const tk=towerKey(),tm=MAN[tk];if(!tm)return;
- const tw=tm[0]/2,th=tm[1]/2,tx=20;
+ const TS=1.25,tw=tm[0]/2*TS,th=tm[1]/2*TS,tx=20;// 樓閣放大 1.25 倍，人物大小不變，站位不互擋
  const gk=gateKey(false),gm=MAN[gk];const gw=gm[0]/2;
  const gx=tx+tw-gw/3+gw/2;
- L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2,G-(th-sy/2)]),gk,gx,gw,front:gx+gw/2};
+ L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2*TS,G-(th-sy/2*TS)]),gk,gx,gw,front:gx+gw/2};
  L.tur=[L.front+38,L.front+118,L.front+198];
  const b0=L.front+100;L.beastXs=[b0,b0+110,b0+220,b0+330];
- const nb=Math.max(1,Math.min(S.beastTeam.length,beastSlots()));L.beastX=L.beastXs[nb-1];
+ // 神獸兩排：會飛的（朱雀、青龍）在上排，地上的（白虎、玄武）在下排
+ {let gi=0,fi=0;L.bpos=S.beastTeam.slice(0,beastSlots()).map(k=>BEAST[k]&&BEAST[k].fly?{x:b0+40+140*fi++,y:G-150}:{x:b0+140*gi++,y:G});}
+ L.beastX=Math.max(b0,...L.bpos.map(p=>p.x));
  L.arr0=L.front-30;L.arr1=L.beastX+90;L.dX=(L.tx+L.front)/2;L.dR=(L.front-L.tx)/2+10;L.arrX=(L.arr0+L.arr1)/2;L.arrR=(L.arr1-L.arr0)/2;
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
  B.turrets.forEach((t,i)=>t.x=L.tur[i]);
- B.beasts.forEach((b,i)=>b.x=L.beastXs[i]);
+ B.beasts.forEach((b,i)=>{const q=L.bpos[i]||{x:L.beastXs[i],y:G};b.x=q.x;b.y=q.y});
  if(B.arr)B.arr.x=L.arrX;
 }
 function buildField(){
  layout();
  B.heroes=S.team.slice(0,slots()).map((id,i)=>({id,x:L.spots[i][0],y:L.spots[i][1],cd:.5+i*.2,anim:null,charge:0,jump:0}));
  B.turrets=S.turTeam.slice(0,turSlots()).map((k,i)=>({k,x:L.tur[i],cd:.6,anim:0}));
- B.beasts=S.beastTeam.slice(0,beastSlots()).map((k,i)=>({k,x:L.beastXs[i],cd:1+i*.3,anim:0,charge:0}));
+ B.beasts=S.beastTeam.slice(0,beastSlots()).map((k,i)=>({k,x:(L.bpos[i]||{x:L.beastXs[i]}).x,y:(L.bpos[i]||{y:G}).y,cd:1+i*.3,anim:0,charge:0}));
  B.arr=S.arrA&&S.arr[S.arrA]?{k:S.arrA,x:L.arrX,t:0,tick:0,big:0}:null;
  B.arrD=S.arrD&&S.arr[S.arrD]?S.arrD:null;
  calcPassives();B.gateMax=Math.round(gateMax(S.gateLv)*(1+PS.hp));B.gateHp=Math.min(B.gateHp,B.gateMax);
@@ -990,7 +992,7 @@ function draw(real){if((B.bfT=(B.bfT||0)+1)%10===0)renderBuffs();
  // 定身符陣地面
  if(PS.slow>0){ctx.save();ctx.globalAlpha=.32+.08*Math.sin(B.time*3);ctx.fillStyle='#ffe86a';ctx.beginPath();ctx.ellipse(L.front+225,G+6,225,22,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.9;for(let i=0;i<6;i++){const x=L.front+30+i*75,y=G-8-Math.abs(Math.sin(B.time*2+i))*10;ctx.fillStyle='#ffe86a';ctx.fillRect(x-6,y-14,12,20);ctx.fillStyle='#d0302a';ctx.fillRect(x-2,y-11,4,14)}ctx.restore()}
  // 樓閣
- const tm=MAN[L.tk];ctx.drawImage(IMG[L.tk],L.tx,G-tm[1]/2,tm[0]/2,tm[1]/2);
+ const tm=MAN[L.tk];ctx.drawImage(IMG[L.tk],L.tx,G-L.th,L.tw,L.th);
  // 換站位提示
  if(pick>=0){L.spots.forEach(([x,y],i)=>{const me=i===pick;ctx.save();ctx.globalAlpha=me?.35:.18+.1*Math.sin(B.time*6);ctx.fillStyle=me?'#ffd86a':'#ffffff';ctx.fillRect(x-42,y-150,84,150);ctx.globalAlpha=me?1:.8;ctx.strokeStyle=me?'#ffb020':'#ffffff';ctx.lineWidth=7;ctx.setLineDash([14,8]);ctx.strokeRect(x-42,y-150,84,150);ctx.setLineDash([]);if(!me){ctx.fillStyle='#fff';ctx.font='900 30px sans-serif';ctx.textAlign='center';ctx.fillText('⇄',x,y-160)}ctx.restore()})}
  // 英雄
@@ -1018,7 +1020,7 @@ drawSprite(hk,h.x,h.y,o);
  if(B.shield>0){ctx.save();ctx.globalAlpha=Math.min(1,B.shield)*(.35+.1*Math.sin(B.time*8));ctx.fillStyle='#8fe0ff';ctx.strokeStyle='#e6fbff';ctx.lineWidth=5;ctx.beginPath();ctx.ellipse(L.gx,G-120,170,190,0,Math.PI,0);ctx.closePath();ctx.fill();ctx.globalAlpha*=1.8;ctx.stroke();ctx.restore()}
  for(const b of B.beasts){const fly=BEAST[b.k].fly;const p=b.anim>0?b.anim/.45:0;let o={sy:1+Math.sin(B.time*3+b.x)*.015,dy:fly?Math.sin(B.time*2.5+b.x)*8:0};
   if(p>0){const q=p>.6?(1-p)/.4:p/.6;o={dx:(fly?14:30)*q,rot:.12*q,sy:1-.06*q,sx:1+.05*q,dy:o.dy}}
-  shadow(b.x,G+2,fly?36:50,fly?.12:.22);drawSprite('b_'+b.k,b.x,G,o)}
+  shadow(b.x,G+2,fly?36:50,fly?.12:.22);drawSprite('b_'+b.k,b.x,b.y||G,o)}
  // 敵人
  const es=B.enemies.slice().sort((a,b)=>(a.fly-b.fly)||(a.y-b.y));
  for(const e of es){let key=e.key,o={},alpha=1;
