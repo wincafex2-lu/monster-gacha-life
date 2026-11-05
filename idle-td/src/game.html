@@ -531,7 +531,7 @@ const B={heroes:[],enemies:[],proj:[],fx:[],txt:[],turrets:[],beasts:[],arr:null
 let L={};// layout
 function layout(){
  const tk=towerKey(),tm=MAN[tk];if(!tm)return;
- const TS=1.25,tw=tm[0]/2*TS,th=tm[1]/2*TS,tx=20;// 樓閣放大 1.25 倍，人物大小不變，站位不互擋
+ const TS=1.5,tw=tm[0]/2*TS,th=tm[1]/2*TS,tx=20;// 樓閣放大 1.5 倍，人物大小不變，站位不互擋
  const gk=gateKey(false),gm=MAN[gk];const gw=gm[0]/2;
  const gx=tx+tw-gw/3+gw/2;
  L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2*TS,G-(th-sy/2*TS)]),gk,gx,gw,front:gx+gw/2};
@@ -595,6 +595,7 @@ function spawn(q){
  const e=mkEnemy(q.k,false);
  if(q.elite&&!e.fly){e.elite=1;e.sc=1.3;e.c='#ffd84a';e.hp*=3;e.max=e.hp;e.dmg*=2;e.coin*=4;e.w*=1.3;e.h*=1.3;e.ax*=1.3;e.ay*=1.3}
  if(B.crush){e.x=VW*.45+Math.random()*VW*.45;e.crushT=.12+Math.random()*.15}
+ else{e.x=VW-110-Math.random()*50;addFx({k:'dust',x:e.x,y:G,life:.45});if(!e.fly)addFx({k:'ring',x:e.x,y:G-30,life:.35,c:'#b48aff',r:80})}// 小怪直接在畫面右邊冒出來，不再從場外走進來
 }
 function mkEnemy(k,boss){
  const s=S.stage;const m=boss?{hp:26,spd:26,dmg:4,coin:20,fly:0}:MON[k];
@@ -963,7 +964,7 @@ function coinText(e){B.txt.push({x:e.x,y:e.y-e.ay-24,v:'+'+fmt(e.coin),t:0,coin:
 /* ---------- 繪圖 ---------- */
 let SKY='#7fd0f2';const SKYS={};const BGS=['bg_meadow','bg_bamboo','bg_nightwood'];const curBg=()=>BGS[Math.floor((Math.max(1,S.stage)-1)/50)%3];
 function img(k){return IMG[k]}
-function heroScale(){if(L._hsSp===L.spots)return L._hs;let d=999;const sp=L.spots||[];for(const a of sp)for(const b of sp)if(a!==b&&Math.abs(a[1]-b[1])<20)d=Math.min(d,Math.abs(a[0]-b[0]));L._hsSp=sp;L._hs=Math.max(.8,Math.min(1,d/110));return L._hs}
+function heroScale(){if(L._hsSp===L.spots)return L._hs;let d=999;const sp=L.spots||[];for(const a of sp)for(const b of sp)if(a!==b&&Math.abs(a[1]-b[1])<20)d=Math.min(d,Math.abs(a[0]-b[0]));L._hsSp=sp;L._hs=Math.max(.75,Math.min(1,d/160));return L._hs}
 // 每個站位能用的寬度：同一層最近的鄰居距離 ×1.12（最多 112）
 function spotW(x,y){let d=999;for(const [sx,sy] of (L.spots||[]))if(Math.abs(sy-y)<20&&Math.abs(sx-x)>1)d=Math.min(d,Math.abs(sx-x));return Math.min(112,d*1.12)}
 function drawSprite(k,x,y,o={}){const m=MAN[k],im=IMG[k];if(!m||!im)return;const w=m[0]/2,h=m[1]/2,ax=m[2]/2,ay=m[3]/2;
