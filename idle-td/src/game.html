@@ -130,7 +130,7 @@ html.uiimg .card.R::after{background-image:var(--f-R)}html.uiimg .card.E::after{
 .pulls .card::before{content:"";position:absolute;inset:0;z-index:5;background:var(--f-back,#2a6a50) center/100% 100% no-repeat;animation:unflip .5s forwards;animation-delay:calc(var(--d,0s) + .25s)}
 @keyframes unflip{0%{opacity:1;transform:none}100%{opacity:0;transform:rotateY(90deg)}}
 .pulls .card{animation-delay:var(--d,0s)}
-.gacha.altar{min-height:100%;box-sizing:border-box;background:linear-gradient(rgba(255,250,240,.15),rgba(255,250,240,.55)),var(--altar) center/cover no-repeat;border-radius:14px;padding:16px 8px 12px}
+.gacha.altar{height:100%;overflow:auto;box-sizing:border-box;background:linear-gradient(rgba(255,250,240,.15),rgba(255,250,240,.55)),var(--altar) center/cover no-repeat;border-radius:14px;padding:16px 8px 12px}
 .gacha.altar .rates{background:rgba(255,250,240,.88);border-radius:10px;padding:6px 10px}
 .ultw{position:relative}
 .ult{border-radius:50%;border:none;box-shadow:0 3px 6px rgba(0,0,0,.5)}
