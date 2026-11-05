@@ -1151,7 +1151,7 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
    const k2=MAN[f.key+'_a2']?f.key+'_a2':f.key;glow(f.x,f.y-60,70,'rgba(255,210,90,.9)',.5*(1-p));ctx.save();ctx.globalAlpha=p<.15?p/.15*.9:p>.7?(1-p)/.3*.9:.9;{const fl=f.fl||1,dy=f.top?(p<.3?-300*(1-p/.3)*(1-p/.3):-Math.sin(Math.min(1,(p-.3)*3)*Math.PI)*14):-Math.sin(Math.min(1,p*2)*Math.PI)*26;drawSprite(p<.35?f.key:k2,f.x,f.y,{sx:.85*fl,sy:.85,dy,rot:f.top&&p<.3?f.rt*fl*3:0})}ctx.restore();break}
   case 'staff':{// 齊天大聖：巨大金箍棒從天上砸下來
    const fall=Math.min(1,p/.28),yb=TOPY-200+(f.y-(TOPY-200))*fall*fall,L=760,W=46;ctx.save();ctx.globalAlpha=p<.75?1:(1-p)/.25;ctx.translate(f.x,yb);
-   glow(0,-L/2,170,'rgba(255,210,80,.55)',.9);if(MAN.fx_staff){ctx.restore();ctx.save();ctx.globalAlpha=p<.75?1:(1-p)/.25;drawSprite('fx_staff',f.x,yb,{sx:1.6,sy:1.6})}ctx.restore();// 金箍棒：從齊天神猴原圖摳下來的棒頭＋棒身，後段淡出
+   glow(0,-L/2,170,'rgba(255,210,80,.55)',.9);if(MAN.fx_staff){ctx.restore();ctx.save();ctx.globalAlpha=p<.75?1:(1-p)/.25;drawSprite('fx_staff',f.x,yb,{sx:1.4,sy:1.4})}ctx.restore();// 金箍棒：從齊天神猴原圖摳下來的棒頭＋棒身，後段淡出
    if(p>=.28){const q=(p-.28)/.72;ctx.save();ctx.globalAlpha=(1-q)*.9;ctx.strokeStyle='#ffd84a';ctx.lineWidth=14*(1-q)+3;ctx.beginPath();ctx.ellipse(f.x,f.y+20,600*q+60,110*q+14,0,0,Math.PI*2);ctx.stroke();ctx.fillStyle=`rgba(255,230,140,${.35*(1-q)})`;ctx.fillRect(0,TOPY,VW,VH);ctx.restore()}
    break}
   case 'ring':ctx.save();ctx.strokeStyle=f.c;ctx.globalAlpha=1-p;ctx.lineWidth=8*(1-p)+2;ctx.beginPath();ctx.ellipse(f.x,f.y+30,f.r*ease(p),f.r*.3*ease(p),0,0,Math.PI*2);ctx.stroke();ctx.restore();break;
