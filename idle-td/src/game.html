@@ -424,7 +424,7 @@ const arrPaired=a=>Object.keys(PAIR).some(k=>PAIR[k]===a&&paired(k));
 const BEAST_SLOT=[[1,1],[15,2],[30,3],[45,4]];
 const beastSlots=()=>{let n=0;for(const[l,c]of BEAST_SLOT)if(S.gateLv>=l)n=c;return n};
 // 修煉：用銅錢升，沒有上限
-const TRAIN={atk:{n:'全隊攻擊',per:.05,d:'弟子、塔、陣法、神獸攻擊'},hp:{n:'山門血量',per:.06,d:'山門最大血量'},coin:{n:'銅錢收入',per:.04,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.08,d:'全部大招的傷害'}};
+const TRAIN={atk:{n:'全隊攻擊',per:.05,d:'弟子、陣法、神獸攻擊'},hp:{n:'山門血量',per:.06,d:'山門最大血量'},coin:{n:'銅錢收入',per:.04,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.08,d:'全部大招的傷害'}};
 const trainCost=lv=>Math.ceil(40*Math.pow(1.15,lv));
 const TR=k=>1+TRAIN[k].per*((S.train&&S.train[k])||0);
 // 飛升：200 關以上可以飛升，關卡、山門、等級、銅錢、山門石、修煉重來；弟子階級、突破、法寶、靈石、塔陣獸（等級回 1）保留
@@ -440,8 +440,8 @@ const HX={disciple:'fx_wind',fox:'fx_fire',dragon:'fx_blunt',mecha:'fx_blunt',va
 const RAINSPR={arrow:'p_arrow',harpoon:'p_harpoon',star:'p_starbolt',bomb:'p_firebomb',bluefire:'p_foxfire',sand:'p_scarab',fire:'p_ofuda'};
 const ULTFX={dragon:'ult_dragon',fox:'ult_ninetail',mecha:'ult_mecha',alchemist:'ult_cauldron'};
 // 首次過關獎勵
-const GIFTS={3:{type:'tur',k:'crossbow'},6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},20:{type:'beast',k:'qinglong'},30:{type:'beast',k:'zhuque'},40:{type:'beast',k:'xuanwu'}};
-const GP=[...Object.keys(TUR).map(k=>({type:'tur',k})),...Object.keys(ARR).map(k=>({type:'arr',k}))];// 陣法・塔召喚池
+const GIFTS={6:{type:'arr',k:'a_fire'},10:{type:'beast',k:'baihu'},20:{type:'beast',k:'qinglong'},30:{type:'beast',k:'zhuque'},40:{type:'beast',k:'xuanwu'}};
+const GP=Object.keys(ARR).map(k=>({type:'arr',k}));// 陣法召喚池（塔已移除 2026-11-05）
 const SLOT_LV=[[1,2],[3,3],[10,4],[18,5],[26,6],[35,7],[45,8]];
 const TUR_SLOT=[[1,1],[6,2],[14,3]];
 const TIER_CAP=[0,20,40,60,80,100];
@@ -463,7 +463,7 @@ if(!S||S.v!==1)S=fresh();
 S.train=Object.assign({atk:0,hp:0,coin:0,ult:0},S.train||{});S.arr=S.arr||{};S.beast=S.beast||{};
 if(S.arrA===undefined){S.arrA=S.arrOn||null;S.arrD=null}
 if(!S.beastTeam){S.beastTeam=S.beastOn?[S.beastOn]:[]}
-S.gpull=S.gpull||0;S.fb=S.fb||{};S.fbOn=S.fbOn||[];
+S.gpull=S.gpull||0;S.fb=S.fb||{};S.fbOn=S.fbOn||[];if(!S.turRef){let c=0;for(const k in (S.tur||{}))c+=14*(Math.pow(1.13,(S.tur[k].lv||1)-1)-1)/.13;S.coin+=Math.round(c);S.turRef=1;S.turTeam=[]}// 塔移除：升級花的銅錢退回
 let wiped=false;
 function persist(){if(wiped)return;S.seen=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}}
 setInterval(persist,5000);
@@ -479,7 +479,7 @@ const gateMax=lv=>Math.round(150*Math.pow(1.2,lv-1)*TR('hp')*(1+(S.arrD==='d_roc
 const turCost=lv=>Math.ceil(14*Math.pow(1.13,lv-1));
 const lvCap=id=>S.gateLv*5+10;// 等級上限只看山門；階級改成直接加攻擊（每階 ×1.5）
 const slots=()=>{let n=2;for(const[l,c]of SLOT_LV)if(S.gateLv>=l)n=c;return n};
-const turSlots=()=>{let n=0;for(const[l,c]of TUR_SLOT)if(S.gateLv>=l)n=c;return n};
+const turSlots=()=>0;// 塔已移除
 const tierOf=lv=>lv>=20?3:lv>=10?2:1;
 const spdBonus=()=>PS.spd+(B.drumT>0?.3:0)+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv('d_taiji',S.arr.d_taiji.lv):0);
 const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus())*(id==='archer'&&PS.aw&&PS.aw.archer?2:1);
@@ -524,7 +524,7 @@ function layout(){
  const gx=tx+tw-gw/3+gw/2;
  L={tk,tx,tw,th,spots:tm[4].map(([sx,sy])=>[tx+sx/2,G-(th-sy/2)]),gk,gx,gw,front:gx+gw/2};
  L.tur=[L.front+38,L.front+118,L.front+198];
- const b0=L.front+60+Math.max(1,turSlots())*80;L.beastXs=[b0,b0+110,b0+220,b0+330];
+ const b0=L.front+100;L.beastXs=[b0,b0+110,b0+220,b0+330];
  const nb=Math.max(1,Math.min(S.beastTeam.length,beastSlots()));L.beastX=L.beastXs[nb-1];
  L.arr0=L.front-30;L.arr1=L.beastX+90;L.dX=(L.tx+L.front)/2;L.dR=(L.front-L.tx)/2+10;L.arrX=(L.arr0+L.arr1)/2;L.arrR=(L.arr1-L.arr0)/2;
  B.heroes.forEach((h,i)=>{const s=L.spots[i];if(s){h.x=s[0];h.y=s[1]}});
@@ -1148,7 +1148,7 @@ function updLive(){
  B.heroes.forEach((h,i)=>{const b=ultBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100)});
  B.beasts.forEach((h,i)=>{const b=bBtns[i];if(!b)return;b.querySelector('.fill').style.height=(100-h.charge)+'%';b.classList.toggle('ready',h.charge>=100)});
  const now=performance.now();if(now-lastLive>400){lastLive=now;$('coinT').textContent=fmt(S.coin);$('gemT').textContent=fmt(S.gem);$('stoneT').textContent=fmt(S.stone);
-  $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv)||turUpgradable())}
+  $('bHero').classList.toggle('on',canUpgradeAny());$('bGacha').classList.toggle('on',S.gem>=10);$('bGate').classList.toggle('on',S.stone>=gateCost(S.gateLv))}
 }
 // 全隊 BUFF 列：有時間的顯示剩幾秒，常駐的不顯示秒數
 let buffLast='';function renderBuffs(){const L2=[],sec=t=>`｜${Math.ceil(t)} 秒`;const M=PS.mx||{};
@@ -1265,11 +1265,11 @@ function pull(n){const cost=n*10;if(S.gem<cost){toast('靈石不夠，過關可�
  for(let i=0;i<n;i++)lastPulls.push(gTab==='gp'?gpOne():rollOne());SND.play(lastPulls.some(p=>p.id&&'EL'.includes(CH[p.id].r))?'rare':'gacha');if(gTab==='hero')S.firstGacha=false;refreshField();renderGacha();updLive()}
 function gpInfo(p){if(p.type==='tur')return{img:SRC['t_'+p.k+'_1'],n:TUR[p.k].n,r:'R'};return{img:SRC['i_'+p.k],n:ARR[p.k].n,r:ARR[p.k].t==='a'?'E':'L'}}
 function renderGacha(){$('shTitle').textContent='召喚';
- $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法・塔</button>`;
+ $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法</button>`;
  $('shTabs').querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{if(gTab!==b.dataset.gt){gTab=b.dataset.gt;lastPulls=[]}renderGacha()});
  let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
  if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 50 次），另外給傳說碎片</div>`;
- else{const own=Object.keys(S.tur).length+Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 5 種塔、6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的塔或攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
+ else{const own=Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
  if(gTab==='hero'){const sh=S.shard||0;h+=`<div class="rates" style="margin-top:6px"><b>傳說碎片 ${sh}/${SHARD_COST}</b>（滿階後抽到重複：普通 1、稀有 2、史詩 4、傳說 10 片；突破滿了給 2 倍。可以換傳說，也可以給滿階傳說升紅星）<br>${POOL.L.map(k=>`<button class="btn ${sh>=SHARD_COST?'gold':''}" data-shard="${k}" ${sh>=SHARD_COST?'':'disabled'} style="margin:3px">換 ${CH[k].n}</button>`).join('')}</div>`}
  h+='<div class="pulls">';
  lastPulls.forEach((p,i)=>{if(p.id){const d=CH[p.id];h+=`<div class="card ${d.r}" style="--d:${i*.08}s"><img src="${charImg(p.id,1)}" alt="">${p.isNew?'<span class="new">新！</span>':p.sh?`<span class="new" style="background:#8a4ad8">+${p.sh} 碎片</span>`:''}<span class="cn">${d.n}</span></div>`}
@@ -1280,14 +1280,14 @@ function renderGacha(){$('shTitle').textContent='召喚';
 let gtab='gate';
 const giftAt=k=>{const g=Object.entries(GIFTS).find(([,v])=>v.k===k);return g?g[0]:0};
 function renderGate(){$('shTitle').textContent='山門';
- const T=[['gate','山門・修煉'],['tur','塔'],['arr','陣法'],['beast','神獸'],['fb','法寶']];
+ const T=[['gate','山門・修煉'],['arr','陣法'],['beast','神獸'],['fb','法寶']];
  $('shTabs').innerHTML=T.map(([k,n])=>`<button class="btn ${gtab===k?'on':''}" data-gk="${k}">${n}</button>`).join('');
  $('shTabs').querySelectorAll('[data-gk]').forEach(b=>b.onclick=()=>{gtab=b.dataset.gk;renderGate()});
  const lv=S.gateLv,c=gateCost(lv);const nx=SLOT_LV.find(([l])=>l>lv),nt=TUR_SLOT.find(([l])=>l>lv),nb=BEAST_SLOT.find(([l])=>l>lv);let h='';
  const lockImg=(src,f)=>`<div class="th"><img src="${src}" alt="" style="filter:${f||'brightness(0) opacity(.35)'}"></div>`;
  if(gtab==='gate'){
   h+=`<div class="gateinfo"><div class="pic"><img src="${SRC[gateKey(false)]}" alt=""></div><div class="info" style="flex:1;min-width:200px"><h3 style="margin:0;font-family:var(--title);font-size:24px">山門 Lv${lv}</h3>
-  <div class="stat"><b>城門血量</b><span>${fmt(gateMax(lv))} → ${fmt(gateMax(lv+1))}${PS.hp?`（弟子被動再 +${Math.round(PS.hp*100)}%）`:''}</span><b>樓閣站位</b><span>${slots()} 位${nx?`（Lv${nx[0]} 變 ${nx[1]} 位）`:''}</span><b>塔位</b><span>${turSlots()} 座${nt?`（Lv${nt[0]} 變 ${nt[1]} 座）`:''}</span><b>神獸</b><span>${beastSlots()} 隻${nb?`（Lv${nb[0]} 變 ${nb[1]} 隻）`:''}</span><b>防禦陣</b><span>${lv>=5?'已開放':'Lv5 開放'}</span><b>弟子等級上限</b><span>Lv${lv*5+10}（所有弟子一樣）</span></div>
+  <div class="stat"><b>城門血量</b><span>${fmt(gateMax(lv))} → ${fmt(gateMax(lv+1))}${PS.hp?`（弟子被動再 +${Math.round(PS.hp*100)}%）`:''}</span><b>樓閣站位</b><span>${slots()} 位${nx?`（Lv${nx[0]} 變 ${nx[1]} 位）`:''}</span><b>神獸</b><span>${beastSlots()} 隻${nb?`（Lv${nb[0]} 變 ${nb[1]} 隻）`:''}</span><b>防禦陣</b><span>${lv>=5?'已開放':'Lv5 開放'}</span><b>弟子等級上限</b><span>Lv${lv*5+10}（所有弟子一樣）</span></div>
   <div class="row" style="margin-top:8px"><button class="btn gold" id="gUp" ${S.stone<c?'disabled':''}>升級山門 <span class="cost"><span class="ico stone"></span>${fmt(c)}</span></button><button class="btn gold" id="gUpAll" ${S.stone<c?'disabled':''}>連升</button><span class="hint">山門石：每次過關都會拿到，Boss 給比較多</span></div></div></div>
   <h3 class="sec">修煉（用銅錢，沒有上限）</h3><div class="list">`;
   for(const k in TRAIN){const t=TRAIN[k],l=S.train[k]||0,cc=trainCost(l);
@@ -1295,12 +1295,12 @@ function renderGate(){$('shTitle').textContent='山門';
    <button class="btn green" data-tr="${k}" ${S.coin<cc?'disabled':''}>修煉 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tr10="${k}" ${S.coin<cc?'disabled':''}>×10</button><button class="btn green" data-trmax="${k}" ${S.coin<cc?'disabled':''}>全部</button></div>`}
   {const best=S.best||0,g=xyGain(best),ok=best>=ASC_MIN;h+=`</div><h3 class="sec">飛升</h3><div class="item" style="display:block"><div class="tx"><b>仙元 ${S.xy||0}${S.asc?`（已飛升 ${S.asc} 次）`:''}</b><div>永久：全隊攻擊 ×${XYA().toFixed(2)}、銅錢和山門石 ×${XYR().toFixed(2)}（每點仙元 攻擊 +${XY_ATK*100}%、資源 +${XY_RES*100}%）</div>
    <div style="margin-top:4px">${ok?`現在飛升可以拿到 <b style="color:#c2410c">${g} 仙元</b>（最高第 ${best} 關，打越遠拿越多）`:`打到第 ${ASC_MIN} 關就能飛升（現在最高第 ${best} 關）`}</div>
-   <div style="opacity:.75;font-size:.9em;margin-top:2px">重來：關卡、山門等級、弟子等級、銅錢、山門石、修煉、塔陣獸等級<br>保留：所有弟子和階級、突破、法寶、靈石、進階丹、塔陣獸</div></div>
+   <div style="opacity:.75;font-size:.9em;margin-top:2px">重來：關卡、山門等級、弟子等級、銅錢、山門石、修煉、陣法神獸等級<br>保留：所有弟子和階級、突破、法寶、靈石、進階丹、陣法神獸</div></div>
    <div class="row" style="margin-top:6px"><button class="btn gold" id="gAsc" ${ok?'':'disabled'}>飛升</button><span class="hint" id="gAscTip"></span></div></div>`}
   h+=`<h3 class="sec">設定</h3><div class="row"><button class="btn" id="gReset" style="background:linear-gradient(#e2523a,#a8281a);color:#fff">清除存檔，從頭開始</button><span class="hint" id="gResetTip">所有弟子、關卡、資源都會消失，不能復原</span></div>`}
  if(gtab==='tur'){h+=`<h3 class="sec" style="margin-top:0">塔（擺上 ${S.turTeam.length}/${turSlots()}）</h3><div class="list">`;
   for(const k in TUR){const has=S.tur[k];const d=TUR[k];const g=giftAt(k);
-   if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
+   if(!has){h+=`<div class="item lock">${lockImg(SRC['t_'+k+'_1'])}<div class="tx"><b>${d.n}</b><div>${d.d}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法」可以抽到</div></div></div>`;continue}
    const l=has.lv,cc=turCost(l);const on=S.turTeam.includes(k);
    h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['t_'+k+'_'+tierOf(l)]}" alt=""></div><div class="tx"><b>${d.n} Lv${l}${has.brk?` 突破+${has.brk}`:''}</b><div>${d.d}｜攻擊 ${fmt(turAtk(k))}｜Lv10 換外型並一次打 2 隻、Lv20 打 3 隻</div></div>
    <button class="btn green" data-tu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-tu99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-tt="${k}">${on?'收起':'擺上'}</button></div>`}
@@ -1310,7 +1310,7 @@ function renderGate(){$('shTitle').textContent='山門';
    h+=`<h3 class="sec" ${tt==='a'?'style="margin-top:0"':''}>${title}${tt==='d'&&lv<5?'　<span class="hint">山門 Lv5 開放</span>':''}</h3><div class="list">`;
    for(const k in ARR){const d=ARR[k];if(d.t!==tt)continue;const has=S.arr[k];const g=giftAt(k);
     const desc=tt==='a'?(has?aDesc(k,has.lv):d.d):d.d(has?has.lv:1);
-    if(!has){h+=`<div class="item lock">${lockImg(SRC['i_'+k],'grayscale(1) opacity(.4)')}<div class="tx"><b>${d.n}</b><div>${desc}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法・塔」可以抽到</div></div></div>`;continue}
+    if(!has){h+=`<div class="item lock">${lockImg(SRC['i_'+k],'grayscale(1) opacity(.4)')}<div class="tx"><b>${d.n}</b><div>${desc}｜${g?`第 ${g} 關第一次過關送，`:''}召喚「陣法」可以抽到</div></div></div>`;continue}
     const cc=turCost(has.lv),on=S[sl]===k;
     h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['i_'+k]}" alt=""></div><div class="tx"><b>${d.n} Lv${has.lv}${has.brk?` 突破+${has.brk}`:''}</b><div>${desc}${tt==='a'?`｜每秒 ${fmt(arrDps(k)*(d.m||0)+ (k==='a_thunder'?arrDps(k)*2.6/1.5:0))}`:''}</div></div>
     <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-au99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
