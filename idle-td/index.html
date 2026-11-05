@@ -339,9 +339,9 @@ const MON={
  wolf:{n:'狼妖',hp:1.3,spd:92,dmg:1.2,coin:1.4,from:13},
  golem:{n:'石頭怪',hp:3.4,spd:30,dmg:2,coin:2.5,from:16}
 };
-// 法寶：3 個共用欄位（山門 Lv1／10／20 開），重複拿到升星（最多 5 星，每星 +25%）
+// 法寶：3 個共用欄位（山門 Lv1／10／20 開），重複拿到升星（最多 5 星，5 星 = 1 星 ×5）
 const FB={
- qiankun:{n:'乾坤圈',g:'圈',c:'#ffb02e',k:'fbatk',v:.15,t:v=>`全隊攻擊 ×${(1+v).toFixed(2)}（獨立乘，不跟被動擠）`},
+ qiankun:{n:'乾坤圈',g:'圈',c:'#ffb02e',k:'fbatk',v:.2,t:v=>`全隊攻擊 ×${(1+v).toFixed(2)}（獨立乘，不跟被動擠）`},
  huntian:{n:'混天綾',g:'綾',c:'#ff4a6a',k:'mslow',v:.12,t:v=>`全部怪物走路變慢 ${Math.round(v*100)}%`},
  zhaoyao:{n:'照妖鏡',g:'鏡',c:'#7ad8ff',k:'boss',v:.3,t:v=>`打 Boss 和魔頭傷害 +${Math.round(v*100)}%`},
  dinghai:{n:'定海神針',g:'針',c:'#e0b84a',k:'hp',v:.25,t:v=>`山門血量 +${Math.round(v*100)}%`},
@@ -356,7 +356,7 @@ const FB={
 };
 const FB_SLOT=[[1,1],[10,2],[20,3]];
 const fbSlots=()=>{let n=0;for(const[l,c]of FB_SLOT)if(S.gateLv>=l)n=c;return n};
-const fbV=k=>FB[k].v*(1+.25*((S.fb[k]&&S.fb[k].star||1)-1));
+const fbV=k=>FB[k].v*((S.fb[k]&&S.fb[k].star)||1);// 越難拿越強：5 星 = 1 星的 5 倍
 function giveFb(src){const ks=Object.keys(FB),k=ks[Math.floor(Math.random()*ks.length)];let txt;
  if(!S.fb[k]){S.fb[k]={star:1};if(S.fbOn.length<fbSlots())S.fbOn.push(k);txt='新的法寶！'}else if(S.fb[k].star<5){S.fb[k].star++;txt=`升到 ${S.fb[k].star} 星！`}else{const c=Math.round(coinKill(Math.max(1,S.best),1)*40);S.coin+=c;txt=`已經滿星，換成 ${fmt(c)} 銅錢`}
  return{k,txt}}
@@ -448,7 +448,7 @@ const TIER_CAP=[0,20,40,60,80,100];
 // 升到下一階要幾隻重複（普通最常抽到，所以要最多）
 const DUPE={N:{2:6,3:15},R:{2:3,3:8},E:{2:2,3:5},L:{2:1,3:1,4:1,5:1}};
 const dupeNeed=(id,t)=>(DUPE[CH[id].r]||{})[t];
-const BRK_MAX=50;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 50
+const BRK_MAX=50,BRK_P={N:.03,R:.05,E:.08,L:.15,S:.03},brkP=id=>BRK_P[CH[id].r]||.03;// 滿階後每多抽到 1 隻：突破 +1（攻擊 +3%），最多 50
 // 傳說碎片：滿階後再抽到重複弟子會給碎片（突破滿了給 2 倍），100 片換一隻自選傳說
 const SHV={N:1,R:2,E:4,L:10},SHARD_COST=100;
 
@@ -485,7 +485,7 @@ const spdBonus=()=>PS.spd+(B.drumT>0?.3:0)+(B.arrD==='d_taiji'&&S.arr.d_taiji?dv
 const heroRate=id=>ROLE[CH[id].role].rate*(1+spdBonus())*(id==='archer'&&PS.aw&&PS.aw.archer?2:1);
 // 升階攻擊加成：每階 ×2，升到滿階再 ×1.5（傳說 5 階 = 24 倍、三階角色滿階 = 6 倍）
 const tierMul=(id,t)=>Math.pow(2,t-1)*(t>=CH[id].t?1.5:1);
-function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*tierMul(id,r.tier)*(B.buff>0?(PS.r10&&PS.r10.alchemist?2:1.3):1)*Math.pow(1.5,rsOf(id))*(isMy(id)?4:1)*(id==='dragon'||id==='mecha'?1.5:1)*(1+PS.atk+side)*(1+(PS.fbatk||0))*(1+.03*(r.brk||0))*TR('atk')*XYA()}
+function heroAtk(id){const d=CH[id],r=S.roster[id];const side=(d.role==='melee'||d.role==='tank')?PS.front:(d.role==='ranged'||d.role==='magic')?PS.back:0;return ROLE[d.role].atk*RAR[d.r].mul*Math.pow(1.09,r.lv-1)*tierMul(id,r.tier)*(B.buff>0?(PS.r10&&PS.r10.alchemist?2:1.3):1)*Math.pow(1.5,rsOf(id))*(isMy(id)?4:1)*(id==='dragon'||id==='mecha'?1.5:1)*(1+PS.atk+side)*(1+(PS.fbatk||0))*(1+brkP(id)*(r.brk||0))*TR('atk')*XYA()}
 function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*Math.pow(1.3,tierOf(l)-1)*(1+.05*(S.tur[k].brk||0))*TR('atk')*XYA()}
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*XYA()*(arrPaired(k)?1.5:1)}
 // 神獸攻擊跟著隊伍走：上陣弟子的平均攻擊 × 神獸倍率 × 等級加成（每級 +2%），不會因為弟子等級高就被拋在後面
@@ -1214,7 +1214,7 @@ function renderHero(){
  if(!sel||!S.roster[sel])sel=S.team[0];
  const id=sel,d=CH[id],r=S.roster[id];const cap=lvCap(id);const cost=lvCost(r.lv);const inTeam=S.team.includes(id);
  const need=dupeNeed(id,r.tier+1);const canTier=r.tier<d.t&&(id==='disciple'?S.pill>=r.tier*5:r.dup>=need);
- const tierTxt=r.tier>=d.t?(id==='disciple'?'已滿階':`已滿階｜突破 ${r.brk||0}/${BRK_MAX}（再抽到一隻：攻擊 +3%）`):id==='disciple'?`升階需要 進階丹 ${r.tier*5}（有 ${S.pill}）`:`升階需要 重複角色 ${need}（有 ${r.dup}）`;const tierUp=r.tier<d.t?`｜升階後攻擊 ×${+(tierMul(id,r.tier+1)/tierMul(id,r.tier)).toFixed(1)}${r.tier+1>=d.t?'（含滿階 ×1.5）':''}`:'';
+ const tierTxt=r.tier>=d.t?(id==='disciple'?'已滿階':`已滿階｜突破 ${r.brk||0}/${BRK_MAX}（再抽到一隻：攻擊 +${Math.round(brkP(id)*100)}%）`):id==='disciple'?`升階需要 進階丹 ${r.tier*5}（有 ${S.pill}）`:`升階需要 重複角色 ${need}（有 ${r.dup}）`;const tierUp=r.tier<d.t?`｜升階後攻擊 ×${+(tierMul(id,r.tier+1)/tierMul(id,r.tier)).toFixed(1)}${r.tier+1>=d.t?'（含滿階 ×1.5）':''}`:'';
  let h=`<div class="detail"><div class="pic" style="border-color:var(--${d.r.toLowerCase()})"><img src="${charImg(id)}" alt=""></div><div class="info">
  <div><span class="tag ${isMy(id)?'M':d.r}">${isMy(id)?'神話':RAR[d.r].n}</span><span class="tag" style="background:#7a5a3a">${ROLE[d.role].n}</span></div>
  <h3>${chName(id)}${isMy(id)&&MYN[id]?`<span style="font-size:14px;opacity:.6">（${d.n}）</span>`:''} <span style="font-size:18px;color:#ff9a1e">${tierStars(r.tier,d.t,r.rs)}</span></h3>
@@ -1268,7 +1268,7 @@ function renderGacha(){$('shTitle').textContent='召喚';
  $('shTabs').innerHTML=`<button class="btn ${gTab==='hero'?'on':''}" data-gt="hero">弟子</button><button class="btn ${gTab==='gp'?'on':''}" data-gt="gp">陣法</button>`;
  $('shTabs').querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{if(gTab!==b.dataset.gt){gTab=b.dataset.gt;lastPulls=[]}renderGacha()});
  let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
- if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 +3%（最多 50 次），另外給傳說碎片</div>`;
+ if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 普通 +3%／稀有 +5%／史詩 +8%／傳說 +15%（最多 50 次），另外給傳說碎片</div>`;
  else{const own=Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
  if(gTab==='hero'){const sh=S.shard||0;h+=`<div class="rates" style="margin-top:6px"><b>傳說碎片 ${sh}/${SHARD_COST}</b>（滿階後抽到重複：普通 1、稀有 2、史詩 4、傳說 10 片；突破滿了給 2 倍。可以換傳說，也可以給滿階傳說升紅星）<br>${POOL.L.map(k=>`<button class="btn ${sh>=SHARD_COST?'gold':''}" data-shard="${k}" ${sh>=SHARD_COST?'':'disabled'} style="margin:3px">換 ${CH[k].n}</button>`).join('')}</div>`}
  h+='<div class="pulls">';
@@ -1321,7 +1321,7 @@ function renderGate(){$('shTitle').textContent='山門';
    const cc=Math.ceil(turCost(has.lv)*1.4),on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} Lv${has.lv}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」：${BULT[k].d}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))}</span>`:`<span style="opacity:.55">Lv${(i+1)*50} 解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}${bFxN(k)>=4?`（效果 ${bFxLv(k)} 級，下一級 Lv${200+50*bFxLv(k)}）`:''}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn green" data-bu="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-bu99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
-  h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星，最多 5 星，每星效果 +25%。已收集 ${own.length}/12。</div><div class="list">`;
+  h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星，最多 5 星，5 星效果是 1 星的 5 倍。已收集 ${own.length}/12。</div><div class="list">`;
   for(const k in FB){const d=FB[k],has=S.fb[k];const ic=SRC['i_fb_'+k]?`<div class="th" style="background:radial-gradient(circle at 50% 45%,#fff8e6,${d.c}55);${has?'':'filter:grayscale(1) opacity(.45)'}"><img src="${SRC['i_fb_'+k]}" alt="" style="object-fit:contain;padding:4px"></div>`:`<div class="th" style="display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#fff,${d.c});font-family:var(--title);font-size:30px;color:#3a2008;${has?'':'filter:grayscale(1) opacity(.45)'}">${d.g}</div>`;
    if(!has){h+=`<div class="item lock">${ic}<div class="tx"><b>${d.n}</b><div>${d.t(d.v)}｜還沒拿到</div></div></div>`;continue}
    const on=S.fbOn.includes(k);h+=`<div class="item ${on?'on':''}">${ic}<div class="tx"><b>${d.n} ${'★'.repeat(has.star)}<span style="opacity:.3">${'★'.repeat(5-has.star)}</span></b><div>${d.t(fbV(k))}</div></div><button class="btn blue" data-fb="${k}">${on?'卸下':'裝備'}</button></div>`}
