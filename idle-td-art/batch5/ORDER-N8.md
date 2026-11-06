@@ -1,6 +1,6 @@
 # 放置塔防：工單 N8　上古凶獸 4 隻＋葫蘆圖示 2 張
 
-狀態：待接手
+狀態：進行中
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 **排在 N7（山海經神獸）之後**：N7 出現「完成通知」再接。做法、大小、指令**全部照 `ORDER-N7.md`**，只是角色不同：
@@ -32,3 +32,6 @@
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+- 14:32 台灣時間 饕餮站立 **通過**（巨大嘴巴佔大半個頭、紅銅古紋、小捲角、短腿圓肚；高 936、腳底 1114）→ 可以畫攻擊 f1～f3。
+  窮奇站立 **退回**：看起來就是白虎換紫色加翅膀（同一張臉、額頭也有「王」字），玩家會以為是白虎換色。請重畫成一眼分得出來的凶獸（大小、飛的位置不用改）：
+  `Redraw this winged beast so it looks clearly DIFFERENT from a white tiger: NO "王" mark on the forehead, a wild spiky dark mane that sticks out like flames, a meaner wolfish face with narrow glowing-yellow eyes, a wide sharp grin showing fangs, small horns, ragged bat-like feathered wings, dark grey-purple fur with jagged black stripes. Keep the same chibi pixel style, same size and position. Solid magenta #FF00FF background.`
