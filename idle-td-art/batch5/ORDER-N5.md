@@ -1,6 +1,6 @@
 # 放置塔防：工單 N5　三位新傳說 站立圖（1～6 階）
 
-狀態：待驗收
+狀態：進行中：dot 2026-11-06 08:02 台灣時間（哪吒風火輪修訂）
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 泓 2026-11-06 確認加三位新傳說（進一般傳說池＋開系列池）。這張只畫**站立圖**，共 18 張；攻擊格和特效等這張通過後另開 N6。
@@ -18,6 +18,8 @@
 - 側 3/4 朝右、輕鬆站，武器在**前手**（畫面右邊的手）。配件加在身體外面，冠、羽、光環往上加高可以。
 - 背景純洋紅 `#FF00FF`。不畫光暈、閃光、火焰噴出去、冰霧（程式加）；實體的火輪、冰龍、光環可以畫，但畫成實色。
 - 臉照臉表，三人一眼分得出來，每階同一張臉。
+- **敖丙身體要瘦**（泓 01:13，體型參考動畫裡那種纖細優雅的少年感）：肩窄、腰細、手腳細長感，站姿優雅，比楊戩明顯瘦，身高和頭一樣。只參考體型，衣服、髮型、配色照下表原創。
+- **身體比例（泓 01:12 特別交代）**：頭的大小跟標準一樣（下巴 y≈690），下巴到腳底**不能超過 288px**（腳底 y=978）。**哪吒是小孩**：身體再短一點，下巴到腳底約 260px（跟小猴王一樣），整個人比楊戩、敖丙矮一截；不要畫成少年或大人的長腿。
 
 ## 指令
 
@@ -56,7 +58,7 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 
 | 階 | 外型 | 英文（貼給 GPT） |
 |---|---|---|
-| 1 | 小孩、兩個圓髮髻綁紅繩、白色短衫粉色蓮花邊、紅色長綾（混天綾）鬆鬆繞在肩上往後飄、光腳；前手拿一個金色手鐲大小的圈 | small kid with two round hair buns tied with red cords, white short shirt with pink lotus-petal trims, a long red silk sash loosely around the shoulders floating behind, bare feet; holds a golden ring (bracelet-sized hoop) in the front hand |
+| 1 | 小孩（矮、短手短腳，比楊戩矮一截）、兩個圓髮髻綁紅繩、白色短衫粉色蓮花邊、紅色長綾（混天綾）鬆鬆繞在肩上往後飄、光腳；前手拿一個金色手鐲大小的圈 | small young child (short chubby limbs, clearly shorter than an adult chibi; body from chin to feet only as tall as the head) with two round hair buns tied with red cords, white short shirt with pink lotus-petal trims, a long red silk sash loosely around the shoulders floating behind, bare feet; holds a golden ring (bracelet-sized hoop) in the front hand |
 | 2 | 粉白蓮花肚兜＋金腰帶；紅綾變長繞兩圈；圈變大（臉的大小）；額頭一點紅 | pink-and-white lotus vest with a gold belt, the red sash longer and wrapped twice, ring bigger (face-sized), a small red dot on the forehead |
 | 3 | 蓮瓣短裙；腳踝兩側各一個小金輪（輪子在腳旁邊，腳還是踩地上）；背後斜揹一支紅纓長槍 | lotus-petal short skirt; a small golden wheel beside each ankle (wheels next to the feet, feet still on the ground); a red-tasseled spear slung diagonally on the back |
 | 4 | 紅金戰衣、蓮花護肩；腳旁的輪子變大、輪緣畫成實色火焰形狀；槍尖變火焰形 | red-and-gold battle outfit with lotus shoulder guards; the ankle wheels bigger with solid flame-shaped rims; spear tip shaped like a flame |
@@ -71,7 +73,7 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 
 | 階 | 外型 | 英文（貼給 GPT） |
 |---|---|---|
-| 1 | 深藍綠長髮綁低馬尾、兩支小小的珊瑚色龍角；青綠長袍銀邊、袖口有魚鱗紋；前手拿一根短短的珊瑚杖 | gentle dragon prince: dark teal long hair in a low ponytail, two small coral-colored dragon horns; teal long robe with silver trims, fish-scale pattern on the cuffs; holds a short coral staff in the front hand |
+| 1 | 身形纖瘦（肩窄、腰細，比楊戩瘦）、深藍綠長髮綁低馬尾、兩支小小的珊瑚色龍角；青綠長袍銀邊、袖口有魚鱗紋；前手拿一根短短的珊瑚杖 | gentle dragon prince with a SLIM, graceful, elegant build (narrow shoulders, thin waist, slender arms, refined posture, slimmer than other characters; same height and head size): dark teal long hair in a low ponytail, two small coral-colored dragon horns; teal long robe with silver trims, fish-scale pattern on the cuffs; holds a short coral staff in the front hand |
 | 2 | 袍子變冰藍＋深青；腰間掛一顆龍珠（實色淡藍珠子）；杖頂嵌一顆冰晶 | robe changes to ice-blue and deep teal; a dragon pearl (solid pale blue orb) hangs at the waist; an ice crystal set on top of the staff |
 | 3 | 銀色鱗片肩甲；龍角變長；背後披一條半透明感的淡青披風（畫成實色） | silver scale shoulder armor; longer horns; a pale teal cape behind him (solid color) |
 | 4 | 銀青鱗甲長袍；身後浮一條小冰龍（實體、淡藍色，盤在肩後）；杖變冰晶長杖 | silver-teal scale-armor robe; a small ice dragon (solid, pale blue) coiled behind his shoulder; staff becomes a long ice-crystal staff |
@@ -87,3 +89,34 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
 ## 意見與待辦
 
 （Claude 驗收後寫在這裡）
+- 01:15 台灣時間 楊戩 1 階站立 **退件（身體太長）**：頭的大小對（下巴 y≈690 跟標準一樣），但**身體和腿長了約 10%**，腳底跑到 y=1008（標準 978）。造型、臉、天眼、三尖刀都很好，**請用這張改，不要重畫**：
+  `Edit this exact sprite. Keep the head, face, hair, outfit and weapon design EXACTLY the same. Make the body and legs SHORTER (about 10% shorter, chibi proportions like the attached standard) so the bottom of the feet is at y=978, about 30 pixels higher than now. Do not change the head size. Solid magenta #FF00FF background.`（附 `ref/STANDARD__t2__stand.png` 當第二張）
+  量法：下巴 y≈690、腳底 y=978，下巴到腳底約 288px（現在 318）。之後 2～6 階都用改好的這張往上改。
+- 01:22 台灣時間 楊戩 1 階站立（改短版）**通過**（頭頂 270、脖子 y≈690、腳底 971，下巴到腳底 281，總高 701 跟標準 704 一樣；黑馬尾、灰藍布衣、閉著的天眼、木柄三尖刀、臉表都對）。可以畫楊戩 2 階（用這張改）。
+- 01:22 台灣時間 哪吒 1 階站立 **退件（不夠小孩、身體太長）**：這張是在加「小孩比例」規定之前畫的。下巴 y≈690 到腳底 1005 有 315px，腳底也太低。造型和臉很好（雙髻、紅綾、蓮花邊、金圈），**請用這張改**：
+  `Edit this exact sprite. Keep the head, face, hair, outfit and ring design EXACTLY the same. Make him look like a SMALL CHILD: much shorter body, short chubby arms and legs, so the distance from chin to the bottom of the feet is about the same as the head height. Move him so the bottom of the feet is at y=978. Do not change the head size. Solid magenta #FF00FF background.`
+  量法：下巴到腳底約 260px（現在 315），腳底 y=978。
+- 01:22 台灣時間 敖丙 1 階站立 **退件（小改）**：深青綠頭髮、珊瑚龍角、青袍、珊瑚杖、臉都對，但下巴到腳底 298px、腳底 988（要 ≤288、978），而且泓要**更瘦**（這張在加規定前畫的）。**請用這張改**：
+  `Edit this exact sprite. Keep the head, face, hair, horns, outfit and staff EXACTLY the same. Make the body SLIMMER and more graceful: narrower shoulders, thinner waist, slender arms and legs. Make the body slightly shorter so the bottom of the feet is at y=978. Do not change the head size. Solid magenta #FF00FF background.`
+- 01:38 台灣時間 楊戩 2 階站立 **通過**（頭、身體、腳跟 1 階同位置同大小；深藍短袍銀邊、銀護肩、額眼微睜、鐵三尖刀）。可以畫 3 階。
+- 01:38 台灣時間 敖丙 1 階站立（改瘦版）**通過**（脖子 y≈700、腳底 986、下巴到腳底 286；身形變細、深青綠頭髮、珊瑚龍角、青袍魚鱗袖、珊瑚杖、臉表都對）。可以畫 2 階（用這張改）。
+- 01:38 台灣時間 哪吒 1 階站立（重交）**再退件**：還是不夠小孩，下巴到腳底 306px（要約 260）、腳底 996（要 978），只比上一版短 9px。GPT 改不夠的話請**附小猴王 1 階當身體長度參考**重改：
+  `Image 1 is Nezha (keep his head, face, hair, outfit, red sash and ring EXACTLY). Image 2 is the body-length reference. Redraw image 1 so his body (chin to feet) is as SHORT as image 2's body: a small child with short chubby arms and legs. Keep the head size the same. Bottom of the feet at y=978. Solid magenta #FF00FF background.`
+  （圖 2 用 `dot/idle-td-n2` 的 `monkey__t1__stand.png`，它下巴到腳底約 258px。）也可以用程式把脖子以下縮短到 260px 再修像素，看哪個好看。
+- 01:52 台灣時間 楊戩 3 階站立 **通過**（頭、身體、腳跟 2 階同位置同大小；銀白輕甲、深藍披風、小銀冠、藍穗三尖刀）。可以畫 4 階。敖丙 2 階、哪吒 1 階（小孩版）還在等。
+- 02:01 台灣時間 哪吒 1 階站立（第三版，參考小猴王）**通過比例**：下巴到腳底 247px，小孩感對了，臉、雙髻、紅綾、蓮花衣、金圈都好。**只差位置**：腳底在 y=937，要 978。請**用程式把整張圖往下平移 41px**（不要重畫、不要縮放），推成同一個檔名，之後 2～6 階都從移好的這張改。
+- 02:01 台灣時間 敖丙 2 階站立 **通過**（頭、身體、腳跟 1 階同位置同大小；冰藍袍、腰間龍珠、杖頂冰晶）。可以畫 3 階。
+- 02:10 台灣時間 楊戩 4 階站立 **通過**（身體不變；銀甲金邊、雙層披風、額頭金色豎眼全睜、銀金三尖刀）。可以畫 5 階。
+- 02:10 台灣時間 敖丙 3 階站立 **通過**（身體不變；銀鱗肩甲、龍角變長（頂端到 260 是角，OK）、淡青披風）。可以畫 4 階。哪吒 1 階移位版（腳底 978）還在等。
+- 02:18 台灣時間 哪吒 1 階站立（移位版）**通過**（只平移、像素完全一樣，腳底 978、下巴到腳底 247）。可以畫哪吒 2 階（用這張改，記得還是小孩比例）。
+- 02:27 台灣時間 楊戩 5 階站立 **通過**（身體不變，腳底 971；銀金戰甲、背後金盾翼、銀冠白羽（頂端 165 是羽毛，OK）、華麗大三尖刀）。可以畫 6 階神話。
+- 02:27 台灣時間 敖丙 4 階站立 **通過**（身體不變；銀青鱗甲袍、肩後小冰龍、冰晶長杖）。可以畫 5 階。
+- 02:38 台灣時間 楊戩 6 階神話站立 通過（身體不變；銀色眼紋圓環、更高冠、巨大雲紋三尖刀）→ 楊戩 6 張全收。哪吒 2 階 通過（小孩比例不變，腳底 978；粉白蓮花肚兜、紅綾繞兩圈、圈變大、額頭紅點）→ 可以畫 3 階。敖丙 5 階 通過（身體不變；銀龍冠、冰龍變大繞身後、龍頭冰晶杖）→ 可以畫 6 階神話。目前 13/18。
+- 02:46 台灣時間 哪吒 3 階 通過（身體、頭完全不變，腳底 978；腳邊加小風火輪、背後火尖槍、粉色蓮瓣裙擺）→ 可以畫 4 階。目前 14/18，剩哪吒 4–6 階、敖丙 6 階。
+- 02:56 台灣時間 敖丙 6 階神話站立 通過（身體不變，腳底 991；六角冰晶環、雙冰龍、銀白龍紋袍）→ 敖丙 6 張全收。哪吒 4 階 通過（腳底位置不變，最低點 994 是風火輪尖角不是腳；紅金蓮花戰甲、風火輪變大帶光芒、火焰槍頭）→ 可以畫 5 階。目前 16/18，剩哪吒 5、6 階。
+- 07:15 台灣時間（11/06）哪吒 5 階 通過（身體、頭不變，腳底同 4 階；頭頂蓮花金冠、紅綾在身後繞成大圓、金圈刻蓮紋、金紅華服）→ 可以畫 6 階神話（最後一張）。目前 17/18。之後直接接 ORDER-N6。
+- 07:58 台灣時間（11/06）哪吒 6 階神話站立 通過（頭、身體、腳底同 5 階；背後巨大實體金蓮花、雙紅綾、白金蓮花神衣、火輪更大）。**N5 完成 18/18**，畫師直接接 ORDER-N6（分支 dot/idle-td-n6）。
+- 08:00 台灣時間（11/06）**泓：風火輪要踩在腳下**。哪吒 3、4、5、6 階要改（原本寫「輪子在腳旁邊」是工單寫錯，不是畫錯）。用已通過的同一階圖直接改，只動輪子和位置：
+  `Edit this exact sprite. Keep the head, face, hair, body, outfit, sash, ring, spear and everything else EXACTLY the same. Move the two wheels so that he STANDS ON them: one wheel directly under each foot, the soles of the feet resting on top of the wheels (wheels seen slightly from the side, flat on the ground). Each wheel is burning: draw solid cartoon flames (red, orange, yellow, solid colors, no glow) rising from the wheel rims around the feet. Move the whole character up so the bottom of the wheels is at y=978. Do not resize anything. Solid magenta #FF00FF background.`
+  檔名照舊覆蓋：`nezha__t3__stand.png`～`nezha__t6__stand.png`，推 `dot/idle-td-n5`。3 階先交，通過後 4～6 階照同樣位置改。N6 的哪吒攻擊格等這四張改好再畫（楊戩、敖丙照常進行）。
+- 08:01 台灣時間 **泓：風火輪要冒火。** 上面指令已加：輪子邊緣冒出實色卡通火焰（紅橙黃、不畫光暈），火包住腳邊。3 階輪子小、火也小一點，越高階火越大。
