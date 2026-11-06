@@ -753,7 +753,7 @@ function step(dt){
   h.cd-=dt;
   let wIF=0;if(h.charge>=100&&icefire()&&(h.id==='nezha'||h.id==='aobing')){const o=B.heroes.find(x=>x.id===(h.id==='nezha'?'aobing':'nezha'));if(o&&o.charge<100&&(h.ifw=(h.ifw||0)+dt)<8)wIF=1}// 冰火合璧：自動放時等搭檔充滿（最多等 8 秒）
   if(!wIF&&h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length){h.ifw=0;castUlt(B.heroes.indexOf(h))}// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
-  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+(h.id==='monkey'?99999:h.id==='dragon'||h.id==='mecha'?950:R.reach));if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
+  if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+(h.id==='monkey'?99999:h.id==='dragon'||h.id==='mecha'||h.id==='yangjian'?950:R.reach));if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
   if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/ucdOf(h.id)*Math.min(fb10('liuli')?3:2,(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0))*chgMul(h.id)));
  }
  // 塔
