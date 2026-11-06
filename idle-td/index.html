@@ -468,9 +468,9 @@ const trCan=f=>trOpen(f)&&TRIAL.every((x,i)=>i+1>=f||!trOpen(i+1)||trDone(i+1));
 const TRAIN={atk:{n:'全隊攻擊',per:.05,d:'弟子、陣法、神獸攻擊'},hp:{n:'山門血量',per:.06,d:'山門最大血量'},coin:{n:'銅錢收入',per:.04,d:'打怪和過關的銅錢'},ult:{n:'大招傷害',per:.08,d:'全部大招的傷害'}};
 const trainCost=lv=>Math.ceil(40*Math.pow(1.15,lv));
 const TR=k=>1+TRAIN[k].per*((S.train&&S.train[k])||0);
-// 飛升：第 400 關以上才能飛升，之後每飛升一次門檻 +100 關（第 2 次要 500、第 3 次 600…），關卡、山門、等級、銅錢、山門石、修煉重來；弟子階級、突破、法寶、靈石、塔陣獸（等級回 1）保留
+// 飛升：第 300 關以上才能飛升，之後每飛升一次門檻 +100 關（第 2 次要 500、第 3 次 600…），關卡、山門、等級、銅錢、山門石、修煉重來；弟子階級、突破、法寶、靈石、塔陣獸（等級回 1）保留
 // 拿到仙元（永久）：每點 全隊攻擊 +5%、銅錢和山門石 +2%
-const ascMin=()=>400+100*(S.asc||0),XY_ATK=.05,XY_RES=.02;
+const ascMin=()=>300+100*(S.asc||0),XY_ATK=.05,XY_RES=.02;
 const xyGain=b=>b<ascMin()?0:Math.floor(Math.pow(b/50,2.5));
 const XYA0=()=>1+XY_ATK*(S.xy||0),XYA=()=>XYA0()*RLM(),XYR=()=>1+XY_RES*(S.xy||0);
 // 境界：每飛升一次升一境界，全隊攻擊 ×20、弟子等級上限 +50（2026-11-05 泓）
