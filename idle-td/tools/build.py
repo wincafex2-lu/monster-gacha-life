@@ -11,7 +11,7 @@ def out(srcmap, path):
     print(path, round(len(h) / 1e6, 2), 'MB')
 out({k: f'assets/{k}.webp' for k in keys}, os.path.join(D, 'index.html'))
 if len(sys.argv) > 1:
-    # 單檔預覽上限 16MB：角色、大招、樓閣、陣法、背景圖重新壓縮（quality 66），其他圖照原檔
+    # 單檔預覽上限 16MB：角色、大招、樓閣、陣法、背景圖重新壓縮（攻擊格 quality 50、其他 60），其他圖照原檔
     # 壓過的圖快取在 ~/.cache/idle-td-inline，下次 build 不用重壓
     import io, hashlib
     from PIL import Image
@@ -19,9 +19,12 @@ if len(sys.argv) > 1:
     def data(k):
         raw = open(os.path.join(D, 'assets', k + '.webp'), 'rb').read()
         if k.startswith(('c_', 'ult_', 'tower', 'd_', 'bg_')):
-            cp = os.path.join(CACHE, hashlib.md5(raw).hexdigest() + '.webp')
+            q = 50 if k.startswith('c_') and '_a' in k[2:] else 60
+            cp = os.path.join(CACHE, hashlib.md5(raw).hexdigest() + f'_{q}s.webp')
             if not os.path.exists(cp):
-                bio = io.BytesIO(); Image.open(io.BytesIO(raw)).save(bio, 'WEBP', quality=66, method=4)
+                im0 = Image.open(io.BytesIO(raw))
+                if k.startswith(('c_', 'ult_')): im0 = im0.resize((max(1, round(im0.width * .72)), max(1, round(im0.height * .72))), Image.LANCZOS)
+                bio = io.BytesIO(); im0.save(bio, 'WEBP', quality=q, method=4)
                 open(cp, 'wb').write(min(raw, bio.getvalue(), key=len))
             raw = open(cp, 'rb').read()
         return 'data:image/webp;base64,' + base64.b64encode(raw).decode()
