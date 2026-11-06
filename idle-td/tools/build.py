@@ -11,20 +11,20 @@ def out(srcmap, path):
     print(path, round(len(h) / 1e6, 2), 'MB')
 out({k: f'assets/{k}.webp' for k in keys}, os.path.join(D, 'index.html'))
 if len(sys.argv) > 1:
-    # 單檔預覽上限 16MB：角色（×0.72）、大招圖（×0.62）、樓閣、陣法、背景圖重新壓縮（攻擊格 quality 50、其他 60），其他圖照原檔
+    # 單檔預覽上限 16MB：角色（×0.72）、大招圖（×0.56）、樓閣、陣法、背景圖重新壓縮（攻擊格 quality 44、其他 60），其他圖照原檔
     # 壓過的圖快取在 ~/.cache/idle-td-inline，下次 build 不用重壓
     import io, hashlib
     from PIL import Image
     CACHE = os.path.expanduser('~/.cache/idle-td-inline'); os.makedirs(CACHE, exist_ok=True)
     def data(k):
         raw = open(os.path.join(D, 'assets', k + '.webp'), 'rb').read()
-        if k.startswith(('c_', 'ult_', 'bu_', 'tower', 'd_', 'bg_')):
-            q = 50 if k.startswith('c_') and '_a' in k[2:] else 60
-            cp = os.path.join(CACHE, hashlib.md5(raw).hexdigest() + f'_{q}s{"u" if k.startswith(("ult_", "bu_")) else ""}.webp')
+        if k.startswith(('c_', 'ult_', 'bu_', 'xu_', 'x_', 'xa_', 'tower', 'd_', 'bg_')):
+            q = 44 if k.startswith('c_') and '_a' in k[2:] else 60
+            cp = os.path.join(CACHE, hashlib.md5(raw).hexdigest() + f'_{q}s{"v" if k.startswith(("ult_", "bu_", "xu_")) else ""}.webp')
             if not os.path.exists(cp):
                 im0 = Image.open(io.BytesIO(raw))
-                if k.startswith(('c_', 'ult_', 'bu_')):
-                    f = .62 if k.startswith(('ult_', 'bu_')) else .72
+                if k.startswith(('c_', 'ult_', 'bu_', 'xu_')):
+                    f = .56 if k.startswith(('ult_', 'bu_', 'xu_')) else .72
                     im0 = im0.resize((max(1, round(im0.width * f)), max(1, round(im0.height * f))), Image.LANCZOS)
                 bio = io.BytesIO(); im0.save(bio, 'WEBP', quality=q, method=4)
                 open(cp, 'wb').write(min(raw, bio.getvalue(), key=len))
