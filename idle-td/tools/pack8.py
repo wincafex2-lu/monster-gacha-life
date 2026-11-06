@@ -8,6 +8,25 @@ src = open(os.path.join(os.path.dirname(__file__), 'pack.py'), encoding='utf-8')
 exec(src[:src.index('files = set(')])
 mp = os.path.join(OUT, 'manifest.json')
 MAN.update(json.load(open(mp)))
+# 窮奇身上有亮洋紅色的毛，整張照顏色去背會把毛挖空 → 只去掉「跟圖片外框連在一起」的洋紅背景
+def keyed(n, loose=False):
+    a = load(n)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    mg = np.minimum(r, b) - g
+    hard0 = (np.minimum(r, b) >= 200) & (g <= 90) & (np.abs(r - b) < 60)
+    hard = np.zeros_like(hard0); hard[0, :] = hard0[0, :]; hard[-1, :] = hard0[-1, :]; hard[:, 0] = hard0[:, 0]; hard[:, -1] = hard0[:, -1]
+    while True:
+        g2 = hard.copy(); g2[1:] |= hard[:-1]; g2[:-1] |= hard[1:]; g2[:, 1:] |= hard[:, :-1]; g2[:, :-1] |= hard[:, 1:]; g2 &= hard0
+        if (g2 == hard).all(): break
+        hard = g2
+    alpha = np.where(hard, 0.0, 1.0)
+    edge = dil(hard, 2) & ~hard & (mg > 50) & (np.abs(r - b) < 80)
+    t = np.clip((mg - 50) / 160.0, 0, 1)
+    alpha = np.where(edge, 1 - t, alpha)
+    rgb = a.astype(np.float32); M = np.array([255, 0, 255], np.float32); al = np.maximum(alpha, 1e-3)[..., None]
+    un = (rgb - (1 - alpha[..., None]) * M) / al
+    rgb = np.where(edge[..., None], np.clip(un, 0, 255), rgb)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype(np.uint8), 'RGBA')
 sc = S * X2
 for c in ('taotie', 'taowu', 'hundun', 'qiongqi'):
     fly = c == 'qiongqi'
