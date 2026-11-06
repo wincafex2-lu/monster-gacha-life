@@ -485,7 +485,7 @@ function xUpd(dt){
  X.hd-=dt;if(X.hd<=0){X.hd=.5;const a=xAtk('hundun')*.6;for(const e of T)if(e.xcz>0){e.xcz-=.5;B.enemies.forEach(o=>{if(o!==e&&!o.dead&&Math.abs(o.x-e.x)<120)hit(o,a,{c:'#b0a0ff',small:1,src:'x:hundun'})})}}
  X.charge=Math.min(100,X.charge+dt*100/26*(1+PS.charge));if(X.charge>=100&&T.length)xUlt(k);DSRC='etc'}
 function xUlt(k){X.charge=0;DSRC='x:'+k;const u=1+.5*(xUl(k)-1),a=xAtk(k)*u,al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);SND.play('ult','magic');
- const el=document.getElementById('ultName');el.textContent=XB[k].u+'！';el.style.setProperty('--c','#ff7aa8');el.classList.remove('show');void el.offsetWidth;el.classList.add('show');shake(10);B.hitstop=.08;
+ {const o=xLay();shout(o.x,o.y-o.mh-24,XB[k].u,'#ff7aa8')}shake(10);B.hitstop=.08;
  if(MAN['xu_'+k]){const o=xLay();addFx({k:'bult',key:'xu_'+k,life:1.2,ox:o.x+o.hw,oy:o.y-o.mh*.5,fly:k==='qiongqi'})};
  if(k==='taotie'){al().forEach(e=>{if(e.boss)hit(e,a*30,{c:'#ff5a3a',big:1});else if(e.hp<e.max*.2)xDevour(e);else hit(e,a*2,{c:'#ff8a3a',big:1})})}
  else if(k==='qiongqi'){const e=al().sort((p,q)=>q.hp-p.hp)[0];if(e){hit(e,a*50,{c:'#c08aff',big:1});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.6,c:'#c08aff',r:220})}}
@@ -732,7 +732,7 @@ function frame(now){const real=Math.min(.05,(now-last)/1000);last=now;
  const n=B.speed;for(let i=0;i<n;i++)step(dt/n);
  draw(real);renderDps();requestAnimationFrame(frame)}
 function step(dt){
- B.time+=dt;if(B.state==='run')fsTick(dt);if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;for(const k of UTK)if(B[k]>0)B[k]-=dt;for(const h of B.heroes)if(h.ucd>0)h.ucd-=dt;if(B.state==='run')ultTick(dt);if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700*ZM});shake(5)}}}if(cbOn('mecha')&&B.state==='run'){B.cbM=(B.cbM||0)+dt;if(B.cbM>=8){B.cbM=0;const ds=DSRC;DSRC='cb:mecha';const a=teamAvgAtk()*NA*30,es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);es.forEach(e=>{hit(e,a,{c:'#ffcf6a',big:1});e.melt=6;sprFx('fx_blunt',e.x,e.y-e.ay*.5,1.2)});DSRC=ds;if(es.length){addFx({k:'ring',x:VW*.6,y:G-40,life:.5,c:'#ffcf6a',r:600*ZM});B.txt.push({x:VW*.6,y:G-300,v:'天機艦砲！',t:0,big:1,crit:1});shake(8)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';SWC=0;if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
+ B.time+=dt;if(B.state==='run')fsTick(dt);if(B.focusT>0)B.focusT-=dt;if(B.drumT>0)B.drumT-=dt;if(B.mechT>0)B.mechT-=dt;if(B.ovT>0)B.ovT-=dt;for(const k of UTK)if(B[k]>0)B[k]-=dt;for(const h of B.heroes)if(h.ucd>0)h.ucd-=dt;if(B.state==='run')ultTick(dt);if(PS.my&&B.state==='run'){if(PS.my.dragon){B.myDr=(B.myDr||0)+dt;if(B.myDr>=8){B.myDr=0;B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,1.5)});addFx({k:'ring',x:VW*.55,y:G-20,life:.6,c:'#ff5a40',r:700*ZM});shake(5)}}}if(cbOn('mecha')&&B.state==='run'){B.cbM=(B.cbM||0)+dt;if(B.cbM>=8){B.cbM=0;cbShout('天機艦砲','mecha');const ds=DSRC;DSRC='cb:mecha';const a=teamAvgAtk()*NA*30,es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);es.forEach(e=>{hit(e,a,{c:'#ffcf6a',big:1});e.melt=6;sprFx('fx_blunt',e.x,e.y-e.ay*.5,1.2)});DSRC=ds;if(es.length){addFx({k:'ring',x:VW*.6,y:G-40,life:.5,c:'#ffcf6a',r:600*ZM});B.txt.push({x:VW*.6,y:G-300,v:'天機艦砲！',t:0,big:1,crit:1});shake(8)}}}if(PS.mx&&PS.mx.moonrabbit&&B.state==='run'){B.moonT=(B.moonT||0)+dt;if(B.moonT>=25){B.moonT=0;B.shield=Math.max(B.shield,3)}}DSRC='etc';SWC=0;if(B.state==='run'&&B.dmg)B.dmgT+=dt;if(B.buff>0)B.buff-=dt;
  // 關卡狀態
  if(B.state==='run'){
   // 場上的怪都打光了，下一隻（群）不用等，0.25 秒後就出來（秒殺時推關比較快）
@@ -832,8 +832,8 @@ function step(dt){
  // 特效
  for(const f of B.fx){f.t=(f.t||0)+dt;if(f.upd){DSRC=f.src||'etc';SWC=0;f.upd(f,dt)}}DSRC='etc';SWC=0;
  B.fx=B.fx.filter(f=>f.t<f.life);
- for(const t of B.txt){t.t+=dt;t.y-=dt*40}
- B.txt=B.txt.filter(t=>t.t<.8);
+ for(const t of B.txt){t.t+=dt;t.y-=dt*(t.shout?14:40)}
+ B.txt=B.txt.filter(t=>t.t<(t.life||.8));
  B.shake=Math.max(0,B.shake-dt*30);
 }
 // 普攻倍率：普攻比大招弱太多（後期大招占 85% 以上），普攻另外 ×NA，大招、神獸不變
@@ -1066,7 +1066,7 @@ const SND=(()=>{let ultS='a';try{ultS=localStorage.getItem('idle-td-ultsnd')||'a
 const ROLE_OF=id=>CH[id].role;
 /* ---------- 神獸大招 ---------- */
 function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')return;DSRC='b:'+b.k;b.charge=0;const u=BULT[b.k];SND.play('ult',u.r);
- const el=document.getElementById('ultName');el.textContent=u.n+'！';el.style.setProperty('--c','#9fe3ff');el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+ {const m=MAN['b_'+b.k];shout(b.x,(b.y||G)-(m?(BEAST[b.k].fly?m[1]/4:m[3]/2):150)-28,u.n,'#9fe3ff')}
  const ul=bUlv(b.k),a=beastAtk(b.k)*(1+.5*(ul-1)),al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);b.anim=.45;shake(10);B.hitstop=.08;
  if(b.k==='baihu'){al().forEach(e=>{if(!e.fly){hit(e,a*6,{c:'#ffffff',kb:120,big:1});e.stun=Math.max(e.stun,1.5)}else hit(e,a*3,{c:'#ffffff',big:1})});addFx({k:'ring',x:b.x+60,y:G-40,life:.7,c:'#ffffff',r:900*ZM});ultFx('ult_mecha',b.x+300,G-150,1)}
  else if(b.k==='qinglong'){for(let j=0;j<10;j++)setTimeout(()=>{DSRC='b:qinglong';const T=al();if(!T.length)return;const e=T[Math.floor(Math.random()*T.length)];B.enemies.forEach(o=>{if(!o.dead&&Math.abs(o.x-e.x)<90)hit(o,a*3,{c:'#bfa0ff',big:1})});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.8);shake(4)},j*200)}
@@ -1082,8 +1082,11 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
 // 大招冷卻：每招依強度不同（秒）；充能加成、普攻充能、別人送的充能最多只能把冷卻降到一半
 const UCD={yangjian:20,nezha:18,aobing:22,fox:20,dragon:18,archer:24,mecha:22,alchemist:20,monkey:18,vampire:16,yukionna:18,catsamurai:16,moonrabbit:22,pharaoh:16,elf:16,kitsune:14,shark:14,tanuki:14,disciple:10,general:18,swordsman:12,panda:12,pirate:12,jiangshi:14,witch:14,mummy:14,grandma:18,slingkid:10,drummer:20};
 const ucdOf=id=>UCD[id]||16,ULT_CD=8;
+// 泓 2026-11-06：大招名字喊在放招的人頭上（不然不知道誰放什麼招）
+function shout(x,y,n,c){let lv=0;while(lv<5&&B.txt.some(q=>q.shout&&q.lv===lv&&Math.abs(q.x-x)<(q.v.length+n.length+1)*17&&q.t<1.3))lv++;B.txt.push({x,y:y-lv*40,lv,v:n+'！',t:0,shout:1,life:1.6,c})}
+function cbShout(n,id){const h=B.heroes.find(x=>x.id===id);if(h)shout(h.x,h.y-205,'合擊・'+n,'#ffd84a')}
 function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult'||B.state!=='run'||h.ucd>0||(h.id==='archer'&&B.focusT>1))return;h.charge=0;h.ucd=ucdOf(h.id)/2;h.ifc=0;if(icefire()&&(h.id==='nezha'||h.id==='aobing')){const o=B.heroes.find(x=>x.id===(h.id==='nezha'?'aobing':'nezha'));if(o&&o.charge>=100){o.charge=0;o.ucd=ucdOf(o.id)/2;h.ifc=1}}h.anim={type:'ult',t:0};
- SND.play('ult',h.id);if(PS.mx&&PS.mx.drummer)B.drumT=6;if(PS.my&&PS.my.mecha&&h.id==='mecha')B.mechT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.ovT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.r10&&PS.r10.mecha&&h.id==='mecha')h.charge=50;if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];const u=document.getElementById('ultName');u.textContent=d.un+'！';u.style.setProperty('--c',d.c);u.classList.remove('show');void u.offsetWidth;u.classList.add('show')}
+ SND.play('ult',h.id);if(PS.mx&&PS.mx.drummer)B.drumT=6;if(PS.my&&PS.my.mecha&&h.id==='mecha')B.mechT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.ovT=6;if(PS.mx&&PS.mx.mecha&&h.id==='mecha')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+50)});if(PS.r10&&PS.r10.mecha&&h.id==='mecha')h.charge=50;if(PS.mx&&PS.mx.grandma)B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.05);const d=CH[h.id];shout(h.x,h.y-165,d.un,d.c)}
 // 大招射程（從山門前算起）：雷射打整排，其他只打射程內
 const ULT_R={sweep:900,slam:750,rain:1100,freeze:1000,heal:600,drain:900,laser:99999,focus:0};
 function doUlt(h){
@@ -1131,14 +1134,14 @@ function fsTick(dt){const T=S.team.slice(0,slots());
  if(PS.my&&PS.my.nezha&&!B.lotus&&B.gateHp>0&&B.gateHp<B.gateMax*.3){B.lotus=1;B.gateHp=B.gateMax*.6;B.shield=Math.max(B.shield,3);sprFx('fx_heal',L.gx,G-110,2.2);B.txt.push({x:L.gx,y:G-280,v:'蓮花化身！',t:0,big:1})}}
 function fsUlt(h,dmg,al,lim,A,Z,Q,inV,sm){const id=h.id,src='u:'+id;
  if(id==='yangjian'){A.forEach(e=>{e.crk=4;if(sm(e)&&!e.fly)e.stun=Math.max(e.stun,2)});addFx({k:'crack',x0:L.front,x1:lim,life:4});for(let i=0;i<3;i++)spawnDog(heroAtk('yangjian')*NA*3,i*.25);
-  if(tgdf())Q(2,()=>{DSRC='h:monkey';for(let i=0;i<10;i++){const V=inV();if(!V.length)break;const o=V[Math.floor(Math.random()*V.length)];addFx({k:'clone',x:Math.max(L.front+40,o.x-70),y:G,life:.5,key:myKey('monkey'),fl:1,top:Math.random()<.4?1:0,rt:0});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})}})}
- if(id==='monkey'&&tgdf()){const yh=B.heroes.find(x=>x.id==='yangjian');if(yh)Q(2,()=>skyLaser(yh,heroAtk('yangjian')*NA*3))}
- if(id==='general'&&cbOn('yangjian'))Q(.4,()=>{DSRC='u:yangjian';const d2=heroAtk('yangjian')*7*1.5;al().forEach(e=>{hit(e,d2,{c:'#c8d8ff',big:1});e.crk=4});addFx({k:'crack',x0:L.front,x1:lim,life:4});B.txt.push({x:L.front+300,y:G-260,v:'天兵天將！',t:0,big:1})});
- if(h.ifc){DSRC='u:nezha';const icx=(L.front+lim)/2,big=(heroAtk('nezha')+heroAtk('aobing'))*40*TR('ult');inV().forEach(e=>{hit(e,big/2,{c:'#ff6a3a',big:1,src:'u:nezha'});hit(e,big/2,{c:'#7ae0ff',big:1,src:'u:aobing'});e.burnS='u:nezha';e.burn=Math.max(e.burn||0,2);e.burnD=Math.max(e.burnD||0,big*.01);e.stun=Math.max(e.stun,2)});ultFx('ult_icefire',icx,G-170,1.4);B.txt.push({x:icx,y:G-330,v:'冰火合璧！',t:0,big:1,crit:1});shake(18);return}
+  if(tgdf())Q(2,()=>{cbShout('天宮鬥法','monkey');DSRC='h:monkey';for(let i=0;i<10;i++){const V=inV();if(!V.length)break;const o=V[Math.floor(Math.random()*V.length)];addFx({k:'clone',x:Math.max(L.front+40,o.x-70),y:G,life:.5,key:myKey('monkey'),fl:1,top:Math.random()<.4?1:0,rt:0});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})}})}
+ if(id==='monkey'&&tgdf()){const yh=B.heroes.find(x=>x.id==='yangjian');if(yh)Q(2,()=>{cbShout('天宮鬥法','yangjian');skyLaser(yh,heroAtk('yangjian')*NA*3)})}
+ if(id==='general'&&cbOn('yangjian'))Q(.4,()=>{cbShout('天兵天將','yangjian');DSRC='u:yangjian';const d2=heroAtk('yangjian')*7*1.5;al().forEach(e=>{hit(e,d2,{c:'#c8d8ff',big:1});e.crk=4});addFx({k:'crack',x0:L.front,x1:lim,life:4});B.txt.push({x:L.front+300,y:G-260,v:'天兵天將！',t:0,big:1})});
+ if(h.ifc){DSRC='u:nezha';const icx=(L.front+lim)/2,big=(heroAtk('nezha')+heroAtk('aobing'))*40*TR('ult');inV().forEach(e=>{hit(e,big/2,{c:'#ff6a3a',big:1,src:'u:nezha'});hit(e,big/2,{c:'#7ae0ff',big:1,src:'u:aobing'});e.burnS='u:nezha';e.burn=Math.max(e.burn||0,2);e.burnD=Math.max(e.burnD||0,big*.01);e.stun=Math.max(e.stun,2)});ultFx('ult_icefire',icx,G-170,1.4);cbShout('冰火合璧','nezha');cbShout('冰火合璧','aobing');B.txt.push({x:icx,y:G-330,v:'冰火合璧！',t:0,big:1,crit:1});shake(18);return}
  if(id==='nezha'){nzRide(dmg,lim,src);Q(1.3,()=>{const V=al();const fx=V.length?V.reduce((m,e)=>e.x>m.x?e:m).x:lim;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-fx)<220)hit(e,dmg*1.5,{c:'#ff6a3a',big:1})});addFx({k:'boom',x:fx,y:G-60,life:.5,c:'#ff6a3a',r:220});sprFx('fx_fire',fx,G-80,2.4);shake(10)});
-  if(icefire())Q(.6,()=>{DSRC='u:aobing';const d2=heroAtk('aobing')*7*1.5*.6;inV().forEach(e=>{hit(e,d2,{c:'#bfefff',big:1});e.stun=Math.max(e.stun,1)});addFx({k:'fly',key:'ice_dragon',x0:L.front,x1:VW,y:G-220,life:1})})}
+  if(icefire())Q(.6,()=>{cbShout('冰火兩重天','aobing');DSRC='u:aobing';const d2=heroAtk('aobing')*7*1.5*.6;inV().forEach(e=>{hit(e,d2,{c:'#bfefff',big:1});e.stun=Math.max(e.stun,1)});addFx({k:'fly',key:'ice_dragon',x0:L.front,x1:VW,y:G-220,life:1})})}
  if(id==='aobing'){A.forEach(e=>{if(e.boss)e.stun=Math.min(e.stun,1)});addFx({k:'fly',key:'ice_dragon',x0:L.front-100,x1:VW+100,y:G-230,life:1.1});Q(3,()=>{al().forEach(e=>{hit(e,dmg*.6,{c:'#bfefff',big:1});sprFx('fx_ice',e.x,e.y-e.ay*.5,.9)})});
-  if(icefire())Q(.6,()=>nzRide(heroAtk('nezha')*7*1.5,lim,'u:nezha'))}}
+  if(icefire())Q(.6,()=>{cbShout('冰火兩重天','nezha');nzRide(heroAtk('nezha')*7*1.5,lim,'u:nezha')})}}
 function ultTick(dt){
  if(B.zones&&B.zones.length){for(const z of B.zones){z.t-=dt;z.tk=(z.tk||0)-dt;if(z.tk<=0){z.tk=.5;DSRC=z.src;const on=B.enemies.filter(e=>!e.dead&&e.x<VW-50&&Math.abs(e.x-z.x)<z.r);on.forEach(e=>{if(z.k==='fire'){e.burnS=z.src;e.burn=Math.max(e.burn||0,2);e.burnD=Math.max(e.burnD||0,z.dmg)}else{hit(e,z.dmg,{c:z.c,small:1,nosw:1});e.slow=Math.max(e.slow,z.slow);e.slowT=.8;if(z.k==='sand')e.sand=1}})}}B.zones=B.zones.filter(z=>z.t>0)}
  if(B.sched&&B.sched.length){for(const q of B.sched){q.t-=dt;if(q.t<=0&&!q.done){q.done=1;DSRC=q.src;q.fn()}}B.sched=B.sched.filter(q=>!q.done)}
@@ -1146,12 +1149,12 @@ function ultTick(dt){
 function ultExtra(h,dmg,al,lim){const id=h.id,src='u:'+id,A=al(),inV=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-50),Z=z=>{(B.zones=B.zones||[]).push({src,...z})},Q=(t,fn)=>{(B.sched=B.sched||[]).push({t,fn,src})},rnd=a=>a[Math.floor(Math.random()*a.length)];
  const sm=e=>!e.boss;fsUlt(h,dmg,al,lim,A,Z,Q,inV,sm);
  if(id==='disciple')A.forEach(e=>{if(sm(e))e.kb=Math.max(e.kb,240);e.slow=Math.max(e.slow,.5);e.slowT=3});
- else if(id==='fox'){A.forEach(e=>{e.burnS=src;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,dmg*.05)});const xs=A.length?[...new Set([A[0],A[Math.floor(A.length/2)],A[A.length-1]].map(e=>Math.round(e.x/200)*200))]:[L.front+300];xs.forEach(x=>Z({k:'fire',x,r:cbOn('fox')?280:140,t:cbOn('fox')?8:4,dmg:dmg*.05,c:'#ff8a3d'}))}
+ else if(id==='fox'){A.forEach(e=>{e.burnS=src;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,dmg*.05)});const xs=A.length?[...new Set([A[0],A[Math.floor(A.length/2)],A[A.length-1]].map(e=>Math.round(e.x/200)*200))]:[L.front+300];if(cbOn('fox'))cbShout('九尾狐火陣','fox');xs.forEach(x=>Z({k:'fire',x,r:cbOn('fox')?280:140,t:cbOn('fox')?8:4,dmg:dmg*.05,c:'#ff8a3d'}))}
  else if(id==='dragon')A.forEach(e=>{if(sm(e)&&!e.fly){e.lift=1.5;e.liftD=dmg*.5}});
- else if(id==='archer'){const V=inV();if(V.length){const Ts=V.slice().sort((a,b)=>b.hp-a.hp).slice(0,cbOn('archer')?3:1);Ts.forEach(t=>{t.mark=8;sprFx('fx_thunder',t.x,t.y-t.ay*.5,1.2)});const T=Ts[0];addFx({k:'laser',x:h.x+20,y:h.y-60,life:.3,c:'#bfe6ff',w:Math.max(200,T.x-h.x)});sprFx('fx_thunder',T.x,T.y-T.ay*.5,1.6);B.txt.push({x:T.x,y:T.y-T.ay-60,v:'星光標記！',t:0,big:1,crit:1})}}
+ else if(id==='archer'){const V=inV();if(V.length){const Ts=V.slice().sort((a,b)=>b.hp-a.hp).slice(0,cbOn('archer')?3:1);if(cbOn('archer'))cbShout('星蛙標記','archer');Ts.forEach(t=>{t.mark=8;sprFx('fx_thunder',t.x,t.y-t.ay*.5,1.2)});const T=Ts[0];addFx({k:'laser',x:h.x+20,y:h.y-60,life:.3,c:'#bfe6ff',w:Math.max(200,T.x-h.x)});sprFx('fx_thunder',T.x,T.y-T.ay*.5,1.6);B.txt.push({x:T.x,y:T.y-T.ay-60,v:'星光標記！',t:0,big:1,crit:1})}}
  else if(id==='mecha')A.forEach(e=>{e.melt=6;if(e.boss)e.x=Math.min(VW-90,e.x+80)});
- else if(id==='alchemist')B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+(cbOn('alchemist')?40:20))});
- else if(id==='monkey'){A.filter(e=>e.fly).forEach(e=>hit(e,dmg*.4,{c:'#ffc23a',big:1}));for(let i=0,n=cbOn('monkey')?20:10;i<n;i++)Q(.3+i*(cbOn('monkey')?.2:.4),()=>{const V=inV();if(!V.length)return;const o=rnd(V),cx=Math.max(L.front+40,o.x-70);addFx({k:'clone',x:cx,y:G,life:.5,key:myKey('monkey'),fl:1,top:Math.random()<.4?1:0,rt:(Math.random()-.5)*.5});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})})}
+ else if(id==='alchemist'){if(cbOn('alchemist'))cbShout('丹鼓齊鳴','alchemist');B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+(cbOn('alchemist')?40:20))})}
+ else if(id==='monkey'){if(cbOn('monkey'))cbShout('花果山迷陣','monkey');A.filter(e=>e.fly).forEach(e=>hit(e,dmg*.4,{c:'#ffc23a',big:1}));for(let i=0,n=cbOn('monkey')?20:10;i<n;i++)Q(.3+i*(cbOn('monkey')?.2:.4),()=>{const V=inV();if(!V.length)return;const o=rnd(V),cx=Math.max(L.front+40,o.x-70);addFx({k:'clone',x:cx,y:G,life:.5,key:myKey('monkey'),fl:1,top:Math.random()<.4?1:0,rt:(Math.random()-.5)*.5});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})})}
  else if(id==='vampire'){A.forEach(e=>{e.vuln=5;e.vulnS='vampire'});B.vamT=6}
  else if(id==='yukionna'){const cx=(L.front+lim)/2;Z({k:'bliz',x:cx,r:(lim-L.front)/2,t:4,dmg:dmg*.06,slow:.6,c:'#bfefff'});B.shatT=4;B.shatD=dmg*.5}
  else if(id==='catsamurai')Q(.55,()=>{al().forEach(e=>{if(e.boss)hit(e,dmg*2,{c:'#fff',big:1});else if(e.hp<e.max*.3){hit(e,e.hp*1.01,{c:'#ffffff',big:1});sprFx('fx_slash',e.x,e.y-e.ay*.5,1.2)}})});
@@ -1160,15 +1163,15 @@ function ultExtra(h,dmg,al,lim){const id=h.id,src='u:'+id,A=al(),inV=()=>B.enemi
  else if(id==='elf')A.forEach(e=>{e.stun=Math.max(e.stun,3);e.bleed=3;e.bleedD=dmg*.1;e.bleedS=src;if(e.fly&&!(e.pullT>0)){e.fly0=e.fly;e.y0=e.y;e.fly=0;e.y=G;e.pullT=3}});
  else if(id==='kitsune'){let burnt=A.slice();burnt.forEach(e=>{e.burnS=src;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,dmg*.05)});for(let k=0;k<3;k++){const nx=inV().filter(o=>!burnt.includes(o)&&burnt.some(b=>Math.abs(b.x-o.x)<250));nx.forEach(o=>{o.burnS=src;o.burn=Math.max(o.burn||0,3);o.burnD=Math.max(o.burnD||0,dmg*.05);sprFx('fx_fire',o.x,o.y-o.ay*.5,.9)});if(cbOn('fox'))nx.slice(0,3).forEach(o=>Z({k:'fire',x:o.x,r:90,t:4,dmg:dmg*.05,c:'#5ab8ff'}));burnt=burnt.concat(nx)}}
  else if(id==='shark')A.forEach(e=>{e.bleed=6;e.bleedD=dmg*.1;e.bleedS=src;if(e.boss){e.vuln=6;e.vulnS='shark'}});
- else if(id==='tanuki'){A.forEach(e=>{if(sm(e))e.conf=3});if(cbOn('monkey'))for(let i=0;i<6;i++)Q(.3+i*.5,()=>{DSRC='h:monkey';B.enemies.filter(e=>!e.dead&&e.conf>0).slice(0,6).forEach(o=>{addFx({k:'clone',x:Math.max(L.front+40,o.x+(Math.random()<.5?-70:70)),y:G,life:.5,key:myKey('monkey'),fl:Math.random()<.5?1:-1,top:0,rt:0});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})})});for(let i=1;i<=2;i++)Q(i*.8,()=>{al().forEach(e=>hit(e,dmg*.3,{c:'#d0a878',big:1}));addFx({k:'sweep',x:h.x+40,y:G-110,life:.5,c:'#d0a878'})})}
+ else if(id==='tanuki'){A.forEach(e=>{if(sm(e))e.conf=3});if(cbOn('monkey'))cbShout('花果山迷陣','tanuki');if(cbOn('monkey'))for(let i=0;i<6;i++)Q(.3+i*.5,()=>{DSRC='h:monkey';B.enemies.filter(e=>!e.dead&&e.conf>0).slice(0,6).forEach(o=>{addFx({k:'clone',x:Math.max(L.front+40,o.x+(Math.random()<.5?-70:70)),y:G,life:.5,key:myKey('monkey'),fl:Math.random()<.5?1:-1,top:0,rt:0});hit(o,heroAtk('monkey')*NA*2,{c:'#ffc23a',big:1})})});for(let i=1;i<=2;i++)Q(i*.8,()=>{al().forEach(e=>hit(e,dmg*.3,{c:'#d0a878',big:1}));addFx({k:'sweep',x:h.x+40,y:G-110,life:.5,c:'#d0a878'})})}
  else if(id==='general')B.genT=6;
  else if(id==='swordsman')for(let i=0;i<8;i++)Q(.5+i*.09,()=>{const V=al();if(!V.length)return;const o=rnd(V);SWC=1;hit(o,dmg*.5*2,{c:'#c8e8ff',big:1,crit:1});sprFx('fx_slash',o.x,o.y-o.ay*.5,1.3)});
  else if(id==='panda')A.forEach(e=>{if(sm(e)&&!e.fly)e.kb=Math.max(e.kb,320);e.stun=Math.max(e.stun,1.5)});
  else if(id==='jiangshi')A.forEach(e=>{if(sm(e))e.stun=Math.max(e.stun,4)});
  else if(id==='witch')A.forEach(e=>{if(sm(e)){e.frog=3;sprFx('fx_stun',e.x,e.y-e.ay*.5,.9)}});
- else if(id==='mummy'){const g=A.filter(e=>sm(e)&&!e.fly);if(g.length){const cx=g.map(e=>e.x).sort((a,b)=>a-b)[Math.floor(g.length/2)];g.forEach(e=>{e.grpX=cx+(Math.random()-.5)*70;e.grpT=.5;e.stun=Math.max(e.stun,1.5)});if(cbOn('dragon'))Q(.55,()=>{DSRC='u:dragon';const ld=heroAtk('dragon')*7*TR('ult')*2.25*.5;addFx({k:'ring',x:cx,y:G-30,life:.4,c:'#ff5a40',r:160});g.forEach(e=>{if(!e.dead){e.lift=1.5;e.liftD=ld}});shake(6)})}}
+ else if(id==='mummy'){const g=A.filter(e=>sm(e)&&!e.fly);if(g.length){const cx=g.map(e=>e.x).sort((a,b)=>a-b)[Math.floor(g.length/2)];g.forEach(e=>{e.grpX=cx+(Math.random()-.5)*70;e.grpT=.5;e.stun=Math.max(e.stun,1.5)});if(cbOn('dragon'))Q(.55,()=>{cbShout('龍捲縛天','dragon');DSRC='u:dragon';const ld=heroAtk('dragon')*7*TR('ult')*2.25*.5;addFx({k:'ring',x:cx,y:G-30,life:.4,c:'#ff5a40',r:160});g.forEach(e=>{if(!e.dead){e.lift=1.5;e.liftD=ld}});shake(6)})}}
  else if(id==='grandma')B.gmaT=8;
- else if(id==='drummer'){B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+(cbOn('alchemist')?60:30))});B.drmT=6}
+ else if(id==='drummer'){if(cbOn('alchemist'))cbShout('丹鼓齊鳴','drummer');B.heroes.forEach(o=>{if(o!==h)o.charge=Math.min(100,o.charge+(cbOn('alchemist')?60:30))});B.drmT=6}
  DSRC=src}
 /* ---------- 特效 ---------- */
 function addFx(f){if(B.fx.length>140)return;if(f.upd)f.src=DSRC;B.fx.push(f)}
@@ -1176,7 +1179,7 @@ let sprN=0;function sprFx(pre,x,y,sc){if(!pre||!MAN[pre+'_0'])return;let n=0;for
 function ultFx(pre,x,y,sc,delay){addFx({k:'ult',pre,x,y,sc:sc||1,delay:delay||0,life:1+(delay||0)})}
 const SHAKE_ON=false;// 泓：技能畫面震動先取消（會讓人以為卡畫面）
 function shake(a){if(SHAKE_ON)B.shake=Math.max(B.shake,a)}
-function dmgText(x,y,v,big,crit){if(B.txt.length>14)B.txt.shift();B.txt.push({x,y,v:(crit?'爆擊 ':'')+fmt(Math.max(1,v)),t:0,big,crit})}
+function dmgText(x,y,v,big,crit){if(B.txt.length>14){const i=B.txt.findIndex(q=>!q.shout);if(i>=0)B.txt.splice(i,1)}B.txt.push({x,y,v:(crit?'爆擊 ':'')+fmt(Math.max(1,v)),t:0,big,crit})}
 function coinText(e){B.txt.push({x:e.x,y:e.y-e.ay-24,v:'+'+fmt(e.coin),t:0,coin:1})}
 
 /* ---------- 繪圖 ---------- */
@@ -1285,7 +1288,7 @@ drawSprite(hk,h.x,h.y,o);
  for(const f of B.fx)drawFx(f);
  // 字
  ctx.textAlign='center';ctx.lineJoin='round';
- for(const t of B.txt){const a=1-Math.max(0,(t.t-.5)/.3);ctx.globalAlpha=a;const sz=t.crit?Math.round(52*(t.t<.12?1+(.12-t.t)*4:1)):t.coin?26:t.big?40:30;ctx.font=`900 ${sz}px "Noto Sans TC",sans-serif`;
+ for(const t of B.txt){const L0=t.life||.8,a=1-Math.max(0,(t.t-(L0-.3))/.3);ctx.globalAlpha=a;if(t.shout){const sz=Math.round(34*(t.t<.15?1+(.15-t.t)*3:1));ctx.font=`900 ${sz}px "Noto Sans TC",sans-serif`;ctx.lineWidth=7;ctx.strokeStyle='#2a1206';ctx.strokeText(t.v,t.x,t.y);ctx.fillStyle=t.c||'#fff2a0';ctx.fillText(t.v,t.x,t.y);ctx.lineWidth=2;ctx.strokeStyle='rgba(255,255,255,.9)';ctx.strokeText(t.v,t.x,t.y);continue}const sz=t.crit?Math.round(52*(t.t<.12?1+(.12-t.t)*4:1)):t.coin?26:t.big?40:30;ctx.font=`900 ${sz}px "Noto Sans TC",sans-serif`;
   ctx.lineWidth=5;ctx.strokeStyle=t.coin?'#5a3a06':'#3a1408';ctx.strokeText(t.v,t.x,t.y);ctx.fillStyle=t.crit?'#ff5a2a':t.coin?'#ffe066':t.big?'#fff2a0':'#ffffff';ctx.fillText(t.v,t.x,t.y)}
  ctx.globalAlpha=1;
  // 大招全螢幕色
