@@ -469,7 +469,7 @@ const xSt=k=>(S.xb&&S.xb[k]&&S.xb[k].st)||0,xAv=k=>1+.5*(Math.min(5,Math.max(1,x
 const xAtk=k=>teamAvgAtk()*XB[k].atk/10*(1+.5*(xSt(k)-1))*(1+(PS.bdmg||0));
 const xCap=k=>Math.min(1,.25*(1+((S.xMiss||{})[k]||0)));
 const X={cd:1,charge:0,pz:0,tgt:null,hd:0,ttT:6,hdT:10};
-function gourdPos(){const xs=B.beasts.map(b=>b.x),x0=L.gx-120,x1=Math.max(L.gx+260,...xs)+40;return [x0+(x1-x0)*.5+Math.sin(B.time*.7)*20,G-(ZM>1?560:455)+Math.sin(B.time*1.5)*10]}
+function gourdPos(){return [L.gx+20+Math.sin(B.time*.7)*8,G-(ZM>1?520:420)+Math.sin(B.time*1.5)*8]}
 function xDevour(e){if(!e||e.dead||e.boss)return;const[gx,gy]=gourdPos();addFx({k:'xsuck',key:e.key,x0:e.x,y0:e.y-e.ay*.5,x1:gx,y1:gy,life:.6,sc:.6});hit(e,e.hp*1.01+1,{c:'#ff5a3a',small:1,src:'x:taotie',nodps:1});B.ttN=Math.min(50/xAv('taotie'),(B.ttN||0)+1)}
 function xUpd(dt){
  if(B.xenc){B.xenc.t-=dt;const b=$('xBtn');if(B.xenc.t<=0||B.trial||B.xf){B.xenc=null;b.style.display='none'}else{const tx=`⚠ 上古凶獸「${XB[B.xenc.k].n}」出沒！點我挑戰（${Math.ceil(B.xenc.t)}）`;if(b.textContent!==tx)b.textContent=tx;b.style.display='block'}}
@@ -499,7 +499,7 @@ function xDraw(){
  if(k){ctx.strokeStyle='rgba(255,122,168,.9)';ctx.lineWidth=5;ctx.beginPath();ctx.arc(gx,gy,42,-Math.PI/2,-Math.PI/2+Math.PI*2*X.charge/100);ctx.stroke();
   for(let i=0;i<5;i++){const q=(t*.6+i/5)%1;ctx.globalAlpha=.4*(1-q);ctx.fillStyle='#f4ecff';ctx.beginPath();ctx.arc(gx+Math.sin(q*6+i)*10+q*30,gy-36-q*60,5+q*10,0,7);ctx.fill()}}
  ctx.restore();drawSprite(k?'g_open':'g_closed',gx,gy,{rot:Math.sin(t*1.2)*.1,sx:.9,sy:.9});
- if(k){const m=MAN['x_'+k];let x=gx+130,y=gy+30+Math.sin(t*2.2)*8,key='x_'+k,sc=.85;
+ if(k){const m=MAN['x_'+k];let x=gx+120,y=gy-40+Math.sin(t*2.2)*8,key='x_'+k,sc=.85;
   if(X.pz>0){const q=Math.sin(Math.PI*(1-X.pz/.5));x+=46*q;y-=10*q;key='xa_'+k;sc=.85+.08*q}
   if(m){ctx.save();ctx.globalAlpha=.25;ctx.strokeStyle='#f4ecff';ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(gx+6,gy-34);ctx.quadraticCurveTo(gx+50,gy-70,x-20,y-(XB[k].fly?0:m[3]*.25*sc));ctx.stroke();ctx.restore();drawSprite(key,x,XB[k].fly?y:y+m[3]*.25*sc,{sx:sc,sy:sc})}}}
 function xOffer(k){if(!unl('xiong')||B.trial||B.xf)return;B.xenc={k:k||Object.keys(XB)[Math.floor(Math.random()*4)],t:60}}
