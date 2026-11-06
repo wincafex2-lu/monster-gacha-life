@@ -1,7 +1,7 @@
 """第八批美術打包（上古凶獸：饕餮、檮杌、混沌、窮奇＋葫蘆）。接在前面幾支之後跑，合併進同一份 manifest。
 用法：python3 pack8.py <原圖資料夾> <assets 資料夾>
 凶獸跟神獸同比例（x_<id> 站姿、xa_<id> 撲擊格）；窮奇是飛的，錨點放身體正中間。
-大招圖 xu_<id> 存 1000 寬；葫蘆 g_closed／g_open 存 128（跟法寶圖示一樣）。"""
+大招圖 xu_<id> 存 1000 寬；葫蘆 g_closed／g_open 存 256 高（打開的去掉原圖那縷細煙）。"""
 import sys, os, json
 SRC, OUT = sys.argv[1], sys.argv[2]
 src = open(os.path.join(os.path.dirname(__file__), 'pack.py'), encoding='utf-8').read()
@@ -39,7 +39,11 @@ for c in ('taotie', 'taowu', 'hundun', 'qiongqi'):
     im = keyed(f'{c}__ult.png'); im = im.crop(im.getbbox()); f = 1000 / im.width
     im = im.resize((1000, max(1, round(im.height * f))), Image.LANCZOS); save(f'xu_{c}', im, 500, im.height / 2, q=80)
 for g in ('closed', 'open'):
-    im = keyed(f'gourd__{g}.png'); im = im.crop(im.getbbox()); f = 128 / max(im.size)
+    im = keyed(f'gourd__{g}.png'); im = im.crop(im.getbbox())
+    if g == 'open':  # 畫上去的那縷細煙拿掉（程式自己畫煙）：從上往下找到葫蘆口那一列才開始
+        A = np.array(im)[..., 3] > 128; r0 = next(y for y in range(A.shape[0]) if A[y].sum() > A.shape[1] * .15)
+        im = im.crop((0, r0, im.width, im.height)); im = im.crop(im.getbbox())
+    f = 256 / max(im.size)
     im = im.resize((max(1, round(im.width * f)), max(1, round(im.height * f))), Image.LANCZOS)
     save(f'g_{g}', im, im.width / 2, im.height / 2)
 json.dump(MAN, open(mp, 'w'), separators=(',', ':'))

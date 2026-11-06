@@ -486,7 +486,7 @@ function xUpd(dt){
  X.charge=Math.min(100,X.charge+dt*100/26*(1+PS.charge));if(X.charge>=100&&T.length)xUlt(k);DSRC='etc'}
 function xUlt(k){X.charge=0;DSRC='x:'+k;const u=1+.5*(xUl(k)-1),a=xAtk(k)*u,al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);SND.play('ult','magic');
  const el=document.getElementById('ultName');el.textContent=XB[k].u+'！';el.style.setProperty('--c','#ff7aa8');el.classList.remove('show');void el.offsetWidth;el.classList.add('show');shake(10);B.hitstop=.08;
- if(MAN['xu_'+k])addFx({k:'bult',key:'xu_'+k,life:1.2});
+ if(MAN['xu_'+k]){const o=xLay();addFx({k:'bult',key:'xu_'+k,life:1.2,ox:o.x+o.hw,oy:o.y-o.mh*.5,fly:k==='qiongqi'})};
  if(k==='taotie'){al().forEach(e=>{if(e.boss)hit(e,a*30,{c:'#ff5a3a',big:1});else if(e.hp<e.max*.2)xDevour(e);else hit(e,a*2,{c:'#ff8a3a',big:1})})}
  else if(k==='qiongqi'){const e=al().sort((p,q)=>q.hp-p.hp)[0];if(e){hit(e,a*50,{c:'#c08aff',big:1});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.6,c:'#c08aff',r:220})}}
  else if(k==='taowu'){al().forEach(e=>{hit(e,a*5,{c:'#d8b88a',kb:160,big:1});if(!e.boss)e.stun=Math.max(e.stun,3)});shake(14)}
@@ -498,9 +498,8 @@ function gourdPos(){const o=xLay();return [o.gx,o.gy]}
 function xDraw(){
  if(!unl('xiong')||!Object.keys(S.xb||{}).length)return;const o=xLay(),k=o.k,t=B.time,gx=o.gx,gy=o.gy;
  // 葫蘆在凶獸左上方，口朝右下倒出仙煙，凶獸踩在煙上
- const th=k?1.99+Math.sin(t*1.2)*.06:Math.sin(t*1.2)*.1,mx=gx+Math.sin(th)*24,my=gy-Math.cos(th)*24;
- ctx.save();const gr=ctx.createRadialGradient(gx,gy,4,gx,gy,70);gr.addColorStop(0,'rgba(255,120,170,.45)');gr.addColorStop(1,'rgba(255,120,170,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(gx,gy,70,0,7);ctx.fill();
- if(k){ctx.strokeStyle='rgba(255,122,168,.9)';ctx.lineWidth=5;ctx.beginPath();ctx.arc(gx,gy,40,-Math.PI/2,-Math.PI/2+Math.PI*2*X.charge/100);ctx.stroke()}
+ const th=k?1.99+Math.sin(t*1.2)*.06:Math.sin(t*1.2)*.1,mx=gx+Math.sin(th)*26,my=gy-Math.cos(th)*26;
+ ctx.save();{const full=k&&X.charge>=95,ga=k?.2+.35*X.charge/100+(full?.25*Math.sin(t*10):0):.2;const gr=ctx.createRadialGradient(gx,gy,4,gx,gy,56);gr.addColorStop(0,`rgba(255,236,160,${ga})`);gr.addColorStop(1,'rgba(255,220,120,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(gx,gy,56,0,7);ctx.fill()}
  ctx.restore();
  if(k&&o.m){let key='x_'+k,sc=o.sc,x=o.x,y=o.y;const m=o.m,hw=o.hw;
   if(X.pz>0){const q=Math.sin(Math.PI*(1-X.pz/.5));x+=46*q;y-=10*q;key='xa_'+k;sc+=.08*q}
@@ -508,12 +507,12 @@ function xDraw(){
   ctx.save();// 煙從葫蘆口直直噴向凶獸，越往前越寬，到腳下聚成雲
   // 像倒水：順著葫蘆口方向噴出，受重力往下彎，落到凶獸身上再流到腳下
   const ex=x-hw*.15,ey=y-o.mh*.55,D=Math.hypot(ex-mx,ey-my)*.75,c1x=mx+Math.sin(th)*D,c1y=my-Math.cos(th)*D,P=u=>{const iu=1-u;return [iu*iu*mx+2*iu*u*c1x+u*u*ex,iu*iu*my+2*iu*u*c1y+u*u*ey]};X.P=P;
-  for(let i=0;i<36;i++){const u=(t*.6+i/36)%1,[px,py]=P(u),w=Math.sin(t*2.6+i*2.3)*u*8;puff(px+w,py,7+u*u*hw*.75,Math.min(1,.55+u*5))}
+  for(let i=0;i<56;i++){const u=(t*.6+i/56)%1,[px,py]=P(u),w=Math.sin(t*2.6+i*2.3)*u*10;puff(px+w,py,7+u*u*hw*.75,Math.min(1,.55+u*5))}
   for(let i=0;i<10;i++){const u=(t*.8+i/10)%1;puff(ex+(x-ex)*u+Math.sin(t*2+i)*hw*.35*u,ey+(y-ey)*u,hw*.55+u*hw*.2,.9)}
   for(let i=0;i<7;i++)puff(x+(i/6-.5)*hw*1.5+Math.sin(t*1.3+i)*6,y+4+Math.sin(t*1.7+i)*3,18+8*Math.sin(t*2+i*1.9),1);
   ctx.restore();drawSprite(key,x,XB[k].fly?y-m[1]*.25*sc:y,{sx:sc,sy:sc});
   ctx.save();for(let i=0;i<36;i++){const u=(t*.6+i/36)%1;if(u<.6)continue;const [px,py]=X.P(u);puff(px,py,7+u*u*hw*.75,Math.max(0,(1-u)/.4)*.3)}ctx.restore()}
- drawSprite(k?'g_open':'g_closed',gx,gy,{rot:th,sx:.9,sy:.9})}
+ drawSprite(k?'g_open':'g_closed',gx,gy,{rot:th,sx:.45,sy:.45})}
 function xOffer(k){if(!unl('xiong')||B.trial||B.xf)return;B.xenc={k:k||Object.keys(XB)[Math.floor(Math.random()*4)],t:60}}
 function xStart(){if(!B.xenc||B.trial||B.xf)return;B.xf={k:B.xenc.k,t:0};B.xenc=null;$('xBtn').style.display='none';closePanel();startStage()}
 function xEnd(win){const k=B.xf.k,d=XB[k];B.state=win?'win':'lose';B.stateT=0;const boss=B.enemies.find(e=>e.xbz);const bx=boss?boss.x:VW*.7,by=boss?boss.y-boss.ay*.5:G-150;B.enemies.forEach(e=>{if(!e.dead)e.dead=.001});document.getElementById('bossBar').style.display='none';SND.setBoss(false);
@@ -1069,13 +1068,13 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
  const ul=bUlv(b.k),a=beastAtk(b.k)*(1+.5*(ul-1)),al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);b.anim=.45;shake(10);B.hitstop=.08;
  if(b.k==='baihu'){al().forEach(e=>{if(!e.fly){hit(e,a*6,{c:'#ffffff',kb:120,big:1});e.stun=Math.max(e.stun,1.5)}else hit(e,a*3,{c:'#ffffff',big:1})});addFx({k:'ring',x:b.x+60,y:G-40,life:.7,c:'#ffffff',r:900*ZM});ultFx('ult_mecha',b.x+300,G-150,1)}
  else if(b.k==='qinglong'){for(let j=0;j<10;j++)setTimeout(()=>{DSRC='b:qinglong';const T=al();if(!T.length)return;const e=T[Math.floor(Math.random()*T.length)];B.enemies.forEach(o=>{if(!o.dead&&Math.abs(o.x-e.x)<90)hit(o,a*3,{c:'#bfa0ff',big:1})});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.8);shake(4)},j*200)}
- else if(b.k==='zhuque'){const sh=RES[3].on();if(sh){addFx({k:'bult',key:'bu_bifang',life:1.2});B.txt.push({x:VW*.5,y:G-300,v:'雙火鳥！',t:0,big:1})}al().forEach(e=>{if(sh){e.burnD=Math.max(e.burnD||0,a*1.2)}hit(e,a*4,{c:'#ff8a3d',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
+ else if(b.k==='zhuque'){const sh=RES[3].on();if(sh){addFx({k:'bult',key:'bu_bifang',life:1.2,ox:b.x+80,oy:(b.y||G)-120,fly:1});B.txt.push({x:VW*.5,y:G-300,v:'雙火鳥！',t:0,big:1})}al().forEach(e=>{if(sh){e.burnD=Math.max(e.burnD||0,a*1.2)}hit(e,a*4,{c:'#ff8a3d',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
  else if(b.k==='xuanwu'){B.shield=4+.5*(ul-1);B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*(.1+.05*(ul-1)));sprFx('fx_heal',L.gx,G-110,2);if(RES[1].on()){al().forEach(e=>{if(!e.boss)e.conf=Math.max(e.conf||0,B.shield)});B.txt.push({x:L.gx+200,y:G-260,v:'龜蛇合體！',t:0,big:1})}}
  else if(b.k==='qilin'){B.qlT=8;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.3);al().forEach(e=>hit(e,a*3,{c:'#ffd84a',big:1}));sprFx('fx_heal',L.gx,G-110,2.2)}
  else if(b.k==='baize'){B.enemies.forEach(e=>{if(!e.dead&&e.x<VW-50){e.bzv=6;hit(e,a*2,{c:'#e8f0ff',big:1})}})}
  else if(b.k==='tengshe'){al().forEach(e=>{e.fog=6;hit(e,a*2,{c:'#dde8f0',big:1});if(!e.boss)e.conf=Math.max(e.conf||0,6)});addFx({k:'frost',life:1.4,c:'#dde8f0',fk:'ice'})}
  else if(b.k==='bifang'){al().forEach(e=>{hit(e,a*4,{c:'#3ad0ff',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
- if(BEAST[b.k].sh&&MAN['bu_'+b.k])addFx({k:'bult',key:'bu_'+b.k,life:1.2});
+ if(BEAST[b.k].sh&&MAN['bu_'+b.k])addFx({k:'bult',key:'bu_'+b.k,life:1.2,ox:b.x+110,oy:(b.y||G)-90,fly:b.k==='bifang'});
 }
 /* ---------- 大招 ---------- */
 // 大招冷卻：每招依強度不同（秒）；充能加成、普攻充能、別人送的充能最多只能把冷卻降到一半
@@ -1089,9 +1088,10 @@ function doUlt(h){
  DSRC='u:'+h.id;if(h.id==='dragon'&&PS.mx&&PS.mx.dragon)B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,3)}); const d=CH[h.id],dmg=heroAtk(h.id)*7*(1+PS.ultm)*TR('ult')*(d.r==='L'?1.5:1)*(h.id==='mecha'&&PS.aw&&PS.aw.mecha?1.5:1)*(isMy(h.id)?1.5:1);shake(10);B.hitstop=.08;
  const UR=ULT_R[CH[h.id].ult]||900,lim=Math.min(VW-60,L.front+UR),alive=()=>B.enemies.filter(e=>!e.dead&&e.x<lim);
  if(ULTFX[h.id]){const a=alive().sort((x,y)=>x.x-y.x);const pre=ULTFX[h.id];
-  if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
+  // 泓 2026-11-06：個人大招圖縮小、放在自己面前（會分出去的星弓少女照舊打在怪身上）
+  if(h.id==='alchemist')ultFx(pre,h.x+110,h.y-60,.55);
   else if(h.id==='archer'){const xs=a.length?[a[0].x,a[Math.floor(a.length/2)].x,a[a.length-1].x]:[L.front+300];[...new Set(xs.map(x=>Math.round(x/150)))].forEach((q,i)=>ultFx(pre,q*150,G-150,.9,i*.12))}
-  else {const c=a.length?a[Math.min(a.length-1,1)]:null;ultFx(pre,c?c.x:L.front+320,G-150,1.15)}}
+  else ultFx(pre,h.x+120,h.y-60,.6)}
  if(h.id==='moonrabbit')B.shield=Math.max(B.shield,4);
  if(d.ult==='freeze')alive().forEach(e=>sprFx(d.fk==='ice'?'fx_ice':'fx_stun',e.x,e.y-e.ay*.5,1));
  if(d.ult==='heal')sprFx('fx_heal',L.gx,G-110,2);
@@ -1319,11 +1319,16 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
   case 'dust':for(let i=0;i<8;i++){ctx.fillStyle=`rgba(190,170,140,${.6*(1-p)})`;ctx.beginPath();ctx.arc(f.x+(i-4)*14*(.5+p),f.y-6-p*20*(i%3),6+p*10,0,Math.PI*2);ctx.fill()}break;
   case 'xslash':{const m=MAN.xu_qiongqi;ctx.save();ctx.globalAlpha=1-p;drawSprite('xu_qiongqi',f.x,f.y+m[3]*.15,{sx:.3+.1*p,sy:.3+.1*p});ctx.restore();break}
   case 'xsuck':{const q=Math.min(1,p*1.25),e2=q*q;ctx.save();ctx.globalAlpha=1-Math.max(0,p-.8)*5;drawSprite(f.key,f.x0+(f.x1-f.x0)*e2,f.y0+(f.y1-f.y0)*e2,{sx:f.sc*(1-q*.92),sy:f.sc*(1-q*.92),rot:q*6});ctx.restore();break}
-  case 'bult':{const m=MAN[f.key];if(m){ctx.save();ctx.globalAlpha=p<.15?p/.15:p>.7?(1-p)/.3:1;if(f.cx==null){const es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);f.cx=es.length?Math.min(VW*.78,Math.max(VW*.64,es.reduce((q,e)=>q+e.x,0)/es.length)):VW*.7}drawSprite(f.key,f.cx,G-190+m[3]/4,{sx:1.1*(1+.08*p),sy:1.1*(1+.08*p)});ctx.restore()}break}
+  case 'bult':{const m=MAN[f.key];if(m){ctx.save();ctx.globalAlpha=p<.15?p/.15:p>.7?(1-p)/.3:1;
+   if(f.cx==null){const es=B.enemies.filter(e=>!e.dead&&e.x<VW-60);f.cx=es.length?Math.min(VW*.78,Math.max(VW*.64,es.reduce((q,e)=>q+e.x,0)/es.length)):VW*.7}
+   if(f.ox==null)drawSprite(f.key,f.cx,G-190+m[3]/4,{sx:1.1,sy:1.1});
+   else if(f.fly){const q=ease(Math.min(1,p*1.6)),sc=.4+.6*q;drawSprite(f.key,f.ox+(f.cx-f.ox)*q,f.oy+(G-190-f.oy)*q+m[3]/4*sc,{sx:sc,sy:sc})}// 會飛出去的：從自己身上飛到怪物那邊、越飛越大
+   else{const sc=.45*(1+.08*p);drawSprite(f.key,f.ox+m[0]/4*sc,f.oy,{sx:sc,sy:sc})}// 其他：縮小放在自己面前
+   ctx.restore()}break}
   case 'dog':{const bite=f.bite>0,fr=bite?'dog_bite_f'+(1+Math.floor(f.t*8)%2):'dog_run_f'+(1+Math.floor(f.t*14)%4);glow(f.x,f.y-30,46,'rgba(255,230,160,.8)',.35);ctx.save();ctx.globalAlpha=f.t>f.life-.2?(f.life-f.t)/.2:1;drawSprite(fr,f.x,f.y,{});ctx.restore();break}
   case 'ride':{const k=myKey('nezha');ctx.save();if(MAN.wheel_firetrail)drawSprite('wheel_firetrail',f.x-(f.dir>0?20:-20),f.y-14,{sx:f.dir>0?1.3:-1.3,sy:1.3});glow(f.x,f.y-60,90,'rgba(255,90,60,.9)',.5);drawSprite(k,f.x,f.y,{sx:f.dir>0?1.1:-1.1,sy:1.1});ctx.restore();break}
   case 'fly':{const q=ease(Math.min(1,p*1.1)),x=f.x0+(f.x1-f.x0)*q;ctx.save();ctx.globalAlpha=p>.8?(1-p)/.2:1;glow(x,f.y,140,f.c||'rgba(160,230,255,.9)',.5);drawSprite(f.key,x,f.y+Math.sin(p*9)*16,{sx:f.sc||1.6,sy:f.sc||1.6});ctx.restore();break}
-  case 'crack':{ctx.save();ctx.globalAlpha=Math.min(1,(f.life-f.t)/.5)*.85;ctx.strokeStyle='#2a1a10';ctx.lineWidth=10;ctx.beginPath();let y=G+6;ctx.moveTo(f.x0,y);for(let x=f.x0;x<f.x1;x+=40){ctx.lineTo(x+20,G+((x/40)%2?14:-2));}ctx.stroke();ctx.strokeStyle='rgba(255,220,140,.8)';ctx.lineWidth=3;ctx.stroke();glow((f.x0+f.x1)/2,G,Math.max(100,(f.x1-f.x0)/2),'rgba(255,200,120,.6)',.25);ctx.restore();break}
+  case 'crack':{ctx.save();ctx.globalAlpha=Math.min(1,(f.life-f.t)/.5)*.85;ctx.strokeStyle='#2a1a10';ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(f.x0,G+6);let zi=0;for(let x=f.x0;x<f.x1;x+=40){ctx.lineTo(x+20,G+(zi++%2?16:-4));}ctx.stroke();ctx.strokeStyle='rgba(255,220,140,.8)';ctx.lineWidth=3;ctx.stroke();glow((f.x0+f.x1)/2,G,Math.max(100,(f.x1-f.x0)/2),'rgba(255,200,120,.6)',.25);ctx.restore();break}
   case 'clone':{// 毫毛分身：分身猴在怪旁邊冒出來敲一下（半透明、小一號）
    const k2=MAN[f.key+'_a2']?f.key+'_a2':f.key;glow(f.x,f.y-60,70,'rgba(255,210,90,.9)',.5*(1-p));ctx.save();ctx.globalAlpha=p<.15?p/.15*.9:p>.7?(1-p)/.3*.9:.9;{const fl=f.fl||1,dy=f.top?(p<.3?-300*(1-p/.3)*(1-p/.3):-Math.sin(Math.min(1,(p-.3)*3)*Math.PI)*14):-Math.sin(Math.min(1,p*2)*Math.PI)*26;drawSprite(p<.35?f.key:k2,f.x,f.y,{sx:.85*fl,sy:.85,dy,rot:f.top&&p<.3?f.rt*fl*3:0})}ctx.restore();break}
   case 'staff':{// 齊天大聖：巨大金箍棒從天上砸下來
