@@ -93,3 +93,7 @@
 - 10:24 台灣時間 敖丙 3 階 f1～f3、4 階 f1、f2 **通過**（頭 89～95% 同像素、腳底同站立；銀鱗肩甲、淡青披風、4 階小冰龍和冰晶長杖保留）。繼續 4 階 f3、5、6 階。
 - 10:37 台灣時間 敖丙 4 階 f3、5 階 f1～f3、6 階 f1、f2 **通過**（頭頂、腳底同站立，臉一樣大；銀龍冠、冰龍、龍頭冰晶杖、6 階六角冰環和雙龍保留，動作跟 1 階一致）。繼續 6 階 f3，之後投射物、道具、大招。
 - 10:48 台灣時間 敖丙 6 階 f3 **通過** → **攻擊格 54 張全收**。投射物 `p_qiankun`（金蓮紋圈＋紅布）、`p_icepearl`（龍鱗冰珠＋三片冰片）、`p_skyeye`（金白眼形光束）**通過**（實色、指向右）。下一步道具 8 張（哮天犬跑 4、咬 2、火尾、冰龍），再大招 4 張。
+- 11:01 台灣時間 哮天犬 6 張（dog_run_f1～f4、dog_bite_f1～f2）**退回重畫**：畫成寫實細長的灰狗，跟遊戲的 Q 版角色放一起畫風不搭；每格腳底高低不一（851～963，要 978）；跑步 f2 像趴著。
+  重畫方式：先畫 `dog_run_f1.png` 當定稿，附 `ref/BEAST__baihu__stand.png`（神獸 Q 版畫風）和 `yangjian__t1__stand.png`（大小參考）：
+  `Draw an original CHIBI hound in the SAME cute pixel-art style as image 1 (big head about 40% of the body height, short legs, round chunky shapes, same outline and shading). Silver-grey fur, pointed ears, long fluffy tail, a dark-blue collar with a small silver bell, cool and loyal, not scary. Side view facing RIGHT, running pose: front legs stretched forward, back legs pushing. Size: about half as tall as the character in image 2 (about 330-360 px tall). Paws on the ground line at y=978. Solid magenta #FF00FF background, no effects, no text.`
+  f1 通過後，其他 5 格**用 f1 直接改**（頭、身體、毛色、項圈完全一樣，只動腳、尾巴、嘴）：f2 四腳收在肚子下、f3 後腳蹬地前腳離地、f4 四腳離地騰空（最低點離地不超過 30px）；bite_f1 張大嘴往前撲、bite_f2 咬合頭往下甩。除了 f4，腳底都在 y=978。
