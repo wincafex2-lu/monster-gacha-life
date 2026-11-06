@@ -1091,7 +1091,7 @@ function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult
 const ULT_R={sweep:900,slam:750,rain:1100,freeze:1000,heal:600,drain:900,laser:99999,focus:0};
 function doUlt(h){
  DSRC='u:'+h.id;if(h.id==='dragon'&&PS.mx&&PS.mx.dragon)B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,3)}); const d=CH[h.id],dmg=heroAtk(h.id)*7*(1+PS.ultm)*TR('ult')*(d.r==='L'?1.5:1)*(h.id==='mecha'&&PS.aw&&PS.aw.mecha?1.5:1)*(isMy(h.id)?1.5:1);shake(10);B.hitstop=.08;
- const UR=ULT_R[CH[h.id].ult]||900,lim=Math.min(VW-60,L.front+UR),alive=()=>B.enemies.filter(e=>!e.dead&&e.x<lim);
+ const UR=h.id==='yangjian'?950:ULT_R[CH[h.id].ult]||900,lim=Math.min(VW-60,L.front+UR),alive=()=>B.enemies.filter(e=>!e.dead&&e.x<lim);
  if(ULTFX[h.id]){const a=alive().sort((x,y)=>x.x-y.x);const pre=ULTFX[h.id];
   if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
   else if(h.id==='archer'){const xs=a.length?[a[0].x,a[Math.floor(a.length/2)].x,a[a.length-1].x]:[L.front+300];[...new Set(xs.map(x=>Math.round(x/150)))].forEach((q,i)=>ultFx(pre,q*150,G-150,.9,i*.12))}
