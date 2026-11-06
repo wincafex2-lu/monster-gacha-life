@@ -314,7 +314,7 @@ const CB={yangjian:{p:['general'],n:'天兵天將',d:'將軍放大招時，楊�
 const CB_P=10,cbOn=id=>!!(PS.cb&&PS.cb[id]),cbPart=id=>!!(PS.cbp&&PS.cbp[id]);
 const MY_COST=1000,isMy=id=>!!(S.roster[id]&&S.roster[id].my),myKey=id=>`c_${id}_${isMy(id)&&SRC[`c_${id}_6`]?6:S.roster[id].tier}`;
 const R10FX={yangjian:{n:'哮天神犬',d:'哮天犬改成每 3 下就衝一次'},nezha:{n:'摘下乾坤圈',d:'每 30 秒摘下乾坤圈魔化 8 秒：攻擊 ×3、攻速 ×2、普攻帶火（燒傷）、乾坤圈彈跳 4 次'},aobing:{n:'寒冰封海',d:'普攻變慢改成 20% 機會直接凍住 1.5 秒'},fox:{n:'天狐焚天',d:'燒傷傷害 ×3'},dragon:{n:'龍王降臨',d:'普攻暈眩機率 25% → 50%，暈 2 秒'},archer:{n:'星河倒懸',d:'星隕一擊觸發機率 20% → 40%'},mecha:{n:'無限核心',d:'放完大招，自己馬上回 50 充能'},alchemist:{n:'金丹大成',d:'仙丹爐火的全隊攻擊 +30% 變成 +100%'},monkey:{n:'大鬧天宮',d:'齊天大聖改成每 3 下就砸一次'}};
-const PS0=()=>({fbatk:0,atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0});
+const PS0=()=>({fbatk:0,atk:0,regen:0,slow:0,coin:0,charge:0,hp:0,front:0,back:0,crit:0,dr:0,mslow:0,boss:0,cap:0,spd:0,wind:0,bind:0,seal:0,ultm:0,critd:0,ctrl:0,burnm:0,bdmg:0,elite:0,flyd:0,burnc:0,burnv:0});
 let PS=PS0();
 function calcPassives(){PS=PS0();PS.mx={};PS.aw={};PS.r10={};PS.my={};S.team.slice(0,slots()).forEach(id=>{if(isMax(id))PS.mx[id]=1;if(isAw(id))PS.aw[id]=1;if(isR10(id))PS.r10[id]=1;if(isMy(id))PS.my[id]=1});
  if(PS.mx.disciple)PS.front+=.2;if(PS.mx.grandma)PS.charge+=.25;if(PS.mx.general)PS.dr+=.04*S.team.slice(0,slots()).filter(id=>['melee','tank'].includes(CH[id].role)).length;(S.fbOn||[]).slice(0,fbSlots()).forEach(k=>{if(S.fb[k])PS[FB[k].k]+=fbV(k)});
@@ -429,30 +429,40 @@ const BEAST={
  baihu:{n:'白虎',atk:14,rate:.8,d:'撲咬前方一群怪物'},
  qinglong:{n:'青龍',atk:9,rate:.6,fly:1,fx:'fx_thunder',d:'在空中放雷，打一整排，也打得到飛的'},
  zhuque:{n:'朱雀',atk:8,rate:.7,fly:1,fx:'fx_fire',d:'丟火焰，炸一群還會燒傷'},
- xuanwu:{n:'玄武',atk:7,rate:.45,fx:'fx_stun',d:'震地讓前方怪物暈住，山門受傷 -15%'}
+ xuanwu:{n:'玄武',atk:7,rate:.45,fx:'fx_stun',d:'震地讓前方怪物暈住，山門受傷 -15%'},
+ qilin:{n:'麒麟',atk:24,rate:.7,sh:1,d:'踏雲衝撞最前面的一群怪'},
+ baize:{n:'白澤',atk:20,rate:.8,sh:1,d:'看穿一隻怪，標記 4 秒（受全隊傷害 ×1.5）'},
+ tengshe:{n:'騰蛇',atk:18,rate:.6,fly:1,sh:1,d:'吐雲霧團，打中的怪迷路 1 秒（往回走）'},
+ bifang:{n:'畢方',atk:18,rate:.7,fly:1,sh:1,d:'吐一道火焰，打中的怪燒傷 3 秒'}
 };
 // 神獸光環（上陣就有效，神獸等級越高越強）、大招、陣法搭配
-const BAURA={baihu:{k:'crit',v:.10,t:'全隊爆擊率'},qinglong:{k:'charge',v:.15,t:'全隊大招充能'},zhuque:{k:'coin',v:.20,t:'打怪銅錢'},xuanwu:{k:'hp',v:.20,t:'山門血量'}};
+const BAURA={baihu:{k:'crit',v:.10,t:'全隊爆擊率'},qinglong:{k:'charge',v:.15,t:'全隊大招充能'},zhuque:{k:'coin',v:.20,t:'打怪銅錢'},xuanwu:{k:'hp',v:.20,t:'山門血量'},qilin:{k:'ultm',v:.5,t:'全隊大招傷害'},baize:{k:'critd',v:.5,t:'全隊爆擊傷害'},tengshe:{k:'ctrl',v:.5,t:'被控住（暈、慢、迷路）的怪受傷'},bifang:{k:'burnm',v:1,t:'全隊燒傷傷害'}};
 // 神獸每 50 級多一個效果（Lv50／100／150／200 共 4 個），超過 200 級後每 50 級全部效果再升一級（每級 +50%）
 const P1=v=>`+${Math.round(v*100)}%`,P2=v=>`+${(v*100).toFixed(1)}%`;
 const BFX={baihu:[{k:'front',v:.15,t:'近戰・坦克傷害',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'bind',v:.03,t:'普攻定身 1 秒機率',f:P1},{k:'boss',v:.15,t:'打 Boss・魔頭傷害',f:P1}],
  qinglong:[{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'spd',v:.08,t:'全隊攻擊速度',f:P1},{k:'seal',v:.5,t:'每 12 秒天雷打全場（平均攻擊 ×',f:v=>`${(3*v).toFixed(1)}）`},{k:'charge',v:.10,t:'全隊大招充能',f:P1}],
  zhuque:[{k:'coin',v:.15,t:'打怪銅錢',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'back',v:.15,t:'遠程・法術傷害',f:P1},{k:'cap',v:.015,t:'普攻直接燒掉小怪機率',f:P2}],
- xuanwu:[{k:'dr',v:.05,t:'山門受傷減少',f:P1},{k:'regen',v:.005,t:'山門每秒回血',f:P2},{k:'mslow',v:.06,t:'怪物走路變慢',f:P1},{k:'hp',v:.20,t:'山門血量',f:P1}]};
+ xuanwu:[{k:'dr',v:.05,t:'山門受傷減少',f:P1},{k:'regen',v:.005,t:'山門每秒回血',f:P2},{k:'mslow',v:.06,t:'怪物走路變慢',f:P1},{k:'hp',v:.20,t:'山門血量',f:P1}],
+ qilin:[{k:'ultm',v:.15,t:'全隊大招傷害',f:P1},{k:'bdmg',v:.2,t:'神獸傷害',f:P1},{k:'regen',v:.003,t:'山門每秒回血',f:P2},{k:'charge',v:.1,t:'全隊大招充能',f:P1}],
+ baize:[{k:'critd',v:.2,t:'全隊爆擊傷害',f:P1},{k:'elite',v:.2,t:'打精英怪傷害',f:P1},{k:'crit',v:.05,t:'全隊爆擊率',f:P1},{k:'boss',v:.15,t:'打 Boss・魔頭傷害',f:P1}],
+ tengshe:[{k:'ctrl',v:.15,t:'被控住的怪受傷',f:P1},{k:'mslow',v:.05,t:'怪物走路變慢',f:P1},{k:'bind',v:.03,t:'普攻定身 1 秒機率',f:P1},{k:'flyd',v:.2,t:'打飛行怪傷害',f:P1}],
+ bifang:[{k:'burnm',v:.2,t:'全隊燒傷傷害',f:P1},{k:'burnc',v:.05,t:'普攻點燃機率',f:P1},{k:'atk',v:.08,t:'全隊攻擊',f:P1},{k:'burnv',v:.1,t:'燒傷中的怪受全隊傷害',f:P1}]};
 // 神獸改成碎片升星（泓 2026-11-06）：1～10 星，每升一星只加一項：2～5 星先開 4 個加成效果，6～10 星大招各升一級
 // 星數上限 30（泓：反正要慢慢抽、跟人物搶靈石）；第 n 星要的碎片
 const B_MAX=30,B_FXAT=[2,3,4,5],B_BRK=20,B_BRKMAX=0,B_STAR=[0,100,30,40,60,80,100,130,160,200,250].concat(Array.from({length:20},(_,i)=>300+50*i));
 // 神獸召喚分兩個系列池
 const CODES={'封神降臨':{k:'fengshen',n:'封神系列'},'山海現世':{k:'shanhai',n:'山海經神獸'},'凶獸出世':{k:'xiong',n:'上古凶獸'},'測試跳關':{k:'jump',n:'跳關按鈕'}},unl=k=>!!(S.unl&&S.unl[k]);
-const BSER={sishen:{n:'四神獸',ks:['baihu','qinglong','zhuque','xuanwu']},shanhai:{n:'山海經神獸',ks:[]}};
+const BSER={sishen:{n:'四神獸',ks:['baihu','qinglong','zhuque','xuanwu']},shanhai:{n:'山海經神獸',ks:['qilin','baize','tengshe','bifang']}};
+const bTeamHas=k=>S.beastTeam.slice(0,beastSlots()).includes(k)&&!!S.beast[k],wufang=()=>bTeamHas('qilin')&&['baihu','qinglong','zhuque','xuanwu'].every(bTeamHas);
+const RES=[{n:'五方神獸齊聚',ks:['qilin','baihu','qinglong','zhuque','xuanwu'],d:'麒麟坐鎮中央、四神獸守四方：全部神獸傷害 ×3，四神獸光環 ×2（要 5 格神獸欄）',on:()=>wufang()},{n:'龜蛇合體',ks:['tengshe','xuanwu'],d:'玄甲護盾期間起霧，小怪迷路往回走',on:()=>bTeamHas('tengshe')&&bTeamHas('xuanwu')},{n:'洞悉萬物',ks:['baize'],hero:'archer',d:'白澤標記的怪，星弓少女的星隕一擊必定觸發',on:()=>bTeamHas('baize')&&S.team.slice(0,slots()).includes('archer')},{n:'雙火鳥',ks:['bifang','zhuque'],d:'朱雀火雨時畢方一起降天火，燒傷 ×2',on:()=>bTeamHas('bifang')&&bTeamHas('zhuque')}];
 const bSt=k=>S.beast[k]?S.beast[k].st||1:0;
 const bFxN=k=>B_FXAT.filter(x=>bSt(k)>=x).length;
 const bFxLv=(k,i)=>{const st=bSt(k);let n=1;for(let x=6;x<=Math.min(st,15);x++)if((x-6)%4===i)n++;return n},bUlv=k=>Math.max(1,bSt(k)-14);
 const bFxV=(k,i)=>BFX[k][i].v*(1+.5*(bFxLv(k,i)-1));
-const bAuraV=k=>BAURA[k].v*(1+.5*(Math.min(5,Math.max(1,bSt(k)))-1));
-const BULT={baihu:{n:'虎嘯山林',d:'全場地上的怪物被震退、暈 1.5 秒',r:'melee'},qinglong:{n:'青龍雷暴',d:'2 秒內落下 10 道雷',r:'magic'},zhuque:{n:'朱雀火雨',d:'全場怪物受傷並燒傷 5 秒',r:'ranged'},xuanwu:{n:'玄甲護盾',d:'山門 4 秒不受傷，回血 10%',r:'support'}};
+const bAuraV=k=>BAURA[k].v*(1+.5*(Math.min(5,Math.max(1,bSt(k)))-1))*(!BEAST[k].sh&&wufang()?2:1);
+const BULT={baihu:{n:'虎嘯山林',d:'全場地上的怪物被震退、暈 1.5 秒',r:'melee'},qinglong:{n:'青龍雷暴',d:'2 秒內落下 10 道雷',r:'magic'},zhuque:{n:'朱雀火雨',d:'全場怪物受傷並燒傷 5 秒',r:'ranged'},xuanwu:{n:'玄甲護盾',d:'山門 4 秒不受傷，回血 10%',r:'support'},qilin:{n:'祥雲降瑞',d:'8 秒內全隊所有傷害 ×2，山門回血 30%',r:'support'},baize:{n:'萬妖圖鑑',d:'全場標記 6 秒，受全隊傷害 ×2（Boss ×3）',r:'magic'},tengshe:{n:'騰雲駕霧',d:'全場起大霧 6 秒：小怪迷路往回走，霧裡的怪受傷 ×1.5',r:'magic'},bifang:{n:'畢方天火',d:'天火落滿全場：全部受傷並燒傷 5 秒',r:'ranged'}};
 const PAIR={baihu:'a_sword',qinglong:'a_thunder',zhuque:'a_fire',xuanwu:'d_gold'};
-const paired=k=>S.beastTeam.includes(k)&&(S.arrA===PAIR[k]||S.arrD===PAIR[k])&&S.beastTeam.indexOf(k)<beastSlots();
+const paired=k=>!!PAIR[k]&&S.beastTeam.includes(k)&&(S.arrA===PAIR[k]||S.arrD===PAIR[k])&&S.beastTeam.indexOf(k)<beastSlots();
 const arrPaired=a=>Object.keys(PAIR).some(k=>PAIR[k]===a&&paired(k));
 const BEAST_SLOT=[[1,1],[15,2],[30,3],[45,4]];
 const beastSlots=()=>{let n=0;for(const[l,c]of BEAST_SLOT)if(S.gateLv>=l)n=c;return n+(S.slot5?1:0)};
@@ -461,7 +471,7 @@ const curS=()=>B.trial?B.trial.f*100:S.stage;
 // 神獸試煉塔：弟子照常上場，神獸當 Boss，第 n 層 ≈ 第 100n 關魔頭；10 層通關開第 5 格神獸欄
 const TRIAL=[['baihu'],['qinglong'],['zhuque'],['xuanwu'],['qilin'],['baize'],['tengshe'],['bifang'],['baihu','qinglong','zhuque','xuanwu'],['qilin','baize','tengshe','bifang']];
 const TRN=f=>f===9?'四聖獸':f===10?'上古四神獸':(BEAST[TRIAL[f-1][0]]||{n:'山海經神獸'}).n;
-const trOpen=f=>TRIAL[f-1].every(k=>BEAST[k]);
+const trOpen=f=>TRIAL[f-1].every(k=>BEAST[k]&&(!BEAST[k].sh||unl('shanhai')));
 const trDone=f=>!!(S.trDone&&S.trDone[f]),trCnt=()=>TRIAL.filter((x,i)=>trDone(i+1)).length;
 const trCan=f=>trOpen(f)&&TRIAL.every((x,i)=>i+1>=f||!trOpen(i+1)||trDone(i+1));
 // 修煉：用銅錢升，沒有上限
@@ -535,7 +545,7 @@ function turAtk(k){const l=S.tur[k].lv;return 2.5*TUR[k].atk*Math.pow(1.1,l-1)*M
 function arrDps(k){return 3*Math.pow(1.1,S.arr[k].lv-1)*(1+.05*(S.arr[k].brk||0))*TR('atk')*XYA()*(arrPaired(k)?1.5:1)}
 // 神獸攻擊跟著隊伍走：上陣弟子的平均攻擊 × 神獸倍率 × 等級加成（每級 +2%），不會因為弟子等級高就被拋在後面
 function teamAvgAtk(){const ids=S.team.slice(0,slots()).filter(i=>S.roster[i]);if(!ids.length)return 1;return ids.reduce((a,i)=>a+heroAtk(i),0)/ids.length}
-function beastAtk(k){return teamAvgAtk()*BEAST[k].atk/10*(1+.5*(bSt(k)-1))*(1+.05*(S.beast[k].brk||0))*(paired(k)?1.5:1)}
+function beastAtk(k){return teamAvgAtk()*BEAST[k].atk/10*(1+.5*(bSt(k)-1))*(1+.05*(S.beast[k].brk||0))*(paired(k)?1.5:1)*(1+(PS.bdmg||0))*(wufang()?3:1)}
 function towerKey(){const n=slots();return 'tower'+Math.min(8,n)}
 function gateKey(broken){const g=Math.min(5,1+Math.floor((S.gateLv-1)/10));return `gate${g}_${broken?'broken':'ok'}`}
 // 大數字：K M B T，之後 aa ab ac…（每 1000 倍換一個），保留 3 位有效數字
@@ -691,7 +701,7 @@ function step(dt){
   if(fb10('huntian')){B.htT=(B.htT||0)+dt;if(B.htT>=10){B.htT=0;B.enemies.forEach(e=>{if(!e.dead&&!e.boss&&e.x<VW-60)e.stun=Math.max(e.stun,2)});B.txt.push({x:VW*.5,y:G-300,v:'混天縛海！',t:0,big:1})}}
  for(const b of B.beasts){if(B.state==='run'){b.charge=Math.min(100,b.charge+dt*100/24*(1+PS.charge));if(b.charge>=100&&S.auto&&S.auto['b_'+b.k]&&alive.length)castBeast(B.beasts.indexOf(b))}}
  for(const b of B.beasts){const d=BEAST[b.k];b.anim=Math.max(0,b.anim-dt);if(b.pounce>0)b.pounce=Math.max(0,b.pounce-dt);b.cd-=dt;
-  const reach=b.k==='qinglong'||b.k==='zhuque'?VW:b.k==='baihu'?VW*.5:200;// 青龍朱雀全畫面、白虎撲半個畫面、玄武近身擋
+  const reach=b.k==='qinglong'||b.k==='zhuque'||b.k==='baize'||b.k==='tengshe'||b.k==='bifang'?VW:b.k==='baihu'||b.k==='qilin'?VW*.5:200;// 青龍朱雀全畫面、白虎撲半個畫面、玄武近身擋
   const near=alive.filter(e=>(d.fly||!e.fly)&&e.x>L.front-40&&e.x<b.x+reach);// 走到神獸身後、在打山門的怪也打
   if(b.cd<=0&&near.length&&B.state==='run'){b.cd=1/(d.rate*(1+spdBonus()));b.anim=.45;b.hitAt=.18;b.targets=near;if(b.k==='baihu'){const t0=near.filter(e=>!e.fly).sort((p,q)=>p.x-q.x)[0]||near[0];b.targets=near.filter(e=>Math.abs(e.x-t0.x)<130).slice(0,3);b.pounce=.55;b.pdx=Math.max(0,t0.x-b.x-70);b.ptx=t0.x;b.hitAt=.27}}
   if(b.hitAt!=null){b.hitAt-=dt;if(b.hitAt<=0){b.hitAt=null;DSRC='b:'+b.k;const a=beastAtk(b.k);const T=b.targets.filter(e=>!e.dead);
@@ -699,6 +709,10 @@ function step(dt){
    else if(b.k==='qinglong'){T.slice(0,6).forEach(e=>{hit(e,a,{c:'#bfa0ff'});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1)})}
    else if(b.k==='zhuque'){const c=T[0];if(c){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-c.x)<110){hit(e,a,{c:'#ff8a3d'});e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=a*.3}});sprFx('fx_fire',c.x,c.y-c.ay*.4,1.4)}}
    else if(b.k==='xuanwu'){T.filter(e=>!e.fly).forEach(e=>{hit(e,a,{c:'#ffe08a'});e.stun=Math.max(e.stun,1.2)});addFx({k:'ring',x:b.x+80,y:G-40,life:.5,c:'#ffe08a',r:200});shake(4)}
+   else if(b.k==='qilin'){const c=T.filter(e=>!e.fly).sort((p,q)=>p.x-q.x)[0]||T[0];if(c){B.enemies.filter(e=>!e.dead&&Math.abs(e.x-c.x)<160).slice(0,5).forEach(e=>{hit(e,a,{c:'#ffd84a',kb:30})});addFx({k:'dust',x:c.x,y:G,life:.4});addFx({k:'ring',x:c.x,y:G-30,life:.4,c:'#ffd84a',r:160})}}
+   else if(b.k==='baize'){const c=T.slice().sort((p,q)=>q.hp-p.hp)[0];if(c){hit(c,a*1.5,{c:'#e8f0ff'});c.bzm=4;addFx({k:'ring',x:c.x,y:c.y-c.ay*.5,life:.5,c:'#e8f0ff',r:90})}}
+   else if(b.k==='tengshe'){const c=T[Math.floor(Math.random()*T.length)];if(c){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-c.x)<110){hit(e,a,{c:'#c8d8e8'});if(!e.boss)e.conf=Math.max(e.conf||0,1)}});addFx({k:'boom',x:c.x,y:c.y-c.ay*.4,life:.45,c:'#dde8f0',r:110})}}
+   else if(b.k==='bifang'){const c=T[0];if(c){B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-c.x)<120){hit(e,a,{c:'#3ad0ff'});e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,a*.3)}});sprFx('fx_fire',c.x,c.y-c.ay*.4,1.2)}}
   }}
  }
  // 陣法
@@ -714,13 +728,13 @@ function step(dt){
   if(a.k==='a_thunder'&&a.big>=ae.thun){a.big=0;DSRC='a:'+a.k;const dps=arrDps(a.k);on.forEach(e=>{hit(e,dps*2.6,{c:'#d0b0ff'});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.1)});if(on.length)shake(3)}}
  // 燒傷（朱雀）
  if(B.crush)for(const e of B.enemies){if(!e.dead&&e.crushT!==undefined){e.crushT-=dt;if(e.crushT<=0){const hs=B.heroes;const h=hs[Math.floor(Math.random()*hs.length)];DSRC=h?'h:'+h.id:'etc';e.crushT=undefined;hit(e,e.hp*1.01,{c:'#ffd86a'});sprFx('fx_slash',e.x,e.y-e.ay*.5,.8)}}}
- for(const e of B.enemies){if(!e.dead&&e.burn>0){e.burn-=dt;e.bt=(e.bt||0)+dt;if(e.bt>=.5){e.bt=0;hit(e,(e.burnD||1)*(PS.r10&&PS.r10.fox?3:1),{c:'#ff8a3d',small:1,src:e.burnS||'burn',nosw:1})}}}
+ for(const e of B.enemies){if(!e.dead&&e.burn>0){e.burn-=dt;e.bt=(e.bt||0)+dt;if(e.bt>=.5){e.bt=0;hit(e,(e.burnD||1)*(PS.r10&&PS.r10.fox?3:1)*(1+PS.burnm),{c:'#ff8a3d',small:1,src:e.burnS||'burn',nosw:1})}}}
  // 敵人
  for(const e of B.enemies){
   if(e.dead){e.dead+=dt;continue}
   e.t+=dt;e.flash=Math.max(0,e.flash-dt);
   if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slow=0}
-  if(e.mark>0)e.mark-=dt;if(e.bit>0)e.bit-=dt;if(e.crk>0)e.crk-=dt;if(e.melt>0)e.melt-=dt;if(e.vuln>0)e.vuln-=dt;if(e.frog>0)e.frog-=dt;if(e.sand>0)e.sand-=dt;if(e.loot>0)e.loot-=dt;
+  if(e.mark>0)e.mark-=dt;if(e.bzm>0)e.bzm-=dt;if(e.bzv>0)e.bzv-=dt;if(e.fog>0)e.fog-=dt;if(e.bit>0)e.bit-=dt;if(e.crk>0)e.crk-=dt;if(e.melt>0)e.melt-=dt;if(e.vuln>0)e.vuln-=dt;if(e.frog>0)e.frog-=dt;if(e.sand>0)e.sand-=dt;if(e.loot>0)e.loot-=dt;
   if(e.bleed>0){e.bleed-=dt;e.blt=(e.blt||0)+dt;if(e.blt>=1){e.blt=0;hit(e,e.bleedD||0,{c:'#e03050',small:1,src:e.bleedS||'etc',nosw:1})}if(e.dead)continue}
   if(e.pullT>0){e.pullT-=dt;if(e.pullT<=0){e.fly=e.fly0;e.y=e.y0}}
   if(e.grpT>0){e.grpT-=dt;e.x+=(e.grpX-e.x)*Math.min(1,dt*10)}
@@ -761,7 +775,7 @@ function heroFire(h){
  const d=CH[h.id],R=ROLE[d.role];let tg=h.anim.target;
  if(!tg||tg.dead){const a=B.enemies.filter(e=>!e.dead);if(!a.length)return;tg=a.reduce((m,e)=>e.x<m.x?e:m)}
  const p={x:h.x+18,y:h.y-70,sx:h.x+18,sy:h.y-70,tx:tg.x,ty:tg.y-tg.ay*.45,target:tg,spd:900,life:3*ZM,dmg:heroAtk(h.id)*NA*(h.id==='archer'?2.5:1),kind:R.proj,c:d.c,aoe:R.aoe||0,knock:R.knock||0,from:h,spr:PSPR[h.id],hx:HX[h.id],sp:h.id};
- {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=fo?4:h.id==='archer'?2.5:2;p.crit=1}}SWC=p.crit?1:0;
+ {const fo=h.id==='archer'&&B.focusT>0,cc=Math.min(.95,PS.crit+(fo?.5:0));if(cc>0&&Math.random()<cc){p.dmg*=(fo?4:h.id==='archer'?2.5:2)*(1+PS.critd);p.crit=1}}SWC=p.crit?1:0;
  if(h.id==='mecha'){h.n4=(h.n4||0)+1;if(h.n4>=3){h.n4=0;DSRC='h:mecha';const dd=p.dmg*1.2;addFx({k:'laser',x:h.x+20,y:h.y-60,life:.35,c:d.c,w:900*ZM});B.enemies.forEach(e=>{if(!e.dead&&e.x>h.x&&e.x<tg.x+500*ZM)hit(e,dd,{c:d.c})})}}
  if(CH[h.id].fs)fsFire(h,p,tg);
  if(h.id==='monkey'){const os=B.enemies.filter(e=>!e.dead&&e!==tg&&e.x<VW-60);if(PS.aw&&PS.aw.monkey&&Math.random()<.3)for(let i=0,nm=PS.my&&PS.my.monkey?(cbOn('monkey')?12:6):3;i<nm&&os.length;i++){const o=os.splice(Math.floor(Math.random()*os.length),1)[0];{const base=heroAtk('monkey')*NA*(PS.my&&PS.my.monkey?1:.8),cr=Math.random()<Math.min(.95,PS.crit);B.proj.push({...p,tx:o.x,ty:o.y-o.ay*.45,target:o,dmg:base*(cr?2:1),crit:cr?1:0,sp:'',sy:p.sy-15*i})}{const sd=Math.floor(Math.random()*3),cx=sd===0?Math.max(L.front+40,o.x-70):sd===1?Math.min(VW-40,o.x+70):o.x-10;addFx({k:'clone',x:cx,y:G,life:.5,key:myKey('monkey'),fl:sd===1?-1:1,top:sd===2?1:0,rt:(Math.random()-.5)*.5});addFx({k:'dust',x:cx,y:G,life:.35})}}
@@ -799,11 +813,12 @@ function projHit(p){
   if(M.panda&&p.from.id==='panda'){p.from.n3=(p.from.n3||0)+1;if(p.from.n3>=3){p.from.n3=0;T.stun=Math.max(T.stun,1);if(!T.boss)T.kb=Math.min(160,T.kb+60);sprFx('fx_blunt',T.x,T.y-T.ay*.5,1.4);shake(3)}}}
  if(p.from&&p.target&&!p.target.dead&&!p.target.boss){if(PS.cap&&Math.random()<PS.cap){const e=p.target,fc=(S.fbOn||[]).slice(0,fbSlots()).includes('zijin')&&S.fb.zijin?fbV('zijin'):0,zq=Math.random()*PS.cap>=fc;hit(e,e.hp+1,{c:zq?'#ff6a2a':'#c08aff',big:1,src:zq?'b:zhuque':'fb:zijin',nodps:1});addFx({k:'ring',x:e.x,y:e.y-e.ay*.5,life:.4,c:'#c08aff',r:60});if(fb10('zijin'))B.enemies.forEach(o=>{if(!o.dead&&!o.boss&&o!==e&&Math.abs(o.x-e.x)<150)hit(o,o.hp+1,{c:'#c08aff',big:1,src:'fb:zijin',nodps:1})})}
   else if(PS.bind&&Math.random()<PS.bind){p.target.stun=Math.max(p.target.stun,1)}}
+ if(p.from&&p.target&&!p.target.dead&&PS.burnc&&Math.random()<PS.burnc){const t=p.target;t.burnS=t.burnS||'b:bifang';t.burn=Math.max(t.burn||0,2);t.burnD=Math.max(t.burnD||0,p.dmg*.3)}
  if(p.from&&p.target&&!p.target.dead&&fb10('fenghuo')){const t=p.target;t.burnS=t.burnS||DSRC;t.burn=Math.max(t.burn||0,2);t.burnD=Math.max(t.burnD||0,p.dmg*.3)}
  if(p.sp==='fox')B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-p.tx)<(p.aoe||90)){e.burnS=DSRC;e.burn=Math.max(e.burn||0,3);e.burnD=Math.max(e.burnD||0,p.dmg*.35)}});
  if(p.sp==='monkey'&&p.target){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&e!==T&&e.x>T.x&&e.x<T.x+150)hit(e,p.dmg*.6,{c:'#ffc23a'})})}
  if(p.sp==='slingkid'&&p.from&&M.slingkid&&p.target){const T=p.target;B.enemies.filter(e=>!e.dead&&e!==T&&Math.abs(e.x-T.x)<350).sort((a,b)=>Math.abs(a.x-T.x)-Math.abs(b.x-T.x)).slice(0,2).forEach(o=>{hit(o,p.dmg*.5,{c:'#e0b070'});addFx({k:'spark',x:o.x,y:o.y-o.ay*.45,life:.2,c:'#e0b070'})})}
- if(p.sp==='archer'&&p.from&&M.archer&&p.target&&!p.target.dead&&Math.random()<(PS.r10&&PS.r10.archer?.4:.2)+(PS.my&&PS.my.archer&&p.crit?.3:0)){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-T.x)<260)hit(e,p.dmg*8,{c:'#bfe6ff',big:1,crit:1})});sprFx('fx_thunder',T.x,T.y-T.ay*.5,2);addFx({k:'ring',x:T.x,y:T.y-T.ay*.5,life:.4,c:'#bfe6ff',r:260});shake(4)}
+ if(p.sp==='archer'&&p.from&&M.archer&&p.target&&!p.target.dead&&(Math.random()<(PS.r10&&PS.r10.archer?.4:.2)+(PS.my&&PS.my.archer&&p.crit?.3:0)||(p.target.bzm>0&&RES[2].on()))){const T=p.target;B.enemies.forEach(e=>{if(!e.dead&&Math.abs(e.x-T.x)<260)hit(e,p.dmg*8,{c:'#bfe6ff',big:1,crit:1})});sprFx('fx_thunder',T.x,T.y-T.ay*.5,2);addFx({k:'ring',x:T.x,y:T.y-T.ay*.5,life:.4,c:'#bfe6ff',r:260});shake(4)}
  if(p.sp==='archer'&&p.target){B.enemies.filter(e=>!e.dead&&e!==p.target&&e.x>p.target.x).sort((a,b)=>a.x-b.x).slice(0,2).forEach(e=>{hit(e,p.dmg*.6,{c:p.c});if(p.hx)sprFx(p.hx,e.x,e.y-e.ay*.45,.6)})}
  if(p.sp==='dragon'&&p.target&&!p.target.dead&&Math.random()<(PS.r10&&PS.r10.dragon?.5:.25)){p.target.stun=Math.max(p.target.stun,PS.r10&&PS.r10.dragon?2:1);sprFx('fx_stun',p.target.x,p.target.y-p.target.ay-10,.7)}if(p.hx)sprFx(p.hx,p.tx,p.ty,p.aoe?1.3:p.tw?1.25:.8);
  if(p.sp==='nezha'||p.sp==='aobing'||p.sp==='nzb')fsProj(p);
@@ -817,7 +832,7 @@ function hit(e,amt,o={}){
  // 劍意連斬：大招打中有爆擊率的機會追加一刀（這下 ×3）；弟子普攻爆擊時，這一下帶出來的技能傷害（星隕、穿透、雷射、大棍…）也追加一刀（×1.5）。普攻本體另外算，燒傷每跳、陣法、神獸、法寶不算。DPS 算給出手的人
  if(PS.mx&&PS.mx.swordsman&&!o.nosw&&!o.na){const sr=String(o.src||DSRC);let m=0;if(sr.startsWith('u:')){if(Math.random()<Math.min(.95,PS.crit))m=3}else if(SWC&&sr.startsWith('h:'))m=1.5;if(m){const a=amt;hit(e,a,{...o,nosw:1});if(!e.dead)hit(e,a*m,{c:'#ff5a2a',crit:1,big:1,src:sr,nosw:1});return}}const hp0=Math.max(0,e.hp);const amt0=amt;if(e.boss&&PS.boss)amt*=1+PS.boss;
  // 全隊增傷極意（DPS 表一律算給打出這一下的人，泓 2026-11-05）
- const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(cbOn('fox')&&B.zones&&B.zones.some(z=>z.k==='fire'&&Math.abs(e.x-z.x)<z.r))mul('fox',3);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.stun>0&&fb10('kunxian'))mul('fb:kunxian',1.5);if(e.boss&&fb10('zhaoyao'))mul('fb:zhaoyao',2);if(e.armor>0)mul('monkey',cbOn('monkey')?3:1.5);if(e.lift>0)mul('dragon',cbOn('dragon')?4:1.5);if(e.mark>0||(cbOn('archer')&&e.frog>0))mul('archer',2);if(e.melt>0)mul('mecha',cbOn('mecha')?2:1.3);if(e.vuln>0)mul(e.vulnS||'vampire',1.25);if(e.frog>0)mul('witch',1.5);{const sr=String(o.src||DSRC),sid=sr.slice(2);if(e.bit>0)mul('yangjian',M.yangjian?1.875:1.25);if(e.crk>0){mul('yangjian',e.boss?2:1.5);if(cbOn('yangjian')&&CH[sid]&&CH[sid].role==='melee')mul('yangjian',2)}if(PS.my&&PS.my.yangjian&&e.boss&&o.crit)mul('yangjian',2);if(PS.my&&PS.my.aobing&&e.stun>0)mul('aobing',2);if(icefire()&&e.burn>0&&e.stun>0)mul('nezha',4);if(tgdf()&&sid==='monkey'&&(e.bit>0||e.crk>0))mul('yangjian',3)}if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
+ const M=PS.mx||{},bon=[];const mul=(id,m)=>{amt*=m;bon.push([id,Math.log(m)])};if(M.fox&&e.burn>0)mul('fox',2);if(cbOn('fox')&&B.zones&&B.zones.some(z=>z.k==='fire'&&Math.abs(e.x-z.x)<z.r))mul('fox',3);if(M.moonrabbit&&B.shield>0)mul('moonrabbit',1.4);if(M.dragon&&e.stun>0)mul('dragon',2);if(e.stun>0&&fb10('kunxian'))mul('fb:kunxian',1.5);if(e.boss&&fb10('zhaoyao'))mul('fb:zhaoyao',2);if(e.armor>0)mul('monkey',cbOn('monkey')?3:1.5);if(e.lift>0)mul('dragon',cbOn('dragon')?4:1.5);if(e.mark>0||(cbOn('archer')&&e.frog>0))mul('archer',2);if(e.melt>0)mul('mecha',cbOn('mecha')?2:1.3);if(e.vuln>0)mul(e.vulnS||'vampire',1.25);if(e.frog>0)mul('witch',1.5);if(B.qlT>0)mul('b:qilin',2);if(e.bzm>0)mul('b:baize',1.5);if(e.bzv>0)mul('b:baize',e.boss?3:2);if(e.fog>0)mul('b:tengshe',1.5);if(PS.ctrl&&(e.stun>0||e.slow>0||e.conf>0||e.frog>0))mul('b:tengshe',1+PS.ctrl);if(PS.elite&&e.elite)mul('b:baize',1+PS.elite);if(PS.flyd&&e.fly)mul('b:tengshe',1+PS.flyd);if(PS.burnv&&e.burn>0)mul('b:bifang',1+PS.burnv);{const sr=String(o.src||DSRC),sid=sr.slice(2);if(e.bit>0)mul('yangjian',M.yangjian?1.875:1.25);if(e.crk>0){mul('yangjian',e.boss?2:1.5);if(cbOn('yangjian')&&CH[sid]&&CH[sid].role==='melee')mul('yangjian',2)}if(PS.my&&PS.my.yangjian&&e.boss&&o.crit)mul('yangjian',2);if(PS.my&&PS.my.aobing&&e.stun>0)mul('aobing',2);if(icefire()&&e.burn>0&&e.stun>0)mul('nezha',4);if(tgdf()&&sid==='monkey'&&(e.bit>0||e.crk>0))mul('yangjian',3)}if(M.elf&&(e.slow>0||e.stun>0))mul('elf',1.3);if(M.catsamurai&&e.hp<e.max*.3)mul('catsamurai',2);if(M.mummy&&B.gateHp<B.gateMax*.3)mul('mummy',1.5);if(B.ovT>0&&String(o.src||DSRC).startsWith('u:'))mul('mecha',2);if(PS.my){if(PS.my.alchemist)mul('alchemist',1.5);if(PS.my.mecha&&B.mechT>0)mul('mecha',1.5)}
  if(o.q){const Mt=amt/amt0;amt=amt0*(1+(Mt-1)*o.q)}// q：只吃增傷的這個比例（狐火燎原 1/4）
  if(M.yukionna&&e.slow>0&&!e.boss&&Math.random()<.08){e.stun=Math.max(e.stun,2);sprFx('fx_ice',e.x,e.y-e.ay*.5,.8)}e.hp-=amt;e.flash=.08;if(B.dmg&&!o.nodps){const src=o.src||DSRC,dealt=Math.min(hp0,Math.max(0,amt));B.dmg[src]=(B.dmg[src]||0)+dealt}
  if(o.kb&&!e.boss)e.kb=Math.min(160,e.kb+o.kb);
@@ -983,8 +998,13 @@ function castBeast(i){const b=B.beasts[i];if(!b||b.charge<100||B.state!=='run')r
  const ul=bUlv(b.k),a=beastAtk(b.k)*(1+.5*(ul-1)),al=()=>B.enemies.filter(e=>!e.dead&&e.x<VW-60);b.anim=.45;shake(10);B.hitstop=.08;
  if(b.k==='baihu'){al().forEach(e=>{if(!e.fly){hit(e,a*6,{c:'#ffffff',kb:120,big:1});e.stun=Math.max(e.stun,1.5)}else hit(e,a*3,{c:'#ffffff',big:1})});addFx({k:'ring',x:b.x+60,y:G-40,life:.7,c:'#ffffff',r:900*ZM});ultFx('ult_mecha',b.x+300,G-150,1)}
  else if(b.k==='qinglong'){for(let j=0;j<10;j++)setTimeout(()=>{DSRC='b:qinglong';const T=al();if(!T.length)return;const e=T[Math.floor(Math.random()*T.length)];B.enemies.forEach(o=>{if(!o.dead&&Math.abs(o.x-e.x)<90)hit(o,a*3,{c:'#bfa0ff',big:1})});sprFx('fx_thunder',e.x,e.y-e.ay*.5,1.8);shake(4)},j*200)}
- else if(b.k==='zhuque'){al().forEach(e=>{hit(e,a*4,{c:'#ff8a3d',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
- else if(b.k==='xuanwu'){B.shield=4+.5*(ul-1);B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*(.1+.05*(ul-1)));sprFx('fx_heal',L.gx,G-110,2)}
+ else if(b.k==='zhuque'){const sh=RES[3].on();if(sh){addFx({k:'bult',key:'bu_bifang',life:1.2});B.txt.push({x:VW*.5,y:G-300,v:'雙火鳥！',t:0,big:1})}al().forEach(e=>{if(sh){e.burnD=Math.max(e.burnD||0,a*1.2)}hit(e,a*4,{c:'#ff8a3d',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
+ else if(b.k==='xuanwu'){B.shield=4+.5*(ul-1);B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*(.1+.05*(ul-1)));sprFx('fx_heal',L.gx,G-110,2);if(RES[1].on()){al().forEach(e=>{if(!e.boss)e.conf=Math.max(e.conf||0,B.shield)});B.txt.push({x:L.gx+200,y:G-260,v:'龜蛇合體！',t:0,big:1})}}
+ else if(b.k==='qilin'){B.qlT=8;B.gateHp=Math.min(B.gateMax,B.gateHp+B.gateMax*.3);al().forEach(e=>hit(e,a*3,{c:'#ffd84a',big:1}));sprFx('fx_heal',L.gx,G-110,2.2)}
+ else if(b.k==='baize'){B.enemies.forEach(e=>{if(!e.dead&&e.x<VW-50){e.bzv=6;hit(e,a*2,{c:'#e8f0ff',big:1})}})}
+ else if(b.k==='tengshe'){al().forEach(e=>{e.fog=6;hit(e,a*2,{c:'#dde8f0',big:1});if(!e.boss)e.conf=Math.max(e.conf||0,6)});addFx({k:'frost',life:1.4,c:'#dde8f0',fk:'ice'})}
+ else if(b.k==='bifang'){al().forEach(e=>{hit(e,a*4,{c:'#3ad0ff',big:1});e.burnS=DSRC;e.burn=Math.max(e.burn||0,5);e.burnD=Math.max(e.burnD||0,a*.6);sprFx('fx_fire',e.x,e.y-e.ay*.5,1.4)})}
+ if(BEAST[b.k].sh&&MAN['bu_'+b.k])addFx({k:'bult',key:'bu_'+b.k,life:1.2});
 }
 /* ---------- 大招 ---------- */
 // 大招冷卻：每招依強度不同（秒）；充能加成、普攻充能、別人送的充能最多只能把冷卻降到一半
@@ -995,7 +1015,7 @@ function castUlt(i){const h=B.heroes[i];if(!h||h.charge<100||h.anim?.type==='ult
 // 大招射程（從山門前算起）：雷射打整排，其他只打射程內
 const ULT_R={sweep:900,slam:750,rain:1100,freeze:1000,heal:600,drain:900,laser:99999,focus:0};
 function doUlt(h){
- DSRC='u:'+h.id;if(h.id==='dragon'&&PS.mx&&PS.mx.dragon)B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,3)}); const d=CH[h.id],dmg=heroAtk(h.id)*7*TR('ult')*(d.r==='L'?1.5:1)*(h.id==='mecha'&&PS.aw&&PS.aw.mecha?1.5:1)*(isMy(h.id)?1.5:1);shake(10);B.hitstop=.08;
+ DSRC='u:'+h.id;if(h.id==='dragon'&&PS.mx&&PS.mx.dragon)B.enemies.forEach(e=>{if(!e.dead)e.stun=Math.max(e.stun,3)}); const d=CH[h.id],dmg=heroAtk(h.id)*7*(1+PS.ultm)*TR('ult')*(d.r==='L'?1.5:1)*(h.id==='mecha'&&PS.aw&&PS.aw.mecha?1.5:1)*(isMy(h.id)?1.5:1);shake(10);B.hitstop=.08;
  const UR=ULT_R[CH[h.id].ult]||900,lim=Math.min(VW-60,L.front+UR),alive=()=>B.enemies.filter(e=>!e.dead&&e.x<lim);
  if(ULTFX[h.id]){const a=alive().sort((x,y)=>x.x-y.x);const pre=ULTFX[h.id];
   if(h.id==='alchemist')ultFx(pre,L.front+120,G-150,1);
@@ -1017,7 +1037,7 @@ function doUlt(h){
  DSRC='u:'+h.id;ultExtra(h,dmg,alive,lim);
 }
 // 大招特色效果（每招除了傷害再多一個只有他有的效果）
-const UTK=['nzT','genT','mbT','gmaT','drmT','vamT','shatT'];
+const UTK=['qlT','nzT','genT','mbT','gmaT','drmT','vamT','shatT'];
 const ULTX={yangjian:'裂縫 4 秒：裂縫上的小怪掉下去暈 2 秒，裂縫裡的怪受傷 ×1.5（Boss ×2）；同時放出 3 隻哮天犬',nezha:'踩風火輪從山門衝到最右邊再衝回來，一路撞飛小怪、留下火焰路 4 秒；最後火尖槍插地，火柱爆開（×1.5）',aobing:'全場凍住 3 秒（Boss 1 秒），凍住結束時碎冰再打一次（60%）；冰龍掃過全場',disciple:'把範圍內的怪掃回去（大擊退），並變慢 50%（3 秒）',fox:'流星落地留下狐火地面 4 秒，走過的怪一直燒；打中的全部上燒傷',dragon:'把範圍內的小怪挑飛到空中 1.5 秒（不能走、受傷 ×1.5），落地再震一次',archer:'射一支星光標記箭打血最多的怪（通常是 Boss），8 秒內受全隊傷害 ×2',mecha:'打中的怪裝甲熔化 6 秒（受傷 +30%），Boss 也會被往後推',alchemist:'全隊其他人大招充能 +20',monkey:'金箍棒連空中的怪一起掃，然後叫分身跟著打 4 秒',vampire:'被吸的怪 5 秒內受傷 +25%；吸血鬼自己攻速 ×2（6 秒）',yukionna:'暴風雪持續 4 秒（怪變慢 60%）；冰凍中死掉的怪會碎裂濺傷旁邊的怪',catsamurai:'居合斬後，血量低於 30% 的小怪直接斬殺，Boss 受 ×3',moonrabbit:'全隊月光加持：攻擊 +30%（6 秒）',pharaoh:'沙暴持續 5 秒打範圍內的怪、變慢 40%；被沙暴困住時死掉的怪銅錢 ×2',elf:'樹根定身 3 秒並每秒毒傷；飛的怪會被拉到地上',kitsune:'藍火燒傷會跳到附近的怪（連鎖 3 次）',shark:'叉中的怪流血 6 秒（每秒 10%）；Boss 受傷 +25%',tanuki:'放煙霧：範圍內的小怪迷路往回走 3 秒；手裡劍旋風再轉 2 圈',general:'將軍號令：全隊近戰・坦克攻擊 ×1.5（6 秒）',swordsman:'劍氣之後瞬移連斬範圍內 8 下，每下必爆擊',panda:'前排的小怪推回去很遠並暈 1.5 秒',pirate:'砲彈爆炸範圍變 2 倍；被打死的怪 30% 多掉一份銅錢',jiangshi:'小怪定身 4 秒',witch:'打中的小怪變成青蛙 3 秒（不能打山門、受傷 ×1.5）',mummy:'繃帶把範圍內的小怪拉到一起並暈 1.5 秒，方便一次打完',grandma:'全隊攻速 +40%（8 秒）',slingkid:'每顆石頭再彈跳 2 次打別隻',drummer:'全隊其他人大招充能 +30、全隊攻速 +50%（6 秒）'};
 /* ---------- 封神三傳說：楊戩・哪吒・敖丙 ---------- */
 const icefire=()=>!!(PS.my&&PS.my.nezha&&PS.my.aobing),tgdf=()=>!!(PS.my&&PS.my.monkey&&PS.my.yangjian);
@@ -1225,6 +1245,7 @@ function drawFx(f){const p=Math.min(1,f.t/f.life);
   case 'coin':{f.vy+=600*(1/60);const x=f.x+f.vx*f.t,y=f.y+f.vy*f.t*.6+300*f.t*f.t;ctx.globalAlpha=1-p;ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.arc(x,Math.min(G,y),5,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;break}
   case 'claw':ctx.save();ctx.strokeStyle='#ffffff';ctx.lineCap='round';ctx.globalAlpha=1-p;for(let i=0;i<3;i++){ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(f.x-30+i*18,f.y-40);ctx.lineTo(f.x+i*18,f.y+30);ctx.stroke()}ctx.restore();break;
   case 'dust':for(let i=0;i<8;i++){ctx.fillStyle=`rgba(190,170,140,${.6*(1-p)})`;ctx.beginPath();ctx.arc(f.x+(i-4)*14*(.5+p),f.y-6-p*20*(i%3),6+p*10,0,Math.PI*2);ctx.fill()}break;
+  case 'bult':{const m=MAN[f.key];if(m){ctx.save();ctx.globalAlpha=p<.15?p/.15:p>.7?(1-p)/.3:1;drawSprite(f.key,VW*.52,TOPY+VH*.42+m[3]/2,{sx:1.3*(1+.08*p),sy:1.3*(1+.08*p)});ctx.restore()}break}
   case 'dog':{const bite=f.bite>0,fr=bite?'dog_bite_f'+(1+Math.floor(f.t*8)%2):'dog_run_f'+(1+Math.floor(f.t*14)%4);glow(f.x,f.y-30,46,'rgba(255,230,160,.8)',.35);ctx.save();ctx.globalAlpha=f.t>f.life-.2?(f.life-f.t)/.2:1;drawSprite(fr,f.x,f.y,{});ctx.restore();break}
   case 'ride':{const k=myKey('nezha');ctx.save();if(MAN.wheel_firetrail)drawSprite('wheel_firetrail',f.x-(f.dir>0?20:-20),f.y-14,{sx:f.dir>0?1.3:-1.3,sy:1.3});glow(f.x,f.y-60,90,'rgba(255,90,60,.9)',.5);drawSprite(k,f.x,f.y,{sx:f.dir>0?1.1:-1.1,sy:1.1});ctx.restore();break}
   case 'fly':{const q=ease(Math.min(1,p*1.1)),x=f.x0+(f.x1-f.x0)*q;ctx.save();ctx.globalAlpha=p>.8?(1-p)/.2:1;glow(x,f.y,140,f.c||'rgba(160,230,255,.9)',.5);drawSprite(f.key,x,f.y+Math.sin(p*9)*16,{sx:f.sc||1.6,sy:f.sc||1.6});ctx.restore();break}
@@ -1448,7 +1469,7 @@ function renderGacha(){$('shTitle').textContent='召喚';
  let h=`<div class="gacha altar"><div class="row" style="justify-content:center"><button class="btn gold" id="g1">召喚 1 次 <span class="cost"><span class="ico gem"></span>10</span></button><button class="btn gold" id="g10">召喚 10 次 <span class="cost"><span class="ico gem"></span>100</span></button></div>`;
  if(gTab==='hero'){const g=S.gser||'all';h+=`<div class="row" style="justify-content:center;gap:6px;margin:6px 0;flex-wrap:wrap">${Object.entries(SERIES).filter(([k,v])=>!v.lock||unl(v.lock)).map(([k,v])=>`<button class="btn ${g===k?'blue':''}" data-ser="${k}" style="padding:3px 12px">${v.n}<span style="font-size:11px;opacity:.75;display:block">${v.d}</span></button>`).join('')}</div>`+(g!=='all'?`<div class="rates" style="margin-bottom:6px"><b>${SERIES[g].n}</b>：抽到傳說時，有 ${SER_UP*100}% 一定是 ${serIds(g).map(i=>CH[i].n).join('、')} 其中一位（傳說機率和保底跟一般池一樣）</div>`:'')}
  if(gTab==='hero')h+=`<div class="rates">普通 68%　稀有 24%　史詩 6%　傳說 2%｜再 ${10-S.pityR} 次必出稀有以上、${30-(S.pityE||0)} 次必出史詩以上、${60-S.pityL} 次必出傳說<br>抽到已經有的弟子 → 累積起來升階：普通 6／15 隻、稀有 3／8 隻、史詩 2／5 隻、傳說每階 1 隻<br>滿階之後再抽到 → 突破，每次攻擊 普通 +3%／稀有 +5%／史詩 +8%／傳說 +15%（最多 50 次），另外給傳說碎片</div>`;
- else if(gTab==='beast'){const bs=S.bser||'sishen';h+=`<div class="row" style="justify-content:center;gap:6px;margin:6px 0">${Object.entries(BSER).filter(([k])=>k!=='shanhai'||unl('shanhai')).map(([k,v])=>`<button class="btn ${bs===k?'blue':''}" data-bser="${k}" ${v.ks.length?'':'disabled'} style="padding:3px 12px">${v.n}系列${v.ks.length?'':'<span style="font-size:11px;display:block">即將開放</span>'}</button>`).join('')}</div>`;h+=`<div class="rates">每抽隨機一隻神獸的碎片 1～10 片（1 片 30%、2 片 20%……10 片 2%），1% 直接抽到整隻（已經有就換 50 片）｜再 ${10-(S.bpity||0)} 次保底 8 片以上<br>100 片合成神獸；之後用碎片升星（最多 30 星）：2～5 星開加成效果，6 星起每星大招升一級<br>${BSER[bs].ks.map(k=>`${BEAST[k].n} ${S.beast[k]?bSt(k)+'星':'未合成'}・碎片 ${S.bfr[k]||0}`).join('　')}</div>`}
+ else if(gTab==='beast'){const bs=S.bser||'sishen';h+=`<div class="row" style="justify-content:center;gap:6px;margin:6px 0">${Object.entries(BSER).filter(([k])=>k!=='shanhai'||unl('shanhai')).map(([k,v])=>`<button class="btn ${bs===k?'blue':''}" data-bser="${k}" ${v.ks.length?'':'disabled'} style="padding:3px 12px">${v.n}系列${v.ks.length?'':'<span style="font-size:11px;display:block">即將開放</span>'}</button>`).join('')}</div>`;h+=`<div class="rates">每抽隨機一隻神獸的碎片 1～10 片（1 片 30%、2 片 20%……10 片 2%），1% 直接抽到整隻（已經有就換 50 片）｜再 ${10-(S.bpity||0)} 次保底 8 片以上<br>100 片合成神獸；之後用碎片升星（最多 30 星）：1～5 星光環變強、2～5 星開附加效果，6～15 星附加效果升級，16 星起大招升級<br>${BSER[bs].ks.map(k=>`${BEAST[k].n} ${S.beast[k]?bSt(k)+'星':'未合成'}・碎片 ${S.bfr[k]||0}`).join('　')}</div>`}
  else{const own=Object.keys(S.arr).length;h+=`<div class="rates">可以抽到 6 種攻擊陣、6 種防禦陣（已有 ${own}/${GP.length}），每種機會一樣<br>抽到重複的攻擊陣 → 突破，攻擊 +5%（最多 50 次）；重複的防禦陣 → 直接 +3 級<br>防禦陣鋪在樓閣下，山門 Lv5 開放</div>`}
  if(gTab==='hero'){const sh=S.shard||0;h+=`<div class="rates" style="margin-top:6px"><b>傳說碎片 ${sh}/${SHARD_COST}</b>（滿階後抽到重複：普通 1、稀有 2、史詩 4、傳說 10 片；突破滿了給 2 倍。可以換傳說，也可以給滿階傳說升紅星）<br>${lPool().map(k=>`<button class="btn ${sh>=SHARD_COST?'gold':''}" data-shard="${k}" ${sh>=SHARD_COST?'':'disabled'} style="margin:3px">換 ${CH[k].n}</button>`).join('')}</div>`}
  h+='<div class="pulls">';
@@ -1497,9 +1518,9 @@ function renderGate(){$('shTitle').textContent='山門';
     <button class="btn green" data-au="${k}" ${S.coin<cc?'disabled':''}>升級 <span class="cost"><span class="ico coin"></span>${fmt(cc)}</span></button><button class="btn green" data-au99="${k}" ${S.coin<cc?'disabled':''}>連升</button><button class="btn blue" data-as="${k}" data-sl="${sl}" ${tt==='d'&&lv<5?'disabled':''}>${on?'使用中':'使用'}</button></div>`}
    h+='</div>'}}
  if(gtab==='beast'){h+=`<h3 class="sec" style="margin-top:0">神獸試煉塔（${trCnt()}/10 層）</h3><div class="hint" style="margin-bottom:6px">神獸當 Boss 來挑戰你的隊伍，第 n 層約等於第 100×n 關的魔頭（第 9、10 層四隻一起上）。打輸不會掉關。第一次通過拿靈石和那隻神獸的碎片，<b>10 層全通開第 5 格神獸欄</b>${S.slot5?'（已開放）':''}。</div><div class="row" style="flex-wrap:wrap;gap:6px;margin-bottom:12px">${TRIAL.map((ks,i)=>{const f=i+1,done=trDone(f),op=trOpen(f),can=trCan(f)&&!B.trial;return `<button class="btn ${done?'':can?'gold':''}" data-tr="${f}" ${can?'':'disabled'} style="padding:4px 10px;min-width:96px">${f} 層 ${TRN(f)}<span style="font-size:11px;display:block">${!op?'即將開放':done?'✓ 已通過（可重打）':!can&&!B.trial?'先過前面的層':f===9?'獎勵 3000 靈石':f===10?'獎勵 第 5 格':`獎勵 ${200*f} 靈石`}</span></button>`}).join('')}</div>`;h+=`<h3 class="sec">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="hint" style="margin-bottom:8px">神獸用碎片升星：召喚頁「神獸」分頁用靈石抽碎片。100 片合成。每升一星只加一項：1～5 星光環每星 +50%，2～5 星開 4 個加成效果；6～15 星輪流升加成效果；16～30 星只升大招（每級傷害 +50%）。另外每升一星攻擊 +50%。</div><div class="list">`;
-  for(const k in BEAST){const has=S.beast[k],d=BEAST[k],fr=S.bfr[k]||0;
+  for(const k in BEAST){if(BEAST[k].sh&&!S.beast[k]&&!unl('shanhai'))continue;const has=S.beast[k],d=BEAST[k],fr=S.bfr[k]||0;
    if(!has){h+=`<div class="item lock">${lockImg(SRC['b_'+k])}<div class="tx"><b>神獸 ${d.n}</b><div>${d.d}｜碎片 ${fr}/${B_STAR[1]}</div></div><button class="btn gold" data-bs="${k}" ${fr>=B_STAR[1]?'':'disabled'}>合成</button></div>`;continue}
-   const st=bSt(k),nc=st<B_MAX?B_STAR[st+1]:B_BRK,canUp=st<B_MAX?fr>=nc:(has.brk||0)<B_BRKMAX&&fr>=B_BRK,on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} <span style="color:#ff9a1e">${st<=10?'★'.repeat(Math.min(5,st)):''}</span><span style="color:#ff3a2a">${st<=10?'★'.repeat(Math.max(0,st-5)):`★×${st}`}</span>${has.brk?`+${has.brk}`:''}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}｜碎片 ${fr}${st<B_MAX?`/${nc}`:''}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」Lv${bUlv(k)}：${BULT[k].d}${bUlv(k)>1?`（傷害 ×${1+.5*(bUlv(k)-1)}${k==='xuanwu'?'、護盾更久、回血更多':''}）`:''}${st<16?'<span style="opacity:.55">（16 星起大招升級）</span>':''}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))} Lv${bFxLv(k,i)}</span>`:`<span style="opacity:.55">${B_FXAT[i]} 星解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}<br>搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}</div></div><button class="btn gold" data-bs="${k}" ${canUp?'':'disabled'}>${st<B_MAX?`升星 <span class="cost">碎片 ${nc}</span>`:'已滿星'}</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
+   const st=bSt(k),nc=st<B_MAX?B_STAR[st+1]:B_BRK,canUp=st<B_MAX?fr>=nc:(has.brk||0)<B_BRKMAX&&fr>=B_BRK,on=S.beastTeam.includes(k);h+=`<div class="item ${on?'on':''}"><div class="th"><img src="${SRC['b_'+k]}" alt=""></div><div class="tx"><b>神獸 ${d.n} <span style="color:#ff9a1e">${st<=10?'★'.repeat(Math.min(5,st)):''}</span><span style="color:#ff3a2a">${st<=10?'★'.repeat(Math.max(0,st-5)):`★×${st}`}</span>${has.brk?`+${has.brk}`:''}${paired(k)?' <span style="color:#e3561e">搭配中 ×1.5</span>':''}</b><div>${d.d}｜攻擊 ${fmt(beastAtk(k))}｜碎片 ${fr}${st<B_MAX?`/${nc}`:''}<br>光環：${BAURA[k].t} +${Math.round(bAuraV(k)*100)}%｜大招「${BULT[k].n}」Lv${bUlv(k)}：${BULT[k].d}${bUlv(k)>1?`（傷害 ×${1+.5*(bUlv(k)-1)}${k==='xuanwu'?'、護盾更久、回血更多':''}）`:''}${st<16?'<span style="opacity:.55">（16 星起大招升級）</span>':''}<br>${BFX[k].map((x,i)=>i<bFxN(k)?`<span style="color:#2a8a3a">✓ ${x.t} ${x.f(bFxV(k,i))} Lv${bFxLv(k,i)}</span>`:`<span style="opacity:.55">${B_FXAT[i]} 星解鎖：${x.t} ${x.f(x.v)}</span>`).join('、')}<br>${PAIR[k]?`搭配${ARR[PAIR[k]].n}：神獸和陣法傷害 ×1.5${k==='xuanwu'?'、金剛陣減傷再 +10%':''}`:''}${RES.filter(q=>q.ks.includes(k)).map(q=>`${PAIR[k]||RES.filter(z=>z.ks.includes(k))[0]!==q?'<br>':''}<span style="color:${q.on()?'#0a7a8a':'#999'}">共鳴「${q.n}」${q.ks.map(x=>BEAST[x].n).join('＋')}${q.hero?'＋'+CH[q.hero].n:''}：${q.d}${q.on()?'（生效中）':''}</span>`).join('')}</div></div><button class="btn gold" data-bs="${k}" ${canUp?'':'disabled'}>${st<B_MAX?`升星 <span class="cost">碎片 ${nc}</span>`:'已滿星'}</button><button class="btn blue" data-bt="${k}">${on?'休息':'上陣'}</button></div>`}
   h+=`</div><div class="hint" style="margin-top:8px">山門 Lv15、30、45 可以多帶一隻神獸</div>`}
  if(gtab==='fb'){const own=Object.keys(S.fb);const fn=FB_SLOT.find(([l])=>l>lv);
   h+=`<h3 class="sec" style="margin-top:0">法寶（裝備 ${S.fbOn.length}/${fbSlots()}${fn?`，山門 Lv${fn[0]} 變 ${fn[1]} 格`:''}）</h3><div class="hint" style="margin-bottom:8px">打倒 Boss 有機會掉法寶（第一次 35%），每 100 關的魔頭一定掉 2 件。拿到重複的會升星：5 星之後變紅星，最多 10 星，效果照星數倍增（10 星是 1 星的 10 倍），10 星再解鎖特效。已收集 ${own.length}/12。</div><div class="list">`;
