@@ -37,3 +37,4 @@
   `Redraw this winged beast so it looks clearly DIFFERENT from a white tiger: NO "王" mark on the forehead, a wild spiky dark mane that sticks out like flames, a meaner wolfish face with narrow glowing-yellow eyes, a wide sharp grin showing fangs, small horns, ragged bat-like feathered wings, dark grey-purple fur with jagged black stripes. Keep the same chibi pixel style, same size and position. Solid magenta #FF00FF background.`
 - 14:44 台灣時間 窮奇重畫版 **通過**（沒有王字、狼臉黃眼、尖牙獰笑、火焰狀刺毛、小角、破翼，一眼分得出不是白虎）。檮杌站立 **通過**（豬臉獠牙、長灰褐毛、粗腿、倔強皺眉；腳底 1091）。混沌站立 **通過**（毛球無臉、四短腿、兩對小翅、深紫到深藍；腳底 1093）。饕餮攻擊 f1 **通過**（嘴張更大、頭身同站立）。四隻都可以畫攻擊，目前 5/22。
 - 14:56 台灣時間 饕餮攻擊 f2（往前撲咬）、f3（嘴合上鼓腮）、`taotie__ult`（紅銅古紋框的吞天漩渦大口）**通過** → 饕餮全收。窮奇攻擊 f1（翅膀舉高、爪子抬起）、f2（往前俯衝揮爪）**通過**（頭臉同站立）。目前 10/22。
+- 15:09 台灣時間 窮奇攻擊 f3（翅膀往下拍、甩尾）、`qiongqi__ult`（紫黑凶風斬）**通過** → 窮奇全收。檮杌攻擊 f1（低頭蹬地）、f2（獠牙往前衝）**通過**（頭臉同站立）。目前 14/22。
