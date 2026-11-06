@@ -1,6 +1,6 @@
 # 放置塔防：工單 N5　三位新傳說 站立圖（1～6 階）
 
-狀態：進行中：dot 2026-11-06 08:02 台灣時間（哪吒風火輪修訂）
+狀態：待驗收
 （狀態只會是：待接手／進行中：<誰> <時間>／待驗收／完成通知）
 
 泓 2026-11-06 確認加三位新傳說（進一般傳說池＋開系列池）。這張只畫**站立圖**，共 18 張；攻擊格和特效等這張通過後另開 N6。
@@ -120,3 +120,5 @@ Accessories go outside the body. Solid magenta #FF00FF background, no effects, n
   `Edit this exact sprite. Keep the head, face, hair, body, outfit, sash, ring, spear and everything else EXACTLY the same. Move the two wheels so that he STANDS ON them: one wheel directly under each foot, the soles of the feet resting on top of the wheels (wheels seen slightly from the side, flat on the ground). Each wheel is burning: draw solid cartoon flames (red, orange, yellow, solid colors, no glow) rising from the wheel rims around the feet. Move the whole character up so the bottom of the wheels is at y=978. Do not resize anything. Solid magenta #FF00FF background.`
   檔名照舊覆蓋：`nezha__t3__stand.png`～`nezha__t6__stand.png`，推 `dot/idle-td-n5`。3 階先交，通過後 4～6 階照同樣位置改。N6 的哪吒攻擊格等這四張改好再畫（楊戩、敖丙照常進行）。
 - 08:01 台灣時間 **泓：風火輪要冒火。** 上面指令已加：輪子邊緣冒出實色卡通火焰（紅橙黃、不畫光暈），火包住腳邊。3 階輪子小、火也小一點，越高階火越大。
+- 08:16 台灣時間 哪吒 3 階（踩風火輪版）**通過**（頭、身體寬度逐行一樣，整個抬高 62px；兩腳各踩一個金輪、輪邊冒紅橙黃實色火，輪底 969）。4～6 階照同樣位置改（輪子移到腳下、人抬高、輪底≈970～978、火越高階越大）。
+- 08:33 台灣時間 哪吒 4 階、6 階神話（踩風火輪版）**通過**（頭、身體跟原圖一樣大，整個抬高約 57～75px；兩腳踩火輪、輪邊冒實色火，輪底 983～986；6 階金蓮花、雙紅綾保留）。**還差 5 階**（`nezha__t5__stand.png` 還是舊的輪子在腳邊版本），請照同樣方式改。
