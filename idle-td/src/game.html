@@ -673,7 +673,8 @@ function step(dt){
    else if(A.type==='ult'){if(!A.fired&&A.t>=.78){A.fired=1;doUlt(h)}if(A.t>1.2)h.anim=null}
   }
   h.cd-=dt;
-  if(h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length)castUlt(B.heroes.indexOf(h));// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
+  let wIF=0;if(h.charge>=100&&icefire()&&(h.id==='nezha'||h.id==='aobing')){const o=B.heroes.find(x=>x.id===(h.id==='nezha'?'aobing':'nezha'));if(o&&o.charge<100&&(h.ifw=(h.ifw||0)+dt)<8)wIF=1}// 冰火合璧：自動放時等搭檔充滿（最多等 8 秒）
+  if(!wIF&&h.charge>=100&&S.auto&&S.auto[h.id]&&(!h.anim||h.anim.type!=='ult')&&B.state==='run'&&alive.length){h.ifw=0;castUlt(B.heroes.indexOf(h))}// 先檢查自動大招（攻速快的弟子一直在普攻，不然永遠找不到空檔）
   if(h.cd<=0&&!h.anim&&B.state==='run'){const R=ROLE[CH[h.id].role];const tg=alive.find(e=>e.x<=L.front+(h.id==='monkey'?99999:h.id==='dragon'||h.id==='mecha'?950:R.reach));if(tg){h.cd=1/heroRate(h.id);h.anim={type:'atk',t:0,target:tg}}}
   if(B.state==='run')h.charge=Math.min(100,h.charge+dt*100/ucdOf(h.id)*Math.min(fb10('liuli')?3:2,(1+PS.charge+(B.arrD==='d_star'?dv('d_star',S.arr.d_star.lv):0))*chgMul(h.id)));
  }
@@ -1359,7 +1360,10 @@ function teamStats(){const P=v=>Math.round(v*100)+'%',X=v=>'×'+(v<100?v.toFixed
  return `<details class="tstat" ${tstatOpen?'open':''} ontoggle="tstatOpen=this.open" style="margin:12px 0 4px;background:#fff7e6;border:2px solid #e0c890;border-radius:12px;padding:6px 12px"><summary style="cursor:pointer;font-weight:800;color:#7a4a20">隊伍總加成（點開看）</summary>
   <div class="stat" style="margin-top:6px">${R.map(([n,t])=>`<b>${n}</b><span>${t}</span>`).join('')||'<b>被動</b><span>目前沒有</span>'}${M.map(([n,v])=>`<b>${n}</b><span>${X(v)}</span>`).join('')}${fx.length?`<b>生效中的特效</b><span>${fx.join('、')}</span>`:''}</div>
   <div style="font-size:12px;opacity:.65;margin-top:4px">來源：上陣弟子的被動、神獸、防禦陣、法寶、修煉、仙元。戰鬥中的暫時 BUFF 看左上角。</div></details>`}
-function cbLine(id){const mk=(my,on)=>{const c=CB[my],ps=c.p.map(x=>CH[x].n).join(' 或 ');return SK('合擊',c.n,`${MYN[my]}＋${ps} 一起上陣：${c.d}；搭檔自己攻擊 ×${CB_P}`,on,`需要${MYN[my]}＋${ps}同隊`,'#0a7a8a')};if(CB[id])return mk(id,cbOn(id));const my=Object.keys(CB).find(k=>CB[k].p.includes(id));return my?mk(my,cbPart(id)):''}
+const PAIR2=[{a:'nezha',b:'aobing',n:'冰火兩重天',d:'同時燒傷又凍住的怪受全隊傷害 ×4；一人放大招，另一人自動跟一招；兩人大招都充滿時放大招，變成合體大招「冰火合璧」（自動模式會等搭檔充滿，最多 8 秒）',on:()=>icefire()},{a:'monkey',b:'yangjian',n:'天宮鬥法',d:'哮天犬咬過、或在裂縫裡的怪，猴王打中 ×3；猴王放大招 2 秒後楊戩射天眼神光，楊戩放大招 2 秒後猴王變出 10 隻分身',on:()=>tgdf()}];
+function pairLine(id){return PAIR2.filter(q=>q.a===id||q.b===id).map(q=>SK('合擊',q.n,`${MYN[q.a]}＋${MYN[q.b]}（兩位都要神話進化）一起上陣：${q.d}`,q.on(),`需要${MYN[q.a]}＋${MYN[q.b]}都是神話、同隊`,'#0a7a8a')).join('')}
+function cbLine(id){return cbLine0(id)+pairLine(id)}
+function cbLine0(id){const mk=(my,on)=>{const c=CB[my],ps=c.p.map(x=>CH[x].n).join(' 或 ');return SK('合擊',c.n,`${MYN[my]}＋${ps} 一起上陣：${c.d}；搭檔自己攻擊 ×${CB_P}`,on,`需要${MYN[my]}＋${ps}同隊`,'#0a7a8a')};if(CB[id])return mk(id,cbOn(id));const my=Object.keys(CB).find(k=>CB[k].p.includes(id));return my?mk(my,cbPart(id)):''}
 function tierStars(t,max,rs){return '★'.repeat(t)+'<span style="opacity:.3">'+'★'.repeat(max-t)+'</span>'+(rs?'<span style="color:#e0241a">'+'★'.repeat(rs)+'</span>':'')}
 // 大招說明（點大招名字才展開，不佔版面）
 function ultDesc(id){const d=CH[id],x=heroAtk(id)*7*TR('ult')*(d.r==='L'?1.5:1),f=fmt;const leg=d.r==='L'?'（含傳說 ×1.5）':'';
