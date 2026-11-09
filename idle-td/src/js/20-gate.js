@@ -277,8 +277,8 @@ function renderGate() {
     renderGate();
     updLive();
   });
-  Q('[data-tr]', b => {
-    trialStart(+b.dataset.tr);
+  Q('[data-trial]', b => {
+    trialStart(+b.dataset.trial);
   });
   Q('[data-xo]', b => {
     const k = b.dataset.xo;
@@ -392,7 +392,7 @@ function gateTabBeast() {
         done = trDone(f),
         op = trOpen(f),
         can = trCan(f) && !B.trial;
-      return `<button class="btn ${done ? '' : can ? 'gold' : ''}" data-tr="${f}" ${can ? '' : 'disabled'} style="padding:4px 10px;min-width:96px">${f} 層 ${TRN(f)}<span style="font-size:11px;display:block">${!op ? '即將開放' : done ? '✓ 已通過（可重打）' : !can && !B.trial ? '先過前面的層' : f === 9 ? '獎勵 3000 靈石' : f === 10 ? '獎勵 第 5 格' : `獎勵 ${200 * f} 靈石`}</span></button>`;
+      return `<button class="btn ${done ? '' : can ? 'gold' : ''}" data-trial="${f}" ${can ? '' : 'disabled'} style="padding:4px 10px;min-width:96px">${f} 層 ${TRN(f)}<span style="font-size:11px;display:block">${!op ? '即將開放' : done ? '✓ 已通過（可重打）' : !can && !B.trial ? '先過前面的層' : f === 9 ? '獎勵 3000 靈石' : f === 10 ? '獎勵 第 5 格' : `獎勵 ${200 * f} 靈石`}</span></button>`;
     }
   ).join('')}</div>`;
   h += `<h3 class="sec">神獸（上陣 ${S.beastTeam.length}/${beastSlots()}）</h3><div class="hint" style="margin-bottom:8px">神獸用碎片升星：召喚頁「神獸」分頁用靈石抽碎片。100 片合成。每升一星只加一項：1～5 星光環每星 +50%，2～5 星開 4 個加成效果；6～15 星輪流升加成效果；16～30 星只升大招（每級傷害 +50%）。另外每升一星攻擊 +50%。</div><div class="list">`;
