@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="掃帚守山門">
+<meta name="theme-color" content="#2a1d14">
+<title>掃帚守山門</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<style>
+@@include css/style.css
+</style>
+</head>
+<body>
+<div id="loading"><div>掃帚守山門</div><div class="bar"><i id="ldbar"></i></div></div>
+<div id="game">
+<canvas id="cv"></canvas>
+<div class="hud">
+  <div class="top">
+    <div class="chip stage"><b id="stageT">第 1 關</b><div class="bar"><i id="waveBar"></i></div></div>
+    <div class="chip gatehp" id="gateBox"><div class="lbl"><span id="gateName">山門 Lv1</span><span id="gateHpT">100/100</span></div><div class="bar"><i id="gateBar"></i></div></div>
+    <div class="res">
+      <div class="chip"><span class="ico coin"></span><span id="coinT">0</span></div>
+      <div class="chip"><span class="ico gem"></span><span id="gemT">0</span></div>
+      <div class="chip"><span class="ico stone"></span><span id="stoneT">0</span></div>
+      <button class="btn spd" id="musBtn">🎵</button><button class="btn spd" id="sfxBtn">🔊</button><button class="btn spd" id="zmBtn">🔍</button><button class="btn spd" id="spdBtn">1×</button>
+    </div>
+  </div>
+  <button class="farm" id="farmBtn"></button><button class="farm xenc" id="xBtn" style="display:none"></button><div class="buffs" id="buffs"></div><div class="buftip" id="bufTip"></div><div class="dps" id="dps"></div><div class="bossbar" id="bossBar"><div class="lbl" id="bossName">Boss</div><div class="bar"><i id="bossHp"></i></div></div>
+  <div class="banner" id="banner"></div>
+  <div class="ultname" id="ultName"></div>
+  <div class="rotate">把手機轉橫的玩比較大喔</div>
+  <div class="bottom">
+    <button class="utog" id="ultTog" title="收起／打開頭像">▼</button><div class="ults" id="ults"></div>
+    <div class="menu">
+      <button class="btn dot" id="bHero">弟子<small>升級</small></button>
+      <button class="btn gold dot" id="bGacha">召喚<small>靈石</small></button>
+      <button class="btn dot" id="bGate">山門<small>守城</small></button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div class="ver">v0.1 試玩版</div>
+</div>
+<div class="sheet" id="sheet"><div class="box"><header><h2 id="shTitle"></h2><div class="tabs" id="shTabs"></div><button class="btn x" id="shX">✕</button></header><div class="body" id="shBody"></div></div></div>
+<div class="sheet gift" id="gift"><div class="box"><header><h2 id="gfTitle">獲得</h2></header><div class="body"><img id="gfImg" alt=""><p id="gfText"></p><button class="btn gold" id="gfOk">太好了！</button></div></div></div>
+</div>
+<script>
+@@include js/00-core.js
+@@include js/01-heroes.js
+@@include js/02-items.js
+@@include js/03-beasts.js
+@@include js/04-progress.js
+@@include js/05-save.js
+@@include js/06-stats.js
+@@include js/07-images.js
+@@include js/08-field.js
+@@include js/09-loop.js
+@@include js/10-combat.js
+@@include js/11-stage.js
+@@include js/12-sound.js
+@@include js/13-ults.js
+@@include js/14-fengshen.js
+@@include js/15-draw.js
+@@include js/16-draw-fx.js
+@@include js/17-ui.js
+@@include js/18-panels.js
+@@include js/19-gacha.js
+@@include js/20-gate.js
+@@include js/21-boot.js
+</script>
+</body>
+</html>
