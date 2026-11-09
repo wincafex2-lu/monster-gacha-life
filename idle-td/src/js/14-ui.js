@@ -194,15 +194,9 @@ function dpsName(k) {
     ] || k
   );
 }
-let dpsOn = true;
-try {
-  dpsOn = localStorage.getItem('idle-td-dps') !== '0';
-} catch (e) {}
+let dpsOn = pref.get('idle-td-dps') !== '0';
 let dpsLast = 0,
-  dpsMode = 'sum';
-try {
-  dpsMode = localStorage.getItem('idle-td-dpsm') || 'sum';
-} catch (e) {}
+  dpsMode = pref.get('idle-td-dpsm') || 'sum';
 const DPSM = [
   ['sum', '合計'],
   ['n', '普攻'],
@@ -359,9 +353,6 @@ function updHud() {
 }
 function canUpgradeAny() {
   return S.team.some(id => S.roster[id] && S.roster[id].lv < lvCap(id) && S.coin >= lvCost(S.roster[id].lv));
-}
-function turUpgradable() {
-  return Object.keys(S.tur).some(k => S.coin >= turCost(S.tur[k].lv) * 3);
 }
 function banner(t, boss) {
   const b = $('banner');

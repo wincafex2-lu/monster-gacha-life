@@ -4,7 +4,6 @@ function addFx(f) {
   if (f.upd) f.src = DSRC;
   B.fx.push(f);
 }
-let sprN = 0;
 function sprFx(pre, x, y, sc) {
   if (!pre || !MAN[pre + '_0']) return;
   let n = 0;
@@ -35,9 +34,6 @@ let SKY = '#7fd0f2';
 const SKYS = {};
 const BGS = ['bg_meadow', 'bg_bamboo', 'bg_nightwood'];
 const curBg = () => BGS[Math.floor((Math.max(1, S.stage) - 1) / 50) % 3];
-function img(k) {
-  return IMG[k];
-}
 function heroScale() {
   if (L._hsSp === L.spots) return L._hs;
   let d = 999;
@@ -47,13 +43,6 @@ function heroScale() {
   L._hsSp = sp;
   L._hs = Math.max(0.75, Math.min(1, d / 160));
   return L._hs;
-}
-// 每個站位能用的寬度：同一層最近的鄰居距離 ×1.12（最多 112）
-function spotW(x, y) {
-  let d = 999;
-  for (const [sx, sy] of L.spots || [])
-    if (Math.abs(sy - y) < 20 && Math.abs(sx - x) > 1) d = Math.min(d, Math.abs(sx - x));
-  return Math.min(112, d * 1.12);
 }
 function drawSprite(k, x, y, o = {}) {
   const m = MAN[k],
@@ -227,7 +216,6 @@ function draw(real) {
     ctx.restore();
   }
   // 樓閣
-  const tm = MAN[L.tk];
   ctx.drawImage(IMG[L.tk], L.tx, G - L.th, L.tw, L.th);
   // 換站位提示
   if (pick >= 0) {
@@ -382,7 +370,6 @@ function draw(real) {
   // 山門
   const broken = B.gateHp < B.gateMax * 0.35;
   const gk = gateKey(broken);
-  const gm = MAN[gk];
   const gdx = B.gateHit > 0 ? (Math.random() - 0.5) * 6 : 0;
   if (B.gateHit > 0) B.gateHit -= real;
   drawSprite(gk, L.gx + gdx, G, {flash: B.gateHit > 0 ? 0.35 : 0});
@@ -462,8 +449,7 @@ function draw(real) {
   const es = B.enemies.slice().sort((a, b) => a.fly - b.fly || a.y - b.y);
   for (const e of es) {
     let key = e.key,
-      o = {},
-      alpha = 1;
+      o = {};
     if (e.dead) {
       const p = Math.min(1, e.dead / 0.45);
       o.sx = 1 + p * 0.3;
@@ -1023,8 +1009,7 @@ function drawFx(f) {
       // 齊天大聖：巨大金箍棒從天上砸下來
       const fall = Math.min(1, p / 0.28),
         yb = TOPY - 200 + (f.y - (TOPY - 200)) * fall * fall,
-        L = 760,
-        W = 46;
+        L = 760;
       ctx.save();
       ctx.globalAlpha = p < 0.75 ? 1 : (1 - p) / 0.25;
       ctx.translate(f.x, yb);

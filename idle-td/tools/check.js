@@ -66,9 +66,10 @@ const SNAP = `(() => {
       ' 飛升' + (S.asc || 0) + ' 場上怪' + B.enemies.filter(e => !e.dead).length + ' ' + B.state + (B.xf ? ' 凶獸戰' : '') };
 })()`;
 
-async function boot(page, file, save) {
+async function boot(page, file, save, prefs) {
   await page.goto(`http://127.0.0.1:${server.address().port}/blank`).catch(() => {});
-  await page.evaluate(s => { localStorage.clear(); localStorage.setItem('idle-td-snd2', '{"m":0,"s":0}'); if (s) localStorage.setItem('idle-td-save-v1', s); }, save);
+  await page.evaluate(([s, p]) => { localStorage.clear(); localStorage.setItem('idle-td-snd2', '{"m":0,"s":0}'); if (s) localStorage.setItem('idle-td-save-v1', s);
+    for (const k in p || {}) localStorage.setItem(k, p[k]); }, [save, prefs]);
   await page.goto(`http://127.0.0.1:${server.address().port}/${file}`);
   await page.waitForFunction(() => document.getElementById('loading').style.display === 'none', null, { timeout: 120000 });
   // 所有圖先載完，畫面才不會因為載入快慢不同而不一樣
@@ -169,6 +170,14 @@ async function run(file) {
   await panels('飛升後面板');
   await page.evaluate(() => { for (const z of [1.5, 1]) { ZM = z; resize(); } });
   await tick(5, '後期:縮放');
+
+  // 3. 本機設定都改過（鏡頭拉遠、傷害表關掉、排序、頭像收起、大招音效）再載入
+  await boot(page, file, save, { 'idle-td-zoom': '2', 'idle-td-dps': '0', 'idle-td-dpsm': 'hero', 'idle-td-hsort': 'lv', 'idle-td-ultfold': '1', 'idle-td-ultsnd': 'b' });
+  await tick(8, '設定:載入');
+  await panels('設定面板');
+  await page.evaluate(() => ['ultTog', 'zmBtn', 'musBtn', 'sfxBtn', 'spdBtn'].forEach(id => document.getElementById(id).click()));
+  await tick(5, '設定:按上方按鈕');
+  out.push({ label: '設定:存下來的設定', S: await page.evaluate(() => JSON.stringify(Object.keys(localStorage).sort().filter(k => k !== 'idle-td-save-v1').map(k => [k, localStorage.getItem(k)]))) });
 
   await browser.close();
   return out;

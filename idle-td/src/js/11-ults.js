@@ -128,8 +128,7 @@ const UCD = {
   slingkid: 10,
   drummer: 20
 };
-const ucdOf = id => UCD[id] || 16,
-  ULT_CD = 8;
+const ucdOf = id => UCD[id] || 16;
 // 泓 2026-11-06：大招名字喊在放招的人頭上（不然不知道誰放什麼招）
 function shout(x, y, n, c) {
   let lv = 0;
@@ -343,10 +342,7 @@ function doUlt(h) {
     });
     addFx({k: 'frost', life: 1.2, c: d.c, fk: d.fk});
   } else if (d.ult === 'drain') {
-    let tot = 0;
     alive().forEach(e => {
-      const a = Math.min(e.hp, dmg * 0.8);
-      tot += a;
       hit(e, dmg * 0.8, {c: d.c, big: 1});
       addFx({k: 'drain', x: e.x, y: e.y - e.ay * 0.5, tx: L.gx, ty: G - 120, life: 0.6, c: d.c});
     });

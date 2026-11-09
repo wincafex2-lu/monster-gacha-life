@@ -35,7 +35,6 @@ function rollOne() {
   let pool = r === 'L' ? lPool() : POOL[r];
   if (r === 'L' && S.gser && S.gser !== 'all' && Math.random() < SER_UP) pool = serIds(S.gser);
   const id = pool[Math.floor(Math.random() * pool.length)];
-  let isNew = false;
   return grantHero(id);
 }
 function grantHero(id) {

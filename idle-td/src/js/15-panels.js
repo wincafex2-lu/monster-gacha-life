@@ -1,10 +1,8 @@
 /* 面板 */
 let panel = null,
-  tab = null,
   sel = null;
 function openPanel(p, t) {
   panel = p;
-  tab = t || null;
   $('sheet').classList.add('open');
   render();
 }
@@ -31,17 +29,13 @@ $('dps').onclick = ev => {
   const m = ev.target.closest('[data-dm]');
   if (m) {
     dpsMode = m.dataset.dm;
-    try {
-      localStorage.setItem('idle-td-dpsm', dpsMode);
-    } catch (e) {}
+    pref.set('idle-td-dpsm', dpsMode);
     dpsLast = 0;
     renderDps();
     return;
   }
   dpsOn = !dpsOn;
-  try {
-    localStorage.setItem('idle-td-dps', dpsOn ? '1' : '0');
-  } catch (e) {}
+  pref.set('idle-td-dps', dpsOn ? '1' : '0');
   dpsLast = 0;
   renderDps();
 };
@@ -64,17 +58,12 @@ $('dps').onclick = ev => {
         document.body.classList.toggle('ufold', f);
         tb.textContent = f ? '▲ 頭像' : '▼';
       };
-    let uf = false;
-    try {
-      uf = localStorage.getItem('idle-td-ultfold') === '1';
-    } catch (e) {}
+    let uf = pref.get('idle-td-ultfold') === '1';
     ut(uf);
     tb.onclick = () => {
       uf = !uf;
       ut(uf);
-      try {
-        localStorage.setItem('idle-td-ultfold', uf ? '1' : '0');
-      } catch (e) {}
+      pref.set('idle-td-ultfold', uf ? '1' : '0');
     };
   }
   {
@@ -86,9 +75,7 @@ $('dps').onclick = ev => {
     uz();
     zb.onclick = () => {
       ZM = ZM > 1 ? 1 : 1.5;
-      try {
-        localStorage.setItem('idle-td-zoom', ZM);
-      } catch (e) {}
+      pref.set('idle-td-zoom', ZM);
       resize();
       uz();
       toast(ZM > 1 ? '畫面縮小（鏡頭拉遠，2/3 大小）' : '畫面大小：正常');
@@ -121,11 +108,8 @@ function render() {
 }
 // 隊伍總加成：把上陣弟子被動、神獸、陣法、法寶、修煉、仙元全部加總
 var tstatOpen = false,
-  hSort = 'rar',
+  hSort = pref.get('idle-td-hsort') || 'rar',
   hRole = 'all';
-try {
-  hSort = localStorage.getItem('idle-td-hsort') || 'rar';
-} catch (e) {}
 const RK = i =>
   (isMy(i) ? 6 : {L: 5, E: 4, R: 3, N: 2, S: 1}[CH[i].r]) + (S.roster[i] ? (S.roster[i].tier + rsOf(i)) / 20 : 0); // 弟子頁技能一行一個名字，點了才展開說明
 const SK = (lb, nm, ds, on, lock, col) =>
@@ -361,9 +345,7 @@ function renderHero() {
       b =>
         (b.onclick = () => {
           hSort = b.dataset.hs;
-          try {
-            localStorage.setItem('idle-td-hsort', hSort);
-          } catch (e) {}
+          pref.set('idle-td-hsort', hSort);
           renderHero();
         })
     );

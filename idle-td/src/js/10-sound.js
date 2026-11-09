@@ -1,18 +1,12 @@
 /* ---------- 音樂・音效（WebAudio 即時合成，不用音檔） ---------- */
 const SND = (() => {
-  let ultS = 'a';
-  try {
-    ultS = localStorage.getItem('idle-td-ultsnd') || 'a';
-  } catch (e) {}
+  let ultS = pref.get('idle-td-ultsnd') || 'a';
   let ac = null,
     mg,
     mus,
     sfx,
-    on = 1,
-    mode = 0,
     nextT = 0,
     step16 = 0,
-    timer = null,
     boss = false;
   const last = {};
   let musOn = true,
@@ -29,11 +23,7 @@ const SND = (() => {
       sfxOn = old < 2;
     }
   } catch (e) {}
-  const save = () => {
-    try {
-      localStorage.setItem('idle-td-snd2', JSON.stringify({m: musOn ? 1 : 0, s: sfxOn ? 1 : 0}));
-    } catch (e) {}
-  };
+  const save = () => pref.set('idle-td-snd2', JSON.stringify({m: musOn ? 1 : 0, s: sfxOn ? 1 : 0}));
   function init() {
     if (ac) return;
     try {
@@ -53,7 +43,7 @@ const SND = (() => {
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
     noiseBuf = nb;
     nextT = ac.currentTime + 0.1;
-    timer = setInterval(sched, 60);
+    setInterval(sched, 60);
   }
   let noiseBuf = null;
   function apply() {
@@ -434,9 +424,7 @@ const SND = (() => {
     },
     setUlt(v) {
       ultS = v;
-      try {
-        localStorage.setItem('idle-td-ultsnd', v);
-      } catch (e) {}
+      pref.set('idle-td-ultsnd', v);
     },
     setBoss: b => {
       boss = b;
@@ -463,4 +451,3 @@ const SND = (() => {
     }
   };
 })();
-const ROLE_OF = id => CH[id].role;

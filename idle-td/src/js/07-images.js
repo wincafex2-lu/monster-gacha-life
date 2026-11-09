@@ -52,11 +52,8 @@ const cv = document.getElementById('cv'),
 const G = 860,
   MINW = 1750,
   MINH = 820;
-let ZM = 1;
-try {
-  ZM = +localStorage.getItem('idle-td-zoom') || 1;
-  if (ZM > 1) ZM = 1.5;
-} catch (e) {} // 縮小一半試玩：整個戰場鏡頭拉遠 ×2
+let ZM = +pref.get('idle-td-zoom') || 1; // 縮小試玩：整個戰場鏡頭拉遠 ×1.5
+if (ZM > 1) ZM = 1.5;
 let DPR = 1,
   SC = 1,
   VW = 1536,

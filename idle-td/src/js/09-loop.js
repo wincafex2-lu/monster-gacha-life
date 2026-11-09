@@ -1,6 +1,5 @@
 /* ---------- 主迴圈 ---------- */
-let last = performance.now(),
-  acc = 0;
+let last = performance.now();
 function frame(now) {
   const real = Math.min(0.05, (now - last) / 1000);
   last = now;

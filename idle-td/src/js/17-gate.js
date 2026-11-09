@@ -27,7 +27,6 @@ function renderGate() {
   const lv = S.gateLv,
     c = gateCost(lv);
   const nx = SLOT_LV.find(([l]) => l > lv),
-    nt = TUR_SLOT.find(([l]) => l > lv),
     nb = BEAST_SLOT.find(([l]) => l > lv);
   let h = '';
   const lockImg = (src, f) =>
@@ -383,24 +382,6 @@ function renderGate() {
     refreshField();
     renderGate();
   });
-  const upBeast = (k, n) => {
-    const f0 = bFxN(k);
-    let c = 0;
-    while (c < n) {
-      const cc = Math.ceil(turCost(S.beast[k].lv) * 1.4);
-      if (S.coin < cc) break;
-      S.coin -= cc;
-      S.beast[k].lv++;
-      c++;
-    }
-    if (!c) return;
-    if (bFxN(k) > f0) toast(`${BEAST[k].n} 學會新效果：${BFX[k][bFxN(k) - 1].t}`);
-    else if (n > 1) toast(`${BEAST[k].n} 升了 ${c} 級`);
-    calcPassives();
-    persist();
-    renderGate();
-    updLive();
-  };
   Q('[data-bs]', b => {
     const k = b.dataset.bs,
       has = S.beast[k],
