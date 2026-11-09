@@ -93,7 +93,35 @@ function draw(real) {
     sy = (Math.random() - 0.5) * B.shake;
   }
   ctx.setTransform(k, 0, 0, k, sx * k, (-TOPY + sy) * k);
-  // 背景
+  drawBg();
+  drawArrays();
+  drawZones();
+  drawDefArray();
+  drawSealArray();
+  // 樓閣
+  ctx.drawImage(IMG[L.tk], L.tx, G - L.th, L.tw, L.th);
+  drawSwapHint();
+  drawHeroes();
+  drawGate(real);
+  // 塔
+  for (const t of B.turrets) {
+    const tier = tierOf(S.tur[t.k].lv);
+    const p = t.anim > 0 ? t.anim / 0.25 : 0;
+    shadow(t.x, G + 2, 34);
+    drawSprite(`t_${t.k}_${tier}`, t.x, G, {sx: 1 + 0.05 * p, sy: 1 - 0.06 * p, dx: -4 * p});
+  }
+  drawBeasts();
+  drawTreasures();
+  drawEnemies();
+  // 投射物
+  for (const p of B.proj) drawProj(p);
+  // 特效
+  for (const f of B.fx) drawFx(f);
+  drawTexts();
+  drawUltFlash();
+}
+// 背景（縮小模式：背景放大 ×2、地平線對齊，只有人物怪物變小）
+function drawBg() {
   const bg = IMG[curBg()] || IMG.bg_meadow,
     bw = 1536 * ZM,
     bh = 1024 * ZM,
@@ -106,8 +134,10 @@ function draw(real) {
       ctx.drawImage(bg, 0, by, bw, bh);
       ctx.restore();
     } else ctx.drawImage(bg, x, by, bw, bh);
-  } // 縮小模式：背景放大 ×2、地平線對齊，只有人物怪物變小
-  // 陣法
+  }
+}
+// 陣法
+function drawArrays() {
   if (B.arr) {
     const a = B.arr,
       c = ARR[a.k].c;
@@ -143,7 +173,9 @@ function draw(real) {
     }
     ctx.restore();
   }
-  // 大招地面效果：狐火地面／沙暴／暴風雪
+}
+// 大招地面效果：狐火地面／沙暴／暴風雪
+function drawZones() {
   if (B.zones && B.zones.length)
     for (const z of B.zones) {
       const a = Math.min(1, z.t / 0.5);
@@ -176,7 +208,9 @@ function draw(real) {
       }
       ctx.restore();
     }
-  // 防禦陣（樓閣下）
+}
+// 防禦陣（樓閣下）
+function drawDefArray() {
   if (B.arrD) {
     const c = ARR[B.arrD].c;
     ctx.save();
@@ -196,7 +230,9 @@ function draw(real) {
     ctx.fill();
     ctx.restore();
   }
-  // 定身符陣地面
+}
+// 定身符陣地面
+function drawSealArray() {
   if (PS.slow > 0) {
     ctx.save();
     ctx.globalAlpha = 0.32 + 0.08 * Math.sin(B.time * 3);
@@ -215,9 +251,9 @@ function draw(real) {
     }
     ctx.restore();
   }
-  // 樓閣
-  ctx.drawImage(IMG[L.tk], L.tx, G - L.th, L.tw, L.th);
-  // 換站位提示
+}
+// 換站位提示
+function drawSwapHint() {
   if (pick >= 0) {
     L.spots.forEach(([x, y], i) => {
       const me = i === pick;
@@ -240,7 +276,9 @@ function draw(real) {
       ctx.restore();
     });
   }
-  // 英雄
+}
+// 英雄
+function drawHeroes() {
   for (const h of B.heroes) {
     const o = {};
     const A = h.anim;
@@ -367,20 +405,17 @@ function draw(real) {
       swoosh(h.x + 40, h.y - 70, CH[h.id].c, 1 - (A.t - 0.18) / 0.18, 70);
     }
   }
-  // 山門
+}
+// 山門
+function drawGate(real) {
   const broken = B.gateHp < B.gateMax * 0.35;
   const gk = gateKey(broken);
   const gdx = B.gateHit > 0 ? (Math.random() - 0.5) * 6 : 0;
   if (B.gateHit > 0) B.gateHit -= real;
   drawSprite(gk, L.gx + gdx, G, {flash: B.gateHit > 0 ? 0.35 : 0});
-  // 塔
-  for (const t of B.turrets) {
-    const tier = tierOf(S.tur[t.k].lv);
-    const p = t.anim > 0 ? t.anim / 0.25 : 0;
-    shadow(t.x, G + 2, 34);
-    drawSprite(`t_${t.k}_${tier}`, t.x, G, {sx: 1 + 0.05 * p, sy: 1 - 0.06 * p, dx: -4 * p});
-  }
-  // 神獸
+}
+// 神獸
+function drawBeasts() {
   if (B.shield > 0) {
     ctx.save();
     ctx.globalAlpha = Math.min(1, B.shield) * (0.35 + 0.1 * Math.sin(B.time * 8));
@@ -417,7 +452,9 @@ function draw(real) {
     shadow(b.x + (o.dx || 0), G + 2, fly ? 36 : 50, fly ? 0.12 : 0.22);
     drawSprite('b_' + b.k, b.x, b.y || G, o);
   }
-  // 裝備中的法寶：在山門和神獸上方飄著轉圈（10 星的有紅光）
+}
+// 裝備中的法寶：在山門和神獸上方飄著轉圈（10 星的有紅光）
+function drawTreasures() {
   {
     const fo = (S.fbOn || []).slice(0, fbSlots()).filter(k => S.fb[k]);
     if (fo.length) {
@@ -445,7 +482,9 @@ function draw(real) {
     }
   }
   xDraw();
-  // 敵人
+}
+// 敵人
+function drawEnemies() {
   const es = B.enemies.slice().sort((a, b) => a.fly - b.fly || a.y - b.y);
   for (const e of es) {
     let key = e.key,
@@ -635,11 +674,9 @@ function draw(real) {
       ctx.fillRect(e.x - w / 2, e.y - e.ay - 10, w * Math.max(0, e.hp / e.max), 5);
     }
   }
-  // 投射物
-  for (const p of B.proj) drawProj(p);
-  // 特效
-  for (const f of B.fx) drawFx(f);
-  // 字
+}
+// 傷害數字、銅錢字
+function drawTexts() {
   ctx.textAlign = 'center';
   ctx.lineJoin = 'round';
   for (const t of B.txt) {
@@ -668,7 +705,9 @@ function draw(real) {
     ctx.fillText(t.v, t.x, t.y);
   }
   ctx.globalAlpha = 1;
-  // 大招全螢幕色
+}
+// 大招全螢幕色
+function drawUltFlash() {
   for (const f of B.fx) {
     if (f.k === 'frost') {
       ctx.fillStyle = `rgba(190,240,255,${0.35 * (1 - f.t / f.life)})`;

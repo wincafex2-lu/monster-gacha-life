@@ -3,7 +3,7 @@
 //
 // 用法（在 idle-td/ 底下）：
 //   python3 tools/build.py && node tools/check.js            舊版 = git HEAD 的 index.html，新版 = 目前的 index.html
-//   node tools/check.js <git 版本>                           舊版改用那個版本的 index.html
+//   node tools/check.js <git 版本或 html 檔>                  舊版改用那個版本的 index.html（或指定的檔）
 //   node tools/check.js <git 版本> --self                    只跑舊版兩次，確認測試本身每次結果都一樣
 // 需要 Playwright（雲端機器已裝好）。
 const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
@@ -15,7 +15,7 @@ const args = process.argv.slice(2);
 const SELF = args.includes('--self');
 const REF = args.find(a => !a.startsWith('--')) || 'HEAD';
 const pages = {
-  'a.html': execSync(`git show ${REF}:idle-td/index.html`, { cwd: ROOT, maxBuffer: 1 << 28 }),
+  'a.html': fs.existsSync(REF) ? fs.readFileSync(REF) : execSync(`git show ${REF}:idle-td/index.html`, { cwd: ROOT, maxBuffer: 1 << 28 }),
   'b.html': fs.readFileSync(path.join(ROOT, 'index.html')),
 };
 if (SELF) pages['b.html'] = pages['a.html'];
@@ -48,6 +48,13 @@ const FAKE_ENV = `(() => {
       if (!b) break; T = b.t; if (b.rep) b.t += b.rep; else q.delete(bi); try { b.f(...b.a); } catch (e) { (window.__errs = window.__errs || []).push('timer: ' + e.message); } }
     T = end; };
   window.__tick = (n, ms) => { for (let k = 0; k < n; k++) { window.__adv(ms); const cb = raf; raf = null; if (cb) cb(T); } };
+  // 假的 WebAudio：時間跟著假時鐘走（真的音效時鐘每次跑都不一樣，會讓配樂用到的亂數順序跑掉）
+  const dummy = () => new Proxy(function () {}, { get: (t, k) => k in t ? t[k] : (t[k] = k === 'value' ? 0 : dummy()), set: (t, k, v) => (t[k] = v, true), apply: () => dummy() });
+  class FakeAC { constructor() { this.state = 'running'; this.sampleRate = 44100; this.destination = dummy(); }
+    get currentTime() { return T / 1000; } resume() { this.state = 'running'; return Promise.resolve(); } suspend() { this.state = 'suspended'; return Promise.resolve(); }
+    createBuffer(c, n) { const d = new Float32Array(n); return { getChannelData: () => d, length: n }; } }
+  for (const m of ['createGain', 'createOscillator', 'createBiquadFilter', 'createBufferSource']) FakeAC.prototype[m] = () => dummy();
+  window.AudioContext = window.webkitAudioContext = FakeAC;
   window.__errs = [];
   addEventListener('error', e => window.__errs.push(String(e.message)));
 })();`;

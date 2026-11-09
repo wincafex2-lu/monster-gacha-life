@@ -14,6 +14,25 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 function step(dt) {
+  stepTimers(dt);
+  stepStage(dt);
+  // 山門回血（輔助）
+  let regen = (PS.regen + (B.arrD === 'd_lotus' ? dv('d_lotus', S.arr.d_lotus.lv) : 0)) * B.gateMax;
+  if (B.state === 'run' && B.gateHp > 0) B.gateHp = Math.min(B.gateMax, B.gateHp + regen * dt);
+  // 英雄
+  const alive = B.enemies.filter(e => !e.dead && e.x < VW - 60);
+  alive.sort((a, b) => a.x - b.x);
+  stepHeroes(dt, alive);
+  stepTurrets(dt, alive);
+  stepBeasts(dt, alive);
+  stepArrays(dt);
+  stepBurn(dt);
+  stepEnemies(dt);
+  stepProj(dt);
+  stepFx(dt);
+}
+// 計時器倒數、定時觸發的被動和合擊
+function stepTimers(dt) {
   B.time += dt;
   if (B.state === 'run') fsTick(dt);
   if (B.focusT > 0) B.focusT -= dt;
@@ -69,7 +88,9 @@ function step(dt) {
   SWC = 0;
   if (B.state === 'run' && B.dmg) B.dmgT += dt;
   if (B.buff > 0) B.buff -= dt;
-  // 關卡狀態
+}
+// 關卡狀態
+function stepStage(dt) {
   if (B.state === 'run') {
     // 場上的怪都打光了，下一隻（群）不用等，0.25 秒後就出來（秒殺時推關比較快）
     if (B.spawnQ.length) {
@@ -92,12 +113,9 @@ function step(dt) {
       startStage();
     }
   }
-  // 山門回血（輔助）
-  let regen = (PS.regen + (B.arrD === 'd_lotus' ? dv('d_lotus', S.arr.d_lotus.lv) : 0)) * B.gateMax;
-  if (B.state === 'run' && B.gateHp > 0) B.gateHp = Math.min(B.gateMax, B.gateHp + regen * dt);
-  // 英雄
-  const alive = B.enemies.filter(e => !e.dead && e.x < VW - 60);
-  alive.sort((a, b) => a.x - b.x);
+}
+// 英雄
+function stepHeroes(dt, alive) {
   for (const h of B.heroes) {
     if (h.anim) {
       h.anim.t += dt;
@@ -158,7 +176,9 @@ function step(dt) {
             )
       );
   }
-  // 塔
+}
+// 塔（已移除，舊存檔沒有塔時這段不做事）
+function stepTurrets(dt, alive) {
   for (const t of B.turrets) {
     t.anim = Math.max(0, t.anim - dt);
     t.cd -= dt;
@@ -169,7 +189,9 @@ function step(dt) {
       turFire(t, alive);
     }
   }
-  // 神獸
+}
+// 神獸
+function stepBeasts(dt, alive) {
   if (B.shield > 0) B.shield -= dt;
   if (B.state === 'run' && PS.mx) {
     const M = PS.mx;
@@ -343,7 +365,9 @@ function step(dt) {
       }
     }
   }
-  // 陣法
+}
+// 陣法
+function stepArrays(dt) {
   if (B.arr && B.state === 'run') {
     const a = B.arr,
       d = ARR[a.k];
@@ -385,7 +409,9 @@ function step(dt) {
       if (on.length) shake(3);
     }
   }
-  // 燒傷（朱雀）
+}
+// 燒傷（朱雀）
+function stepBurn(dt) {
   if (B.crush)
     for (const e of B.enemies) {
       if (!e.dead && e.crushT !== undefined) {
@@ -415,7 +441,9 @@ function step(dt) {
       }
     }
   }
-  // 敵人
+}
+// 敵人
+function stepEnemies(dt) {
   for (const e of B.enemies) {
     if (e.dead) {
       e.dead += dt;
@@ -518,7 +546,9 @@ function step(dt) {
     }
   }
   B.enemies = B.enemies.filter(e => !(e.dead > 0.5));
-  // 投射物
+}
+// 投射物
+function stepProj(dt) {
   for (const p of B.proj) {
     p.life -= dt;
     if (p.target && !p.target.dead) {
@@ -548,7 +578,9 @@ function step(dt) {
     }
   }
   B.proj = B.proj.filter(p => !p.done && p.life > 0);
-  // 特效
+}
+// 特效、飄字
+function stepFx(dt) {
   for (const f of B.fx) {
     f.t = (f.t || 0) + dt;
     if (f.upd) {
