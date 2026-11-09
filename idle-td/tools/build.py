@@ -1,9 +1,20 @@
 """產生 idle-td/index.html（GitHub Pages，圖片讀 assets/）和單檔預覽版（圖片內嵌）。
-用法：python3 tools/build.py [單檔輸出路徑]"""
+用法：python3 tools/build.py [單檔輸出路徑]
+程式碼在 src/：index.tpl.html（網頁骨架）＋ css/style.css ＋ js/*.js，打包時照 @@include 合成一個檔"""
 import json, os, sys, base64
 D = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 man = json.load(open(os.path.join(D, 'assets', 'manifest.json')))
-src = open(os.path.join(D, 'src', 'game.html'), encoding='utf-8').read()
+def assemble():
+    """src/index.tpl.html 裡每行 @@include <檔名> 換成 src/<檔名> 的內容（css/、js/ 照檔名順序）"""
+    S = os.path.join(D, 'src')
+    out = []
+    for line in open(os.path.join(S, 'index.tpl.html'), encoding='utf-8').read().splitlines(keepends=True):
+        if line.startswith('@@include '):
+            out.append(open(os.path.join(S, line[10:].strip()), encoding='utf-8').read())
+        else:
+            out.append(line)
+    return ''.join(out)
+src = assemble()
 keys = sorted(man)
 def out(srcmap, path):
     h = src.replace('__MANIFEST__', json.dumps(man, separators=(',', ':'))).replace('__SRCMAP__', json.dumps(srcmap, separators=(',', ':')))
