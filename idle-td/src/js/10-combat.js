@@ -454,6 +454,7 @@ function hit(e, amt, o = {}) {
   }
   e.hp -= amt;
   e.flash = 0.08;
+  if (!o.small && !(B.time - (e.hkT || -9) < 0.3)) e.hkT = B.time; // 閃白＋後退：直接打中、0.3 秒最多一次
   if (B.dmg && !o.nodps) {
     const src = o.src || DSRC,
       dealt = Math.min(hp0, Math.max(0, amt));
@@ -465,7 +466,8 @@ function hit(e, amt, o = {}) {
     e.slowT = 2;
   }
   if (!o.small) SND.play(o.crit ? 'crit' : 'hit');
-  if (!o.small || Math.random() < 0.35) dmgText(e.x + (Math.random() * 20 - 10), e.y - e.ay - 6, amt, o.big, o.crit);
+  if (!o.small || Math.random() < 0.35) Math.random(); // 保留原本的亂數次數（數字合併後不再用，但戰鬥結果要跟以前一樣）
+  dmgText(e.x, e.y - e.ay - 6, amt, o.big, o.crit, e);
   if (e.hp <= 0) {
     if (PS.my && PS.my.aobing && e.stun > 0 && !e.shat2) {
       e.shat2 = 1;
@@ -523,6 +525,7 @@ function hit(e, amt, o = {}) {
     if (e.boss) SND.setBoss(false);
     B.killed++;
     coinText(e);
+    addFx({k: 'kstar', x: e.x, y: e.y - e.ay * 0.5, life: e.boss ? 0.7 : 0.45, r: e.boss ? 2.2 : 1, a0: vr() * 6});
     for (let i = 0; i < 5; i++)
       addFx({
         k: 'coin',

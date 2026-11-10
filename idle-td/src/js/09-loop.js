@@ -597,5 +597,6 @@ function stepFx(dt) {
     t.y -= dt * (t.shout ? 14 : 40);
   }
   B.txt = B.txt.filter(t => t.t < (t.life || 0.8));
+  if (B.cut && (B.cut.t += dt) > CUT_T) B.cut = null;
   B.shake = Math.max(0, B.shake - dt * 30);
 }

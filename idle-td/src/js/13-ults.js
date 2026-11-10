@@ -134,10 +134,10 @@ function shout(x, y, n, c) {
   let lv = 0;
   while (
     lv < 5 &&
-    B.txt.some(q => q.shout && q.lv === lv && Math.abs(q.x - x) < (q.v.length + n.length + 1) * 17 && q.t < 1.3)
+    B.txt.some(q => q.shout && q.lv === lv && Math.abs(q.x - x) < (q.v.length + n.length + 1) * 21 && q.t < 1.3)
   )
     lv++;
-  B.txt.push({x, y: y - lv * 40, lv, v: n + '！', t: 0, shout: 1, life: 1.6, c});
+  B.txt.push({x, y: y - lv * 48, lv, v: n + '！', t: 0, shout: 1, life: 1.6, c});
 }
 function cbShout(n, id) {
   const h = B.heroes.find(x => x.id === id);
@@ -178,6 +178,7 @@ function castUlt(i) {
   if (PS.mx && PS.mx.grandma) B.gateHp = Math.min(B.gateMax, B.gateHp + B.gateMax * 0.05);
   const d = CH[h.id];
   shout(h.x, h.y - 165, d.un, d.c);
+  if (d.r === 'L') B.cut = {id: h.id, n: d.un, c: d.c, t: 0}; // 傳說／神話大招登場橫幅（W037）
 }
 // 大招射程（從山門前算起）：雷射打整排，其他只打射程內
 const ULT_R = {sweep: 900, slam: 750, rain: 1100, freeze: 1000, heal: 600, drain: 900, laser: 99999, focus: 0};
@@ -215,6 +216,11 @@ function doUlt(h) {
   }
   if (h.id === 'moonrabbit') B.shield = Math.max(B.shield, 4);
   if (d.ult === 'freeze') alive().forEach(e => sprFx(d.fk === 'ice' ? 'fx_ice' : 'fx_stun', e.x, e.y - e.ay * 0.5, 1));
+  if (d.ult === 'freeze' && d.fk === 'root')
+    alive()
+      .filter(e => !e.fly)
+      .slice(0, 12)
+      .forEach(e => addFx({k: 'vine', x: e.x, life: 1.4}));
   if (d.ult === 'heal') sprFx('fx_heal', L.gx, G - 110, 2);
   addFx({k: 'shock', x: h.x, y: h.y, life: 0.5, c: d.c});
   if (d.ult === 'sweep') {

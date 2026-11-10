@@ -23,6 +23,21 @@ function swoosh(x, y, c, a, r) {
   }
   ctx.restore();
 }
+// 實心月牙（劍氣）：外弧＋往內縮的內弧，刀口一條白邊
+function crescent(x, y, r, c, edge) {
+  ctx.fillStyle = c;
+  ctx.beginPath();
+  ctx.arc(x, y, r, -1.25, 1.25);
+  ctx.quadraticCurveTo(x + r * 0.55, y, x + r * Math.cos(-1.25), y + r * Math.sin(-1.25));
+  ctx.fill();
+  if (edge) {
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.beginPath();
+    ctx.arc(x, y, r, -1.1, 1.1);
+    ctx.quadraticCurveTo(x + r * 0.97, y, x + r * Math.cos(-1.1), y + r * Math.sin(-1.1));
+    ctx.fill();
+  }
+}
 function glow(x, y, r, c, a = 1) {
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
@@ -366,48 +381,85 @@ function drawFx(f) {
       break;
     case 'shock':
       ctx.save();
-      ctx.strokeStyle = f.c;
-      ctx.globalAlpha = 1 - p;
-      ctx.lineWidth = 6 * (1 - p) + 1;
+      ctx.fillStyle = f.c;
+      ctx.globalAlpha = 0.45 * (1 - p);
       ctx.beginPath();
       ctx.ellipse(f.x, f.y, 30 + p * 120, 6 + p * 24, 0, 0, Math.PI * 2);
-      ctx.stroke();
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = 0.6 * (1 - p);
+      ctx.beginPath();
+      ctx.ellipse(f.x, f.y, 18 + p * 70, 4 + p * 14, 0, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
       glow(f.x, f.y - 50, 90, f.c, 0.6 * (1 - p));
       break;
     case 'sweep': {
+      // 劍氣月牙：實心填色、白色刀口、後面兩道殘影（W037）
+      const a = 1 - Math.max(0, (p - 0.7) / 0.3);
       ctx.save();
       ctx.translate(f.x, f.y);
-      ctx.strokeStyle = f.c;
-      ctx.lineCap = 'round';
-      const a = 1 - Math.max(0, (p - 0.7) / 0.3);
-      for (let k = 0; k < 4; k++) {
-        ctx.globalAlpha = a * (0.9 - k * 0.2);
-        ctx.lineWidth = 30 - k * 7;
-        ctx.beginPath();
-        ctx.arc(-k * 30, 0, 150 - k * 8, -1.3, 1.3);
-        ctx.stroke();
+      for (let k = 2; k >= 0; k--) {
+        ctx.save();
+        ctx.translate(-k * 46, 0);
+        ctx.globalAlpha = a * (k ? 0.32 / k : 1);
+        crescent(0, 0, 165 - k * 10, f.c, k === 0);
+        ctx.restore();
       }
       ctx.restore();
-      glow(f.x, f.y, 170, f.c, 0.5 * a);
+      glow(f.x - 30, f.y, 190, f.c, 0.45 * a);
       break;
     }
     case 'wave': {
-      const a = 1 - p;
+      // 震地：前緣一座往前推的土浪＋噴起的石塊和煙塵（W037）
+      const a = 1 - Math.max(0, (p - 0.75) / 0.25);
       ctx.save();
-      ctx.fillStyle = f.c;
-      ctx.globalAlpha = 0.7 * a;
+      ctx.globalAlpha = a;
+      const gx = ctx.createLinearGradient(0, G - 130, 0, G + 8);
+      gx.addColorStop(0, f.c);
+      gx.addColorStop(0.45, '#a07a4a');
+      gx.addColorStop(1, '#5a3a1a');
+      ctx.fillStyle = gx;
       ctx.beginPath();
-      ctx.moveTo(f.x - 160, G + 6);
-      ctx.quadraticCurveTo(f.x - 40, G - 110, f.x, G - 20);
-      ctx.lineTo(f.x + 10, G + 6);
+      ctx.moveTo(f.x - 230, G + 8);
+      ctx.quadraticCurveTo(f.x - 120, G - 40, f.x - 30, G - 120);
+      ctx.quadraticCurveTo(f.x + 10, G - 70, f.x + 30, G + 8);
+      ctx.closePath();
       ctx.fill();
-      ctx.restore();
-      glow(f.x - 40, G - 30, 120, f.c, 0.6 * a);
-      for (let i = 0; i < 5; i++) {
-        ctx.fillStyle = `rgba(150,120,80,${a})`;
-        ctx.fillRect(f.x - 30 - i * 26, G - 20 - ((i * 37 + Math.floor(f.t * 20)) % 40), 8, 8);
+      ctx.fillStyle = 'rgba(255,255,255,.55)';
+      ctx.beginPath();
+      ctx.moveTo(f.x - 120, G - 40);
+      ctx.quadraticCurveTo(f.x - 70, G - 85, f.x - 30, G - 120);
+      ctx.quadraticCurveTo(f.x - 55, G - 70, f.x - 110, G - 30);
+      ctx.fill();
+      // 石塊：沿路一路噴起來、掉回去
+      for (let i = 0; i < 9; i++) {
+        const q = (f.t * 2.2 + i * 0.11) % 1,
+          rx = f.x - 40 - i * 34 - q * 40,
+          ry = G - 10 - Math.sin(q * Math.PI) * (70 + (i % 3) * 40),
+          r = 9 + (i % 3) * 4;
+        ctx.fillStyle = i % 2 ? '#6a4a2a' : '#8a6a42';
+        ctx.save();
+        ctx.translate(rx, ry);
+        ctx.rotate(q * 5 + i);
+        ctx.beginPath();
+        ctx.moveTo(-r, -r * 0.4);
+        ctx.lineTo(-r * 0.2, -r);
+        ctx.lineTo(r, -r * 0.3);
+        ctx.lineTo(r * 0.6, r * 0.8);
+        ctx.lineTo(-r * 0.7, r * 0.6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
       }
+      for (let i = 0; i < 6; i++) {
+        ctx.fillStyle = `rgba(200,180,150,${0.5 * a})`;
+        ctx.beginPath();
+        ctx.arc(f.x - 70 - i * 45, G - 14 - (i % 2) * 14, 22 + i * 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+      glow(f.x - 40, G - 40, 140, f.c, 0.55 * a);
       break;
     }
     case 'rainp': {
@@ -493,40 +545,162 @@ function drawFx(f) {
       glow(f.x, f.y, 60, f.c, a);
       break;
     }
-    case 'heal':
+    case 'heal': {
+      // 補山門：一道光柱＋往上飄的實心綠十字和葉子（W037）
+      const a = p < 0.15 ? p / 0.15 : 1 - Math.max(0, (p - 0.6) / 0.4);
+      ctx.save();
+      ctx.globalCompositeOperation = 'source-over';
+      const gr = ctx.createLinearGradient(f.x - 130, 0, f.x + 130, 0);
+      gr.addColorStop(0, 'rgba(140,255,150,0)');
+      gr.addColorStop(0.5, `rgba(120,240,120,${0.4 * a})`);
+      gr.addColorStop(1, 'rgba(140,255,150,0)');
+      ctx.fillStyle = gr;
+      ctx.fillRect(f.x - 130, TOPY, 260, f.y - TOPY);
+      ctx.restore();
       for (let i = 0; i < 14; i++) {
-        const ph = (p * 1.4 + i / 14) % 1;
-        ctx.fillStyle = `rgba(140,255,150,${1 - ph})`;
-        ctx.font = '900 26px sans-serif';
-        ctx.fillText('+', f.x - 90 + ((i * 37) % 180), f.y - ph * 260);
-      }
-      glow(f.x, f.y - 100, 160, '#8cff90', 0.5 * (1 - p));
-      break;
-    case 'frost': {
-      const a = 1 - p;
-      for (let i = 0; i < 30; i++) {
-        const x = (i * 97 + f.t * 40) % VW,
-          y = TOPY + ((i * 53 + f.t * 260) % VH);
-        ctx.fillStyle =
-          f.fk === 'root'
-            ? `rgba(120,220,90,${a})`
-            : f.fk === 'talisman'
-              ? `rgba(255,230,100,${a})`
-              : `rgba(255,255,255,${a})`;
-        if (f.fk === 'talisman') ctx.fillRect(x, y, 8, 14);
-        else {
+        const ph = (p * 1.4 + i / 14) % 1,
+          x = f.x - 110 + ((i * 37) % 220) + Math.sin(ph * 6 + i) * 10,
+          y = f.y - 20 - ph * 300,
+          r = i % 3 ? 12 : 17;
+        ctx.globalAlpha = a * (1 - ph * 0.7);
+        if (i % 4 === 3) {
+          ctx.fillStyle = '#7ad86a';
           ctx.beginPath();
-          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.ellipse(x, y, r * 0.9, r * 0.45, ph * 4 + i, 0, Math.PI * 2);
           ctx.fill();
+        } else {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(x - r * 0.42, y - r - 3, r * 0.84, r * 2 + 6);
+          ctx.fillRect(x - r - 3, y - r * 0.42, r * 2 + 6, r * 0.84);
+          ctx.fillStyle = '#4ee06a';
+          ctx.fillRect(x - r * 0.28, y - r, r * 0.56, r * 2);
+          ctx.fillRect(x - r, y - r * 0.28, r * 2, r * 0.56);
         }
       }
+      ctx.globalAlpha = 1;
+      glow(f.x, f.y - 100, 170, '#8cff90', 0.5 * a);
+      break;
+    }
+    case 'frost': {
+      // 全場定身：冰晶／符咒／樹葉從天上落下（實心，W037）
+      const a = 1 - Math.max(0, (p - 0.6) / 0.4);
+      ctx.save();
+      for (let i = 0; i < 26; i++) {
+        const x = (i * 97 + f.t * 40 + Math.sin(f.t * 2 + i) * 20) % VW,
+          y = TOPY + ((i * 53 + f.t * (f.fk === 'talisman' ? 200 : 300)) % VH),
+          r = 7 + (i % 4) * 3;
+        ctx.globalAlpha = a;
+        ctx.save();
+        ctx.translate(x, y);
+        if (f.fk === 'talisman') {
+          ctx.rotate(Math.sin(f.t * 5 + i) * 0.6);
+          ctx.fillStyle = '#ffe86a';
+          ctx.fillRect(-r * 0.7, -r * 1.4, r * 1.4, r * 2.8);
+          ctx.fillStyle = '#d0302a';
+          ctx.fillRect(-r * 0.2, -r * 1.1, r * 0.4, r * 2.2);
+        } else if (f.fk === 'root') {
+          ctx.rotate(f.t * 3 + i);
+          ctx.fillStyle = i % 2 ? '#5ac84a' : '#8ae86a';
+          ctx.beginPath();
+          ctx.ellipse(0, 0, r * 1.2, r * 0.55, 0, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.rotate(f.t * 2 + i);
+          ctx.fillStyle = 'rgba(200,245,255,.95)';
+          ctx.beginPath();
+          ctx.moveTo(0, -r * 1.6);
+          ctx.lineTo(r * 0.6, 0);
+          ctx.lineTo(0, r * 1.6);
+          ctx.lineTo(-r * 0.6, 0);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.moveTo(0, -r * 1.2);
+          ctx.lineTo(r * 0.25, 0);
+          ctx.lineTo(0, -r * 0.2);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      ctx.restore();
+      break;
+    }
+    case 'vine': {
+      // 樹根纏住：地上長出三條實心藤蔓捲住怪
+      const g = p < 0.25 ? ease(p / 0.25) : 1,
+        a = 1 - Math.max(0, (p - 0.75) / 0.25);
+      ctx.save();
+      ctx.globalAlpha = a;
+      for (let i = 0; i < 3; i++) {
+        const ox = (i - 1) * 22,
+          hgt = (60 + i * 14) * g;
+        ctx.fillStyle = i === 1 ? '#3f8a2e' : '#5aa83a';
+        ctx.beginPath();
+        ctx.moveTo(f.x + ox - 8, G + 4);
+        ctx.quadraticCurveTo(f.x + ox - 26 * (i - 1) - 20, G - hgt * 0.5, f.x + ox + 4, G - hgt);
+        ctx.quadraticCurveTo(f.x + ox - 26 * (i - 1) - 6, G - hgt * 0.5, f.x + ox + 8, G + 4);
+        ctx.fill();
+        ctx.fillStyle = '#8ae86a';
+        ctx.beginPath();
+        ctx.ellipse(f.x + ox + 4, G - hgt, 8 * g, 4 * g, -0.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
       break;
     }
     case 'drain': {
+      // 吸血：一隻小血蝙蝠叼著血珠飛回山門（W037）
       const q = ease(p);
       const x = f.x + (f.tx - f.x) * q,
-        y = f.y + (f.ty - f.y) * q - Math.sin(q * Math.PI) * 80;
-      glow(x, y, 20, f.c, 1 - p * 0.5);
+        y = f.y + (f.ty - f.y) * q - Math.sin(q * Math.PI) * 80,
+        fl = Math.sin(f.t * 40) * 0.6;
+      glow(x, y, 26, f.c, 0.8 * (1 - p * 0.5));
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.fillStyle = '#5a0a1e';
+      for (const sd of [-1, 1]) {
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(sd * 14, -14 - fl * 10, sd * 26, -4 - fl * 12);
+        ctx.lineTo(sd * 20, 2);
+        ctx.lineTo(sd * 14, -2);
+        ctx.lineTo(sd * 8, 4);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 6, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ff2a4a';
+      ctx.beginPath();
+      ctx.arc(0, 12, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffd0d8';
+      ctx.beginPath();
+      ctx.arc(-2, 10, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      break;
+    }
+    case 'kstar': {
+      // 怪物被打倒：白色爆光＋往外噴的星星（W037）
+      const q = ease(p),
+        r = f.r;
+      ctx.save();
+      ctx.globalAlpha = 1 - p;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, (14 + 34 * q) * r * (1 - p * 0.5), 0, Math.PI * 2);
+      ctx.fill();
+      for (let i = 0; i < 6; i++) {
+        const an = f.a0 + (i * Math.PI) / 3,
+          d = (24 + 70 * q) * r;
+        ctx.fillStyle = i % 2 ? '#ffe066' : '#ffffff';
+        star(f.x + Math.cos(an) * d, f.y + Math.sin(an) * d * 0.8, (11 - 6 * p) * r);
+      }
+      ctx.restore();
       break;
     }
   }
