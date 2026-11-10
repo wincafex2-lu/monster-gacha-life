@@ -1,0 +1,41 @@
+{
+  "width": 3072,
+  "height": 2560,
+  "cols": 6,
+  "rows": 5,
+  "anchors": [
+    {
+      "x": 256,
+      "y": 432,
+      "height": 300
+    },
+    {
+      "x": 256,
+      "y": 432,
+      "height": 300
+    },
+    {
+      "x": 256,
+      "y": 432,
+      "height": 300
+    },
+    {
+      "x": 256,
+      "y": 432,
+      "height": 300
+    },
+    {
+      "x": 256,
+      "y": 432,
+      "height": 300
+    }
+  ],
+  "frames": [
+    "idle",
+    "move-left-contact",
+    "move-pass-right",
+    "move-right-contact",
+    "move-pass-left",
+    "attack-cue"
+  ]
+}
