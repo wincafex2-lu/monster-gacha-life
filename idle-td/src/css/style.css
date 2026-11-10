@@ -1438,3 +1438,65 @@ html.uiimg .card.L::after {
     font-size: 13px;
   }
 }
+/* 召喚頁還沒抽時：本池預覽＋保底進度（W037） */
+.pulls:empty {
+  display: none;
+}
+.gidle {
+  background: rgba(255, 250, 240, 0.88);
+  border-radius: 12px;
+  padding: 8px 12px 10px;
+  width: min(760px, 100%);
+  box-sizing: border-box;
+}
+.gidle .gt {
+  font-weight: 900;
+  color: #6a3a1a;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.gidle .gt small {
+  font-weight: 400;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+.gidle .pulls {
+  min-height: 0;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+}
+.gidle .pulls .card {
+  animation: none;
+}
+.gidle .card.lock img {
+  filter: grayscale(1) brightness(0.75);
+  opacity: 0.6;
+}
+.gpity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #7a5a3a;
+  margin-top: 6px;
+}
+.gpity span {
+  width: 64px;
+  text-align: right;
+  font-weight: 700;
+}
+.gpity i {
+  flex: 1;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(90, 60, 30, 0.18);
+  overflow: hidden;
+}
+.gpity b {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+}
+.gpity em {
+  font-style: normal;
+  width: 80px;
+}

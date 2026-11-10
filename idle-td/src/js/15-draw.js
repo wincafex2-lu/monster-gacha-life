@@ -18,12 +18,37 @@ const SHAKE_ON = false; // 泓：技能畫面震動先取消（會讓人以為�
 function shake(a) {
   if (SHAKE_ON) B.shake = Math.max(B.shake, a);
 }
-function dmgText(x, y, v, big, crit) {
-  if (B.txt.length > 14) {
+// 傷害數字：同一隻怪短時間內被打到 → 合併成一個往上跳的總數（W037）；附近有字就往上錯開
+function dmgText(x, y, v, big, crit, e) {
+  v = Math.max(1, v);
+  if (e) {
+    // 同一隻怪，或擠在一起的怪（80px 內）→ 合併成一個數字
+    const q = B.txt.find(
+      t =>
+        !t.shout &&
+        !t.coin &&
+        !t.crit === !crit &&
+        t.t < 0.35 &&
+        (t.e === e || (Math.abs(t.x - x) < 80 && Math.abs(t.y - y) < 110))
+    );
+    if (q) {
+      q.n += v;
+      q.v = (crit ? '爆擊 ' : '') + fmt(q.n);
+      q.t = 0;
+      if (q.e === e) q.x = e.x;
+      q.y = Math.max(q.y, y - 18 - q.lane * 32);
+      q.big = q.big || big;
+      return;
+    }
+  }
+  if (B.txt.length > 12) {
     const i = B.txt.findIndex(q => !q.shout);
     if (i >= 0) B.txt.splice(i, 1);
   }
-  B.txt.push({x, y, v: (crit ? '爆擊 ' : '') + fmt(Math.max(1, v)), t: 0, big, crit});
+  let lane = 0;
+  while (lane < 3 && B.txt.some(q => !q.shout && Math.abs(q.x - x) < 70 && Math.abs(q.y - (y - lane * 32)) < 26))
+    lane++;
+  B.txt.push({x, y: y - lane * 32, n: v, lane, v: (crit ? '爆擊 ' : '') + fmt(v), t: 0, big, crit, e});
 }
 function coinText(e) {
   B.txt.push({x: e.x, y: e.y - e.ay - 24, v: '+' + fmt(e.coin), t: 0, coin: 1});
@@ -68,11 +93,40 @@ function drawSprite(k, x, y, o = {}) {
     ctx.globalAlpha = o.flash;
     ctx.drawImage(im, -ax, -ay, w, h);
   }
+  if (o.white) {
+    const wc = whiteOf(k, im, w, h);
+    if (wc) {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = o.white * (o.alpha != null ? o.alpha : 1);
+      ctx.drawImage(wc, -ax, -ay, w, h);
+    }
+  }
   if (o.tint) {
     ctx.globalCompositeOperation = 'source-atop';
   }
   ctx.restore();
 }
+// 白色剪影（被打中閃白用）：每張圖做一次、用顯示大小存，最多存 80 張（W037）
+const WHT = new Map();
+function whiteOf(k, im, w, h) {
+  let c = WHT.get(k);
+  if (c) return c;
+  if (!im.complete || !im.naturalWidth) return null;
+  if (WHT.size >= 80) WHT.delete(WHT.keys().next().value);
+  c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w));
+  c.height = Math.max(1, Math.round(h));
+  const x = c.getContext('2d');
+  x.drawImage(im, 0, 0, c.width, c.height);
+  x.globalCompositeOperation = 'source-in';
+  x.fillStyle = '#fff';
+  x.fillRect(0, 0, c.width, c.height);
+  WHT.set(k, c);
+  return c;
+}
+// 只給畫面用的亂數（不動遊戲的 Math.random，存檔和戰鬥結果不受影響）
+let VRS = 12345;
+const vr = () => ((VRS = (VRS * 16807) % 2147483647) - 1) / 2147483646;
 function shadow(x, y, w, a = 0.22) {
   ctx.fillStyle = `rgba(40,30,10,${a})`;
   ctx.beginPath();
@@ -94,6 +148,7 @@ function draw(real) {
   }
   ctx.setTransform(k, 0, 0, k, sx * k, (-TOPY + sy) * k);
   drawBg();
+  drawAmbient();
   drawArrays();
   drawZones();
   drawDefArray();
@@ -122,7 +177,7 @@ function draw(real) {
 }
 // 背景（縮小模式：背景放大 ×2、地平線對齊，只有人物怪物變小）
 function drawBg() {
-  const bg = IMG[curBg()] || IMG.bg_meadow,
+  const bg = bossSky() ? tintBg(curBg(), bossSky()) : IMG[curBg()] || IMG.bg_meadow,
     bw = 1536 * ZM,
     bh = 1024 * ZM,
     by = G - G * ZM;
@@ -491,9 +546,19 @@ function drawEnemies() {
       o = {};
     if (e.dead) {
       const p = Math.min(1, e.dead / 0.45);
-      o.sx = 1 + p * 0.3;
-      o.sy = 1 - p * 0.6;
-      o.alpha = 1 - p;
+      if (e.boss) {
+        o.sx = 1 + p * 0.3;
+        o.sy = 1 - p * 0.6;
+        o.alpha = 1 - p;
+      } else {
+        // 小怪被打飛：往後上方飛、轉圈、變小、最後淡掉（W037）
+        o.dx = 150 * p;
+        o.dy = -Math.sin(p * Math.PI * 0.85) * 110 - (e.fly ? 60 * p : 0);
+        o.spin = p * 6;
+        o.sx = o.sy = 1 - p * 0.35;
+        o.alpha = p < 0.6 ? 1 : 1 - (p - 0.6) / 0.4;
+        o.white = p < 0.2 ? 1 - p / 0.2 : 0;
+      }
     } else if (e.lift > 0) {
       o.dy = -110 * Math.sin((Math.min(1, (1.5 - e.lift) / 0.3) * Math.PI) / 2);
       o.rot = Math.sin(e.t * 12) * 0.15;
@@ -561,6 +626,16 @@ function drawEnemies() {
       }
     }
     if (e.flash > 0) o.flash = 0.6;
+    if (!e.dead && e.hkT != null) {
+      // 被打中閃白、往後退一小步
+      const k = 1 - (B.time - e.hkT) / 0.14;
+      if (k > 0) {
+        o.white = 0.6 * k;
+        o.dx = (o.dx || 0) + (e.boss ? 3 : 7) * k;
+        o.sx = (o.sx || 1) * (1 - 0.05 * k);
+        o.sy = (o.sy || 1) * (1 + 0.04 * k);
+      }
+    }
     if (!e.fly) shadow(e.x, G + 2, e.w * 0.33, e.dead ? 0.1 : 0.22);
     else shadow(e.x, G + 2, e.w * 0.22, 0.12);
     if (e.stun > 0 && !e.dead) {
@@ -684,7 +759,7 @@ function drawTexts() {
       a = 1 - Math.max(0, (t.t - (L0 - 0.3)) / 0.3);
     ctx.globalAlpha = a;
     if (t.shout) {
-      const sz = Math.round(34 * (t.t < 0.15 ? 1 + (0.15 - t.t) * 3 : 1));
+      const sz = Math.round(42 * (t.t < 0.15 ? 1 + (0.15 - t.t) * 3 : 1));
       ctx.font = `900 ${sz}px "Noto Sans TC",sans-serif`;
       ctx.lineWidth = 7;
       ctx.strokeStyle = '#2a1206';
@@ -696,7 +771,19 @@ function drawTexts() {
       ctx.strokeText(t.v, t.x, t.y);
       continue;
     }
-    const sz = t.crit ? Math.round(52 * (t.t < 0.12 ? 1 + (0.12 - t.t) * 4 : 1)) : t.coin ? 26 : t.big ? 40 : 30;
+    const pop = t.coin ? 1 : t.t < 0.12 ? 1 + (0.12 - t.t) * (t.crit ? 4 : 2.5) : 1,
+      sz = Math.round((t.crit ? 52 : t.coin ? 26 : t.big ? 40 : 30) * pop);
+    if (t.crit) {
+      // 爆擊：數字後面一顆轉動的金色星芒
+      ctx.save();
+      ctx.translate(t.x, t.y - sz * 0.35);
+      ctx.rotate(t.t * 3);
+      ctx.fillStyle = 'rgba(255,214,60,.85)';
+      star(0, 0, sz * 0.95);
+      ctx.fillStyle = 'rgba(255,255,235,.9)';
+      star(0, 0, sz * 0.5);
+      ctx.restore();
+    }
     ctx.font = `900 ${sz}px "Noto Sans TC",sans-serif`;
     ctx.lineWidth = 5;
     ctx.strokeStyle = t.coin ? '#5a3a06' : '#3a1408';
@@ -706,8 +793,163 @@ function drawTexts() {
   }
   ctx.globalAlpha = 1;
 }
+// 場景環境動態（W037）：草地飄花瓣、竹林落葉、夜林螢火蟲；Boss／魔頭／凶獸關天色變暗紅
+let GLOWDOT = null;
+function glowDot() {
+  if (GLOWDOT) return GLOWDOT;
+  const c = document.createElement('canvas');
+  c.width = c.height = 32;
+  const x = c.getContext('2d'),
+    g = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+  g.addColorStop(0, 'rgba(255,255,220,1)');
+  g.addColorStop(0.25, 'rgba(230,255,140,.9)');
+  g.addColorStop(1, 'rgba(180,255,80,0)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, 32, 32);
+  return (GLOWDOT = c);
+}
+// Boss 關 1、魔頭／凶獸關 2、其他 0
+const bossSky = () => (B.trial ? 0 : B.xf || S.stage % 100 === 0 ? 2 : S.stage % 10 === 0 ? 1 : 0);
+// 染紅的背景：每張背景只做一次（不要每格畫全螢幕混色，手機會變慢）
+const TBG = new Map();
+function tintBg(k, lv) {
+  const key = k + lv;
+  let c = TBG.get(key);
+  if (c) return c;
+  const im = IMG[k] || IMG.bg_meadow;
+  if (!im || !im.complete || !im.naturalWidth) return im;
+  if (TBG.size >= 2) TBG.delete(TBG.keys().next().value);
+  c = document.createElement('canvas');
+  c.width = im.naturalWidth;
+  c.height = im.naturalHeight;
+  const x = c.getContext('2d'),
+    a = lv === 2 ? 0.85 : 0.6,
+    g = x.createLinearGradient(0, 0, 0, c.height * 0.85);
+  x.drawImage(im, 0, 0);
+  g.addColorStop(0, `rgba(190,40,50,${a})`);
+  g.addColorStop(0.75, `rgba(230,110,90,${a * 0.6})`);
+  g.addColorStop(1, 'rgba(255,200,180,0)');
+  x.globalCompositeOperation = 'multiply';
+  x.fillStyle = g;
+  x.fillRect(0, 0, c.width, c.height);
+  TBG.set(key, c);
+  return c;
+}
+function drawAmbient() {
+  const bg = curBg(),
+    T = B.time,
+    boss = bossSky(),
+    mo = boss === 2;
+  ctx.save();
+  const H = G - TOPY;
+  if (boss) {
+    // 往上飄的火星
+    ctx.fillStyle = mo ? '#ff6a3a' : '#ff9a5a';
+    for (let i = 0; i < 22; i++) {
+      const q = (T * (0.06 + (i % 5) * 0.012) + i * 0.137) % 1,
+        x = (i * 211 + Math.sin(T + i) * 30) % VW,
+        y = G - q * H;
+      ctx.globalAlpha = 0.8 * Math.sin(q * Math.PI);
+      ctx.fillRect(x, y, 6 + (i % 3) * 2, 6 + (i % 3) * 2);
+    }
+  } else if (bg === 'bg_nightwood') {
+    const d = glowDot();
+    for (let i = 0; i < 18; i++) {
+      const x = (i * 263 + T * (8 + (i % 4) * 5) + Math.sin(T * 0.7 + i) * 60) % VW,
+        y = G - 60 - ((i * 97) % (H * 0.55)) + Math.sin(T * 1.3 + i * 2) * 30,
+        r = 10 + (i % 3) * 4;
+      ctx.globalAlpha = 0.35 + 0.55 * Math.max(0, Math.sin(T * 2 + i * 1.7));
+      ctx.drawImage(d, x - r, y - r, r * 2, r * 2);
+    }
+  } else {
+    const bam = bg === 'bg_bamboo';
+    for (let i = 0; i < 22; i++) {
+      const q = (T * (0.05 + (i % 4) * 0.01) + i * 0.173) % 1,
+        x = VW - ((i * 197 + q * VW * 1.2 + Math.sin(T * 1.2 + i) * 40) % (VW + 80)),
+        y = TOPY + q * H,
+        r = bam ? 13 : 10;
+      ctx.globalAlpha = 0.85 * Math.min(1, (1 - q) * 6);
+      ctx.fillStyle = bam ? (i % 2 ? '#8ac85a' : '#b0d870') : i % 2 ? '#ffc4d8' : '#ffe0ea';
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(T * 2 + i);
+      ctx.scale(1, 0.45 + 0.35 * Math.sin(T * 4 + i));
+      ctx.beginPath();
+      ctx.ellipse(0, 0, r, r * (bam ? 0.32 : 0.7), 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  ctx.restore();
+}
+// 傳說／神話大招登場橫幅：頭像＋招式名從左邊滑進來，背景稍暗（W037）
+const CUT_T = 1.1;
+function drawCutin() {
+  const c = B.cut;
+  if (!c) return;
+  const t = c.t,
+    inn = ease(Math.min(1, t / 0.18)),
+    out = t > CUT_T - 0.22 ? ease((t - (CUT_T - 0.22)) / 0.22) : 0,
+    env = Math.min(inn, 1 - out);
+  ctx.save();
+  ctx.fillStyle = `rgba(0,0,0,${0.28 * env})`;
+  ctx.fillRect(0, TOPY, VW, VH);
+  const bh = 200,
+    cy = TOPY + VH * 0.3,
+    off = -VW * (1 - inn) + VW * out;
+  ctx.translate(off, 0);
+  ctx.beginPath();
+  ctx.moveTo(0, cy - bh / 2);
+  ctx.lineTo(VW * 0.7, cy - bh / 2);
+  ctx.lineTo(VW * 0.7 - 60, cy + bh / 2);
+  ctx.lineTo(0, cy + bh / 2);
+  ctx.closePath();
+  const g = ctx.createLinearGradient(0, 0, VW * 0.7, 0);
+  g.addColorStop(0, 'rgba(20,10,30,.92)');
+  g.addColorStop(0.7, 'rgba(40,20,50,.85)');
+  g.addColorStop(1, 'rgba(40,20,50,0)');
+  ctx.fillStyle = g;
+  ctx.fill();
+  ctx.save();
+  ctx.clip();
+  // 速度線
+  ctx.fillStyle = c.c;
+  for (let i = 0; i < 7; i++) {
+    const y = cy - bh / 2 + 10 + ((i * 41) % (bh - 20)),
+      x = ((i * 173 + t * 1800) % (VW * 0.7)) - 100;
+    ctx.globalAlpha = 0.35;
+    ctx.fillRect(x, y, 120 + (i % 3) * 60, 4);
+  }
+  ctx.globalAlpha = 1;
+  const k = S.roster[c.id] ? myKey(c.id) : null,
+    m = k && MAN[k];
+  if (m) drawSprite(k, 170 + 30 * (1 - inn), cy - 70 + (m[1] / 2) * 1.7 * 0.8, {sx: 1.7, sy: 1.7});
+  ctx.restore();
+  ctx.fillStyle = c.c;
+  ctx.fillRect(0, cy - bh / 2 - 6, VW * 0.7, 6);
+  ctx.fillRect(0, cy + bh / 2, VW * 0.7 - 60, 6);
+  ctx.textAlign = 'left';
+  ctx.lineJoin = 'round';
+  ctx.font = '900 38px "Noto Sans TC",sans-serif';
+  ctx.lineWidth = 7;
+  ctx.strokeStyle = '#1a0a10';
+  const nm = CH[c.id].n;
+  ctx.strokeText(nm, 340, cy - 34);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(nm, 340, cy - 34);
+  ctx.font = '900 84px "Noto Sans TC",sans-serif';
+  ctx.lineWidth = 12;
+  ctx.strokeText(c.n, 340, cy + 60);
+  ctx.fillStyle = c.c;
+  ctx.fillText(c.n, 340, cy + 60);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255,255,255,.9)';
+  ctx.strokeText(c.n, 340, cy + 60);
+  ctx.restore();
+}
 // 大招全螢幕色
 function drawUltFlash() {
+  drawCutin();
   for (const f of B.fx) {
     if (f.k === 'frost') {
       ctx.fillStyle = `rgba(190,240,255,${0.35 * (1 - f.t / f.life)})`;

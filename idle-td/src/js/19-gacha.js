@@ -144,6 +144,39 @@ function gpInfo(p) {
   if (p.type === 'tur') return {img: SRC['t_' + p.k + '_1'], n: TUR[p.k].n, r: 'R'};
   return {img: SRC['i_' + p.k], n: ARR[p.k].n, r: ARR[p.k].t === 'a' ? 'E' : 'L'};
 }
+// 還沒抽的時候：下面空白處放這個池的傳說／神獸＋保底進度（W037）
+function gachaIdle() {
+  const bar = (n, cur, max, c) =>
+    `<div class="gpity"><span>${n}</span><i><b style="width:${Math.min(100, (cur / max) * 100)}%;background:${c}"></b></i><em>${max - cur} 次內必出</em></div>`;
+  let cards = '',
+    t = '';
+  if (gTab === 'hero') {
+    const ids = serIds(S.gser || 'all');
+    t = (S.gser && S.gser !== 'all' ? SERIES[S.gser].n : '一般池') + '的傳說弟子';
+    cards = ids
+      .map(
+        id =>
+          `<div class="card L ${S.roster[id] ? '' : 'lock'}"><img src="${charImg(id)}" alt=""><span class="cn">${CH[id].n}</span></div>`
+      )
+      .join('');
+    return `<div class="gidle"><div class="gt">${t}<small>（灰色＝還沒有）</small></div><div class="pulls">${cards}</div>${bar('稀有以上', S.pityR || 0, 10, '#3b7fe0')}${bar('史詩以上', S.pityE || 0, 30, '#8a4ad8')}${bar('傳說', S.pityL || 0, 60, '#e0a020')}</div>`;
+  }
+  if (gTab === 'beast') {
+    const ks = BSER[S.bser || 'sishen'].ks;
+    cards = ks
+      .map(
+        k =>
+          `<div class="card E ${S.beast[k] ? '' : 'lock'}"><img src="${SRC['b_' + k]}" alt="" style="height:58%;bottom:24%"><span class="cn">${BEAST[k].n}</span></div>`
+      )
+      .join('');
+    return `<div class="gidle"><div class="gt">這個系列的神獸<small>（灰色＝還沒合成）</small></div><div class="pulls">${cards}</div></div>`;
+  }
+  cards = GP.map(p => {
+    const g = gpInfo(p);
+    return `<div class="card ${g.r} ${S.arr[p.k] ? '' : 'lock'}"><img src="${g.img}" alt="" style="height:52%;bottom:26%"><span class="cn">${g.n}</span></div>`;
+  }).join('');
+  return `<div class="gidle"><div class="gt">可以抽到的陣法<small>（灰色＝還沒有）</small></div><div class="pulls">${cards}</div></div>`;
+}
 function renderGacha() {
   $('shTitle').textContent = '召喚';
   $('shTabs').innerHTML =
@@ -217,7 +250,9 @@ function renderGacha() {
       h += `<div class="card ${g.r}" style="--d:${i * 0.08}s"><img src="${g.img}" alt="" style="height:52%;bottom:26%">${p.isNew ? '<span class="new">新！</span>' : `<span class="new" style="background:#3b7fe0">${p.res}</span>`}<span class="cn">${g.n}</span></div>`;
     }
   });
-  h += '</div></div>';
+  h += '</div>';
+  if (!lastPulls.length) h += gachaIdle();
+  h += '</div>';
   $('shBody').innerHTML = h;
   $('g1').onclick = () => pull(1);
   $('shBody')
